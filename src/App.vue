@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-
-
-
-
     <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" style="position: fixed; top: 0px; z-index:20;">
       <header class="mdl-layout__header" style="background-color: rgb(4, 7, 47);">
@@ -34,10 +30,6 @@
         <div class="page-content"><!-- Your content goes here --></div>
       </main>
     </div>
-
-
-
-
     <router-view/>
   </div>
 </template>

@@ -1,85 +1,21 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div class="newsFeed">
+    <span>04/03/2018</span>
+    <hr/>
+    <div class="news">
+      <div style="position: absolute; background-color: blue; padding: 5px; top: 0px; right: 0px;">WIP</div>
+      <img src="https://www.jvfrance.com/wp-content/uploads/2017/11/Shadow-pc-du-futur-e1511459187569-890x593.jpg" style="height: 100px; margin-right: 10px;" />
+      <p style="display: inline-block;">[PREPROD] Shadow Box <strong>0.22.5</strong> :</p>
+      <p>Changelog : Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <span>02/03/2018</span>
+    <hr/>
+    <div class="news">
+      <div style="position: absolute; background-color: red; padding: 5px; top: 0px; right: 0px;">NO GO</div>
+      <img src="https://www.jvfrance.com/wp-content/uploads/2017/11/Shadow-pc-du-futur-e1511459187569-890x593.jpg" style="height: 100px; margin-right: 10px;" />
+      <p style="display: inline-block;">[PREPROD] Shadow Box <strong>0.22.4</strong> :</p>
+      <p>Changelog : Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
   </div>
 </template>
 
@@ -96,6 +32,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.newsFeed{
+  display: block;
+  position: relative;
+  width: 90%;
+  padding: 5%;
+}
+.news{
+  position: relative;
+  display: inline-block;
+  margin-bottom: 50px;
+  width: 100%;
+  box-shadow: 1px 1px 12px #555;
+  padding: 10px;
+}
+
 h1, h2 {
   font-weight: normal;
 }

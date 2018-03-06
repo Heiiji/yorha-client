@@ -11,17 +11,25 @@ var store = {
   state: {
     connected: false,
     username: ''
-  }
-/*,
-  setMessageAction (newValue) {
-    if (this.debug) console.log('setMessageAction déclenchée avec', newValue)
-    this.state.message = newValue
   },
-  clearMessageAction () {
-    if (this.debug) console.log('clearMessageAction déclenchée')
-    this.state.message = ''
+  version: {
+    preprodvalid: {
+      zotac: [],
+      normal: []
+    },
+    preprod: {
+      zotac: [],
+      normal: []
+    },
+    prodvalid: {
+      zotac: [],
+      normal: []
+    },
+    prod: {
+      zotac: [],
+      normal: []
+    }
   }
-*/
 }
 
 /* eslint-disable no-new */
@@ -32,6 +40,8 @@ new Vue({
   data: {
     privateState: {},
     sharedState: store.state
+  },
+  methods: {
   },
   template: '<App/>'
 })

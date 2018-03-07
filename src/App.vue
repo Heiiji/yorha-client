@@ -13,7 +13,7 @@
             <a class="mdl-navigation__link" href="/posts">Test</a>
             <a class="mdl-navigation__link" href="">Link</a>
             <a class="mdl-navigation__link" href="/login">Login</a>
-            <a class="mdl-navigation__link" href="/overview">Online version</a>
+            <router-link class="mdl-navigation__link" to="/overview">Online version</router-link>
           </nav>
         </div>
       </header>

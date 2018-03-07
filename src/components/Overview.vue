@@ -1,5 +1,6 @@
 <template>
   <div>
+<br/><br/>
     <div style="position: relative; width: 40%; display: inline-block; padding: 0px; margin: 4%;">
       <h3>Zotac</h3>
       <hr/>

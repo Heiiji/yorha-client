@@ -60,35 +60,35 @@ export default {
   },
   methods: {
     async getVersion () {
-      axios.get('http://localhost:8081/overview/gap/preprodvalid').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/gap/preprodvalid').then((response) => {
         this.version.preprodvalid.normal = response.data
         console.log(response.data)
       })
-      axios.get('http://localhost:8081/overview/zotac/preprodvalid').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/zotac/preprodvalid').then((response) => {
         this.version.preprodvalid.zotac = response.data
         console.log(response.data)
       })
-      axios.get('http://localhost:8081/overview/gap/prodvalid').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/gap/prodvalid').then((response) => {
         this.version.prodvalid.normal = response.data
         console.log(response.data)
       })
-      axios.get('http://localhost:8081/overview/zotac/prodvalid').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/zotac/prodvalid').then((response) => {
         this.version.prodvalid.zotac = response.data
         console.log(response.data)
       })
-      axios.get('http://localhost:8081/overview/gap/preprod').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/gap/preprod').then((response) => {
         this.version.preprod.normal = response.data
         console.log(response.data)
       })
-      axios.get('http://localhost:8081/overview/zotac/preprod').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/zotac/preprod').then((response) => {
         this.version.preprod.zotac = response.data
         console.log(response.data)
       })
-      axios.get('http://localhost:8081/overview/gap/prod').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/gap/prod').then((response) => {
         this.version.prod.normal = response.data
         console.log(response.data)
       })
-      axios.get('http://localhost:8081/overview/zotac/prod').then((response) => {
+      axios.get('http://192.168.1.208:8081/overview/zotac/prod').then((response) => {
         this.version.prod.zotac = response.data
         console.log(response.data)
       })

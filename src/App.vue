@@ -10,7 +10,7 @@
           <div class="mdl-layout-spacer"></div>
           <!-- Navigation. We hide it in small screens. -->
           <nav class="mdl-navigation mdl-layout--large-screen-only">
-            <router-link class="mdl-navigation__link" to="/posts">Test</router-link>
+            <router-link class="mdl-navigation__link" to="/posts">Version Manager</router-link>
             <a class="mdl-navigation__link" href="">Link</a>
             <router-link class="mdl-navigation__link" to="/login">Login</router-link>
             <router-link class="mdl-navigation__link" to="/overview">Online version</router-link>
@@ -20,7 +20,7 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Yorha</span>
         <nav class="mdl-navigation">
-          <router-link class="mdl-navigation__link" to="/posts">Test</router-link>
+          <router-link class="mdl-navigation__link" to="/posts">Version Manager</router-link>
           <a class="mdl-navigation__link" href="">Link</a>
           <router-link class="mdl-navigation__link" to="/login">Login</router-link>
           <router-link class="mdl-navigation__link" to="/overview">Online version</router-link>

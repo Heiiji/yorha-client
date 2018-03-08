@@ -1,23 +1,11 @@
 import Api from '@/services/Api'
 
 export default {
-  fetchPosts () {
-    return Api().get('/posts')
+  addUser (params) {
+    return Api().post('account/login', params)
   },
 
-  addPost (params) {
-    return Api().post('posts', params)
+  LogUser (params) {
+    return Api().post('account/signup', params)
   },
-
-  updatePost (params) {
-    return Api().put('posts/' + params.id, params)
-  },
-
-  getPost (params) {
-    return Api().get('post/' + params.id)
-  },
-
-  deletePost (id) {
-    return Api().delete('posts/' + id)
-  }
 }

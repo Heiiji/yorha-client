@@ -37,6 +37,7 @@ export default {
   position: relative;
   width: 90%;
   padding: 5%;
+  margin: 5%;
 }
 .news{
   position: relative;

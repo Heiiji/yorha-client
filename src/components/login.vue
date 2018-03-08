@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import PostsService from '@/services/AccountService'
+//import AccountService from '@/services/AccountService'
 export default {
   name: 'Login',
   data () {
@@ -26,7 +26,7 @@ export default {
     }
   },
   mounted () {
-    
+
   },
   methods: {
 

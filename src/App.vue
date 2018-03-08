@@ -12,7 +12,7 @@
           <nav class="mdl-navigation mdl-layout--large-screen-only">
             <router-link class="mdl-navigation__link" to="/posts">Test</router-link>
             <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="/login">Login</a>
+            <router-link class="mdl-navigation__link" to="/login">Login</router-link>
             <router-link class="mdl-navigation__link" to="/overview">Online version</router-link>
           </nav>
         </div>
@@ -22,7 +22,7 @@
         <nav class="mdl-navigation">
           <router-link class="mdl-navigation__link" to="/posts">Test</router-link>
           <a class="mdl-navigation__link" href="">Link</a>
-          <a class="mdl-navigation__link" href="/login">Login</a>
+          <router-link class="mdl-navigation__link" to="/login">Login</router-link>
           <router-link class="mdl-navigation__link" to="/overview">Online version</router-link>
         </nav>
       </div>

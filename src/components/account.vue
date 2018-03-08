@@ -43,7 +43,7 @@
 </template>
 
 <script>
-// import AccountService from '@/services/AccountService'
+import AccountService from '@/services/AccountService'
 
 export default {
   name: 'Login',
@@ -62,6 +62,12 @@ export default {
     swap () {
       this.login = !this.login
       this.signup = !this.signup
+    },
+    Login () {
+      AccountService.LogUser(this.credential)
+    },
+    Signup () {
+      AccountService.addUser(this.credential)
     }
   }
 }

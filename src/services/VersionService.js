@@ -5,12 +5,12 @@ export default {
     return Api().get('version/' + arg)
   },
 
-  addPost (params) {
-    return Api().post('posts', params)
+  addVersion (params) {
+    return Api().post('version', params)
   },
 
-  updatePost (params) {
-    return Api().put('posts/' + params.id, params)
+  updateVersion (params) {
+    return Api().post('version/modify', params)
   },
 
   getPost (params) {

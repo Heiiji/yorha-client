@@ -3,43 +3,69 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueSession from 'vue-session'
 import Vuetify from 'vuetify'
+import Vuex from 'vuex'
 import 'vuetify/dist/vuetify.min.css'
 
+Vue.use(VueSession)
+Vue.use(Vuex)
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 
-var store = {
-  debug: true,
+const LOGIN = 'LOGIN'
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const LOGOUT = 'LOGOUT'
+
+// eslint-disable-next-line
+const store = new Vuex.Store({
   state: {
-    connected: false,
-    username: ''
+    isLogged: false,
+    user: {
+      username: '',
+      status: ''
+    },
+    test: 'youpi',
+    isLoggedIn: !!localStorage.getItem('token')
   },
-  version: {
-    preprodvalid: {
-      zotac: [],
-      normal: []
+  mutations: {
+    [LOGIN] (state) {
+      state.pending = true
     },
-    preprod: {
-      zotac: [],
-      normal: []
+    [LOGIN_SUCCESS] (state, user) {
+      Object.assign(state.user, user)
+      state.isLoggedIn = true
+      state.pending = false
     },
-    prodvalid: {
-      zotac: [],
-      normal: []
-    },
-    prod: {
-      zotac: [],
-      normal: []
+    [LOGOUT] (state) {
+      state.isLoggedIn = false
+    }
+  },
+  actions: {
+    login ({ commit }, creds) {
+      commit(LOGIN)
+      return new Promise(resolve => {
+        setTimeout(() => {
+          localStorage.setItem('token', 'JWT')
+          commit(LOGIN_SUCCESS)
+          resolve()
+        }, 1000)
+      })
+    }
+  },
+  getters: {
+    isLoggedIn: state => {
+      return state.isLoggedIn
     }
   }
-}
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store: store,
   components: { App },
   data: {
     privateState: {},
@@ -48,4 +74,4 @@ new Vue({
   methods: {
   },
   template: '<App/>'
-})
+}).$mount('#app')

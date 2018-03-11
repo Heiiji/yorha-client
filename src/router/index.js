@@ -6,6 +6,7 @@ import NewPost from '@/components/NewPost'
 import EditPost from '@/components/EditPost'
 import Overview from '@/components/Overview'
 import Account from '@/components/account'
+import Management from '@/components/Management'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/login',
       name: 'Account',
       component: Account
+    },
+    {
+      path: '/management',
+      name: 'Management',
+      component: Management
     }
   ]
 })

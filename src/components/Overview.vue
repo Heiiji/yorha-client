@@ -14,7 +14,7 @@
       <span style="white-space: pre;">{{ version.preprod.zotac }}</span>
     </div>
     <div style="position: relative; width: 40%; display: inline-block; padding: 0px; margin: 4%;">
-      <h3>GAP</h3>
+      <h3>Oblivion</h3>
       <hr/>
       <h5>PROD:valid</h5>
       <span style="white-space: pre;">{{ version.prodvalid.normal }}</span>

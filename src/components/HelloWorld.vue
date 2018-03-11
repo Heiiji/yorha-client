@@ -1,30 +1,53 @@
 <template>
   <div class="newsFeed">
-    <span>04/03/2018</span>
-    <hr/>
-    <div class="news">
-      <div style="position: absolute; background-color: blue; padding: 5px; top: 0px; right: 0px;">WIP</div>
-      <img src="https://www.jvfrance.com/wp-content/uploads/2017/11/Shadow-pc-du-futur-e1511459187569-890x593.jpg" style="height: 100px; margin-right: 10px;" />
-      <p style="display: inline-block;">[PREPROD] Shadow Box <strong>0.22.5</strong> :</p>
-      <p>Changelog : Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
-    <span>02/03/2018</span>
-    <hr/>
-    <div class="news">
-      <div style="position: absolute; background-color: red; padding: 5px; top: 0px; right: 0px;">NO GO</div>
-      <img src="https://www.jvfrance.com/wp-content/uploads/2017/11/Shadow-pc-du-futur-e1511459187569-890x593.jpg" style="height: 100px; margin-right: 10px;" />
-      <p style="display: inline-block;">[PREPROD] Shadow Box <strong>0.22.4</strong> :</p>
-      <p>Changelog : Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
+
+    <v-layout row>
+    <v-flex xs12 sm10 offset-sm1>
+      <v-card style="z-index: 20;">
+        <v-toolbar color="blue" dark>
+          <v-toolbar-title>Working Version</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-list>
+          <v-list-group
+            v-model="item.active"
+            v-for="item in versions"
+            :key="item._id"
+            style="display: block"
+            no-action
+          >
+            <v-list-tile slot="activator">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.support }} {{ item.version }} recieved : {{ item.date.replace(/T............./g, ' ') }}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-tile style="white-space: pre;">{{ item.changelog }}</v-tile>
+            <img :src="item.picture" style="width: 100px; position: absolute; right: 2px; top: 2px;"/>
+          </v-list-group>
+        </v-list>
+      </v-card>
+    </v-flex>
+  </v-layout>
   </div>
 </template>
 
 <script>
+import VersionService from '@/services/VersionService'
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      versions: []
+    }
+  },
+  mounted () {
+    this.getVersion('current')
+  },
+  methods: {
+    async getVersion (arg) {
+      const response = await VersionService.fetchPosts(arg)
+      this.versions = response.data.versions
     }
   }
 }

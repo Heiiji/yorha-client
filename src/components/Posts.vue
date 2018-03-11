@@ -21,12 +21,12 @@
           <v-btn flat color="purple">Set as finnished</v-btn>
           <v-spacer></v-spacer>
           <v-btn icon @click.native="show = !show">
-            <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+            <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
           </v-btn>
         </v-card-actions>
         <v-slide-y-transition>
-          <v-card-text v-show="show">
-            Changelog : <br/>
+          <v-card-text style="white-space: pre; text-align: left;" v-show="show">
+            Changelog :
              {{ value.changelog }}
           </v-card-text>
         </v-slide-y-transition>
@@ -126,6 +126,7 @@ export default {
         const response = VersionService.updateVersion(this.editeable)
         console.log(response)
       }
+      this.$router.push('/')
     },
     Edition (version) {
       this.edition = true

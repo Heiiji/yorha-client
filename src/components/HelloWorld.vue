@@ -28,6 +28,17 @@
       </v-card>
     </v-flex>
   </v-layout>
+<br/>
+  <v-layout row>
+  <v-flex xs12 sm10 offset-sm1>
+    <v-card style="z-index: 20;">
+      <v-toolbar color="blue" dark>
+        <v-toolbar-title>Actu</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+    </v-card>
+  </v-flex>
+</v-layout>
   </div>
 </template>
 

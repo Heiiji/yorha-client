@@ -1,47 +1,81 @@
 <template>
   <div>
-    <br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/>
       <div v-bind:class="{ 'current' : login, 'invisible' : signup }">
-        <div style="z-index: 20;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" v-model="credential.mail" type="text" id="Mail1">
-          <label class="mdl-textfield__label" for="Mail1">Mail</label>
-        </div>
-        <div style="z-index: 20;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" v-model="credential.passw" type="password" id="passw1">
-          <label class="mdl-textfield__label" for="passw1">Password</label>
-        </div>
+        <v-flex xs15>
+        <v-text-field
+            style="z-index: 20;"
+            name="Mail1"
+            label="Mail"
+            id="Mail1"
+            v-model="credential.mail"
+          ></v-text-field>
+        </v-flex>
+          <v-flex xs15>
+          <v-text-field
+              style="z-index: 20;"
+              name="passw1"
+              label="password"
+              id="passw1"
+              min="8"
+              :append-icon="e1 ? 'visibility' : 'visibility_off'"
+              :append-icon-cb="() => (e1 = !e1)"
+              :type="e1 ? 'password' : 'text'"
+              v-model="credential.passw"
+            ></v-text-field>
+          </v-flex>
         <br/><br/>
-        <button style="z-index: 20;" v-on:click="Login()" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-          Login
-        </button>
-        <button style="z-index: 20;" v-on:click="swap()" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-          Signup
-        </button>
+        <v-btn style="z-index: 20;" v-on:click="swap()" color="blue">Register</v-btn>
+        <v-btn style="z-index: 20;" v-on:click="Login()" color="blue">Login</v-btn>
       </div>
       <div  v-bind:class="{ 'current' : signup, 'invisible' : login }">
-        <div style="z-index: 20;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" v-model="credential.username" type="text" id="username">
-          <label class="mdl-textfield__label" for="Mail">username</label>
-        </div>
-          <div style="z-index: 20;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" v-model="credential.mail" type="email" id="Mail">
-            <label class="mdl-textfield__label" for="Mail">Mail</label>
-          </div><br/>
-        <div style="z-index: 20;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" v-model="credential.passw" type="password" id="passw">
-          <label class="mdl-textfield__label" for="passw">Password</label>
-        </div>
-        <div style="z-index: 20;" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" v-model="credential.passwc" type="password" id="passwc">
-          <label class="mdl-textfield__label" for="passwc">Confirmation</label>
-        </div>
+        <v-flex xs15>
+        <v-text-field
+            style="z-index: 20;"
+            name="username"
+            label="username"
+            id="username"
+            v-model="credential.username"
+          ></v-text-field>
+        </v-flex>
+          <v-flex xs15>
+          <v-text-field
+              style="z-index: 20;"
+              name="Mail"
+              label="Mail"
+              id="Mail"
+              v-model="credential.mail"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs15>
+          <v-text-field
+              style="z-index: 20;"
+              name="passw"
+              label="password"
+              id="passw"
+              min="8"
+              :append-icon="e1 ? 'visibility' : 'visibility_off'"
+              :append-icon-cb="() => (e1 = !e1)"
+              :type="e1 ? 'password' : 'text'"
+              v-model="credential.passw"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs15>
+          <v-text-field
+              style="z-index: 20;"
+              name="passwc"
+              label="confirm password"
+              id="passwc"
+              min="8"
+              :append-icon="e2 ? 'visibility' : 'visibility_off'"
+              :append-icon-cb="() => (e2 = !e2)"
+              :type="e2 ? 'password' : 'text'"
+              v-model="credential.passwc"
+            ></v-text-field>
+          </v-flex>
         <br/><br/>
-        <button style="z-index: 20;" v-on:click="Signup()" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-          Register
-        </button>
-        <button style="z-index: 20;" v-on:click="swap()" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-          Login
-        </button>
+        <v-btn style="z-index: 20;" v-on:click="Signup()" color="blue">Register</v-btn>
+        <v-btn style="z-index: 20;" v-on:click="swap()" color="blue">Login</v-btn>
       </div>
   </div>
 </template>
@@ -53,6 +87,8 @@ export default {
   name: 'Login',
   data () {
     return {
+      e1: true,
+      e2: true,
       test: '',
       message: 'none',
       login: true,

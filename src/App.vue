@@ -5,63 +5,66 @@
       :clipped="$vuetify.breakpoint.lgAndUp"
       app
       v-model="drawer"
+      style="z-index: 30;"
     >
       <v-list dense>
         <template v-for="item in items">
-          <v-layout
-            row
-            v-if="item.heading"
-            align-center
-            :key="item.heading"
-          >
-            <v-flex xs6>
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
-            </v-flex>
-            <v-flex xs6 class="text-xs-center">
-              <a href="#!" class="body-2 black--text">EDIT</a>
-            </v-flex>
-          </v-layout>
-          <v-list-group
-            v-else-if="item.children"
-            v-model="item.model"
-            :key="item.text"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
-          >
-            <v-list-tile slot="activator">
+          <span v-if="item.display" :key="item.display" >
+            <v-layout
+              row
+              v-if="item.heading"
+              align-center
+              :key="item.heading"
+            >
+              <v-flex xs6>
+                <v-subheader v-if="item.heading">
+                  {{ item.heading }}
+                </v-subheader>
+              </v-flex>
+              <v-flex xs6 class="text-xs-center">
+                <a href="#!" class="body-2 black--text">EDIT</a>
+              </v-flex>
+            </v-layout>
+            <v-list-group
+              v-else-if="item.children"
+              v-model="item.model"
+              :key="item.text"
+              :prepend-icon="item.model ? item.icon : item['icon-alt']"
+              append-icon=""
+            >
+              <v-list-tile slot="activator">
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    {{ item.text }}
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile
+                v-for="(child, i) in item.children"
+                :key="i"
+
+              >
+                <v-list-tile-action v-if="child.icon">
+                  <v-icon>{{ child.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    {{ child.text }}
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list-group>
+            <v-list-tile v-else @click="redirect(item.link)" :key="item.text">
+              <v-list-tile-action>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-title>
                   {{ item.text }}
                 </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile
-              v-for="(child, i) in item.children"
-              :key="i"
-
-            >
-              <v-list-tile-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ child.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list-group>
-          <v-list-tile v-else @click="redirect(item.link)" :key="item.text">
-            <v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>
-                {{ item.text }}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          </span>
         </template>
       </v-list>
     </v-navigation-drawer>
@@ -108,12 +111,13 @@ export default {
   data: () => ({
     user: [],
     dialog: false,
-    drawer: null,
+    drawer: false,
     items: [
-      { icon: 'contacts', text: 'Version Manager', link: '/posts' },
-      { icon: 'history', text: 'Online version', link: '/overview' },
-      { icon: 'content_copy', text: 'Management', link: '/management' },
+      { display: true, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
+      { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
+      { display: true, icon: 'contacts', text: 'Management', link: '/management' },
       {
+        display: true,
         icon: 'keyboard_arrow_up',
         'icon-alt': 'keyboard_arrow_down',
         text: 'More',
@@ -121,19 +125,29 @@ export default {
         children: [
           { text: 'Import' },
           { text: 'Export' },
-          { text: 'Print' },
-          { text: 'Undo changes' },
-          { text: 'Other contacts' }
+          { text: 'Print' }
         ]
       },
-      { icon: 'settings', text: 'Settings' },
-      { icon: 'chat_bubble', text: 'Send feedback' },
-      { icon: 'phonelink', text: 'App downloads' }
+      { display: true, icon: 'contacts', text: 'Login', link: '/login' },
+      { display: true, icon: 'settings', text: 'Settings' },
+      { display: true, icon: 'history', text: 'App downloads' }
     ]
   }),
   methods: {
     redirect (link) {
       this.$router.push(link)
+    },
+    checkUser () {
+      this.user = this.$store.state.user
+    }
+  },
+  mounted () {
+    this.checkUser()
+    if (!this.user.status) {
+      this.items[0].display = false
+      this.items[2].display = false
+    } else {
+      this.items[4].display = false
     }
   },
   props: {

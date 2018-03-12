@@ -22,7 +22,9 @@
               </v-list-tile-content>
             </v-list-tile>
             <v-tile style="white-space: pre;">{{ item.changelog }}</v-tile>
-            <img :src="item.picture" style="width: 100px; position: absolute; right: 2px; top: 2px;"/>
+            <v-avatar style="position: absolute; right: 2px; top: 2px;" size="50px" tile>
+              <img :src="item.picture" style=" border-radius: 25px"/>
+            </v-avatar>
           </v-list-group>
         </v-list>
       </v-card>

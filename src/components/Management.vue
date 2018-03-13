@@ -1,8 +1,9 @@
 <template>
   <div class="posts">
+    <br/><br/><br/>
     <h1>User Management</h1>
     <br/><br/>
-    <h3>Users Not Activated yet</h3>
+    <h3>Users Not Activated yet : </h3>
 
     <v-expansion-panel style="z-index: 20;">
       <v-expansion-panel-content
@@ -38,6 +39,14 @@
           >
             {{ user.status }}
           </v-flex>
+          <v-flex
+            class="grey--text"
+            ellipsis
+            v-if="user.work"
+            hidden-sm-and-down
+          >
+            {{ user.work }}
+          </v-flex>
           <v-menu bottom left>
             <v-btn icon slot="activator" dark>
               <v-icon>more_vert</v-icon>
@@ -68,11 +77,10 @@ export default {
         status: ''
       },
       rangs: [
-        { title: 'Deactivated' },
-        { title: 'Noob' },
-        { title: 'experimented' },
-        { title: 'Hero' },
-        { title: 'God' }
+        { title: 'QA' },
+        { title: 'Proximity' },
+        { title: 'R&D' },
+        { title: 'Dev' }
       ]
     }
   },

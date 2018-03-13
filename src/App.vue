@@ -93,10 +93,18 @@
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
-      <v-btn  @click="redirect('/login')" icon large>
+      <v-btn v-if="!user.status" @click="redirect('/login')" icon large>
         <v-avatar size="32px" tile>
           <img
             src="https://vuetifyjs.com/static/doc-images/logo.svg"
+            alt="Vuetify"
+          >
+        </v-avatar>
+      </v-btn>
+      <v-btn v-if="user.status && user.status != 'deactivated'" @click="redirect('/profil')" icon large>
+        <v-avatar size="32px" tile>
+          <img
+            src="https://yt3.ggpht.com/-uGYJvczbuow/AAAAAAAAAAI/AAAAAAAAAAA/VQbgt1FitYs/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"
             alt="Vuetify"
           >
         </v-avatar>
@@ -138,17 +146,21 @@ export default {
       this.$router.push(link)
     },
     checkUser () {
+      // check on router change for refresh
       this.user = this.$store.state.user
+      this.items[0].display = false
+      this.items[2].display = false
+      if (this.user.status) {
+        if (this.user.work === 'QA') {
+          this.items[2].display = true
+          this.items[0].display = false
+        }
+        this.items[4].display = false
+      }
     }
   },
   mounted () {
     this.checkUser()
-    if (!this.user.status) {
-      this.items[0].display = false
-      this.items[2].display = false
-    } else {
-      this.items[4].display = false
-    }
   },
   props: {
     source: String

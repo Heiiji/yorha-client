@@ -1,8 +1,9 @@
 <template>
   <div class="posts">
+  <br/><br/>
     <h1>Version Manager</h1>
     <br/><br/>
-    <h3>Version On Rail</h3>
+    <h3>{{ VersionDisplay }}</h3>
       <v-card v-for="value in versions" :key="value.version" style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
         <v-card-media
           :src="value.picture"
@@ -11,14 +12,14 @@
         </v-card-media>
         <v-card-title primary-title>
           <div>
-            <div class="headline">{{ value.support }} {{ value.version }}</div>
-            <span class="grey--text">{{ value.state }} : {{ value.status }} : tested by {{ value.tester }}</span>
+            <div class="headline">{{ value.support }} <strong>{{ value.version }}</strong></div>
+            <span class="grey--text">{{ value.state }} : <span :class="value.status">{{ value.status }}</span> : tested by {{ value.tester }}</span>
           </div>
         </v-card-title>
-        <v-card-actions>
+        <v-card-actions v-if="VersionDisplay == 'Versions On Rail'">
           <v-btn v-on:click="Edition(value)" flat>Edit</v-btn>
           <v-btn flat color="purple">Test it</v-btn>
-          <v-btn flat color="purple">Set as finnished</v-btn>
+          <v-btn flat color="purple" @click="SetFinnished = true; Validator = value._id">Set as finnished</v-btn>
           <v-spacer></v-spacer>
           <v-btn icon @click.native="show = !show">
             <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
@@ -82,8 +83,35 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog style="z-index:25;" v-model="SetFinnished" scrollable max-width="1000px">
+      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+        <v-card-title style="color: blue;">Result :</v-card-title>
+        <v-divider></v-divider>
+          <v-flex xs8>
+            <v-text-field v-model="finnished.score"
+              name="score"
+              label="Version score"
+              id="score"
+              style="width: 990px; margin: 5px;"
+            ></v-text-field>
+            <v-text-field v-model="finnished.status"
+              name="status"
+              label="status (GO, NOGO,...)"
+              id="status"
+              style="width: 990px; margin: 5px;"
+            ></v-text-field>
+            <label>PDF result : </label><input type="file" multiple :name="uploadFieldName" class="input-file">
+          </v-flex>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false; this.edition = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="SetAsFinnished(Validator)">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-layout>
-    <v-btn style="z-index: 20;" small>Archives</v-btn>
+    <v-btn @click="getVersion('old');" style="z-index: 20;" small>Archives</v-btn>
   </div>
 </template>
 
@@ -95,6 +123,7 @@ export default {
   data () {
     return {
       edition: false,
+      Validator: '',
       versions: [],
       editeable: {
         device: '',
@@ -105,9 +134,16 @@ export default {
         tester: 'none',
         id: 0
       },
+      finnished: {
+        id: '',
+        score: 0.01,
+        status: ''
+      },
       show: false,
       dialogm1: '',
-      dialog: false
+      VersionDisplay: 'Version On Rail',
+      dialog: false,
+      SetFinnished: false
     }
   },
   mounted () {
@@ -115,6 +151,11 @@ export default {
   },
   methods: {
     async getVersion (arg) {
+      if (arg === 'all') {
+        this.VersionDisplay = 'Archives'
+      } else {
+        this.VersionDisplay = 'Versions On Rail'
+      }
       const response = await VersionService.fetchPosts(arg)
       this.versions = response.data.versions
     },
@@ -138,12 +179,23 @@ export default {
       this.editeable.id = version._id
       this.editeable.picture = version.picture
       this.dialog = true
+    },
+    SetAsFinnished (id) {
+      this.finnished.id = id
+      const response = VersionService.SetAsFinnished(this.finnished)
+      console.log(response)
     }
   }
 }
 </script>
 
 <style type="text/css">
+.GO {
+  color: green;
+}
+.WIP {
+  color: blue;
+}
 .table-wrap {
   width: 60%;
   margin: 0 auto;
@@ -176,5 +228,8 @@ a.add_post_link {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
+}
+.posts {
+  margin: 30px;
 }
 </style>

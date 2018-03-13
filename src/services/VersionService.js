@@ -13,6 +13,10 @@ export default {
     return Api().post('version/modify', params)
   },
 
+  SetAsFinnished (params) {
+    return Api().post('version/finnished', params)
+  },
+
   getPost (params) {
     return Api().get('post/' + params.id)
   },

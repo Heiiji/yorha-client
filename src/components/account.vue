@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="text-align: center">
     <br/><br/><br/><br/><br/><br/>
       <div v-bind:class="{ 'current' : login, 'invisible' : signup }">
         <v-flex xs15>

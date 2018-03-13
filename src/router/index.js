@@ -7,6 +7,8 @@ import EditPost from '@/components/EditPost'
 import Overview from '@/components/Overview'
 import Account from '@/components/account'
 import Management from '@/components/Management'
+import Profil from '@/components/profil'
+import Changelog from '@/components/changelog'
 
 Vue.use(Router)
 
@@ -16,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/Profil',
+      name: 'Profil',
+      component: Profil
     },
     {
       path: '/overview',
@@ -46,6 +53,11 @@ export default new Router({
       path: '/management',
       name: 'Management',
       component: Management
+    },
+    {
+      path: '/changelog',
+      name: 'Changelog',
+      component: Changelog
     }
   ]
 })

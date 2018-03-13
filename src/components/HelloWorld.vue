@@ -18,7 +18,7 @@
           >
             <v-list-tile slot="activator">
               <v-list-tile-content>
-                <v-list-tile-title>{{ item.support }} {{ item.version }} recieved : {{ item.date.replace(/T............./g, ' ') }}</v-list-tile-title>
+                <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> recieved : {{ item.date.replace(/T............./g, ' ') }} => <span :class="item.status" >{{ item.status }}</span></v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <v-tile style="white-space: pre;">{{ item.changelog }}</v-tile>
@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted () {
-    this.getVersion('current')
+    this.getVersion('all')
   },
   methods: {
     async getVersion (arg) {
@@ -68,6 +68,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.GO {
+  color: green;
+}
+.WIP {
+  color: blue;
+}
 .newsFeed{
   display: block;
   position: relative;

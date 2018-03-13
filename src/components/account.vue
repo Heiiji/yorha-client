@@ -122,6 +122,7 @@ export default {
         return ('error')
       }
       AccountService.addUser(this.credential)
+      this.$router.push('/')
     }
   }
 }

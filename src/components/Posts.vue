@@ -18,7 +18,7 @@
         </v-card-title>
         <v-card-actions v-if="VersionDisplay == 'Versions On Rail'">
           <v-btn v-on:click="Edition(value)" flat>Edit</v-btn>
-          <v-btn flat color="purple">Test it</v-btn>
+          <v-btn flat color="purple" @click="GoTest(value.path)">Test it</v-btn>
           <v-btn flat color="purple" @click="SetFinnished = true; Validator = value._id">Set as finnished</v-btn>
           <v-spacer></v-spacer>
           <v-btn icon @click.native="show = !show">
@@ -179,6 +179,9 @@ export default {
       this.editeable.id = version._id
       this.editeable.picture = version.picture
       this.dialog = true
+    },
+    GoTest (url) {
+      window.location.assign(url)
     },
     SetAsFinnished (id) {
       this.finnished.id = id

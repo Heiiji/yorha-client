@@ -124,6 +124,9 @@ export default {
       { display: true, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
       { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
       { display: true, icon: 'contacts', text: 'Management', link: '/management' },
+      { display: true, icon: 'contacts', text: 'Login', link: '/login' },
+      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' },
+      { display: true, icon: 'history', text: 'App downloads' },
       {
         display: true,
         icon: 'keyboard_arrow_up',
@@ -135,14 +138,12 @@ export default {
           { text: 'Export' },
           { text: 'Print' }
         ]
-      },
-      { display: true, icon: 'contacts', text: 'Login', link: '/login' },
-      { display: true, icon: 'settings', text: 'Settings' },
-      { display: true, icon: 'history', text: 'App downloads' }
+      }
     ]
   }),
   methods: {
     redirect (link) {
+      this.drawer = false
       this.$router.push(link)
     },
     checkUser () {
@@ -155,7 +156,7 @@ export default {
           this.items[2].display = true
           this.items[0].display = false
         }
-        this.items[4].display = false
+        this.items[3].display = false
       }
     }
   },

@@ -83,13 +83,10 @@
         flat
         solo-inverted
         prepend-icon="search"
-        label="Search"
+        label="Search Users"
         class="hidden-sm-and-down"
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
       <v-btn icon>
         <v-icon>notifications</v-icon>
       </v-btn>
@@ -125,8 +122,7 @@ export default {
       { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
       { display: true, icon: 'contacts', text: 'Management', link: '/management' },
       { display: true, icon: 'contacts', text: 'Login', link: '/login' },
-      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' },
-      { display: true, icon: 'history', text: 'App downloads' },
+      { display: true, icon: 'history', text: 'App downloads', link: '/downloads' },
       {
         display: true,
         icon: 'keyboard_arrow_up',
@@ -138,7 +134,8 @@ export default {
           { text: 'Export' },
           { text: 'Print' }
         ]
-      }
+      },
+      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' }
     ]
   }),
   methods: {

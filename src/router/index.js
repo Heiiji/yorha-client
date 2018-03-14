@@ -9,6 +9,7 @@ import Account from '@/components/account'
 import Management from '@/components/Management'
 import Profil from '@/components/profil'
 import Changelog from '@/components/changelog'
+import Downloads from '@/components/downloads'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
       path: '/login',
       name: 'Account',
       component: Account
+    },
+    {
+      path: '/downloads',
+      name: 'Downloads',
+      component: Downloads
     },
     {
       path: '/management',

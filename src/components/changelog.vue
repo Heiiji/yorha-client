@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 30px;">
+  <div style="margin: 30px; margin-left: 200px;">
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
@@ -8,7 +8,11 @@
       - Ajout de la page de changelog<br/>
       - Button "test it" is linked<br/>
       - Auto hide on panel navigation<br/>
-      - Redirect on signup
+      - Redirect on signup<br/>
+      - refactoring de la homepage<br/>
+      - Ajout de la page de téléchargement de versions <br/>
+      - Modification de la string de recherche en haut de pages et changement de l'ordre des menus<br/>
+      - delete du bouton d'apps a la google
     </p>
   </div>
 </template>

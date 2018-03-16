@@ -3,6 +3,15 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.0.2 :</h4>
+    <p>
+      - Add working place display on side menu<br />
+      - Fix refresh of side menu<br />
+      - Add inventory on menu<br />
+      - Little fix for conflict<br />
+      - Preparation for presentation <br/>
+    </p>
+    <br/><br/>
     <h4>0.0.1 :</h4>
     <p>
       - Ajout de la page de changelog<br/>

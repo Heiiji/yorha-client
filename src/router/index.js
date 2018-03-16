@@ -10,6 +10,7 @@ import Management from '@/components/Management'
 import Profil from '@/components/profil'
 import Changelog from '@/components/changelog'
 import Downloads from '@/components/downloads'
+import Mattermost from '@/components/mattermost'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/changelog',
       name: 'Changelog',
       component: Changelog
+    },
+    {
+      path: '/mattermost',
+      name: 'Mattermost',
+      component: Mattermost
     }
   ]
 })

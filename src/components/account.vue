@@ -113,10 +113,12 @@ export default {
     Login () {
       AccountService.LogUser(this.credential).then((response) => {
         this.$store.commit('LOGIN_SUCCESS', response.data)
+        this.$parent.$emit('refresh', this)
         this.$router.push('/')
       })
     },
     Signup () {
+      console.log(this.credential)
       if (this.passw !== this.passwc) {
         this.message = 'Passwords doesn\'t correspond'
         return ('error')

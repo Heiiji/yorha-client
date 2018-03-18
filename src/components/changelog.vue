@@ -9,7 +9,8 @@
       - add side menu shadow <br/>
       - add home page on login <br/>
       - remplace standar login with google login <br/>
-      - update right management
+      - update right management <br/>
+      - refactoring of management page
     </p>
     <br/><br/>
     <h4>0.0.2 :</h4>

@@ -209,7 +209,6 @@ export default {
       this.$store.GoogleToken = googleUser
       Api().post('/account', {
         username: googleUser.getBasicProfile().getName(),
-        GoogleID: googleUser.getBasicProfile().getId(),
         mail: googleUser.getBasicProfile().getEmail()
       }).then((response) => {
         console.log(response)

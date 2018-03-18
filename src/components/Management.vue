@@ -2,8 +2,7 @@
   <div class="posts">
     <br/><br/><br/>
     <h1>User Management</h1>
-    <br/><br/>
-    <h3>Users Not Activated yet : </h3>
+    <br/>
 
     <v-expansion-panel style="z-index: 20;">
       <v-expansion-panel-content
@@ -85,7 +84,7 @@ export default {
     }
   },
   mounted () {
-    this.getUsersByStatus('deactivated')
+    this.getUsersByStatus('noob')
   },
   methods: {
     async getUsersByStatus (arg) {

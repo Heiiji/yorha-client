@@ -4,7 +4,7 @@
                          :clipped="$vuetify.breakpoint.lgAndUp"
                          app
                          v-model="drawer"
-                         style="z-index: 30;">
+                         style="z-index: 30; box-shadow: 1px 0px 1px #aaa;">
       <v-list dense>
         <template v-for="item in items">
           <span v-if="item.display" :key="item.display">
@@ -60,6 +60,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="blue darken-3"
+               style="z-index: 20;"
                dark
                app
                :clipped-left="$vuetify.breakpoint.lgAndUp"
@@ -110,18 +111,18 @@
           <span slot="badge">2</span>
         </v-badge>
       </a>
-      <v-btn v-if="!user.status" @click="redirect('/login')" icon large>
+      <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
-          <img src="https://vuetifyjs.com/static/doc-images/logo.svg"
-               alt="Profil">
+          <img style="border-radius: 20px;" :src="user.path" alt="Profil">
         </v-avatar>
       </v-btn>
-      <v-btn v-if="user.status && user.status != 'deactivated'" @click="redirect('/profil')" icon large>
-        <v-avatar size="32px" tile>
-          <img src="https://yt3.ggpht.com/-uGYJvczbuow/AAAAAAAAAAI/AAAAAAAAAAA/VQbgt1FitYs/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"
-               alt="Profil">
-        </v-avatar>
-      </v-btn>
+      <g-signin-button
+        v-else
+        :params="googleSignInParams"
+        @success="onSignInSuccess"
+        @error="onSignInError">
+        Sign in
+      </g-signin-button>
     </v-toolbar>
     <br/><br/><br/>
     <v-tabs v-model="active"
@@ -154,17 +155,35 @@
   </v-app>
 </template>
 
+<style>
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  margin-left: 15px;
+  box-shadow: 0 3px 0 #0f69ff;
+}
+</style>
+
 <script>
+import Api from '@/services/Api'
+
 export default {
   data: () => ({
     user: [],
+    signed: false,
+    googleSignInParams: {
+      client_id: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com'
+    },
     dialog: false,
     drawer: false,
     items: [
-      { display: true, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
+      { display: false, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
       { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
-      { display: true, icon: 'contacts', text: 'Management', link: '/management' },
-      { display: true, icon: 'contacts', text: 'Login', link: '/login' },
+      { display: false, icon: 'contacts', text: 'Management', link: '/management' },
       { display: true, icon: 'history', text: 'App downloads', link: '/downloads' },
       {
         display: true,
@@ -184,6 +203,26 @@ export default {
     ]
   }),
   methods: {
+    onSignInSuccess (googleUser) {
+      // See https://developers.google.com/identity/sign-in/web/reference#users
+      console.log(googleUser.getBasicProfile())
+      this.$store.GoogleToken = googleUser
+      Api().post('/account', {
+        username: googleUser.getBasicProfile().getName(),
+        GoogleID: googleUser.getBasicProfile().getId(),
+        mail: googleUser.getBasicProfile().getEmail()
+      }).then((response) => {
+        console.log(response)
+        this.user = response.data
+        this.$store.state.user = response.data
+        this.checkUser()
+      })
+      this.$router.push('/home')
+    },
+    onSignInError (error) {
+      // `error` contains any error occurred.
+      console.log('OH NOES', error)
+    },
     redirect (link) {
       this.drawer = false
       this.$router.push(link)
@@ -191,17 +230,14 @@ export default {
     checkUser () {
       // check on router change for refresh
       console.log('user check()')
-      this.user = this.$store.state.user
-      this.items[0].display = false
-      this.items[2].display = false
-      if (this.user.status) {
+      if (this.$store.GoogleToken) {
+        this.user.path = this.$store.GoogleToken.getBasicProfile().getImageUrl()
+        this.signed = true
+        this.items[3].display = false
         if (this.user.work === 'QA') {
-          this.items[2].display = true
           this.items[0].display = true
         }
-        this.items[3].display = false
-        this.items[7].display = true
-        this.items[7].text = this.user.work
+        this.items[2].display = true
       }
     }
   },

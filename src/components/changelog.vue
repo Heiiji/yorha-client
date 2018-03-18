@@ -3,6 +3,15 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.0.3 :</h4>
+    <p>
+      - Home menu overflow fix<br />
+      - add side menu shadow <br/>
+      - add home page on login <br/>
+      - remplace standar login with google login <br/>
+      - update right management
+    </p>
+    <br/><br/>
     <h4>0.0.2 :</h4>
     <p>
       - Add working place display on side menu<br />

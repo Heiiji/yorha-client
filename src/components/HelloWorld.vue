@@ -14,6 +14,11 @@
           <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
             <v-card-text class="px-0"><strong>Datacenter Burning :</strong> Data 4 a brulé dans un grand feu de joie. L'équipe a cependant super bien géré la période de crise. </v-card-text>
           </v-card>
+          <v-divider></v-divider>
+          <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+              <v-card-text class="px-0" style="color:rgb(200, 200, 60);"><strong>Windows Update :</strong> La Spring creator update a été publiée, attention a la casse ! </v-card-text>
+          </v-card>
+          <v-divider></v-divider>
         </v-flex>
         <v-flex xs4>
           <v-card dark color="primary">
@@ -23,34 +28,7 @@
             <v-list-group v-model="item.active"
                           v-for="item in versions"
                           :key="item._id"
-                          style="display: block"
-                          no-action>
-              <v-list-tile slot="activator">
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> recieved : {{ item.date.replace(/T............./g, ' ') }} => <span :class="item.status">{{ item.status }}</span></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <p style="white-space: pre; text-align: left;">{{ item.changelog }}</p>
-              <v-avatar style="position: absolute; right: 2px; top: 2px;" size="50px" tile>
-                <img :src="item.picture" style=" border-radius: 25px" />
-              </v-avatar>
-            </v-list-group>
-          </v-list>
-        </v-flex>
-        <v-flex style="opacity: 0;" xs8>
-          <v-card dark color="secondary">
-            <v-card-text class="px-0">Actu</v-card-text>
-          </v-card>
-        </v-flex>
-        <v-flex xs4>
-          <v-card dark color="primary">
-            <v-card-text class="px-0">Passed version</v-card-text>
-          </v-card>
-          <v-list>
-            <v-list-group v-model="item.active"
-                          v-for="item in passed"
-                          :key="item._id"
-                          style="display: block"
+                          style="display: block;  overflow: hidden;"
                           no-action>
               <v-list-tile slot="activator">
                 <v-list-tile-content>
@@ -79,6 +57,28 @@
             <label style="color: green; position: absolute; top: 10px; right: 10px;">89 up</label>
             <label style="color: red; position: absolute; bottom: 10px; right: 10px;">2 down</label>
           </v-card>
+        </v-flex>
+        <v-flex xs4>
+          <v-card dark color="primary">
+            <v-card-text class="px-0">Passed version</v-card-text>
+          </v-card>
+          <v-list>
+            <v-list-group v-model="item.active"
+                          v-for="item in passed"
+                          :key="item._id"
+                          style="display: block;  overflow: hidden;"
+                          no-action>
+              <v-list-tile slot="activator">
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> recieved : {{ item.date.replace(/T............./g, ' ') }} => <span :class="item.status">{{ item.status }}</span></v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <p style="white-space: pre; text-align: left;">{{ item.changelog }}</p>
+              <v-avatar style="position: absolute; right: 2px; top: 2px;" size="50px" tile>
+                <img :src="item.picture" style=" border-radius: 25px" />
+              </v-avatar>
+            </v-list-group>
+          </v-list>
         </v-flex>
       </v-layout>
   </v-container>
@@ -114,6 +114,9 @@ export default {
 <style scoped>
 .GO {
   color: green;
+}
+.NOGO {
+  color: red;
 }
 .WIP {
   color: blue;

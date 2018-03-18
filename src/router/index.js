@@ -11,6 +11,7 @@ import Profil from '@/components/profil'
 import Changelog from '@/components/changelog'
 import Downloads from '@/components/downloads'
 import Mattermost from '@/components/mattermost'
+import Home from '@/components/home'
 
 Vue.use(Router)
 
@@ -20,6 +21,11 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/Home',
+      name: 'Home',
+      component: Home
     },
     {
       path: '/Profil',

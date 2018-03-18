@@ -7,10 +7,12 @@ import VueSession from 'vue-session'
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 import 'vuetify/dist/vuetify.min.css'
+import GSignInButton from 'vue-google-signin-button'
 
 Vue.use(VueSession)
 Vue.use(Vuex)
 Vue.use(Vuetify)
+Vue.use(GSignInButton)
 
 Vue.config.productionTip = false
 
@@ -22,6 +24,7 @@ const LOGOUT = 'LOGOUT'
 const store = new Vuex.Store({
   state: {
     isLogged: false,
+    GoogleToken: [],
     user: {
       username: '',
       status: ''

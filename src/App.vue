@@ -74,7 +74,7 @@
                     prepend-icon="search"
                     label="Search Users"
                     class="hidden-sm-and-down"></v-text-field>
-      <a href="http://192.168.1.208:8065/blade" target="_blank" style="text-decoration:none; color: white; padding: 10px; padding-left: 50px; display: inline-block;">
+      <a href="http://vps526554.ovh.net:8065" target="_blank" style="text-decoration:none; color: white; padding: 10px; padding-left: 50px; display: inline-block;">
         MATTERMOST
       </a>
       <v-spacer></v-spacer>

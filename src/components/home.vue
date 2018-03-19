@@ -80,7 +80,7 @@ export default {
   },
   mounted () {
     this.updateTime()
-    unsplash.photos.getRandomPhoto({width: '1920', height: '1080', query: 'landscape'}).then((response) => {
+    unsplash.photos.getRandomPhoto({width: '1920', height: '1080', query: 'cat'}).then((response) => {
       response.json().then((lots) => {
         console.log(lots)
         this.image = lots.urls.full

@@ -118,6 +118,7 @@
       </v-btn>
       <g-signin-button
         v-else
+        style="cursor: pointer;"
         :params="googleSignInParams"
         @success="onSignInSuccess"
         @error="onSignInError">

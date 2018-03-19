@@ -6,7 +6,16 @@
     username : {{ user.username }}<br/>
     workplace : {{ user.work }}<br/>
     website rank : {{ user.status }}<br/>
-    mail : {{ user.mail }}
+    mail : {{ user.mail }} <br/>
+    Home Background theme :
+    <v-flex xs3>
+        <v-select
+          :items="background"
+          v-model="e1"
+          label="Theme"
+          single-line
+        ></v-select>
+      </v-flex>
   </div>
 </template>
 
@@ -18,7 +27,13 @@ export default {
   data () {
     return {
       edition: false,
-      user: []
+      user: [],
+      e1: null,
+      background: [
+        { text: 'Landscape' },
+        { text: 'Cat' },
+        { text: 'Urban' }
+      ]
     }
   },
   mounted () {

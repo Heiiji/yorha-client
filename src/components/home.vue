@@ -23,8 +23,8 @@ p {
   color: #ffffff;
   text-align: center;
   position: absolute;
-  left: 50%;
-  top: 50%;
+  bottom: 1%;
+  left: 15%;
   background-color: rgba(50,50,50, 0.3);
   padding: 30px;
   transform: translate(-50%, -50%);
@@ -82,7 +82,6 @@ export default {
     this.updateTime()
     unsplash.photos.getRandomPhoto({width: '1920', height: '1080', query: 'cat'}).then((response) => {
       response.json().then((lots) => {
-        console.log(lots)
         this.image = lots.urls.full
       })
     })

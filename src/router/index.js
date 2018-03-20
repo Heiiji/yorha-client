@@ -12,6 +12,7 @@ import Changelog from '@/components/changelog'
 import Downloads from '@/components/downloads'
 import Mattermost from '@/components/mattermost'
 import Home from '@/components/home'
+import Displayer from '@/components/displayer'
 
 Vue.use(Router)
 
@@ -31,6 +32,11 @@ export default new Router({
       path: '/Profil',
       name: 'Profil',
       component: Profil
+    },
+    {
+      path: '/version/id/:id',
+      name: 'Displayer',
+      component: Displayer
     },
     {
       path: '/overview',

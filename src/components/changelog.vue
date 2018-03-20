@@ -3,6 +3,12 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.0.4 :</h4>
+    <p>
+      - Hide notification icon when isn't logged <br/>
+      - rework home graphic
+    </p>
+    <br/><br/>
     <h4>0.0.3 :</h4>
     <p>
       - Home menu overflow fix<br />

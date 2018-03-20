@@ -17,8 +17,16 @@ export default {
     return Api().post('version/finnished', params)
   },
 
+  getById (arg) {
+    return Api().get('version/id/' + arg)
+  },
+
   getPost (params) {
     return Api().get('post/' + params.id)
+  },
+
+  changeStatus (params) {
+    return Api().put('version/status', params)
   },
 
   deletePost (id) {

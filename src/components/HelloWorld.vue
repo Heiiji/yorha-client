@@ -67,16 +67,12 @@
                           v-for="item in passed"
                           :key="item._id"
                           style="display: block;  overflow: hidden;"
-                          no-action>
+                          @click="$router.push('/version/id/' + item._id)">
               <v-list-tile slot="activator">
                 <v-list-tile-content>
-                  <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> recieved : {{ item.date.replace(/T............./g, ' ') }} => <span :class="item.status">{{ item.status }}</span></v-list-tile-title>
+                  <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> => <span :class="item.status">{{ item.score }}% : {{ item.status }}</span></v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
-              <p style="white-space: pre; text-align: left;">{{ item.changelog }}</p>
-              <v-avatar style="position: absolute; right: 2px; top: 2px;" size="50px" tile>
-                <img :src="item.picture" style=" border-radius: 25px" />
-              </v-avatar>
             </v-list-group>
           </v-list>
         </v-flex>
@@ -103,7 +99,7 @@ export default {
     async getVersion () {
       const response = await VersionService.fetchPosts('current')
       this.versions = response.data.versions
-      const responses = await VersionService.fetchPosts('old')
+      const responses = await VersionService.fetchPosts('finnish')
       this.passed = responses.data.versions
     }
   }

@@ -79,7 +79,8 @@ export default {
         { title: 'QA' },
         { title: 'Proximity' },
         { title: 'R&D' },
-        { title: 'Dev' }
+        { title: 'Dev' },
+        { title: 'Master' }
       ]
     }
   },

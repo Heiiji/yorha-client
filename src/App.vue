@@ -61,6 +61,7 @@
     </v-navigation-drawer>
     <v-toolbar color="blue darken-3"
                style="z-index: 20;"
+               v-if="$route.fullPath !== '/home'"
                dark
                app
                :clipped-left="$vuetify.breakpoint.lgAndUp"
@@ -81,7 +82,8 @@
       <v-menu offset-x
               :close-on-content-click="false"
               :nudge-width="200"
-              v-model="menu">
+              v-model="menu"
+              v-if="signed === true">
         <v-btn slot="activator" icon>
           <v-icon>notifications</v-icon>
           <v-badge left style="margin-left: 15px; margin-top: 15px;">
@@ -107,9 +109,63 @@
         <v-btn icon>
           <v-icon>mail</v-icon>
         </v-btn>
-        <v-badge left>
-          <span slot="badge">2</span>
-        </v-badge>
+      </a>
+      <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
+        <v-avatar size="32px" tile>
+          <img style="border-radius: 20px;" :src="user.path" alt="Profil">
+        </v-avatar>
+      </v-btn>
+      <g-signin-button
+        v-else
+        style="cursor: pointer;"
+        :params="googleSignInParams"
+        @success="onSignInSuccess"
+        @error="onSignInError">
+        Sign in
+      </g-signin-button>
+    </v-toolbar>
+    <v-toolbar
+               style="z-index: 20; background-color: rgba(30, 30, 200, 0.1)"
+               v-else
+               dark
+               app
+               :clipped-left="$vuetify.breakpoint.lgAndUp"
+               fixed>
+      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <span style="cursor:pointer;" @click="redirect('/')" class="hidden-sm-and-down">Yorha</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-menu offset-x
+              :close-on-content-click="false"
+              :nudge-width="200"
+              v-model="menu"
+              v-if="signed === true">
+        <v-btn slot="activator" icon>
+          <v-icon>notifications</v-icon>
+          <v-badge left style="margin-left: 15px; margin-top: 15px;">
+            <span slot="badge">4</span>
+          </v-badge>
+        </v-btn>
+        <v-card style="padding: 10px;">
+          <span style="padding: 10px; display: inline-block;">
+            Nouvelle reunions le 15/13/1995
+          </span>
+          <v-divider></v-divider>
+          <span style="padding: 10px; display: inline-block;">
+            Nouvelle version en  test !
+          </span>
+          <v-divider></v-divider>
+          <span style="padding: 10px; display: inline-block;">
+            civilization VI est bien
+          </span>
+          <v-divider></v-divider>
+        </v-card>
+      </v-menu>
+      <a href="https://inbox.google.com/u/0/" target="_blank" style="text-decoration: none;">
+        <v-btn icon>
+          <v-icon>mail</v-icon>
+        </v-btn>
       </a>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
@@ -128,6 +184,7 @@
     <br/><br/><br/>
     <v-tabs v-model="active"
             color="blue"
+            v-if="$route.fullPath !== '/home'"
             dark
             slider-color="red"
             style="text-align: center;">
@@ -235,6 +292,9 @@ export default {
         this.signed = true
         this.items[3].display = false
         if (this.user.work === 'QA') {
+          this.items[0].display = true
+        }
+        if (this.user.work === 'Proximity') {
           this.items[0].display = true
         }
         this.items[2].display = true

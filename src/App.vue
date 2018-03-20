@@ -257,6 +257,7 @@ export default {
       },
       { display: true, icon: 'content_copy', text: 'Inventory', link: '/' },
       { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' },
+      { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' },
       { display: false, icon: 'contacts', text: 'N/A' }
     ]
   }),

@@ -192,15 +192,6 @@
       <v-tab ripple style="margin-left: 30%">
         Général
       </v-tab>
-      <v-tab ripple>
-        Test
-      </v-tab>
-      <v-tab ripple>
-        R&D
-      </v-tab>
-      <v-tab ripple>
-        Dev
-      </v-tab>
       <v-tab-item v-for="n in 3"
                   :key="n">
         <v-card flat>

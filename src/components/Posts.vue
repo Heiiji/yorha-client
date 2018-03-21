@@ -122,11 +122,11 @@
               style="width: 990px; margin: 5px;"
             ></v-text-field>
             <v-text-field v-model="finnished.bugs"
-              name="Bugs"
-              label="Bugs"
-              id="bugs"
-              style="width: 990px; margin: 5px;"
-            ></v-text-field>
+                name="Bugs"
+                label="Bugs"
+                textarea
+                style="width: 990px; margin: 5px;"
+              ></v-text-field>
           </v-flex>
         <v-divider></v-divider>
         <v-card-actions>
@@ -226,6 +226,7 @@ export default {
       this.finnished.id = id
       const response = VersionService.SetAsFinnished(this.finnished)
       console.log(response)
+      this.$router.push('/')
     }
   }
 }

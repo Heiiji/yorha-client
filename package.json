@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "nodemailer": "^4.6.3",
     "unsplash-api": "^1.2.0",
     "unsplash-js": "^4.8.0",
     "vue": "^2.5.2",

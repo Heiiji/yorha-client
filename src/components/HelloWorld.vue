@@ -9,7 +9,7 @@
         </v-flex>
         <v-flex xs8>
           <v-card dark color="secondary">
-            <v-card-text class="px-0">Actu</v-card-text>
+            <v-card-text class="px-0">Actu (inactive)</v-card-text>
           </v-card>
           <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
             <v-card-text class="px-0"><strong>Datacenter Burning :</strong> Data 4 a brulé dans un grand feu de joie. L'équipe a cependant super bien géré la période de crise. </v-card-text>
@@ -44,7 +44,7 @@
         </v-flex>
         <v-flex xs8>
           <v-card dark color="secondary">
-            <v-card-text class="px-0">Feedback</v-card-text>
+            <v-card-text class="px-0">Feedback (inactive)</v-card-text>
           </v-card>
           <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
             <v-card-text class="px-0">Une pluie de donuts serait super sur la homepage !! </v-card-text>

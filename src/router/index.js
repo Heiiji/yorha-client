@@ -14,6 +14,7 @@ import Mattermost from '@/components/mattermost'
 import Home from '@/components/home'
 import Displayer from '@/components/displayer'
 import Benchmark from '@/components/Benchmark'
+import SearchUser from '@/components/SearchUser'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
       path: '/Profil',
       name: 'Profil',
       component: Profil
+    },
+    {
+      path: '/SearchUser',
+      name: 'SearchUser',
+      component: SearchUser
     },
     {
       path: '/version/id/:id',

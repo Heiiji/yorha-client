@@ -73,7 +73,9 @@
       <v-text-field flat
                     solo-inverted
                     prepend-icon="search"
+                    @change="redirect('/SearchUser')"
                     label="Search Users"
+                    v-model="search"
                     class="hidden-sm-and-down"></v-text-field>
       <a href="http://vps526554.ovh.net:8065" target="_blank" style="text-decoration:none; color: white; padding: 10px; padding-left: 50px; display: inline-block;">
         MATTERMOST
@@ -115,14 +117,9 @@
           <img style="border-radius: 20px;" :src="user.path" alt="Profil">
         </v-avatar>
       </v-btn>
-      <g-signin-button
-        v-else
-        style="cursor: pointer;"
-        :params="googleSignInParams"
-        @success="onSignInSuccess"
-        @error="onSignInError">
-        Sign in
-      </g-signin-button>
+      <v-btn v-else @click="login()" color="primary" fab small dark>
+          <v-icon>account_circle</v-icon>
+      </v-btn>
     </v-toolbar>
     <v-toolbar
                style="z-index: 20; background-color: rgba(30, 30, 200, 0.1)"
@@ -172,14 +169,9 @@
           <img style="border-radius: 20px;" :src="user.path" alt="Profil">
         </v-avatar>
       </v-btn>
-      <g-signin-button
-        v-else
-        style="cursor: pointer;"
-        :params="googleSignInParams"
-        @success="onSignInSuccess"
-        @error="onSignInError">
-        Sign in
-      </g-signin-button>
+      <v-btn v-else @click="login()" color="primary" fab small dark>
+          <v-icon>account_circle</v-icon>
+      </v-btn>
     </v-toolbar>
     <br/><br/><br/>
     <v-tabs v-model="active"
@@ -199,8 +191,8 @@
         </v-card>
       </v-tab-item>
     </v-tabs>
-
-    <router-view v-on:refresh="checkUser()" />
+    <router-view :Search="search" v-on:refresh="checkUser()" />
+    <!--<SearchUser ></SearchUser>-->
   </v-app>
 </template>
 
@@ -219,11 +211,14 @@
 
 <script>
 import Api from '@/services/Api'
+import SearchUser from '@/components/SearchUser.vue'
 
 export default {
   data: () => ({
     user: [],
     signed: false,
+    auth2: [],
+    search: '',
     googleSignInParams: {
       client_id: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com'
     },
@@ -233,9 +228,9 @@ export default {
       { display: false, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
       { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
       { display: false, icon: 'contacts', text: 'Management', link: '/management' },
-      { display: true, icon: 'history', text: 'App downloads', link: '/downloads' },
+      { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       {
-        display: true,
+        display: false,
         icon: 'keyboard_arrow_up',
         'icon-alt': 'keyboard_arrow_down',
         text: 'More',
@@ -246,16 +241,19 @@ export default {
           { text: 'Print' }
         ]
       },
-      { display: true, icon: 'content_copy', text: 'Inventory', link: '/' },
-      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' },
+      { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
+      { display: false, icon: 'settings', text: 'Changelog', link: '/changelog' },
       { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' },
       { display: false, icon: 'contacts', text: 'N/A' }
     ]
   }),
+  components: {
+    SearchUser
+  },
   methods: {
     onSignInSuccess (googleUser) {
       // See https://developers.google.com/identity/sign-in/web/reference#users
-      console.log(googleUser.getBasicProfile())
+      console.log(googleUser)
       this.$store.GoogleToken = googleUser
       Api().post('/account', {
         username: googleUser.getBasicProfile().getName(),
@@ -267,6 +265,23 @@ export default {
         this.checkUser()
       })
       this.$router.push('/home')
+    },
+    login () {
+      this.auth2.signIn().then((googleUser) => {
+        console.log(googleUser)
+        this.$store.GoogleToken = googleUser
+        Api().post('/account', {
+          username: googleUser.getBasicProfile().getName(),
+          mail: googleUser.getBasicProfile().getEmail(),
+          picture: googleUser.getBasicProfile().getImageUrl()
+        }).then((response) => {
+          console.log(response)
+          this.user = response.data
+          this.$store.state.user = response.data
+          this.checkUser()
+        })
+        this.$router.push('/home')
+      })
     },
     onSignInError (error) {
       // `error` contains any error occurred.
@@ -294,6 +309,10 @@ export default {
     }
   },
   mounted () {
+    window.gapi.load('auth2', () => {
+      this.auth2 = window.gapi.auth2.init(this.googleSignInParams)
+      console.log(this.auth2)
+    })
     this.checkUser()
   },
   props: {

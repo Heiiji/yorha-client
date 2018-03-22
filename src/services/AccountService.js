@@ -15,5 +15,9 @@ export default {
 
   ChangeStatus (params) {
     return Api().post('account/status/', params)
+  },
+
+  FindUsers (params) {
+    return Api().get('account/', params)
   }
 }

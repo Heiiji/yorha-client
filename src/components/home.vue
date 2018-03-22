@@ -80,7 +80,7 @@ export default {
   },
   mounted () {
     this.updateTime()
-    unsplash.photos.getRandomPhoto({width: '1920', height: '1080', query: 'cat'}).then((response) => {
+    unsplash.photos.getRandomPhoto({width: screen.width, height: screen.height, query: 'city'}).then((response) => {
       response.json().then((lots) => {
         this.image = lots.urls.full
       })
@@ -88,16 +88,6 @@ export default {
     window.setInterval(() => {
       this.updateTime()
     }, 500)
-    /*
-function };
-
-function zeroPadding(num, digit) {
-    var zero = '';
-    for(var i = 0; i < digit; i++) {
-        zero += '0';
-    }
-    return (zero + num).slice(-digit);
-} */
   }
 }
 </script>

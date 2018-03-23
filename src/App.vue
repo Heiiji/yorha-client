@@ -313,6 +313,7 @@ export default {
   mounted () {
     window.gapi.load('auth2', () => {
       this.auth2 = window.gapi.auth2.init(this.googleSignInParams)
+      this.auth2 = window.gapi.auth2.getAuthInstance()
       console.log(this.auth2)
     })
     this.checkUser()

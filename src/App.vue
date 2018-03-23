@@ -114,7 +114,7 @@
       </a>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
-          <img style="border-radius: 20px;" :src="user.path" alt="Profil">
+          <img style="border-radius: 20px;" :src="user.photoURL" alt="Profil">
         </v-avatar>
       </v-btn>
       <v-btn v-else @click="login()" color="primary" fab small dark>
@@ -166,7 +166,7 @@
       </a>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
-          <img style="border-radius: 20px;" :src="user.path" alt="Profil">
+          <img style="border-radius: 20px;" :src="user.photoURL" alt="Profil">
         </v-avatar>
       </v-btn>
       <v-btn v-else @click="login()" color="primary" fab small dark>
@@ -213,11 +213,15 @@
 import Api from '@/services/Api'
 import SearchUser from '@/components/SearchUser.vue'
 
+import firebase from 'firebase'
+
 export default {
   data: () => ({
     user: [],
     signed: false,
+    firebaseApp: [],
     auth2: [],
+    token: [],
     search: '',
     googleSignInParams: {
       client_id: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com',
@@ -269,20 +273,15 @@ export default {
       this.$router.push('/home')
     },
     login () {
-      this.auth2.signIn().then((googleUser) => {
-        console.log(googleUser)
-        this.$store.GoogleToken = googleUser
-        Api().post('/account', {
-          username: googleUser.getBasicProfile().getName(),
-          mail: googleUser.getBasicProfile().getEmail(),
-          picture: googleUser.getBasicProfile().getImageUrl()
-        }).then((response) => {
-          console.log(response)
-          this.user = response.data
-          this.$store.state.user = response.data
-          this.checkUser()
-        })
-        this.$router.push('/home')
+      var provider = new firebase.auth.GoogleAuthProvider()
+      var vue = this
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        vue.token = result.credential.accessToken
+        vue.user = result.user
+        vue.$store.state.user = result.user
+        vue.signed = true
+      }).catch(function (error) {
+        console.log(error)
       })
     },
     onSignInError (error) {
@@ -296,7 +295,7 @@ export default {
     checkUser () {
       // check on router change for refresh
       console.log('user check()')
-      if (this.$store.GoogleToken) {
+      /* if (this.$store.GoogleToken) {
         this.user.path = this.$store.GoogleToken.getBasicProfile().getImageUrl()
         this.signed = true
         this.items[3].display = false
@@ -307,15 +306,23 @@ export default {
           this.items[0].display = true
         }
         this.items[2].display = true
-      }
+      } */
     }
   },
   mounted () {
-    window.gapi.load('auth2', () => {
+    this.firebaseApp = firebase.initializeApp({
+      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
+      authDomain: 'yorha-198313.firebaseapp.com',
+      databaseURL: 'https://yorha-198313.firebaseio.com',
+      projectId: 'yorha-198313',
+      storageBucket: 'yorha-198313.appspot.com',
+      messagingSenderId: '774476919196'
+    })
+    /* window.gapi.load('auth2', () => {
       this.auth2 = window.gapi.auth2.init(this.googleSignInParams)
       this.auth2 = window.gapi.auth2.getAuthInstance()
       console.log(this.auth2)
-    })
+    }) */
     this.checkUser()
   },
   props: {

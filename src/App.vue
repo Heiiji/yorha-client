@@ -77,9 +77,6 @@
                     label="Search Users"
                     v-model="search"
                     class="hidden-sm-and-down"></v-text-field>
-      <a href="http://vps526554.ovh.net:8065" target="_blank" style="text-decoration:none; color: white; padding: 10px; padding-left: 50px; display: inline-block;">
-        MATTERMOST
-      </a>
       <v-spacer></v-spacer>
       <v-menu offset-x
               :close-on-content-click="false"
@@ -214,6 +211,7 @@ import Api from '@/services/Api'
 import SearchUser from '@/components/SearchUser.vue'
 
 import firebase from 'firebase'
+// var db = firebase.database
 
 export default {
   data: () => ({
@@ -223,11 +221,6 @@ export default {
     auth2: [],
     token: [],
     search: '',
-    googleSignInParams: {
-      client_id: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com',
-      apiKey: 'AIzaSyAO4xZ2IqgQmSVNu7fZOCyeWEjaZgYQ9Yc',
-      clientId: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com'
-    },
     dialog: false,
     drawer: false,
     items: [
@@ -263,7 +256,8 @@ export default {
       this.$store.GoogleToken = googleUser
       Api().post('/account', {
         username: googleUser.getBasicProfile().getName(),
-        mail: googleUser.getBasicProfile().getEmail()
+        mail: googleUser.getBasicProfile().getEmail(),
+        picture: googleUser.getBasicProfile().getEmail()
       }).then((response) => {
         console.log(response)
         this.user = response.data
@@ -280,6 +274,12 @@ export default {
         vue.user = result.user
         vue.$store.state.user = result.user
         vue.signed = true
+        console.log(result.user)
+        Api().post('/account', {
+          username: result.user.displayName,
+          mail: result.user.email,
+          picture: result.user.photoURL
+        })
       }).catch(function (error) {
         console.log(error)
       })
@@ -318,6 +318,7 @@ export default {
       storageBucket: 'yorha-198313.appspot.com',
       messagingSenderId: '774476919196'
     })
+    console.log(this.firebaseApp)
     /* window.gapi.load('auth2', () => {
       this.auth2 = window.gapi.auth2.init(this.googleSignInParams)
       this.auth2 = window.gapi.auth2.getAuthInstance()

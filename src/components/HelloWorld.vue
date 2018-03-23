@@ -21,26 +21,8 @@
           <v-divider></v-divider>
         </v-flex>
         <v-flex xs4>
-          <v-card dark color="primary">
-            <v-card-text class="px-0">Working version</v-card-text>
-          </v-card>
-          <v-list>
-            <v-list-group v-model="item.active"
-                          v-for="item in versions"
-                          :key="item._id"
-                          style="display: block;  overflow: hidden;"
-                          no-action>
-              <v-list-tile slot="activator">
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> recieved : {{ item.date.replace(/T............./g, ' ') }} => <span :class="item.status">{{ item.status }}</span></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <p style="white-space: pre; text-align: left;">{{ item.changelog }}</p>
-              <v-avatar style="position: absolute; right: 2px; top: 2px;" size="50px" tile>
-                <img :src="item.picture" style=" border-radius: 25px" />
-              </v-avatar>
-            </v-list-group>
-          </v-list>
+          <QwickLook target="current">
+          </QwickLook>
         </v-flex>
         <v-flex xs8>
           <v-card dark color="secondary">
@@ -59,22 +41,8 @@
           </v-card>
         </v-flex>
         <v-flex xs4>
-          <v-card dark color="primary">
-            <v-card-text class="px-0">Passed version</v-card-text>
-          </v-card>
-          <v-list>
-            <v-list-group v-model="item.active"
-                          v-for="item in passed"
-                          :key="item._id"
-                          style="display: block;  overflow: hidden;"
-                          @click="$router.push('/version/id/' + item._id)">
-              <v-list-tile slot="activator">
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> => <span :class="item.status">{{ item.score }}% : {{ item.status }}</span></v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list-group>
-          </v-list>
+          <QwickLook target="finnish">
+          </QwickLook>
         </v-flex>
       </v-layout>
   </v-container>
@@ -83,17 +51,22 @@
 
 <script>
 import VersionService from '@/services/VersionService'
+import QwickLook from '@/components/versions/WorkingDisplay.vue'
 
 export default {
   name: 'HelloWorld',
   data () {
     return {
       versions: [],
-      passed: []
+      passed: [],
+      target: 'current'
     }
   },
   mounted () {
     this.getVersion()
+  },
+  components: {
+    QwickLook
   },
   methods: {
     async getVersion () {

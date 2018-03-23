@@ -1,12 +1,12 @@
 <template>
   <div>
     <br/><br/><br/>
-    <img width="300px" style="float: left;" :src="user.path"/>
+    <span v-if="user.photoURL"><img width="300px" style="float: left;" :src="user.photoURL"/></span>
     <h1>Profil :</h1>
-    username : {{ user.username }}<br/>
-    workplace : {{ user.work }}<br/>
-    website rank : {{ user.status }}<br/>
-    mail : {{ user.mail }} <br/>
+    username : <span v-if="user.displayName">{{ user.displayName }}<br/></span>
+    workplace : <span v-if="user.local.work">{{ user.local.work }}<br/></span>
+    website rank : <span v-if="user.status">{{ user.status }}<br/></span>
+    mail : <span v-if="user.email">{{ user.email }} <br/></span>
     Home Background theme :
     <v-flex xs3>
         <v-select

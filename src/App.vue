@@ -171,8 +171,7 @@
       </v-btn>
     </v-toolbar>
     <br/><br/><br/>
-    <v-tabs v-model="active"
-            color="blue"
+    <v-tabs color="blue"
             v-if="$route.fullPath !== '/home'"
             dark
             slider-color="red"
@@ -181,15 +180,8 @@
       <v-tab ripple style="margin-left: 30%">
         Général
       </v-tab>
-      <v-tab-item v-for="n in 3"
-                  :key="n">
-        <v-card flat>
-          <v-card-text>{{ text }}</v-card-text>
-        </v-card>
-      </v-tab-item>
     </v-tabs>
     <router-view :Search="search" v-on:refresh="checkUser()" />
-    <!--<SearchUser ></SearchUser>-->
   </v-app>
 </template>
 
@@ -208,7 +200,6 @@
 
 <script>
 import Api from '@/services/Api'
-import SearchUser from '@/components/SearchUser.vue'
 
 import firebase from 'firebase'
 // var db = firebase.database
@@ -218,10 +209,8 @@ export default {
     user: [],
     signed: false,
     firebaseApp: [],
-    auth2: [],
     token: [],
     search: '',
-    dialog: false,
     drawer: false,
     items: [
       { display: false, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
@@ -246,9 +235,6 @@ export default {
       { display: false, icon: 'contacts', text: 'N/A' }
     ]
   }),
-  components: {
-    SearchUser
-  },
   methods: {
     onSignInSuccess (googleUser) {
       // See https://developers.google.com/identity/sign-in/web/reference#users
@@ -272,20 +258,25 @@ export default {
       firebase.auth().signInWithPopup(provider).then(function (result) {
         vue.token = result.credential.accessToken
         vue.user = result.user
-        vue.$store.state.user = result.user
         vue.signed = true
+        vue.$store.state.user = result.user
         console.log(result.user)
         Api().post('/account', {
           username: result.user.displayName,
           mail: result.user.email,
           picture: result.user.photoURL
+        }).then((response) => {
+          vue.$store.state.user.local = response.data
+          vue.user.local = response.data
+          console.log(response.data)
+          vue.checkUser()
+          vue.$router.push('/home')
         })
       }).catch(function (error) {
         console.log(error)
       })
     },
     onSignInError (error) {
-      // `error` contains any error occurred.
       console.log('OH NOES', error)
     },
     redirect (link) {
@@ -293,37 +284,27 @@ export default {
       this.$router.push(link)
     },
     checkUser () {
+      var vue = this
       // check on router change for refresh
-      console.log('user check()')
-      /* if (this.$store.GoogleToken) {
-        this.user.path = this.$store.GoogleToken.getBasicProfile().getImageUrl()
-        this.signed = true
-        this.items[3].display = false
-        if (this.user.work === 'QA') {
-          this.items[0].display = true
+      if (vue.user.local) {
+        vue.items[3].display = false
+        if (vue.user.local.work === 'QA') {
+          vue.items[0].display = true
         }
-        if (this.user.work === 'Proximity') {
-          this.items[0].display = true
-        }
-        this.items[2].display = true
-      } */
+      }
     }
   },
   mounted () {
-    this.firebaseApp = firebase.initializeApp({
-      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
-      authDomain: 'yorha-198313.firebaseapp.com',
-      databaseURL: 'https://yorha-198313.firebaseio.com',
-      projectId: 'yorha-198313',
-      storageBucket: 'yorha-198313.appspot.com',
-      messagingSenderId: '774476919196'
-    })
-    console.log(this.firebaseApp)
-    /* window.gapi.load('auth2', () => {
-      this.auth2 = window.gapi.auth2.init(this.googleSignInParams)
-      this.auth2 = window.gapi.auth2.getAuthInstance()
-      console.log(this.auth2)
-    }) */
+    if (!this.firebaseApp) {
+      this.firebaseApp = firebase.initializeApp({
+        apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
+        authDomain: 'yorha-198313.firebaseapp.com',
+        databaseURL: 'https://yorha-198313.firebaseio.com',
+        projectId: 'yorha-198313',
+        storageBucket: 'yorha-198313.appspot.com',
+        messagingSenderId: '774476919196'
+      })
+    }
     this.checkUser()
   },
   props: {

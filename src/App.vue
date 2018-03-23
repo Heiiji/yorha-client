@@ -220,7 +220,9 @@ export default {
     auth2: [],
     search: '',
     googleSignInParams: {
-      client_id: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com'
+      client_id: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com',
+      apiKey: 'AIzaSyAO4xZ2IqgQmSVNu7fZOCyeWEjaZgYQ9Yc',
+      clientId: '774476919196-crcoingsphm4f4kq00tk1ua7dlh61id9.apps.googleusercontent.com'
     },
     dialog: false,
     drawer: false,

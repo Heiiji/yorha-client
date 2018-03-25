@@ -171,16 +171,6 @@
       </v-btn>
     </v-toolbar>
     <br/><br/><br/>
-    <v-tabs color="blue"
-            v-if="$route.fullPath !== '/home'"
-            dark
-            slider-color="red"
-            style="text-align: center;">
-      <label style="color: white; font-size: 1.5em; padding-top: 10px; padding-left: 10px;" >Department </label>
-      <v-tab ripple style="margin-left: 30%">
-        Général
-      </v-tab>
-    </v-tabs>
     <router-view :Search="search" v-on:refresh="checkUser()" />
   </v-app>
 </template>
@@ -212,6 +202,15 @@ export default {
     token: [],
     search: '',
     drawer: false,
+    department: [
+      { text: 'Test' },
+      { text: 'Marketing' },
+      { text: 'Support' },
+      { text: 'Dev' },
+      { text: 'Web' },
+      { text: 'Infra' },
+      { text: 'RH' }
+    ],
     items: [
       { display: false, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
       { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
@@ -245,7 +244,6 @@ export default {
         mail: googleUser.getBasicProfile().getEmail(),
         picture: googleUser.getBasicProfile().getEmail()
       }).then((response) => {
-        console.log(response)
         this.user = response.data
         this.$store.state.user = response.data
         this.checkUser()
@@ -260,7 +258,6 @@ export default {
         vue.user = result.user
         vue.signed = true
         vue.$store.state.user = result.user
-        console.log(result.user)
         Api().post('/account', {
           username: result.user.displayName,
           mail: result.user.email,
@@ -295,16 +292,14 @@ export default {
     }
   },
   mounted () {
-    if (!this.firebaseApp) {
-      this.firebaseApp = firebase.initializeApp({
-        apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
-        authDomain: 'yorha-198313.firebaseapp.com',
-        databaseURL: 'https://yorha-198313.firebaseio.com',
-        projectId: 'yorha-198313',
-        storageBucket: 'yorha-198313.appspot.com',
-        messagingSenderId: '774476919196'
-      })
-    }
+    this.firebaseApp = firebase.initializeApp({
+      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
+      authDomain: 'yorha-198313.firebaseapp.com',
+      databaseURL: 'https://yorha-198313.firebaseio.com',
+      projectId: 'yorha-198313',
+      storageBucket: 'yorha-198313.appspot.com',
+      messagingSenderId: '774476919196'
+    })
     this.checkUser()
   },
   props: {

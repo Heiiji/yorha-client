@@ -19,5 +19,9 @@ export default {
 
   FindUsers (params) {
     return Api().get('account/', params)
+  },
+
+  editDescription (params) {
+    return Api().put('account/description', params)
   }
 }

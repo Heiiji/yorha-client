@@ -1,5 +1,9 @@
 import axios from 'axios'
 
+/*
+  Ici on a l'adresse du scout local dans le batiment
+*/
+
 export default() => {
   return axios.create({
     baseURL: 'http://192.168.1.208:8081'

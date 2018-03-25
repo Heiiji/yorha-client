@@ -76,8 +76,8 @@ export default {
         status: ''
       },
       rangs: [
+        { title: 'Test' },
         { title: 'QA' },
-        { title: 'Proximity' },
         { title: 'R&D' },
         { title: 'Dev' },
         { title: 'Master' }

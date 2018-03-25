@@ -24,16 +24,208 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a target="_blank" href="https://soundcloud.com/stream">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>Datacenter Burning :</strong> Data 4 a brulé dans un grand feu de joie. L'équipe a cependant super bien géré la période de crise. </v-card-text>
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
+                <v-divider></v-divider>
               </a>
-              <v-divider></v-divider>
-              <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0" style="color:rgb(200, 200, 60);"><strong>Windows Update :</strong> La Spring creator update a été publiée, attention a la casse ! </v-card-text>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
               </v-card>
-              <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
             </v-flex>
             <v-flex xs4>
               <QwickLook target="current">
@@ -83,7 +275,7 @@
         </v-flex>
       <v-card-actions>
         <v-btn color="blue darken-1" flat @click.native="PostNews = false">Close</v-btn>
-        <v-btn color="blue darken-1" flat>Save</v-btn>
+        <v-btn color="blue darken-1" flat @click="postNews()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -93,6 +285,7 @@
 <script>
 import VersionService from '@/services/VersionService'
 import QwickLook from '@/components/versions/WorkingDisplay.vue'
+import News from '@/services/NewsService'
 
 export default {
   name: 'HelloWorld',
@@ -105,7 +298,8 @@ export default {
       News: {
         text: '',
         title: '',
-        link: ''
+        link: '',
+        department: 'General'
       },
       department: [
         { text: 'Test' },
@@ -116,11 +310,13 @@ export default {
         { text: 'Infra' },
         { text: 'RH' }
       ],
+      allNews: [],
       target: 'current'
     }
   },
   mounted () {
     this.getVersion()
+    this.getNews()
   },
   components: {
     QwickLook
@@ -131,12 +327,21 @@ export default {
       this.versions = response.data.versions
       const responses = await VersionService.fetchPosts('finnish')
       this.passed = responses.data.versions
+    },
+    async postNews () {
+      this.News.department = this.e1
+      News.Post(this.News)
+      this.getNews()
+    },
+    async getNews () {
+      const response = await News.fetchNews()
+      console.log(response.data)
+      this.allNews = response.data.news
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .GO {
   color: green;

@@ -1,19 +1,21 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+/* eslint-disable */
+import Vue        from 'vue'
+import Router     from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import Posts from '@/components/Posts'
-import NewPost from '@/components/NewPost'
-import EditPost from '@/components/EditPost'
-import Overview from '@/components/Overview'
-import Account from '@/components/account'
+import Posts      from '@/components/Posts'
+import NewPost    from '@/components/NewPost'
+import EditPost   from '@/components/EditPost'
+import Overview   from '@/components/Overview'
 import Management from '@/components/Management'
-import Profil from '@/components/profil'
-import Changelog from '@/components/changelog'
-import Downloads from '@/components/downloads'
-import Home from '@/components/home'
-import Displayer from '@/components/displayer'
-import Benchmark from '@/components/Benchmark'
-import SearchUser from '@/components/SearchUser'
+import Changelog  from '@/components/changelog'
+import Downloads  from '@/components/downloads'
+import Home       from '@/components/home'
+import Displayer  from '@/components/displayer'
+import Benchmark  from '@/components/Benchmark'
+// users files
+import SearchUser from '@/components/users/SearchUser'
+import Viewer     from '@/components/users/viewer'
+import Profil     from '@/components/users/profil'
 
 Vue.use(Router)
 
@@ -33,6 +35,11 @@ export default new Router({
       path: '/Profil',
       name: 'Profil',
       component: Profil
+    },
+    {
+      path: '/Profil/:id',
+      name: 'Profil',
+      component: Viewer
     },
     {
       path: '/SearchUser',
@@ -63,11 +70,6 @@ export default new Router({
       path: '/posts/:id',
       name: 'EditPost',
       component: EditPost
-    },
-    {
-      path: '/login',
-      name: 'Account',
-      component: Account
     },
     {
       path: '/downloads',

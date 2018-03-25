@@ -27,9 +27,5 @@ export default {
 
   changeStatus (params) {
     return Api().put('version/status', params)
-  },
-
-  deletePost (id) {
-    return Api().delete('posts/' + id)
   }
 }

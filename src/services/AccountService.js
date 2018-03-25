@@ -21,6 +21,10 @@ export default {
     return Api().get('account/', params)
   },
 
+  FindById (id) {
+    return Api().get('/account/' + id)
+  },
+
   editDescription (params) {
     return Api().put('account/description', params)
   }

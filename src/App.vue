@@ -237,7 +237,6 @@ export default {
   methods: {
     onSignInSuccess (googleUser) {
       // See https://developers.google.com/identity/sign-in/web/reference#users
-      console.log(googleUser)
       this.$store.GoogleToken = googleUser
       Api().post('/account', {
         username: googleUser.getBasicProfile().getName(),
@@ -265,7 +264,6 @@ export default {
         }).then((response) => {
           vue.$store.state.user.local = response.data
           vue.user.local = response.data
-          console.log(response.data)
           vue.checkUser()
           vue.$router.push('/home')
         })

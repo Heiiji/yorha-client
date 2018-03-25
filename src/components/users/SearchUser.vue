@@ -6,7 +6,7 @@
         v-for="(user, i) in users"
         :key="i"
       >
-        <v-layout style="z-index: 20;" align-center row spacer slot="header">
+        <v-layout @click="$router.push('/profil/' + user._id)" style="z-index: 20;" align-center row spacer slot="header">
           <v-flex xs4 sm2 md1>
             <v-avatar
               size="36px"

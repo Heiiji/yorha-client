@@ -1,6 +1,6 @@
 <template>
-  <div style="text-align: center; margin-top: -83px; z-index: 18;">
-    <img :src="image" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%" />
+  <div :style="dynamicStyle">
+    <img :src="image" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" />
     <div class="clock">
       <p class="date">{{ date }}</p>
       <p class="time">{{ time }}</p>
@@ -78,11 +78,21 @@ export default {
       return (zero + num).slice(-digit)
     }
   },
+  computed : {
+    dynamicStyle() {
+        return {
+          'text-align': 'center;',
+          'margin-top': '-83px;',
+          'z-index': '18;',
+          'background-image': 'url(\'' + this.image + '\')'
+        };
+    },
+  },
   mounted () {
     this.updateTime()
-    unsplash.photos.getRandomPhoto({width: screen.width, height: screen.height, query: 'city'}).then((response) => {
+    unsplash.photos.getRandomPhoto({width: 2560, height: 1380, query: 'city'}).then((response) => {
       response.json().then((lots) => {
-        this.image = lots.urls.full
+        this.image = lots.urls.custom
       })
     })
     window.setInterval(() => {

@@ -27,5 +27,9 @@ export default {
 
   editDescription (params) {
     return Api().put('account/description', params)
+  },
+  editPhoto (params) {
+    console.log(params.file)
+    return Api().post('account/photo', params)
   }
 }

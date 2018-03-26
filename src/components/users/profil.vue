@@ -2,12 +2,12 @@
   <div>
     <br/>
     <div>
-    <span id="photo" v-if="user.photoURL">
+    <span id="photo" v-if="user.local.picture">
       <div id="editer" @click="EditPicture = true">Editer</div>
-      <img width="300px" :src="user.photoURL"/>
+      <img width="300px" :src="user.local.picture"/>
     </span>
     <h1>Profil :</h1>
-    username : <span v-if="user.displayName">{{ user.displayName }}<br/></span>
+    username : <span v-if="user.displayName">{{ user.local.username }}<br/></span>
     workplace : <span v-if="user.local">{{ user.local.work }}</span><br/>
     workplace rank : <span v-if="user.local">{{ user.local.status }}</span><br/>
     mail : <span v-if="user.email">{{ user.email }} </span><br/>
@@ -51,13 +51,13 @@
         <v-divider></v-divider>
           <v-flex xs8>
             <label>File
-              <input type="file" id="file" ref="file"/>
+              <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
             </label>
           </v-flex>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="blue darken-1" flat @click.native="EditPicture = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="PostDescription(NewDescription)">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="changePhoto()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -66,6 +66,7 @@
 
 <script>
 import AccountService from '@/services/AccountService'
+import axios from 'axios'
 
 export default {
   name: 'Profil',
@@ -73,6 +74,7 @@ export default {
     return {
       edition: false,
       user: [],
+      file: '',
       e1: null,
       EditDescription: null,
       NewDescription: '',
@@ -88,6 +90,7 @@ export default {
   mounted () {
     this.user = this.$store.state.user
     this.e1 = this.user.local.homeTheme
+    console.log(this.user)
   },
   methods: {
     PostDescription (desc) {
@@ -97,6 +100,29 @@ export default {
       })
       this.user.local.description = desc
       this.EditDescription = false
+    },
+    handleFileUpload () {
+      this.file = this.$refs.file.files[0]
+    },
+    changePhoto () {
+      let formData = new FormData()
+      formData.append('file', this.file)
+      formData.append('username', this.user.local.username)
+      formData.append('mail', this.user.email)
+      console.log(formData.get('file'))
+      axios.post( 'http://localhost:8081/account/photo',
+        formData,
+        {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+        }
+      ).then(function(){
+        console.log('SUCCESS!!');
+      })
+      .catch(function(error){
+        console.log('FAILURE : ' + error);
+      })
     }
   }
 }

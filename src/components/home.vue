@@ -67,7 +67,7 @@ export default {
   methods: {
     updateTime () {
       var cd = new Date()
-      this.time = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2) + ':' + this.zeroPadding(cd.getSeconds(), 2)
+      this.time = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2)
       this.date = this.zeroPadding(cd.getFullYear(), 4) + '-' + this.zeroPadding(cd.getMonth() + 1, 2) + '-' + this.zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()]
     },
     zeroPadding (num, digit) {
@@ -78,15 +78,15 @@ export default {
       return (zero + num).slice(-digit)
     }
   },
-  computed : {
-    dynamicStyle() {
-        return {
-          'text-align': 'center;',
-          'margin-top': '-83px;',
-          'z-index': '18;',
-          'background-image': 'url(\'' + this.image + '\')'
-        };
-    },
+  computed: {
+    dynamicStyle () {
+      return {
+        'text-align': 'center;',
+        'margin-top': '-83px;',
+        'z-index': '18;',
+        'background-image': 'url(\'' + this.image + '\')'
+      }
+    }
   },
   mounted () {
     this.updateTime()

@@ -49,6 +49,9 @@ export default {
       users: []
     }
   },
+  props: {
+    Search: ''
+  },
   mounted () {
     this.users = this.takeUsers('all')
   },

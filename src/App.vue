@@ -4,6 +4,67 @@
                          :clipped="$vuetify.breakpoint.lgAndUp"
                          app
                          v-model="drawer"
+                         v-if="$route.fullPath === '/home'"
+                         style="z-index: 30; box-shadow: 1px 0px 1px #222; background-color: rgba(80, 80, 140, 0.1);">
+      <v-list dense>
+        <template v-for="item in items">
+          <span v-if="item.display" :key="item.display">
+            <v-layout row
+                      v-if="item.heading"
+                      align-center
+                      :key="item.heading">
+              <v-flex xs6>
+                <v-subheader v-if="item.heading">
+                  {{ item.heading }}
+                </v-subheader>
+              </v-flex>
+              <v-flex xs6 class="text-xs-center">
+                <a href="#!" class="body-2 black--text">EDIT</a>
+              </v-flex>
+            </v-layout>
+            <v-list-group v-else-if="item.children"
+                          v-model="item.model"
+                          :key="item.text"
+                          :prepend-icon="item.model ? item.icon : item['icon-alt']"
+                          append-icon="">
+              <v-list-tile slot="activator">
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    {{ item.text }}
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile v-for="(child, i) in item.children"
+                           :key="i">
+                <v-list-tile-action v-if="child.icon">
+                  <v-icon>{{ child.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>
+                    {{ child.text }}
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list-group>
+            <v-list-tile v-else @click="redirect(item.link)" :key="item.text">
+              <v-list-tile-action>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  {{ item.text }}
+                </v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </span>
+        </template>
+      </v-list>
+    </v-navigation-drawer>
+    <v-navigation-drawer fixed
+                         :clipped="$vuetify.breakpoint.lgAndUp"
+                         app
+                         v-model="drawer"
+                         v-else
                          style="z-index: 30; box-shadow: 1px 0px 1px #aaa;">
       <v-list dense>
         <template v-for="item in items">
@@ -109,6 +170,9 @@
           <v-icon>mail</v-icon>
         </v-btn>
       </a>
+      <v-btn @click="$router.push('/home')" icon>
+        <v-icon>home</v-icon>
+      </v-btn>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
           <img style="border-radius: 20px;" :src="user.photoURL" alt="Profil">
@@ -141,7 +205,7 @@
             <span slot="badge">4</span>
           </v-badge>
         </v-btn>
-        <v-card style="padding: 10px;">
+        <v-card style="padding: 10px; opacity: 0.9; margin-top: 35px;">
           <span style="padding: 10px; display: inline-block;">
             Nouvelle reunions le 15/13/1995
           </span>
@@ -170,8 +234,7 @@
           <v-icon>account_circle</v-icon>
       </v-btn>
     </v-toolbar>
-    <br/><br/><br/>
-    <router-view :Search="search" v-on:refresh="checkUser()" />
+    <router-view style="margin-top: 60px;" :Search="search" v-on:refresh="checkUser()" />
   </v-app>
 </template>
 
@@ -244,6 +307,7 @@ export default {
         picture: googleUser.getBasicProfile().getEmail()
       }).then((response) => {
         this.user = response.data
+        console.log(this.user)
         this.$store.state.user = response.data
         this.checkUser()
       })
@@ -264,6 +328,7 @@ export default {
         }).then((response) => {
           vue.$store.state.user.local = response.data
           vue.user.local = response.data
+          console.log(vue.user.local.token)
           vue.checkUser()
           vue.$router.push('/home')
         })

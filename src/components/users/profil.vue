@@ -110,19 +110,19 @@ export default {
       formData.append('username', this.user.local.username)
       formData.append('mail', this.user.email)
       console.log(formData.get('file'))
-      axios.post( 'http://localhost:8081/account/photo',
+      axios.post('http://localhost:8081/account/photo',
         formData,
         {
           headers: {
-              'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data'
           }
         }
-      ).then(function(){
-        console.log('SUCCESS!!');
+      ).then(function () {
+        console.log('SUCCESS!!')
       })
-      .catch(function(error){
-        console.log('FAILURE : ' + error);
-      })
+        .catch(function (error) {
+          console.log('FAILURE : ' + error)
+        })
     }
   }
 }

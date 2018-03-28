@@ -147,6 +147,9 @@
       <v-btn @click="$router.push('/home')" icon>
         <v-icon>home</v-icon>
       </v-btn>
+      <v-btn @click="logout()" icon>
+        <v-icon>launch</v-icon>
+      </v-btn>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
           <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
@@ -258,8 +261,7 @@ export default {
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
       { display: false, icon: 'settings', text: 'Changelog', link: '/changelog' },
-      { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' },
-      { display: false, icon: 'contacts', text: 'N/A' }
+      { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' }
     ]
   }),
   methods: {
@@ -301,6 +303,10 @@ export default {
         console.log(error)
       })
     },
+    logout () {
+      window.$cookies.remove('user_session')
+      location.reload()
+    },
     onSignInError (error) {
       console.log('OH NOES', error)
     },
@@ -310,6 +316,9 @@ export default {
     },
     checkUser () {
       var vue = this
+      if (vue.$route.fullPath) {
+
+      }
       // check on router change for refresh
       if (vue.user.local) {
         vue.items[3].display = false

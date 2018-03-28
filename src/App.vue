@@ -34,17 +34,6 @@
                   </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
-              <v-list-tile v-for="(child, i) in item.children"
-                           :key="i">
-                <v-list-tile-action v-if="child.icon">
-                  <v-icon>{{ child.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ child.text }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
             </v-list-group>
             <v-list-tile v-else @click="redirect(item.link)" :key="item.text">
               <v-list-tile-action>
@@ -91,17 +80,6 @@
                 <v-list-tile-content>
                   <v-list-tile-title>
                     {{ item.text }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile v-for="(child, i) in item.children"
-                           :key="i">
-                <v-list-tile-action v-if="child.icon">
-                  <v-icon>{{ child.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ child.text }}
                   </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -157,10 +135,6 @@
           <v-divider></v-divider>
           <span style="padding: 10px; display: inline-block;">
             Nouvelle version en  test !
-          </span>
-          <v-divider></v-divider>
-          <span style="padding: 10px; display: inline-block;">
-            civilization VI est bien
           </span>
           <v-divider></v-divider>
         </v-card>
@@ -264,6 +238,7 @@ export default {
     firebaseApp: [],
     token: [],
     search: '',
+    menu: '',
     drawer: false,
     department: [
       { text: 'Test' },
@@ -279,18 +254,7 @@ export default {
       { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
       { display: false, icon: 'contacts', text: 'Management', link: '/management' },
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
-      {
-        display: false,
-        icon: 'keyboard_arrow_up',
-        'icon-alt': 'keyboard_arrow_down',
-        text: 'More',
-        model: false,
-        children: [
-          { text: 'Import' },
-          { text: 'Export' },
-          { text: 'Print' }
-        ]
-      },
+      { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
       { display: false, icon: 'settings', text: 'Changelog', link: '/changelog' },
       { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' },
@@ -307,7 +271,6 @@ export default {
         picture: googleUser.getBasicProfile().getEmail()
       }).then((response) => {
         this.user = response.data
-        console.log(this.user)
         this.$store.state.user = response.data
         this.checkUser()
       })

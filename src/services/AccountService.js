@@ -9,6 +9,11 @@ export default {
     return Api().post('account/signin', params)
   },
 
+  QwickLog (params) {
+    console.log(params)
+    return Api().put('QwickLogin', params)
+  },
+
   FindByStatus (params) {
     return Api().get('account/status/' + params)
   },

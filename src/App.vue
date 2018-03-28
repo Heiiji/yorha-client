@@ -34,17 +34,6 @@
                   </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
-              <v-list-tile v-for="(child, i) in item.children"
-                           :key="i">
-                <v-list-tile-action v-if="child.icon">
-                  <v-icon>{{ child.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ child.text }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
             </v-list-group>
             <v-list-tile v-else @click="redirect(item.link)" :key="item.text">
               <v-list-tile-action>
@@ -91,17 +80,6 @@
                 <v-list-tile-content>
                   <v-list-tile-title>
                     {{ item.text }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile v-for="(child, i) in item.children"
-                           :key="i">
-                <v-list-tile-action v-if="child.icon">
-                  <v-icon>{{ child.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ child.text }}
                   </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -159,10 +137,6 @@
             Nouvelle version en  test !
           </span>
           <v-divider></v-divider>
-          <span style="padding: 10px; display: inline-block;">
-            civilization VI est bien
-          </span>
-          <v-divider></v-divider>
         </v-card>
       </v-menu>
       <a href="https://inbox.google.com/u/0/" target="_blank" style="text-decoration: none;">
@@ -173,9 +147,12 @@
       <v-btn @click="$router.push('/home')" icon>
         <v-icon>home</v-icon>
       </v-btn>
+      <v-btn @click="logout()" icon>
+        <v-icon>launch</v-icon>
+      </v-btn>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
-          <img style="border-radius: 20px;" :src="user.photoURL" alt="Profil">
+          <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
         </v-avatar>
       </v-btn>
       <v-btn v-else @click="login()" color="primary" fab small dark>
@@ -227,7 +204,7 @@
       </a>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
-          <img style="border-radius: 20px;" :src="user.photoURL" alt="Profil">
+          <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
         </v-avatar>
       </v-btn>
       <v-btn v-else @click="login()" color="primary" fab small dark>
@@ -253,6 +230,7 @@
 
 <script>
 import Api from '@/services/Api'
+import AccountServices from '@/services/AccountService'
 
 import firebase from 'firebase'
 // var db = firebase.database
@@ -264,6 +242,7 @@ export default {
     firebaseApp: [],
     token: [],
     search: '',
+    menu: '',
     drawer: false,
     department: [
       { text: 'Test' },
@@ -279,22 +258,10 @@ export default {
       { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
       { display: false, icon: 'contacts', text: 'Management', link: '/management' },
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
-      {
-        display: false,
-        icon: 'keyboard_arrow_up',
-        'icon-alt': 'keyboard_arrow_down',
-        text: 'More',
-        model: false,
-        children: [
-          { text: 'Import' },
-          { text: 'Export' },
-          { text: 'Print' }
-        ]
-      },
+      { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
       { display: false, icon: 'settings', text: 'Changelog', link: '/changelog' },
-      { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' },
-      { display: false, icon: 'contacts', text: 'N/A' }
+      { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' }
     ]
   }),
   methods: {
@@ -307,7 +274,6 @@ export default {
         picture: googleUser.getBasicProfile().getEmail()
       }).then((response) => {
         this.user = response.data
-        console.log(this.user)
         this.$store.state.user = response.data
         this.checkUser()
       })
@@ -330,11 +296,16 @@ export default {
           vue.user.local = response.data
           console.log(vue.user.local.token)
           vue.checkUser()
+          window.$cookies.set('user_session', vue.user.local.token, '1d')
           vue.$router.push('/home')
         })
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    logout () {
+      window.$cookies.remove('user_session')
+      location.reload()
     },
     onSignInError (error) {
       console.log('OH NOES', error)
@@ -345,6 +316,9 @@ export default {
     },
     checkUser () {
       var vue = this
+      if (vue.$route.fullPath) {
+
+      }
       // check on router change for refresh
       if (vue.user.local) {
         vue.items[3].display = false
@@ -355,15 +329,30 @@ export default {
     }
   },
   mounted () {
-    this.firebaseApp = firebase.initializeApp({
-      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
-      authDomain: 'yorha-198313.firebaseapp.com',
-      databaseURL: 'https://yorha-198313.firebaseio.com',
-      projectId: 'yorha-198313',
-      storageBucket: 'yorha-198313.appspot.com',
-      messagingSenderId: '774476919196'
-    })
-    this.checkUser()
+    var vue = this
+    var token = window.$cookies.get('user_session')
+    console.log(token)
+    if (token) {
+      AccountServices.QwickLog({token: token}).then((response) => {
+        vue.user = response.data
+        vue.user.local = response.data
+        vue.$store.state.user = response.data
+        vue.$store.state.user.local = response.data
+        vue.signed = true
+        console.log(vue.user)
+        vue.checkUser()
+      })
+    } else {
+      this.firebaseApp = firebase.initializeApp({
+        apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
+        authDomain: 'yorha-198313.firebaseapp.com',
+        databaseURL: 'https://yorha-198313.firebaseio.com',
+        projectId: 'yorha-198313',
+        storageBucket: 'yorha-198313.appspot.com',
+        messagingSenderId: '774476919196'
+      })
+      this.checkUser()
+    }
   },
   props: {
     source: String

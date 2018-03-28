@@ -6,6 +6,7 @@ import VueSession from 'vue-session'
 import Vuetify    from 'vuetify'
 import Vuex       from 'vuex'
 import VueFire    from 'vuefire'
+import VueCookie  from 'vue-cookies'
 
 import 'vuetify/dist/vuetify.min.css'
 
@@ -13,6 +14,7 @@ Vue.use(VueSession)
 Vue.use(Vuex)
 Vue.use(Vuetify)
 Vue.use(VueFire)
+Vue.use(VueCookie)
 
 Vue.config.productionTip = false
 

@@ -2,7 +2,7 @@
   <div>
 <br/><br/>
     <div style="position: relative; width: 40%; display: inline-block; padding: 0px; margin: 4%;">
-      <h3>Zotac</h3>
+      <h3>Zotac (Local)</h3>
       <hr/>
       <h5 :class="prodvalid" >PROD:valid</h5>
       <span :class="prodvalid" style="white-space: pre;">{{ version.prodvalid.zotac }}</span>
@@ -14,7 +14,7 @@
       <span :class="preprod" style="white-space: pre;">{{ version.preprod.zotac }}</span>
     </div>
     <div style="position: relative; width: 40%; display: inline-block; padding: 0px; margin: 4%;">
-      <h3>Oblivion</h3>
+      <h3>Oblivion (Online)</h3>
       <hr/>
       <h5 :class="prodvalid">PROD:valid</h5>
       <span :class="prodvalid" style="white-space: pre;">{{ version.prodvalid.normal }}</span>

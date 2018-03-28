@@ -147,7 +147,7 @@
       <v-btn @click="$router.push('/home')" icon>
         <v-icon>home</v-icon>
       </v-btn>
-      <v-btn @click="logout()" icon>
+      <v-btn v-if="signed === true" @click="logout()" icon>
         <v-icon>launch</v-icon>
       </v-btn>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
@@ -202,6 +202,9 @@
           <v-icon>mail</v-icon>
         </v-btn>
       </a>
+      <v-btn v-if="signed === true" @click="logout()" icon>
+        <v-icon>launch</v-icon>
+      </v-btn>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
           <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">

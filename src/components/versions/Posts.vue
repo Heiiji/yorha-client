@@ -26,6 +26,13 @@
             <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
           </v-btn>
         </v-card-actions>
+        <v-card-actions v-else>
+          <v-btn v-on:click="$router.push('/version/id/' + value._id)" flat>Details</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn icon @click.native="show = !show">
+            <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+          </v-btn>
+        </v-card-actions>
         <v-slide-y-transition>
           <v-card-text style="white-space: pre; text-align: left;" v-show="show">
             Changelog :
@@ -58,7 +65,7 @@
     <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
       <v-card-title style="color: blue;">Create a version :</v-card-title>
       <v-divider></v-divider>
-        <v-flex xs8>
+        <v-flex xs12>
           <v-text-field v-model="editeable.device"
             name="device"
             label="Version device"
@@ -93,6 +100,24 @@
               name="tester"
               label="Tester"
               id="tester"
+              style="width: 990px; margin: 5px;"
+            ></v-text-field>
+            <v-text-field v-model="editeable.target"
+              name="target"
+              label="release target"
+              id="target"
+              style="width: 990px; margin: 5px;"
+            ></v-text-field>
+            <v-text-field v-model="editeable.scheduled"
+              name="scheduled"
+              label="Nbr test scheduled"
+              id="scheduled"
+              style="width: 990px; margin: 5px;"
+            ></v-text-field>
+            <v-text-field v-model="editeable.time"
+              name="time"
+              label="estimated time"
+              id="time"
               style="width: 990px; margin: 5px;"
             ></v-text-field>
         </v-flex>
@@ -153,6 +178,9 @@ export default {
       versions: [],
       editeable: {
         device: '',
+        target: '',
+        scheduled: '',
+        time: '',
         version: '',
         importance: '',
         changelog: '',

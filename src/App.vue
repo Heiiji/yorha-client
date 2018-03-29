@@ -3,9 +3,10 @@
     <v-navigation-drawer fixed
                          :clipped="$vuetify.breakpoint.lgAndUp"
                          app
+                         dark
                          v-model="drawer"
                          v-if="$route.fullPath === '/home'"
-                         style="z-index: 30; box-shadow: 1px 0px 1px #222; background-color: rgba(80, 80, 140, 0.1);">
+                         style="z-index: 30; box-shadow: 0.9px 0px 0px #222; background-color: rgba(80, 80, 140, 0.2);">
       <v-list dense>
         <template v-for="item in items">
           <span v-if="item.display" :key="item.display">
@@ -54,7 +55,7 @@
                          app
                          v-model="drawer"
                          v-else
-                         style="z-index: 30; box-shadow: 1px 0px 1px #aaa;">
+                         style="z-index: 30; box-shadow: 0.9px 0px 0px #aaa;">
       <v-list dense>
         <template v-for="item in items">
           <span v-if="item.display" :key="item.display">
@@ -160,7 +161,7 @@
       </v-btn>
     </v-toolbar>
     <v-toolbar
-               style="z-index: 20; background-color: rgba(30, 30, 200, 0.1)"
+               style="z-index: 20; background-color: rgba(30, 30, 200, 0.2);"
                v-else
                dark
                app
@@ -258,13 +259,13 @@ export default {
     ],
     items: [
       { display: false, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
-      { display: true, icon: 'content_copy', text: 'Online version', link: '/overview' },
+      { display: true, icon: 'assignment', text: 'Online version', link: '/overview' },
       { display: false, icon: 'contacts', text: 'Management', link: '/management' },
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
       { display: false, icon: 'settings', text: 'Changelog', link: '/changelog' },
-      { display: true, icon: 'settings', text: 'Benchmark', link: '/benchmark' }
+      { display: true, icon: 'assessment', text: 'Benchmark', link: '/benchmark' }
     ]
   }),
   methods: {

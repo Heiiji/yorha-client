@@ -346,17 +346,15 @@ export default {
         console.log(vue.user)
         vue.checkUser()
       })
-    } else {
-      this.firebaseApp = firebase.initializeApp({
-        apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
-        authDomain: 'yorha-198313.firebaseapp.com',
-        databaseURL: 'https://yorha-198313.firebaseio.com',
-        projectId: 'yorha-198313',
-        storageBucket: 'yorha-198313.appspot.com',
-        messagingSenderId: '774476919196'
-      })
-      this.checkUser()
     }
+    this.firebaseApp = firebase.initializeApp({
+      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
+      authDomain: 'yorha-198313.firebaseapp.com',
+      databaseURL: 'https://yorha-198313.firebaseio.com',
+      projectId: 'yorha-198313',
+      storageBucket: 'yorha-198313.appspot.com',
+      messagingSenderId: '774476919196'
+    })
   },
   props: {
     source: String

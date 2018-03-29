@@ -168,6 +168,7 @@
 
 <script>
 import VersionService from '@/services/VersionService'
+import NewsService from '@/services/VersionService'
 
 export default {
   name: 'VersionManager',
@@ -234,6 +235,12 @@ export default {
         const response = VersionService.updateVersion(this.editeable)
         console.log(response)
       }
+      NewsService.Post({
+        text: this.editeable.importance + ' : ' + this.editeable.device + ' arrive on ' + this.editeable.version,
+        title: 'New Version On QA',
+        link: '',
+        department: 'General'
+      })
       this.$router.push('/')
     },
     Edition (version) {

@@ -168,7 +168,7 @@
 
 <script>
 import VersionService from '@/services/VersionService'
-import NewsService from '@/services/VersionService'
+import NewsService from '@/services/NewsService'
 
 export default {
   name: 'VersionManager',

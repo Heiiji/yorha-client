@@ -10,13 +10,13 @@
     username : <span v-if="user.displayName">{{ user.local.username }}<br/></span>
     workplace : <span v-if="user.local">{{ user.local.work }}</span><br/>
     workplace rank : <span v-if="user.local">{{ user.local.status }}</span><br/>
-    mail : <span v-if="user.email">{{ user.email }} </span><br/>
+    mail : <span v-if="user.local.mail">{{ user.local.mail }} </span><br/>
     Home Background theme :
     <v-flex xs3>
         <v-select
-          :items="e1"
+          :items="background"
           v-model="e1"
-          :label="Theme"
+          @change="PostHomeTheme()"
           single-line
         ></v-select>
       </v-flex>
@@ -83,7 +83,9 @@ export default {
       background: [
         { text: 'Landscape' },
         { text: 'Cat' },
-        { text: 'Urban' }
+        { text: 'Urban' },
+        { text: 'forest' },
+        { text: 'abstract' }
       ]
     }
   },
@@ -100,6 +102,14 @@ export default {
       })
       this.user.local.description = desc
       this.EditDescription = false
+    },
+    async PostHomeTheme () {
+      console.log(this.e1.text)
+      AccountService.editHomeTheme({
+        newTheme: this.e1.text,
+        mail: this.user.local.mail
+      })
+      this.$store.state.user.local.homeTheme = this.e1.text
     },
     handleFileUpload () {
       this.file = this.$refs.file.files[0]

@@ -90,7 +90,12 @@ export default {
   },
   mounted () {
     this.updateTime()
-    unsplash.photos.getRandomPhoto({width: 2560, height: 1380, query: 'city'}).then((response) => {
+    var query = 'city'
+    if (this.$store.state.user) {
+      console.log('personnalise theme')
+      query = this.$store.state.user.local.homeTheme
+    }
+    unsplash.photos.getRandomPhoto({width: 2560, height: 1380, query: query}).then((response) => {
       response.json().then((lots) => {
         this.image = lots.urls.custom
       })

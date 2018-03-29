@@ -33,6 +33,9 @@ export default {
   editDescription (params) {
     return Api().put('account/description', params)
   },
+  editHomeTheme (params) {
+    return Api().put('account/homeTheme', params)
+  },
   editPhoto (params) {
     console.log(params.file)
     return Api().post('account/photo', params)

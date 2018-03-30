@@ -255,7 +255,10 @@ export default {
       { text: 'Dev' },
       { text: 'Web' },
       { text: 'Infra' },
-      { text: 'RH' }
+      { text: 'RH' },
+      { text: 'R&D' },
+      { text: 'International' },
+      { text: 'US' }
     ],
     items: [
       { display: false, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
@@ -265,7 +268,9 @@ export default {
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
       { display: false, icon: 'settings', text: 'Changelog', link: '/changelog' },
-      { display: true, icon: 'assessment', text: 'Benchmark', link: '/benchmark' }
+      { display: true, icon: 'assessment', text: 'Benchmark', link: '/benchmark' },
+      { display: true, icon: 'favorite', text: 'Dr House', link: 'https://backoffice.pa1.blade-group.fr:2448/drhouse/status' },
+      { display: true, icon: 'poll', text: 'Jira', link: 'https://o-computers.atlassian.net/secure/Dashboard.jspa' }
     ]
   }),
   methods: {
@@ -315,13 +320,16 @@ export default {
       console.log('OH NOES', error)
     },
     redirect (link) {
-      this.drawer = false
-      this.$router.push(link)
+      if (link.indexOf('http') !== -1) {
+        window.location.href = link
+      } else {
+        this.drawer = false
+        this.$router.push(link)
+      }
     },
     checkUser () {
       var vue = this
       if (vue.$route.fullPath) {
-
       }
       // check on router change for refresh
       if (vue.user.local) {

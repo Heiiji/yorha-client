@@ -25,14 +25,14 @@
             ellipsis
             hidden-sm-and-down
           >
-            Rank
+            Workplace
           </v-flex>
           <v-flex
             class="grey--text"
             ellipsis
             hidden-sm-and-down
           >
-            Workplace
+            qualifier
           </v-flex>
         </v-layout>
       </v-expansion-panel-content>
@@ -57,18 +57,18 @@
             <v-flex
               class="grey--text"
               ellipsis
-              hidden-sm-and-down
-              v-if="user.status"
-            >
-              {{ user.status }}
-            </v-flex>
-            <v-flex
-              class="grey--text"
-              ellipsis
               v-if="user.work"
               hidden-sm-and-down
             >
               {{ user.work }}
+            </v-flex>
+            <v-flex
+              class="grey--text"
+              ellipsis
+              hidden-sm-and-down
+              v-if="user.qualifier"
+            >
+              {{ user.qualifier }}
             </v-flex>
             <v-menu bottom left>
               <v-btn icon slot="activator" dark>

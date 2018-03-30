@@ -6,7 +6,7 @@
             slider-color="red"
             style="text-align: center;">
       <label style="color: white; font-size: 1.5em; padding-top: 10px; padding-left: 10px;" >Department </label>
-      <v-tab ripple style="margin-left: 20%">
+      <v-tab ripple style="margin-left: 15%">
         Général
       </v-tab>
       <v-tab v-for="item in department" :key="item.text" ripple>
@@ -24,7 +24,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -52,7 +52,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Test'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -80,7 +80,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Marketing'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -108,7 +108,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Support'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -136,7 +136,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Dev'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -308,7 +308,10 @@ export default {
         { text: 'Dev' },
         { text: 'Web' },
         { text: 'Infra' },
-        { text: 'RH' }
+        { text: 'RH' },
+        { text: 'R&D' },
+        { text: 'International' },
+        { text: 'US' }
       ],
       allNews: [],
       target: 'current'
@@ -329,14 +332,19 @@ export default {
       this.passed = responses.data.versions
     },
     async postNews () {
-      this.News.department = this.e1
+      this.News.department = this.e1.text
       News.Post(this.News)
       this.getNews()
+      this.PostNews = false
+      this.$router.push('/home')
     },
     async getNews () {
       const response = await News.fetchNews()
-      console.log(response.data)
-      this.allNews = response.data.news
+      if (response.data) {
+        if (response.data.news) {
+          this.allNews = response.data.news
+        }
+      }
     }
   }
 }

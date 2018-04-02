@@ -5,6 +5,21 @@
       <p class="date">{{ date }}</p>
       <p class="time">{{ time }}</p>
     </div>
+    <div style="position: absolute; width: 400px; right: 10px; top: 10%; height: 90%;">
+      <h2>News :</h2>
+            <v-card v-for="news in allNews" :key="news.title" v-if="(news.department === 'General') || news.department === $store.state.user.local.work && (news.visibility === true || $store.state.user.local.work)" style="background-color: rgba(30, 30, 200, 0.6); margin: 20px;" class="white--text">
+              <v-container fluid grid-list-lg>
+                <v-layout row>
+                  <v-flex xs12>
+                    <div>
+                      <div class="headline">{{ news.title }} :</div>
+                      <div>{{ news.text }}</div>
+                    </div>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card>
+    </div>
   </div>
 </template>
 <style>
@@ -47,6 +62,7 @@ p {
 }
 </style>
 <script>
+import News from '@/services/NewsService'
 import Unsplash from 'unsplash-js'
 
 var week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
@@ -62,6 +78,7 @@ export default {
   data: () => ({
     image: '',
     time: '',
+    allNews: [],
     date: ''
   }),
   methods: {
@@ -76,6 +93,14 @@ export default {
         zero += '0'
       }
       return (zero + num).slice(-digit)
+    },
+    async getNews () {
+      const response = await News.fetchNews()
+      if (response.data) {
+        if (response.data.news) {
+          this.allNews = response.data.news
+        }
+      }
     }
   },
   computed: {
@@ -90,6 +115,7 @@ export default {
   },
   mounted () {
     this.updateTime()
+    this.getNews()
     var query = 'city'
     if (this.$store.state.user) {
       if (this.$store.state.user.local) {

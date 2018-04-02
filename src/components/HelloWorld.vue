@@ -52,7 +52,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Test'">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Test' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -80,7 +80,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Marketing'">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Marketing' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -108,7 +108,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Support'">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Support' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -136,7 +136,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General' || news.department === 'Dev'">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Dev' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -164,7 +164,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Web' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -192,7 +192,7 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'Infra' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -220,7 +220,91 @@
               <v-card dark color="secondary">
                 <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
-              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link">
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'RH' && (news.visibility === true || $store.state.user.local.work)">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'R&D' && (news.visibility === true || $store.state.user.local.work)">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'International' && (news.visibility === true || $store.state.user.local.work)">
+                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </a>
+            </v-flex>
+            <v-flex xs4>
+              <QwickLook target="current">
+              </QwickLook><br/>
+              <QwickLook target="finnish">
+              </QwickLook>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-tab-item>
+      <v-tab-item>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex style="display: none;" xs12>
+              <v-card dark color="primary">
+                <v-card-text class="px-0">12</v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex xs8>
+              <v-card dark color="secondary">
+                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'US' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card>
@@ -273,6 +357,12 @@
             single-line
           ></v-select>
         </v-flex>
+        <br/>
+        <v-switch
+          :label="`Public visibility: ${News.visibility.toString()}`"
+          v-model="News.visibility"
+        ></v-switch>
+        <br/><br/>
       <v-card-actions>
         <v-btn color="blue darken-1" flat @click.native="PostNews = false">Close</v-btn>
         <v-btn color="blue darken-1" flat @click="postNews()">Save</v-btn>
@@ -299,7 +389,8 @@ export default {
         text: '',
         title: '',
         link: '',
-        department: 'General'
+        department: 'General',
+        visibility: true
       },
       department: [
         { text: 'Test' },

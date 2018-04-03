@@ -3,42 +3,11 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
-    <h4>0.0.4 :</h4>
+    <h4>0.0.5 :</h4>
     <p>
-      - Hide notification icon when isn't logged <br/>
-      - rework home graphic
+      - Resolve token bug, we are different ;)
     </p>
     <br/><br/>
-    <h4>0.0.3 :</h4>
-    <p>
-      - Home menu overflow fix<br />
-      - add side menu shadow <br/>
-      - add home page on login <br/>
-      - remplace standar login with google login <br/>
-      - update right management <br/>
-      - refactoring of management page
-    </p>
-    <br/><br/>
-    <h4>0.0.2 :</h4>
-    <p>
-      - Add working place display on side menu<br />
-      - Fix refresh of side menu<br />
-      - Add inventory on menu<br />
-      - Little fix for conflict<br />
-      - Preparation for presentation <br/>
-    </p>
-    <br/><br/>
-    <h4>0.0.1 :</h4>
-    <p>
-      - Ajout de la page de changelog<br/>
-      - Button "test it" is linked<br/>
-      - Auto hide on panel navigation<br/>
-      - Redirect on signup<br/>
-      - refactoring de la homepage<br/>
-      - Ajout de la page de téléchargement de versions <br/>
-      - Modification de la string de recherche en haut de pages et changement de l'ordre des menus<br/>
-      - delete du bouton d'apps a la google
-    </p>
   </div>
 </template>
 

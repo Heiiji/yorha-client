@@ -267,7 +267,7 @@ export default {
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
-      { display: false, icon: 'settings', text: 'Changelog', link: '/changelog' },
+      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' },
       { display: true, icon: 'assessment', text: 'Benchmark', link: '/benchmark' },
       { display: true, icon: 'favorite', text: 'Dr House', link: 'https://backoffice.pa1.blade-group.fr:2448/drhouse/status' },
       { display: true, icon: 'poll', text: 'Jira', link: 'https://o-computers.atlassian.net/secure/Dashboard.jspa' }

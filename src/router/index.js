@@ -9,6 +9,7 @@ import Management from '@/components/Management'
 import Changelog  from '@/components/changelog'
 import Home       from '@/components/home'
 import Benchmark  from '@/components/Benchmark'
+import Mattermost from '@/components/mattermost'
 // versions
 import Displayer  from '@/components/versions/displayer'
 import Downloads  from '@/components/versions/downloads'
@@ -91,6 +92,11 @@ export default new Router({
       path: '/benchmark',
       name: 'Benchmark',
       component: Benchmark
+    },
+    {
+      path: '/mattermost',
+      name: 'mattermost',
+      component: Mattermost
     }
   ]
 })

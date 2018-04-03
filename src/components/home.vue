@@ -6,8 +6,8 @@
       <p class="time">{{ time }}</p>
     </div>
     <div style="position: absolute; width: 400px; right: 0px; top: 0px; height: 100%; background-color: rgba(100, 100, 100, 0.3); padding-left: 20px; padding-top: 65px;">
-      <h2>News :</h2>
-            <v-card v-for="news in allNews" :key="news.title" v-if="(news.department === 'General') || news.department === $store.state.user.local.work && (news.visibility === true || $store.state.user.local.work)" style="background-color: rgba(30, 30, 200, 0.6); margin: 20px;" class="white--text">
+      <h2 style="color: white;" >News :</h2>
+            <v-card v-for="news in allNews" :key="news.title" v-if="(news.department === 'General') || news.department === $store.state.user.local.work" style="background-color: rgba(30, 30, 200, 0.6); margin: 20px;" class="white--text">
               <v-container fluid grid-list-lg>
                 <v-layout row>
                   <v-flex xs12>

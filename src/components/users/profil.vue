@@ -1,28 +1,31 @@
 <template>
-  <div>
+  <div style="background-color: rgba(200, 200, 200, 0.2); min-height: 100%; width: 75%; margin-left: 12.5%">
     <br/>
     <div>
-    <span id="photo" v-if="user.local.picture">
-      <div id="editer" @click="EditPicture = true">Editer</div>
-      <img width="300px" :src="user.local.picture"/>
-    </span>
-    <h1>Profil :</h1>
-    username : <span v-if="user.displayName">{{ user.local.username }}<br/></span>
-    workplace : <span v-if="user.local">{{ user.local.work }}</span><br/>
-    workplace rank : <span v-if="user.local">{{ user.local.status }}</span><br/>
-    mail : <span v-if="user.local.mail">{{ user.local.mail }} </span><br/>
-    Home Background theme :
-    <v-flex xs3>
-        <v-select
-          :items="background"
-          v-model="e1"
-          @change="PostHomeTheme()"
-          single-line
-        ></v-select>
-      </v-flex>
-    </div><br/>
+      <div style="position: relative;">
+        <span id="photo" v-if="user.local.picture">
+          <div id="editer" @click="EditPicture = true">Editer</div>
+          <img width="300px" :src="user.local.picture"/>
+        </span>
+        <div style="display: flex; padding-top: 25px;">
+          <span style="font-size: 2em; display: block;" v-if="user.local">{{ user.local.username }} <span style="font-size: 0.5em;">({{ user.local.mail }})</span><br/></span><br/>
+        </div>
+        <br/>
+        workplace : <span v-if="user.local">{{ user.local.work }}</span><br/>
+        workplace rank : <span v-if="user.local">{{ user.local.qualifier }}</span><br/><br/><br/>
+        Home Background theme :<br/>
+            <v-select
+              :items="background"
+              v-model="e1"
+              @change="PostHomeTheme"
+              style="display: inline-block; width: 500px;"
+              single-line
+            ></v-select>
+      </div>
+    </div>
+    <br/><br/><br/><br/><br/><br/>
     <h2>Description : <v-btn flat small @click="EditDescription = true">Editer</v-btn></h2>
-    <p v-if="user.local">{{ user.local.description }}</p>
+    <p style="margin: 15px;" v-if="user.local">{{ user.local.description }}</p>
 
     <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
       <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
@@ -103,13 +106,13 @@ export default {
       this.user.local.description = desc
       this.EditDescription = false
     },
-    async PostHomeTheme () {
-      console.log(this.e1.text)
+    async PostHomeTheme (event) {
+      console.log(event.text)
       AccountService.editHomeTheme({
-        newTheme: this.e1.text,
+        newTheme: event.text,
         mail: this.user.local.mail
       })
-      this.$store.state.user.local.homeTheme = this.e1.text
+      this.$store.state.user.local.homeTheme = event.text
     },
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
@@ -140,8 +143,8 @@ export default {
 
 <style type="text/css">
 #photo {
-  display: inline-block;
-  position: relative;
+  float: left;
+  margin: 25px;
 }
 #editer {
   -webkit-transition: background-color 0.5s;

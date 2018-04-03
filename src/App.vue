@@ -112,11 +112,14 @@
       </v-toolbar-title>
       <v-text-field flat
                     solo-inverted
-                    prepend-icon="search"
                     @change="redirect('/SearchUser')"
                     label="Search Users"
                     v-model="search"
+                    style="border-radius: 10px;"
                     class="hidden-sm-and-down"></v-text-field>
+      <v-btn icon>
+        <v-icon style="padding: 10px;" >search</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
       <v-menu offset-x
               :close-on-content-click="false"
@@ -267,10 +270,10 @@ export default {
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
       { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
-      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' },
       { display: true, icon: 'assessment', text: 'Benchmark', link: '/benchmark' },
       { display: true, icon: 'favorite', text: 'Dr House', link: 'https://backoffice.pa1.blade-group.fr:2448/drhouse/status' },
-      { display: true, icon: 'poll', text: 'Jira', link: 'https://o-computers.atlassian.net/secure/Dashboard.jspa' }
+      { display: true, icon: 'poll', text: 'Jira', link: 'https://o-computers.atlassian.net/secure/Dashboard.jspa' },
+      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' }
     ]
   }),
   methods: {
@@ -334,7 +337,7 @@ export default {
       // check on router change for refresh
       if (vue.user.local) {
         vue.items[3].display = false
-        if (vue.user.local.work === 'QA') {
+        if (vue.user.local.work === 'Test') {
           vue.items[0].display = true
         }
       }

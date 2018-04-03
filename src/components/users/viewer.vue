@@ -8,7 +8,7 @@
     <h1>Profil :</h1>
     username : <span v-if="user.username">{{ user.username }}<br/></span>
     workplace : <span v-if="user.work">{{ user.work }}</span><br/>
-    workplace rank : <span v-if="user.status">{{ user.status }}</span><br/>
+    workplace rank : <span v-if="user.qualifier">{{ user.qualifier }}</span><br/>
     mail : <span v-if="user.mail">{{ user.mail }} </span><br/>
     </div><br/>
     <h2>Description : </h2>

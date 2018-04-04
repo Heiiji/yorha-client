@@ -147,12 +147,13 @@ export default {
   margin: 25px;
 }
 #editer {
+  opacity: 0;
   -webkit-transition: background-color 0.5s;
   transition: background-color 0.5s;
   display: inline-block;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 30px;
+  left: 30px;
   background-color: rgba(200, 200, 200, 0);
   padding: 10px;
   border-radius: 10px;
@@ -161,6 +162,7 @@ export default {
 #photo:hover #editer {
   -webkit-transition: background-color 0.5s;
   transition: background-color 0.5s;
+  opacity: 1;
   background-color: rgba(200, 200, 200, 0.7);
 }
 </style>

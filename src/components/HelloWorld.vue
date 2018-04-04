@@ -30,6 +30,16 @@
                 </v-card>
                 <v-divider></v-divider>
               </a>
+              <v-card style="margin-top: 15px;" dark color="secondary">
+                <v-card-text class="px-0">Social Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <h3 style="color: blue;">Discord</h3>
+              <span v-for="news in DiscNews" :key="news.title">
+                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
+                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </span>
             </v-flex>
             <v-flex xs4>
               <QwickLook target="current">
@@ -86,6 +96,16 @@
                 </v-card>
                 <v-divider></v-divider>
               </a>
+              <v-card style="margin-top: 15px;" dark color="secondary">
+                <v-card-text class="px-0">Social Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <h3 style="color: blue;">Discord</h3>
+              <span v-for="news in DiscNews" :key="news.title">
+                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
+                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </span>
             </v-flex>
             <v-flex xs4>
               <QwickLook target="current">
@@ -114,6 +134,16 @@
                 </v-card>
                 <v-divider></v-divider>
               </a>
+              <v-card style="margin-top: 15px;" dark color="secondary">
+                <v-card-text class="px-0">Social Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+              </v-card>
+              <h3 style="color: blue;">Discord</h3>
+              <span v-for="news in DiscNews" :key="news.title">
+                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
+                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
+                </v-card>
+                <v-divider></v-divider>
+              </span>
             </v-flex>
             <v-flex xs4>
               <QwickLook target="current">
@@ -405,6 +435,7 @@ export default {
         { text: 'US' }
       ],
       allNews: [],
+      DiscNews: [],
       target: 'current'
     }
   },
@@ -434,6 +465,20 @@ export default {
       if (response.data) {
         if (response.data.news) {
           this.allNews = response.data.news
+        }
+      }
+      this.DiscNews = {
+        msg1: {
+          name: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+          text: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+        },
+        msg2: {
+          name: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+          text: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+        },
+        msg3: {
+          name: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+          text: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
         }
       }
     }

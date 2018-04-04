@@ -6,19 +6,32 @@
       <p class="time">{{ time }}</p>
     </div>
     <div style="position: absolute; width: 400px; right: 0px; top: 0px; height: 100%; background-color: rgba(100, 100, 100, 0.3); padding-left: 20px; padding-top: 65px;">
-      <h2 style="color: white;" >News :</h2>
-            <v-card v-for="news in allNews" :key="news.title" v-if="(news.department === 'General') || news.department === $store.state.user.local.work" style="background-color: rgba(30, 30, 200, 0.6); margin: 20px;" class="white--text">
-              <v-container fluid grid-list-lg>
-                <v-layout row>
-                  <v-flex xs12>
-                    <div>
-                      <div class="headline">{{ news.title }} :</div>
-                      <div>{{ news.text }}</div>
-                    </div>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card>
+      <h2 style="color: white;" >Discord :</h2>
+        <v-card style="color: black; text-align: left; margin: 5px; background-color: rgba(24, 25, 28, 0.9); color: white; font-size: 0.8em;" class="white--text">
+          <v-container fluid grid-list-lg>
+            <v-layout row>
+              <v-flex xs12>
+                <div>
+                  <div style="font-size: 1.4em;">{{ DiscNews.msg3.name }} :</div>
+                  <div>{{ DiscNews.msg3.text }}</div>
+                </div>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card>
+        <h2 style="color: white;" >News :</h2>
+          <v-card v-for="news in allNews" :key="news.title" v-if="news.department === 'General' || news.department === $store.state.user.local.work" style="background-color: rgba(30, 30, 200, 0.6); margin: 20px;" class="white--text">
+            <v-container fluid grid-list-lg>
+              <v-layout row>
+                <v-flex xs12>
+                  <div>
+                    <div class="headline">{{ news.title }} :</div>
+                    <div>{{ news.text }}</div>
+                  </div>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
     </div>
   </div>
 </template>
@@ -79,6 +92,7 @@ export default {
     image: '',
     time: '',
     allNews: [],
+    DiscNews: [],
     date: ''
   }),
   methods: {
@@ -100,6 +114,20 @@ export default {
         if (response.data.news) {
           this.allNews = response.data.news
         }
+        this.DiscNews = {
+          msg1: {
+            name: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+            text: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+          },
+          msg2: {
+            name: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+            text: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+          },
+          msg3: {
+            name: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+            text: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+          }
+        }
       }
     }
   },
@@ -119,7 +147,6 @@ export default {
     var query = 'city'
     if (this.$store.state.user) {
       if (this.$store.state.user.local) {
-        console.log('personnalise theme')
         query = this.$store.state.user.local.homeTheme
       }
     }
@@ -131,6 +158,20 @@ export default {
     window.setInterval(() => {
       this.updateTime()
     }, 500)
+    window.setInterval(() => {
+      if (query === 'city' && this.$store.state.user)
+      {
+        if (this.$store.state.user.local !== 'city')
+        {
+          query = this.$store.state.user.local.homeTheme
+          unsplash.photos.getRandomPhoto({width: 2560, height: 1380, query: query}).then((response) => {
+            response.json().then((lots) => {
+              this.image = lots.urls.custom
+            })
+          })
+        }
+      }
+    }, 1000)
   }
 }
 </script>

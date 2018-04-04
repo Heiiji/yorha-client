@@ -112,37 +112,14 @@
       </v-toolbar-title>
       <v-text-field flat
                     solo-inverted
-                    @change="redirect('/SearchUser')"
                     label="Search Users"
                     v-model="search"
                     style="border-radius: 10px;"
                     class="hidden-sm-and-down"></v-text-field>
-      <v-btn icon>
+      <v-btn @click="searching()" icon>
         <v-icon style="padding: 10px;" >search</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-menu offset-x
-              :close-on-content-click="false"
-              :nudge-width="200"
-              v-model="menu"
-              v-if="signed === true">
-        <v-btn slot="activator" icon>
-          <v-icon>notifications</v-icon>
-          <v-badge left style="margin-left: 15px; margin-top: 15px;">
-            <span slot="badge">4</span>
-          </v-badge>
-        </v-btn>
-        <v-card style="padding: 10px;">
-          <span style="padding: 10px; display: inline-block;">
-            Nouvelle reunions le 15/13/1995
-          </span>
-          <v-divider></v-divider>
-          <span style="padding: 10px; display: inline-block;">
-            Nouvelle version en  test !
-          </span>
-          <v-divider></v-divider>
-        </v-card>
-      </v-menu>
       <a href="https://inbox.google.com/u/0/" target="_blank" style="text-decoration: none;">
         <v-btn icon>
           <v-icon>mail</v-icon>
@@ -152,7 +129,7 @@
         <v-icon>home</v-icon>
       </v-btn>
       <v-btn v-if="signed === true" @click="logout()" icon>
-        <v-icon>launch</v-icon>
+        <img width="20px" src="http://www.clker.com/cliparts/a/U/q/S/B/e/white-button-power-md.png" />
       </v-btn>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
@@ -175,39 +152,13 @@
         <span style="cursor:pointer;" @click="redirect('/')" class="hidden-sm-and-down">Yorha</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-menu offset-x
-              :close-on-content-click="false"
-              :nudge-width="200"
-              v-model="menu"
-              v-if="signed === true">
-        <v-btn slot="activator" icon>
-          <v-icon>notifications</v-icon>
-          <v-badge left style="margin-left: 15px; margin-top: 15px;">
-            <span slot="badge">4</span>
-          </v-badge>
-        </v-btn>
-        <v-card style="padding: 10px; opacity: 0.9; margin-top: 35px;">
-          <span style="padding: 10px; display: inline-block;">
-            Nouvelle reunions le 15/13/1995
-          </span>
-          <v-divider></v-divider>
-          <span style="padding: 10px; display: inline-block;">
-            Nouvelle version en  test !
-          </span>
-          <v-divider></v-divider>
-          <span style="padding: 10px; display: inline-block;">
-            civilization VI est bien
-          </span>
-          <v-divider></v-divider>
-        </v-card>
-      </v-menu>
       <a href="https://inbox.google.com/u/0/" target="_blank" style="text-decoration: none;">
         <v-btn icon>
           <v-icon>mail</v-icon>
         </v-btn>
       </a>
       <v-btn v-if="signed === true" @click="logout()" icon>
-        <v-icon>launch</v-icon>
+        <img width="20px" src="http://www.clker.com/cliparts/a/U/q/S/B/e/white-button-power-md.png" />
       </v-btn>
       <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
         <v-avatar size="32px" tile>
@@ -277,6 +228,9 @@ export default {
     ]
   }),
   methods: {
+    searching () {
+      this.$router.push('/SearchUser')
+    },
     onSignInSuccess (googleUser) {
       // See https://developers.google.com/identity/sign-in/web/reference#users
       this.$store.GoogleToken = googleUser

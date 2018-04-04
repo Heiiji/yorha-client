@@ -130,6 +130,9 @@ export default {
 </script>
 
 <style>
+h5 {
+  margin: 10px;
+}
 .good {
   color: green;
 }

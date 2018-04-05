@@ -26,6 +26,10 @@ export default {
     return Api().get('account/', params)
   },
 
+  FindUsersByName (params) {
+    return Api().get('accountName/' + params)
+  },
+
   FindById (id) {
     return Api().get('/account/' + id)
   },

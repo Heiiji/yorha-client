@@ -3,6 +3,15 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.0.8 :</h4>
+    <p>
+      - Fix 'post' button display on homepage<br/>
+      - fix login error<br/>
+      - Searchbar now filtering with search item<br/>
+      - have a default wallpaper for home <br/>
+      - fix error loop on homepage
+    </p>
+    <br/><br/>
     <h4>0.0.7 :</h4>
     <p>
       - Merge Discord actu and display it. <br/>
@@ -11,17 +20,6 @@
       - homepage refresh news each minutes <br/>
       - change disconnect button <br/>
       - Fix Background theme at home
-    </p>
-    <br/><br/>
-    <h4>0.0.6 :</h4>
-    <p>
-      - More efficient display for news at homepage. <br/>
-      - Rework Profil display <br/>
-      - Changelog on menu push to bottom<br/>
-      - Fix theme selector on profil page<br/>
-      - Fix status => become just a qualifier<br/>
-      - Fix Right access for Version Manager<br/>
-      - Rework main search Bar
     </p>
     <br/><br/>
   </div>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    recherche : {{Search}}
     <v-expansion-panel style="z-index: 20;">
       <v-expansion-panel-content
         hide-actions
@@ -53,11 +54,11 @@ export default {
     Search: ''
   },
   mounted () {
-    this.users = this.takeUsers('all')
+    this.users = this.takeUsers(this.Search)
   },
   methods: {
     takeUsers (arg) {
-      AccountService.FindUsers(arg).then((response) => {
+      AccountService.FindUsersByName(arg).then((response) => {
         this.users = response.data.users
       })
     }

@@ -1,6 +1,7 @@
 <template>
   <div :style="dynamicStyle">
-    <img :src="image" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" />
+    <img :src="'/static/Wallpaper 10.jpg'" style="z-index: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" />
+    <img :src="image" style="z-index: 1; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" />
     <div class="clock">
       <p class="date">{{ date }}</p>
       <p class="time">{{ time }}</p>
@@ -144,6 +145,7 @@ export default {
   mounted () {
     this.updateTime()
     this.getNews()
+    var vue = this
     var query = 'city'
     if (this.$store.state.user) {
       if (this.$store.state.user.local) {
@@ -159,8 +161,8 @@ export default {
       this.updateTime()
     }, 500)
     window.setInterval(() => {
-      if (query === 'city' && this.$store.state.user) {
-        if (this.$store.state.user.local !== 'city') {
+      if (query === 'city' && vue.$store.state.user.local) {
+        if (vue.$store.state.user.local.homeTheme !== 'city') {
           query = this.$store.state.user.local.homeTheme
           unsplash.photos.getRandomPhoto({width: 2560, height: 1380, query: query}).then((response) => {
             response.json().then((lots) => {

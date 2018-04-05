@@ -22,7 +22,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'General'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -31,7 +31,7 @@
                 <v-divider></v-divider>
               </a>
               <v-card style="margin-top: 15px;" dark color="secondary">
-                <v-card-text class="px-0">Social Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Social Actu</v-card-text>
               </v-card>
               <h3 style="color: blue;">Discord</h3>
               <span v-for="news in DiscNews" :key="news.title">
@@ -60,7 +60,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Test' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -88,7 +88,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Marketing' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -97,7 +97,7 @@
                 <v-divider></v-divider>
               </a>
               <v-card style="margin-top: 15px;" dark color="secondary">
-                <v-card-text class="px-0">Social Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Social Actu</v-card-text>
               </v-card>
               <h3 style="color: blue;">Discord</h3>
               <span v-for="news in DiscNews" :key="news.title">
@@ -126,7 +126,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Support' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -135,7 +135,7 @@
                 <v-divider></v-divider>
               </a>
               <v-card style="margin-top: 15px;" dark color="secondary">
-                <v-card-text class="px-0">Social Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Social Actu</v-card-text>
               </v-card>
               <h3 style="color: blue;">Discord</h3>
               <span v-for="news in DiscNews" :key="news.title">
@@ -164,7 +164,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Dev' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -192,7 +192,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'Web' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -220,7 +220,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'Infra' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -248,7 +248,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'RH' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -276,7 +276,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'R&D' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -304,7 +304,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link" v-if="news.department === 'International' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
@@ -332,7 +332,7 @@
             </v-flex>
             <v-flex xs8>
               <v-card dark color="secondary">
-                <v-card-text class="px-0">Actu<v-btn flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
+                <v-card-text class="px-0">Actu<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
               </v-card>
               <a v-for="news in allNews" :key="news.title" target="_blank" :href="news.link"  v-if="news.department === 'US' && (news.visibility === true || $store.state.user.local.work)">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">

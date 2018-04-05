@@ -159,10 +159,8 @@ export default {
       this.updateTime()
     }, 500)
     window.setInterval(() => {
-      if (query === 'city' && this.$store.state.user)
-      {
-        if (this.$store.state.user.local !== 'city')
-        {
+      if (query === 'city' && this.$store.state.user) {
+        if (this.$store.state.user.local !== 'city') {
           query = this.$store.state.user.local.homeTheme
           unsplash.photos.getRandomPhoto({width: 2560, height: 1380, query: query}).then((response) => {
             response.json().then((lots) => {

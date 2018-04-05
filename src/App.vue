@@ -249,18 +249,17 @@ export default {
       var provider = new firebase.auth.GoogleAuthProvider()
       var vue = this
       firebase.auth().signInWithPopup(provider).then(function (result) {
-        vue.token = result.credential.accessToken
-        vue.user = result.user
-        vue.signed = true
-        vue.$store.state.user = result.user
         Api().post('/account', {
           username: result.user.displayName,
           mail: result.user.email,
           picture: result.user.photoURL
         }).then((response) => {
+          vue.token = result.credential.accessToken
+          vue.user = result.user
+          vue.signed = true
+          vue.$store.state.user = result.user
           vue.$store.state.user.local = response.data
           vue.user.local = response.data
-          console.log(vue.user.local.token)
           vue.checkUser()
           window.$cookies.set('user_session', vue.user.local.token, '1d')
           vue.$router.push('/home')

@@ -2,11 +2,11 @@
   <div :style="dynamicStyle">
     <img :src="'/static/Wallpaper 10.jpg'" style="z-index: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" />
     <img :src="image" style="z-index: 1; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" />
-    <div class="clock">
+    <div style="z-index: 3;" class="clock">
       <p class="date">{{ date }}</p>
       <p class="time">{{ time }}</p>
     </div>
-    <div style="position: absolute; width: 400px; right: 0px; top: 0px; height: 100%; background-color: rgba(100, 100, 100, 0.3); padding-left: 20px; padding-top: 65px;">
+    <div style="z-index: 3; position: absolute; width: 400px; right: 0px; top: 0px; height: 100%; background-color: rgba(100, 100, 100, 0.3); padding-left: 20px; padding-top: 65px;">
       <h2 style="color: white;" >Discord :</h2>
         <v-card style="color: black; text-align: left; margin: 5px; background-color: rgba(24, 25, 28, 0.9); color: white; font-size: 0.8em;" class="white--text">
           <v-container fluid grid-list-lg>

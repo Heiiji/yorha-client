@@ -18,8 +18,8 @@
         </v-card-title>
         <v-card-actions v-if="VersionDisplay == 'Versions On Rail'">
           <v-btn v-on:click="Edition(value)" flat>Edit</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.work === 'QA'" @click="GoTest(value.path)">Test it</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.work === 'QA'" @click="SetFinnished = true; Validator = value._id">Set as finnished</v-btn>
+          <v-btn flat color="purple" v-if="$store.state.user.work === 'Test'" @click="GoTest(value.path)">Test it</v-btn>
+          <v-btn flat color="purple" v-if="$store.state.user.work === 'Test'" @click="SetFinnished = true; Validator = value._id">Set as finnished</v-btn>
           <v-btn flat color="purple" v-if="$store.state.user.work === 'Proximity'" @click="dialogProxi = true">Give to QA</v-btn>
           <v-spacer></v-spacer>
           <v-btn icon @click.native="show = !show">
@@ -34,7 +34,7 @@
           </v-btn>
         </v-card-actions>
         <v-slide-y-transition>
-          <v-card-text style="white-space: pre; text-align: left;" v-show="show">
+          <v-card-text style="text-align: left; word-wrap: break-word;" v-show="show">
             Changelog :
              {{ value.changelog }}
           </v-card-text>
@@ -74,13 +74,13 @@
           ></v-text-field>
           <v-text-field v-model="editeable.importance"
             name="importance"
-            label="Version imortance (hotfix,...)"
+            label="Version importance (hotfix,...)"
             id="importance"
             style="width: 990px; margin: 5px;"
           ></v-text-field>
           <v-text-field v-model="editeable.version"
             name="version"
-            label="Version nummber"
+            label="Version number"
             id="version"
             style="width: 990px; margin: 5px;"
           ></v-text-field>
@@ -110,7 +110,7 @@
             ></v-text-field>
             <v-text-field v-model="editeable.scheduled"
               name="scheduled"
-              label="Nbr test scheduled"
+              label="Testcase volume"
               id="scheduled"
               style="width: 990px; margin: 5px;"
             ></v-text-field>
@@ -197,7 +197,7 @@ export default {
       },
       show: false,
       dialogm1: '',
-      VersionDisplay: 'Version On Rail',
+      VersionDisplay: 'Version on Rail',
       dialog: false,
       dialogProxi: false,
       SetFinnished: false
@@ -214,7 +214,7 @@ export default {
         this.versions = response.data.versions
       } else {
         this.VersionDisplay = 'Versions On Rail'
-        if (arg === 'QA') {
+        if (arg === 'Test') {
           const response = await VersionService.fetchPosts('current')
           this.versions = response.data.versions
         } else {
@@ -237,7 +237,7 @@ export default {
       }
       NewsService.Post({
         text: this.editeable.importance + ' : ' + this.editeable.device + ' arrive on ' + this.editeable.version,
-        title: 'New Version On QA',
+        title: 'New version on QA',
         link: '',
         department: 'General'
       })
@@ -252,6 +252,9 @@ export default {
       this.editeable.tester = version.tester
       this.editeable.id = version._id
       this.editeable.picture = version.picture
+      this.editeable.target = version.target
+      this.editeable.scheduled = version.scheduled
+      this.editeable.time = version.time
       this.dialog = true
     },
     GoTest (url) {

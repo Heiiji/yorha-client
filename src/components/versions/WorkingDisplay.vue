@@ -15,10 +15,7 @@
               <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> recieved : {{ item.date.replace(/T............./g, ' ') }} => <span :class="item.status">{{ item.status }}</span></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-          <p style="white-space: pre; text-align: left;">{{ item.changelog }}</p>
-          <v-avatar style="position: absolute; right: 2px; top: 2px;" size="50px" tile>
-            <img :src="item.picture" style=" border-radius: 25px" />
-          </v-avatar>
+          <p style="text-align: left; word-wrap: break-word; width: 100%;">{{ item.changelog }}</p>
         </v-list-group>
       </v-list>
     </span>
@@ -105,6 +102,9 @@ export default {
     async getVersion () {
       const response = await VersionService.fetchPosts(this.target)
       this.versions = response.data.versions
+      this.versions.forEach(function (element) {
+        element.changelog.replace(/\n/g, '<br />')
+      })
     }
   }
 }

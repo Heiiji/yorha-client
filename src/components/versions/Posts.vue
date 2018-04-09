@@ -34,7 +34,7 @@
           </v-btn>
         </v-card-actions>
         <v-slide-y-transition>
-          <v-card-text style="text-align: left; word-wrap: break-word;" v-show="show">
+          <v-card-text style="text-align: left; word-wrap: break-word;" v-html="value.changelog" v-show="show">
             Changelog :
              {{ value.changelog }}
           </v-card-text>
@@ -222,6 +222,10 @@ export default {
           this.versions = response.data.versions
         }
       }
+      this.versions.forEach(function (element) {
+        element.changelog = element.changelog.replace(/\r?\n/g, '<br />')
+        console.log(element.changelog)
+      })
     },
     async giveQA (id) {
       VersionService.changeStatus({id: id, status: 'WIP'})

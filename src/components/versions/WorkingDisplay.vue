@@ -15,7 +15,7 @@
               <v-list-tile-title>{{ item.support }} <strong>{{ item.version }}</strong> recieved : {{ item.date.replace(/T............./g, ' ') }} => <span :class="item.status">{{ item.status }}</span></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-          <p style="text-align: left; word-wrap: break-word; width: 100%;">{{ item.changelog }}</p>
+          <p style="text-align: left; word-wrap: break-word; width: 100%;" v-html="item.changelog"></p>
         </v-list-group>
       </v-list>
     </span>
@@ -103,7 +103,8 @@ export default {
       const response = await VersionService.fetchPosts(this.target)
       this.versions = response.data.versions
       this.versions.forEach(function (element) {
-        element.changelog.replace(/\n/g, '<br />')
+        element.changelog = element.changelog.replace(/\r?\n/g, '<br />')
+        console.log(element.changelog)
       })
     }
   }

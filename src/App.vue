@@ -1,5 +1,316 @@
 <template>
   <v-app id="app" data-app>
+    <div class="overlay"></div>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s1">
+        <h3><span class="pull-left">Chat</span><a href="javascript:void(0);" class="pull-right" id="closeRight"><i class="fa fa-times"></i></a></h3>
+        <div class="slimscroll">
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar2.png" alt=""><span>Sandra smith<small>Hi! How're you?</small></span></a>
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar3.png" alt=""><span>Amily Lee<small>Hi! How're you?</small></span></a>
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar4.png" alt=""><span>Christopher Palmer<small>Hi! How're you?</small></span></a>
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar5.png" alt=""><span>Nick Doe<small>Hi! How're you?</small></span></a>
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar2.png" alt=""><span>Sandra smith<small>Hi! How're you?</small></span></a>
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar3.png" alt=""><span>Amily Lee<small>Hi! How're you?</small></span></a>
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar4.png" alt=""><span>Christopher Palmer<small>Hi! How're you?</small></span></a>
+            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar5.png" alt=""><span>Nick Doe<small>Hi! How're you?</small></span></a>
+        </div>
+</nav>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+        <h3><span class="pull-left">Sandra Smith</span> <a href="javascript:void(0);" class="pull-right" id="closeRight2"><i class="fa fa-angle-right"></i></a></h3>
+        <div class="slimscroll chat">
+            <div class="chat-item chat-item-left">
+                <div class="chat-image">
+                    <img src="/static/assets/images/avatar2.png" alt="">
+                </div>
+                <div class="chat-message">
+                    Hi There!
+                </div>
+            </div>
+            <div class="chat-item chat-item-right">
+                <div class="chat-message">
+                    Hi! How are you?
+                </div>
+            </div>
+            <div class="chat-item chat-item-left">
+                <div class="chat-image">
+                    <img src="/static/assets/images/avatar2.png" alt="">
+                </div>
+                <div class="chat-message">
+                    Fine! do you like my project?
+                </div>
+            </div>
+            <div class="chat-item chat-item-right">
+                <div class="chat-message">
+                    Yes, It's clean and creative, good job!
+                </div>
+            </div>
+            <div class="chat-item chat-item-left">
+                <div class="chat-image">
+                    <img src="/static/assets/images/avatar2.png" alt="">
+                </div>
+                <div class="chat-message">
+                    Thanks, I tried!
+                </div>
+            </div>
+            <div class="chat-item chat-item-right">
+                <div class="chat-message">
+                    Good luck with your sales!
+                </div>
+            </div>
+        </div>
+        <div class="chat-write">
+            <form class="form-horizontal" action="javascript:void(0);">
+                <input type="text" class="form-control" placeholder="Say something">
+            </form>
+        </div>
+</nav>
+    <div class="menu-wrap">
+        <nav class="profile-menu">
+            <div class="profile"><img src="/static/assets/images/profile-menu-image.png" width="60" alt="David Green"/><span>David Green</span></div>
+            <div class="profile-menu-list">
+                <a href="#"><i class="fa fa-star"></i><span>Favorites</span></a>
+                <a href="#"><i class="fa fa-bell"></i><span>Alerts</span></a>
+                <a href="#"><i class="fa fa-envelope"></i><span>Messages</span></a>
+                <a href="#"><i class="fa fa-comment"></i><span>Comments</span></a>
+            </div>
+        </nav>
+        <button class="close-button" id="close-button">Close Menu</button>
+    </div>
+    <form class="search-form" action="#" method="GET">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control search-input" placeholder="Search...">
+            <span class="input-group-btn">
+                <button class="btn btn-default close-search waves-effect waves-button waves-classic" type="button"><i class="fa fa-times"></i></button>
+            </span>
+        </div>
+    </form>
+    <main class="page-content content-wrap">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="sidebar-pusher">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+                <div class="logo-box">
+                    <a href="/" class="logo-text" style="background-color: rgb(33, 150, 243);"><span>Yorha</span></a>
+                </div>
+                <div class="search-button">
+                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
+                </div>
+                <div class="topmenu-outer">
+                    <div class="top-menu">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a falsehref="javascript:void(0);" class="waves-effect waves-button waves-classic sidebar-toggle"><i class="fa fa-bars"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect waves-button waves-classic toggle-fullscreen"><i class="fa fa-expand"></i></a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">4</span></a>
+                                <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
+                                    <li><p class="drop-title">You have 4 new  messages !</p></li>
+                                    <li class="dropdown-menu-list slimscroll messages">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a href="#">
+                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" src="/static/assets/images/avatar2.png" alt=""></div>
+                                                    <p class="msg-name">Sandra Smith</p>
+                                                    <p class="msg-text">Hey ! I'm working on your project</p>
+                                                    <p class="msg-time">3 minutes ago</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="msg-img"><div class="online off"></div><img class="img-circle" src="/static/assets/images/avatar4.png" alt=""></div>
+                                                    <p class="msg-name">Amily Lee</p>
+                                                    <p class="msg-text">Hi David !</p>
+                                                    <p class="msg-time">8 minutes ago</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="msg-img"><div class="online off"></div><img class="img-circle" src="/static/assets/images/avatar3.png" alt=""></div>
+                                                    <p class="msg-name">Christopher Palmer</p>
+                                                    <p class="msg-text">See you soon !</p>
+                                                    <p class="msg-time">56 minutes ago</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" src="/static/assets/images/avatar5.png" alt=""></div>
+                                                    <p class="msg-name">Nick Doe</p>
+                                                    <p class="msg-text">Nice to meet you</p>
+                                                    <p class="msg-time">2 hours ago</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" src="/static/assets/images/avatar2.png" alt=""></div>
+                                                    <p class="msg-name">Sandra Smith</p>
+                                                    <p class="msg-text">Hey ! I'm working on your project</p>
+                                                    <p class="msg-time">5 hours ago</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="msg-img"><div class="online off"></div><img class="img-circle" src="/static/assets/images/avatar4.png" alt=""></div>
+                                                    <p class="msg-name">Amily Lee</p>
+                                                    <p class="msg-text">Hi David !</p>
+                                                    <p class="msg-time">9 hours ago</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="drop-all"><a href="#" class="text-center">All Messages</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-success pull-right">3</span></a>
+                                <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
+                                    <li><p class="drop-title">You have 3 pending tasks !</p></li>
+                                    <li class="dropdown-menu-list slimscroll tasks">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a href="#">
+                                                    <div class="task-icon badge badge-success"><i class="icon-user"></i></div>
+                                                    <span class="badge badge-roundless badge-default pull-right">1min ago</span>
+                                                    <p class="task-details">New user registered.</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="task-icon badge badge-danger"><i class="icon-energy"></i></div>
+                                                    <span class="badge badge-roundless badge-default pull-right">24min ago</span>
+                                                    <p class="task-details">Database error.</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <div class="task-icon badge badge-info"><i class="icon-heart"></i></div>
+                                                    <span class="badge badge-roundless badge-default pull-right">1h ago</span>
+                                                    <p class="task-details">Reached 24k likes</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="drop-all"><a href="#" class="text-center">All Tasks</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                              <div v-if="signed === true" @click="redirect('/profil')" style="padding: 20px; cursor: pointer;">
+                                <span style="font-size: 0.8em; margin: 15px;">{{user.local.username}}</span>
+                                <v-avatar size="32px" tile>
+                                  <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
+                                </v-avatar>
+                              </div>
+                              <v-btn v-else @click="login()" color="primary" fab small dark>
+                                  <v-icon>account_circle</v-icon>
+                              </v-btn>
+                            </li>
+                            <li v-if="signed === true">
+                                <a @click="logout()" class="log-out waves-effect waves-button waves-classic">
+                                    <span><i class="fa fa-sign-out m-r-xs"></i>Log out</span>
+                                </a>
+                            </li>
+                            <li>
+                              <v-btn style="" @click="$router.push('/home')" icon>
+                                <v-icon>home</v-icon>
+                              </v-btn>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-sidebar sidebar">
+            <div class="page-sidebar-inner slimscroll">
+              <div class="sidebar-header">
+                    <div class="sidebar-profile">
+                        <a href="javascript:void(0);" id="profile-menu-link">
+                            <div v-if="user.local" class="sidebar-profile-image">
+                                <img :src="user.local.picture" class="img-circle img-responsive" alt="">
+                            </div>
+                            <div v-if="user.local" class="sidebar-profile-details">
+                                <span>{{ user.local.username }}<br><small>{{ user.local.work }}</small></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <ul class="menu accordion-menu">
+                    <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
+                    <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Profile</p></a></li>
+                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/posts')" class="waves-effect waves-button"><v-icon dark>phonelink</v-icon><p>Version Manager</p></a></li>
+                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" class="waves-effect waves-button"><v-icon dark>favorite</v-icon><p>Version Manager</p></a></li>
+                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" class="waves-effect waves-button"><v-icon dark>poll</v-icon><p>Jira</p></a></li>
+                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><v-icon dark>settings</v-icon><p>Changelog</p></a></li>
+                </ul>
+            </div>
+        </div>
+        <router-view class="page-inner" :Search="search" v-on:refresh="checkUser()" />
+    </main>
+    <!--<nav class="cd-nav-container" id="cd-nav">
+        <header>
+            <h3>Navigation</h3>
+            <a href="#0" class="cd-close-nav">Close</a>
+        </header>
+        <ul class="cd-nav list-unstyled">
+            <li class="cd-selected" data-menu="index">
+                <a href="javsacript:void(0);">
+                    <span>
+                        <i class="glyphicon glyphicon-home"></i>
+                    </span>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li data-menu="profile">
+                <a href="javsacript:void(0);">
+                    <spstatic/assets/images/profile-menu-image.pnan>
+                        <i class="glyphicon glyphicon-user"></i>
+                    </span>
+                    <p>Profile</p>
+                </a>
+            </li>
+            <li data-menu="inbox">
+                <a href="javsacript:void(0);">
+                    <span>
+                        <i class="glyphicon glyphicon-envelope"></i>
+                    </span>
+                    <p>Mailbox</p>
+                </a>
+            </li>
+            <li data-menu="#">
+                <a href="javsacript:void(0);">
+                    <span>
+                        <i class="glyphicon glyphicon-tasks"></i>
+                    </span>
+                    <p>Tasks</p>
+                </a>
+            </li>
+            <li data-menu="#">
+                <a href="javsacript:void(0);">
+                    <span>
+                        <i class="glyphicon glyphicon-cog"></i>
+                    </span>
+                    <p>Settings</p>
+                </a>
+            </li>
+            <li data-menu="calendar">
+                <a href="javsacript:void(0);">
+                    <span>
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </span>
+                    <p>Calendar</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="cd-overlay"></div>
     <v-navigation-drawer fixed
                          :clipped="$vuetify.breakpoint.lgAndUp"
                          app
@@ -168,8 +479,7 @@
       <v-btn v-else @click="login()" color="primary" fab small dark>
           <v-icon>account_circle</v-icon>
       </v-btn>
-    </v-toolbar>
-    <router-view style="margin-top: 60px;" :Search="search" v-on:refresh="checkUser()" />
+    </v-toolbar>-->
   </v-app>
 </template>
 
@@ -262,7 +572,7 @@ export default {
           vue.user.local = response.data
           vue.checkUser()
           window.$cookies.set('user_session', vue.user.local.token, '1d')
-          vue.$router.push('/home')
+          console.log(vue.user)
         })
       }).catch(function (error) {
         console.log(error)
@@ -307,7 +617,6 @@ export default {
         vue.$store.state.user = response.data
         vue.$store.state.user.local = response.data
         vue.signed = true
-        console.log(vue.user)
         vue.checkUser()
       })
     }

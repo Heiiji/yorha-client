@@ -138,6 +138,8 @@ export default {
         'text-align': 'center;',
         'margin-top': '-83px;',
         'z-index': '18;',
+        'width': '100%;',
+        'height': '100%;',
         'background-image': 'url(\'' + this.image + '\')'
       }
     }

@@ -3,6 +3,14 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.0.9 :</h4>
+    <p>
+      - Change display for all sections <br/>
+      - Rework Graphic interface <br/>
+      - annonce now redirect to a forum page <br/>
+      - 'GO' status for version now published on General and reception published only on test department
+    </p>
+    <br/><br/>
     <h4>0.0.8 :</h4>
     <p>
       - Fix 'post' button display on homepage<br/>

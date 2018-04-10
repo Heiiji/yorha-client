@@ -104,7 +104,6 @@ export default {
       this.versions = response.data.versions
       this.versions.forEach(function (element) {
         element.changelog = element.changelog.replace(/\r?\n/g, '<br />')
-        console.log(element.changelog)
       })
     }
   }

@@ -10,6 +10,8 @@ import Changelog  from '@/components/changelog'
 import Home       from '@/components/home'
 import Benchmark  from '@/components/Benchmark'
 import Mattermost from '@/components/mattermost'
+import Inventory  from '@/components/inventaire'
+import Annonce    from '@/components/annonce'
 // versions
 import Displayer  from '@/components/versions/displayer'
 import Downloads  from '@/components/versions/downloads'
@@ -54,6 +56,11 @@ export default new Router({
       component: Displayer
     },
     {
+      path: '/annonces/id/:id',
+      name: 'Annonce',
+      component: Annonce
+    },
+    {
       path: '/overview',
       name: 'Overview',
       component: Overview
@@ -82,6 +89,11 @@ export default new Router({
       path: '/management',
       name: 'Management',
       component: Management
+    },
+    {
+      path: '/inventaire',
+      name: 'Inventory',
+      component: Inventory
     },
     {
       path: '/changelog',

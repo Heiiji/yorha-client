@@ -7,5 +7,9 @@ export default {
 
   fetchNews () {
     return Api().get('/news')
+  },
+
+  GetById (arg) {
+    return Api().get('news/id/' + arg)
   }
 }

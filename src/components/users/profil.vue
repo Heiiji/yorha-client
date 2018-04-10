@@ -1,69 +1,220 @@
 <template>
-  <div style="background-color: rgba(200, 200, 200, 0.2); min-height: 100%; width: 75%; margin-left: 12.5%">
-    <br/>
-    <div>
-      <div style="position: relative;">
-        <span id="photo" v-if="user.local.picture">
-          <div id="editer" @click="EditPicture = true">Editer</div>
-          <img width="300px" :src="user.local.picture"/>
-        </span>
-        <div style="display: flex; padding-top: 25px;">
-          <span style="font-size: 2em; display: block;" v-if="user.local">{{ user.local.username }} <span style="font-size: 0.5em;">({{ user.local.mail }})</span><br/></span><br/>
+  <div style="margin-top:-100px;">
+    <div class="page-inner">
+        <div class="profile-cover">
+            <div class="row">
+                <div class="col-md-3 profile-image">
+                    <div class="profile-image-container">
+                        <img :src="user.local.picture" alt="">
+                    </div>
+                </div>
+            </div>
         </div>
-        <br/>
-        workplace : <span v-if="user.local">{{ user.local.work }}</span><br/>
-        workplace rank : <span v-if="user.local">{{ user.local.qualifier }}</span><br/><br/><br/>
-        Home Background theme :<br/>
-            <v-select
-              :items="background"
-              v-model="e1"
-              @change="PostHomeTheme"
-              style="display: inline-block; width: 500px;"
-              single-line
-            ></v-select>
-      </div>
+        <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-3 user-profile">
+                    <h3 class="text-center">{{ user.local.username }}</h3>
+                    <p class="text-center">{{ user.local.work }} ({{ user.local.qualifier }})</p>
+                    <hr>
+                    <p class="text-center">{{ user.local.description }}</p>
+                    <hr>
+                    <ul class="list-unstyled text-center">
+                        <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
+                        <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.local.mail }}</a></p></li>
+                    </ul>
+                    <hr>
+                    <button class="btn btn-primary btn-block"><i class="fa fa-plus m-r-xs"></i>Add Partner</button>
+                    <button @click="EditDescription = true" class="btn btn-primary btn-block">Modify Description</button>
+                    <div style="position: relative;">
+                      Home Background theme :<br/>
+                          <v-select
+                            :items="background"
+                            v-model="e1"
+                            @change="PostHomeTheme"
+                            style="display: inline-block; width: 500px;"
+                            single-line
+                          ></v-select>
+                    </div>
+                </div>
+                <div class="col-md-6 m-t-lg">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            <div class="post">
+                                <textarea class="form-control" placeholder="Post" rows="4=6"></textarea>
+                                <div class="post-options">
+                                    <a href="#"><i class="icon-camera"></i></a>
+                                    <a href="#"><i class="icon-link"></i></a>
+                                    <button class="btn btn-default pull-right">Post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-timeline">
+                        <ul class="list-unstyled">
+                            <li class="timeline-item">
+                                <div class="panel panel-white">
+                                    <div class="panel-body">
+                                        <div class="timeline-item-header">
+                                            <img src="/static/assets/images/avatar3.png" alt="">
+                                            <p>Christopher palmer <span>Posted a Status</span></p>
+                                            <small>5 hours ago</small>
+                                        </div>
+                                        <div class="timeline-item-post">
+                                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
+                                            <div class="timeline-options">
+                                                <a href="#"><i class="icon-like"></i> Like (7)</a>
+                                                <a href="#"><i class="icon-bubble"></i> Comment (2)</a>
+                                                <a href="#"><i class="icon-share"></i> Share (3)</a>
+                                            </div>
+                                            <div class="timeline-comment">
+                                                <div class="timeline-comment-header">
+                                                    <img src="/static/assets/images/avatar5.png" alt="">
+                                                    <p>Nick Doe <small>1 hour ago</small></p>
+                                                </div>
+                                                <p class="timeline-comment-text">Nullam quis risus eget urna mollis ornare vel eu leo.</p>
+                                            </div>
+                                            <div class="timeline-comment">
+                                                <div class="timeline-comment-header">
+                                                    <img src="/static/assets/images/avatar2.png" alt="">
+                                                    <p>Sandra Smith <small>3 hours ago</small></p>
+                                                </div>
+                                                <p class="timeline-comment-text">Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                                            </div>
+                                            <textarea class="form-control" placeholder="Replay"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <div class="panel panel-white">
+                                    <div class="panel-body">
+                                        <div class="timeline-item-header">
+                                            <img src="/static/assets/images/avatar2.png" alt="">
+                                            <p>Sandra Smith <span>Uploaded Photo</span></p>
+                                            <small>2 hours ago</small>
+                                        </div>
+                                        <div class="timeline-item-post">
+                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
+                                            <img src="/static/assets/images/post-image.jpg" alt="">
+                                            <div class="timeline-options">
+                                                <a href="#"><i class="icon-like"></i> Like (14)</a>
+                                                <a href="#"><i class="icon-bubble"></i> Comment (1)</a>
+                                                <a href="#"><i class="icon-share"></i> Share (5)</a>
+                                            </div>
+                                            <div class="timeline-comment">
+                                                <div class="timeline-comment-header">
+                                                    <img src="/static/assets/images/avatar5.png" alt="">
+                                                    <p>Nick Doe <small>1 hours ago</small></p>
+                                                </div>
+                                                <p class="timeline-comment-text">Nullam quis risus eget urna mollis ornare vel eu leo.</p>
+                                            </div>
+                                            <textarea class="form-control" placeholder="Replay"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 m-t-lg">
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <div class="panel-title">Team</div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="team">
+                                <div class="team-member">
+                                   <div class="online on"></div>
+                                    <img src="/static/assets/images/avatar1.png" alt="">
+                                </div>
+                                <div class="team-member">
+                                   <div class="online off"></div>
+                                    <img src="/static/assets/images/avatar2.png" alt="">
+                                </div>
+                                <div class="team-member">
+                                   <div class="online on"></div>
+                                    <img src="/static/assets/images/avatar3.png" alt="">
+                                </div>
+                                <div class="team-member">
+                                   <div class="online on"></div>
+                                    <img src="/static/assets/images/avatar5.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <div class="panel-title">Some Info</div>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{ user.local.description }}</p>
+                        </div>
+                    </div>
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <div class="panel-title">Skills</div>
+                        </div>
+                        <div class="panel-body">
+                            <p>HTML5</p>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                </div>
+                            </div>
+                            <p>PHP</p>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                </div>
+                            </div>
+                            <p>Javascript</p>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <br/><br/><br/><br/><br/><br/>
-    <h2>Description : <v-btn flat small @click="EditDescription = true">Editer</v-btn></h2>
-    <p style="margin: 15px;" v-if="user.local">{{ user.local.description }}</p>
+    <div>
+      <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+          <v-card-title style="color: blue;">Nouvelle description :</v-card-title>
+          <v-divider></v-divider>
+            <v-flex xs8>
+              <v-text-field v-model="NewDescription"
+                name="Description"
+                label="New Description"
+                id="Description"
+                textarea
+                style="width: 990px; margin: 5px;"
+              ></v-text-field>
+            </v-flex>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" flat @click.native="EditDescription = false;">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="PostDescription(NewDescription)">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-    <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
-      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-        <v-card-title style="color: blue;">Nouvelle description :</v-card-title>
-        <v-divider></v-divider>
-          <v-flex xs8>
-            <v-text-field v-model="NewDescription"
-              name="Description"
-              label="New Description"
-              id="Description"
-              textarea
-              style="width: 990px; margin: 5px;"
-            ></v-text-field>
-          </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="EditDescription = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="PostDescription(NewDescription)">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog style="z-index:25;" v-model="EditPicture" scrollable max-width="1000px">
-      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-        <v-card-title style="color: blue;">Nouvelle image de profil :</v-card-title>
-        <v-divider></v-divider>
-          <v-flex xs8>
-            <label>File
-              <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-            </label>
-          </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="EditPicture = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="changePhoto()">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      <v-dialog style="z-index:25;" v-model="EditPicture" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+          <v-card-title style="color: blue;">Nouvelle image de profil :</v-card-title>
+          <v-divider></v-divider>
+            <v-flex xs8>
+              <label>File
+                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+              </label>
+            </v-flex>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" flat @click.native="EditPicture = false;">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="changePhoto()">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 

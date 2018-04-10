@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     async getVersion (id) {
-      console.log(id)
       const response = await VersionService.getById(id)
       this.version = response.data.versions
     }

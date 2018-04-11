@@ -1,7 +1,7 @@
 <template>
-  <div style="margin-top:-100px;">
+  <div style="margin-top:-60px;">
     <div class="page-inner">
-        <div class="profile-cover">
+        <div class="profile-cover" style="background: url('/static/Wallpaper 10.jpg'); -webkit-background-size: cover; background-size: cover;">
             <div class="row">
                 <div class="col-md-3 profile-image">
                     <div class="profile-image-container">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-inner">
     <v-tabs color="blue"
             v-if="$route.fullPath !== '/home'"
             dark
@@ -13,6 +13,15 @@
       </v-tab>
       <!-- General -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">General</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -32,24 +41,134 @@
               </a>
             </v-flex>
             <v-flex xs4>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Social Actu</v-card-text>
-              </v-card>
-              <h3 style="color: blue;">Discord</h3>
-              <span v-for="news in DiscNews" :key="news._id">
-                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
-                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </span><br/>
+              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
+                  <div class="panel-body">
+                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
+                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
+                      </div>
+                  </div>
+              </div><br/>
               <QwickLook target="finnish">
               </QwickLook>
             </v-flex>
           </v-layout>
         </v-container>
+        <div class="col-lg-12 col-md-12">
+            <div class="panel panel-white">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Project Stats</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive project-stats">
+                       <table class="table">
+                           <thead>
+                               <tr>
+                                   <th>#</th>
+                                   <th>Project</th>
+                                   <th>Status</th>
+                                   <th>Manager</th>
+                                   <th>Progress</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <tr>
+                                   <th scope="row">452</th>
+                                   <td>Mailbox Template</td>
+                                   <td><span class="label label-info">Pending</span></td>
+                                   <td>David Green</td>
+                                   <td>
+                                   <div class="btn-group">
+                            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Action <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <th scope="row">327</th>
+                                   <td>Wordpress Theme</td>
+                                   <td><span class="label label-primary">In Progress</span></td>
+                                   <td>Sandra Smith</td>
+                                   <td>
+                                       <div class="progress progress-sm">
+                                           <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                           </div>
+                                       </div>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <th scope="row">226</th>
+                                   <td>Modern Admin Template</td>
+                                   <td><span class="label label-success">Finished</span></td>
+                                   <td>Chritopher Palmer</td>
+                                   <td>
+                                       <div class="progress progress-sm">
+                                           <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                           </div>
+                                       </div>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <th scope="row">178</th>
+                                   <td>eCommerce template</td>
+                                   <td><span class="label label-danger">Canceled</span></td>
+                                   <td>Amily Lee</td>
+                                   <td>
+                                       <div class="progress progress-sm">
+                                           <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                           </div>
+                                       </div>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <th scope="row">157</th>
+                                   <td>Website PSD</td>
+                                   <td><span class="label label-info">Testing</span></td>
+                                   <td>Nick Doe</td>
+                                   <td>
+                                       <div class="progress progress-sm">
+                                           <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                                           </div>
+                                       </div>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <th scope="row">157</th>
+                                   <td>Fronted Theme</td>
+                                   <td><span class="label label-warning">Waiting</span></td>
+                                   <td>David Green</td>
+                                   <td>
+                                       <div class="progress progress-sm">
+                                           <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+                                           </div>
+                                       </div>
+                                   </td>
+                               </tr>
+                           </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
       </v-tab-item>
       <!-- Test -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">Test</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -79,6 +198,15 @@
       </v-tab-item>
       <!-- Market -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">Marketing</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -98,22 +226,29 @@
               </a>
             </v-flex>
             <v-flex xs4>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Social Actu</v-card-text>
-              </v-card>
-              <h3 style="color: blue;">Discord</h3>
-              <span v-for="news in DiscNews" :key="news._id">
-                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
-                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </span>
+              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
+                  <div class="panel-body">
+                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
+                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
+                      </div>
+                  </div>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
       </v-tab-item>
       <!-- Support -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">Support</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -135,22 +270,29 @@
             <v-flex xs4>
               <QwickLook target="finnish">
               </QwickLook><br/>
-              <v-card style="margin-top: 15px;" dark color="secondary">
-                <v-card-text class="px-0">Social Actu</v-card-text>
-              </v-card>
-              <h3 style="color: blue;">Discord</h3>
-              <span v-for="news in DiscNews" :key="news._id">
-                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
-                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </span>
+              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
+                  <div class="panel-body">
+                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
+                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
+                      </div>
+                  </div>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
       </v-tab-item>
       <!-- Dev -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">Dev</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -180,6 +322,15 @@
       </v-tab-item>
       <!-- Web -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">Web</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -199,22 +350,29 @@
               </a>
             </v-flex>
             <v-flex xs4>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Social Actu</v-card-text>
-              </v-card>
-              <h3 style="color: blue;">Discord</h3>
-              <span v-for="news in DiscNews" :key="news._id">
-                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
-                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </span>
+              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
+                  <div class="panel-body">
+                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
+                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
+                      </div>
+                  </div>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
       </v-tab-item>
       <!-- Infra -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">Infra</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -242,6 +400,15 @@
       </v-tab-item>
       <!-- RH -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">RH</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -261,21 +428,29 @@
               </a>
             </v-flex>
             <v-flex xs4>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Social Actu</v-card-text>
-              </v-card>
-              <h3 style="color: blue;">Discord</h3>
-              <span v-for="news in DiscNews" :key="news._id">
-                <v-card dark style="color: black; text-align: left; padding: 20px; background-color: rgba(24, 25, 28, 0.9); color: white;">
-                  <v-card-text class="px-0"><strong>{{ news.name }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </span>
+              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
+                  <div class="panel-body">
+                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
+                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
+                      </div>
+                  </div>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
       </v-tab-item>
+      <!-- R&D -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">R&D</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -303,7 +478,17 @@
           </v-layout>
         </v-container>
       </v-tab-item>
+      <!-- International -->
       <v-tab-item>
+            <div style="text-align: left;" class="page-title">
+                <h3>Dashboard</h3>
+                <div class="page-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li><a>Home</a></li>
+                        <li class="active">International</li>
+                    </ol>
+                </div>
+            </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex style="display: none;" xs12>
@@ -460,11 +645,13 @@ export default {
         msg2: {
           name: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
           text: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
-        },
+        }
+        /*
         msg3: {
           name: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
           text: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
         }
+        */
       }
     }
   }

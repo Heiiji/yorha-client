@@ -75,9 +75,9 @@
         </nav>
         <button class="close-button" id="close-button">Close Menu</button>
     </div>
-    <form class="search-form" action="#" method="GET">
+    <form class="search-form" v-on:submit.prevent="searching()" action="/SearchUser">
         <div class="input-group">
-            <input type="text" name="search" class="form-control search-input" placeholder="Search...">
+            <input type="text" name="search" v-model="search" class="form-control search-input" placeholder="Search...">
             <span class="input-group-btn">
                 <button class="btn btn-default close-search waves-effect waves-button waves-classic" type="button"><i class="fa fa-times"></i></button>
             </span>
@@ -112,9 +112,9 @@
                                 <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">4</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">2</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
-                                    <li><p class="drop-title">You have 4 new  messages !</p></li>
+                                    <li><p class="drop-title">You have 2 new  messages !</p></li>
                                     <li class="dropdown-menu-list slimscroll messages">
                                         <ul class="list-unstyled">
                                             <li>
@@ -133,47 +133,15 @@
                                                     <p class="msg-time">8 minutes ago</p>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="msg-img"><div class="online off"></div><img class="img-circle" src="/static/assets/images/avatar3.png" alt=""></div>
-                                                    <p class="msg-name">Christopher Palmer</p>
-                                                    <p class="msg-text">See you soon !</p>
-                                                    <p class="msg-time">56 minutes ago</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" src="/static/assets/images/avatar5.png" alt=""></div>
-                                                    <p class="msg-name">Nick Doe</p>
-                                                    <p class="msg-text">Nice to meet you</p>
-                                                    <p class="msg-time">2 hours ago</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" src="/static/assets/images/avatar2.png" alt=""></div>
-                                                    <p class="msg-name">Sandra Smith</p>
-                                                    <p class="msg-text">Hey ! I'm working on your project</p>
-                                                    <p class="msg-time">5 hours ago</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="msg-img"><div class="online off"></div><img class="img-circle" src="/static/assets/images/avatar4.png" alt=""></div>
-                                                    <p class="msg-name">Amily Lee</p>
-                                                    <p class="msg-text">Hi David !</p>
-                                                    <p class="msg-time">9 hours ago</p>
-                                                </a>
-                                            </li>
                                         </ul>
                                     </li>
                                     <li class="drop-all"><a href="#" class="text-center">All Messages</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-success pull-right">3</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-success pull-right">2</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
-                                    <li><p class="drop-title">You have 3 pending tasks !</p></li>
+                                    <li><p class="drop-title">You have 2 pending tasks !</p></li>
                                     <li class="dropdown-menu-list slimscroll tasks">
                                         <ul class="list-unstyled">
                                             <li>
@@ -188,13 +156,6 @@
                                                     <div class="task-icon badge badge-danger"><i class="icon-energy"></i></div>
                                                     <span class="badge badge-roundless badge-default pull-right">24min ago</span>
                                                     <p class="task-details">Database error.</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="task-icon badge badge-info"><i class="icon-heart"></i></div>
-                                                    <span class="badge badge-roundless badge-default pull-right">1h ago</span>
-                                                    <p class="task-details">Reached 24k likes</p>
                                                 </a>
                                             </li>
                                         </ul>
@@ -218,11 +179,6 @@
                                     <span><i class="fa fa-sign-out m-r-xs"></i>Log out</span>
                                 </a>
                             </li>
-                            <li>
-                              <v-btn style="" @click="$router.push('/home')" icon>
-                                <v-icon>home</v-icon>
-                              </v-btn>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -242,13 +198,13 @@
                         </a>
                     </div>
                 </div>
-                <ul class="menu accordion-menu">
+                <ul v-if="user.local" class="menu accordion-menu">
                     <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
                     <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Profile</p></a></li>
-                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/posts')" class="waves-effect waves-button"><v-icon dark>phonelink</v-icon><p>Version Manager</p></a></li>
-                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" class="waves-effect waves-button"><v-icon dark>favorite</v-icon><p>Version Manager</p></a></li>
-                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" class="waves-effect waves-button"><v-icon dark>poll</v-icon><p>Jira</p></a></li>
-                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><v-icon dark>settings</v-icon><p>Changelog</p></a></li>
+                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/posts')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>phonelink</v-icon></span><p>Version Manager</p></a></li>
+                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>favorite</v-icon></span><p>Version Manager</p></a></li>
+                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>poll</v-icon></span><p>Jira</p></a></li>
+                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelog</p></a></li>
                 </ul>
             </div>
         </div>
@@ -609,7 +565,6 @@ export default {
   mounted () {
     var vue = this
     var token = window.$cookies.get('user_session')
-    console.log(token)
     if (token) {
       AccountServices.QwickLog({token: token}).then((response) => {
         vue.user = response.data

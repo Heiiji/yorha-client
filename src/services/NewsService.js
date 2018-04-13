@@ -11,5 +11,13 @@ export default {
 
   GetById (arg) {
     return Api().get('news/id/' + arg)
+  },
+
+  GetReply (arg) {
+    return Api().get('reply/' + arg)
+  },
+
+  PutReply (arg) {
+    return Api().put('reply/', arg)
   }
 }

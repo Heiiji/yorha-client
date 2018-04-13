@@ -30,6 +30,10 @@ export default {
     return Api().get('accountName/' + params)
   },
 
+  FindByTeam (params) {
+    return Api().get('accountTeam/' + params)
+  },
+
   FindById (id) {
     return Api().get('/account/' + id)
   },
@@ -41,7 +45,9 @@ export default {
     return Api().put('account/homeTheme', params)
   },
   editPhoto (params) {
-    console.log(params.file)
     return Api().post('account/photo', params)
+  },
+  editTeam (params) {
+    return Api().put('account/team', params)
   }
 }

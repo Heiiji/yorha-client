@@ -8,7 +8,6 @@ import Overview   from '@/components/Overview'
 import Management from '@/components/Management'
 import Changelog  from '@/components/changelog'
 import Home       from '@/components/home'
-import Benchmark  from '@/components/Benchmark'
 import Mattermost from '@/components/mattermost'
 import Inventory  from '@/components/inventaire'
 import Annonce    from '@/components/annonce'
@@ -99,11 +98,6 @@ export default new Router({
       path: '/changelog',
       name: 'Changelog',
       component: Changelog
-    },
-    {
-      path: '/benchmark',
-      name: 'Benchmark',
-      component: Benchmark
     },
     {
       path: '/mattermost',

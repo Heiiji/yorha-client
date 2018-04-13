@@ -199,12 +199,34 @@
                     </div>
                 </div>
                 <ul v-if="user.local" class="menu accordion-menu">
-                    <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Dashboard</p></a></li>
-                    <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Profile</p></a></li>
-                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/posts')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>phonelink</v-icon></span><p>Version Manager</p></a></li>
-                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>favorite</v-icon></span><p>Version Manager</p></a></li>
-                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>poll</v-icon></span><p>Jira</p></a></li>
-                      <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelog</p></a></li>
+                    <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+                    <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
+                    <v-menu v-if="user.local" offset-x>
+                      <li slot="activator" style="width: 140%;"><a class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Tools</p></a></li>
+                      <v-list style="background-color: rgba(32, 33, 35, 0.8); color: white;">
+                        <v-list-tile v-if="user.local.work === 'Test'">
+                          <v-list-tile-title style="padding-right: 5px; cursor: pointer;" @click="$router.push('/posts')"><v-icon dark style="margin: 5px;">phonelink</v-icon>Version Manager</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" style="text-decoration: none; color: white;"><v-list-tile-title ><v-icon style="margin: 5px;" dark>favorite</v-icon>Dr House</v-list-tile-title></a>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" style="text-decoration: none; color: white;"><v-list-tile-title ><v-icon style="margin: 5px;" dark>poll</v-icon>Jira</v-list-tile-title></a>
+                        </v-list-tile>
+                      </v-list>
+                    </v-menu>
+                    <v-menu offset-x>
+                      <li slot="activator" style="width: 140%;"><a class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p> Doc</p></a></li>
+                      <v-list style="background-color: rgba(32, 33, 35, 0.8); color: white;">
+                        <v-list-tile>
+                          <v-list-tile-title style="padding-right: 5px; cursor: pointer;"><v-icon dark style="margin: 5px;">phonelink</v-icon>Assets</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-title style="padding-right: 5px; cursor: pointer;"><v-icon dark style="margin: 5px;">phonelink</v-icon>Comptes rendu</v-list-tile-title>
+                        </v-list-tile>
+                      </v-list>
+                    </v-menu>
+                    <li style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelog</p></a></li>
                 </ul>
             </div>
         </div>

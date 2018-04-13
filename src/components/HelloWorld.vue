@@ -1,20 +1,7 @@
 <template>
   <div class="page-inner">
-    <v-tabs color="blue"
-            v-if="$route.fullPath !== '/home'"
-            dark
-            slider-color="red"
-            style="text-align: center;">
-      <v-tab ripple style="margin-left: 20%">
-        Général
-      </v-tab>
-      <v-tab v-for="item in department" :key="item.text" ripple>
-        {{ item.text }}
-      </v-tab>
-      <!-- General -->
-      <v-tab-item>
             <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
+                <h3>Acceuil</h3>
                 <div class="page-breadcrumb">
                     <ol class="breadcrumb">
                         <li><a>Home</a></li>
@@ -29,23 +16,19 @@
                 <v-card-text class="px-0">12</v-card-text>
               </v-card>
             </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
+            <v-flex xs8 style="max-height: 800px;">
               <a v-for="news in allNews" :key="news._id" :href="news.link" v-if="news.department === 'General'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
+                  <v-card-text class="px-0"><strong>{{ news.sender }} :</strong> {{ news.text }}</v-card-text>
+                </v-card><br/>
               </a>
             </v-flex>
             <v-flex xs4>
-              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
+              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(255, 255, 255, 0.9); margin: 5px;">
                   <div class="panel-body">
                       <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
                           <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
+                          <div style=" color: black;"><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
                       </div>
                   </div>
               </div><br/>
@@ -54,7 +37,7 @@
             </v-flex>
           </v-layout>
         </v-container>
-        <div class="col-lg-12 col-md-12">
+        <div class="col-lg-12 col-md-12" style="margin-top: 10px;">
             <div class="panel panel-white">
                 <div class="panel-heading">
                     <h4 class="panel-title">Project Stats</h4>
@@ -157,366 +140,6 @@
                 </div>
             </div>
         </div>
-      </v-tab-item>
-      <!-- Test -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">Test</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news._id" v-if="news.department === 'Test' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <QwickLook target="current">
-              </QwickLook><br/>
-              <QwickLook target="finnish">
-              </QwickLook>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- Market -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">Marketing</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link" v-if="news.department === 'Marketing' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
-                  <div class="panel-body">
-                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
-                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
-                      </div>
-                  </div>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- Support -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">Support</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link" v-if="news.department === 'Support' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <QwickLook target="finnish">
-              </QwickLook><br/>
-              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
-                  <div class="panel-body">
-                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
-                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
-                      </div>
-                  </div>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- Dev -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">Dev</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link" v-if="news.department === 'Dev' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <QwickLook target="current">
-              </QwickLook><br/>
-              <QwickLook target="finnish">
-              </QwickLook>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- Web -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">Web</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link" v-if="news.department === 'Web' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
-                  <div class="panel-body">
-                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
-                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
-                      </div>
-                  </div>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- Infra -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">Infra</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link"  v-if="news.department === 'Infra' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <QwickLook target="finnish">
-              </QwickLook>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- RH -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">RH</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link"  v-if="news.department === 'RH' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(30, 32, 60, 0.9); margin: 5px;">
-                  <div class="panel-body">
-                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
-                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                          <div><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
-                      </div>
-                  </div>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- R&D -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">R&D</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link"  v-if="news.department === 'R&D' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <QwickLook target="current">
-              </QwickLook><br/>
-              <QwickLook target="finnish">
-              </QwickLook>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-      <!-- International -->
-      <v-tab-item>
-            <div style="text-align: left;" class="page-title">
-                <h3>Dashboard</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">International</li>
-                    </ol>
-                </div>
-            </div>
-        <v-container grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex style="display: none;" xs12>
-              <v-card dark color="primary">
-                <v-card-text class="px-0">12</v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs8>
-              <v-card dark color="secondary">
-                <v-card-text class="px-0">Annonces<v-btn v-if="$store.state.user.local" flat color="primary" style="position: absolute; right: 10px; bottom: 5px;" @click.native="PostNews = true">Poster</v-btn></v-card-text>
-              </v-card>
-              <a v-for="news in allNews" :key="news._id" :href="news.link" v-if="news.department === 'International' && (news.visibility === true || $store.state.user.local.work)">
-                <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
-                </v-card>
-                <v-divider></v-divider>
-              </a>
-            </v-flex>
-            <v-flex xs4>
-              <QwickLook target="current">
-              </QwickLook><br/>
-              <QwickLook target="finnish">
-              </QwickLook>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-tab-item>
-    </v-tabs>
 
   <v-dialog style="z-index:25;" v-model="PostNews" scrollable max-width="1000px">
     <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
@@ -579,7 +202,6 @@ export default {
     return {
       versions: [],
       passed: [],
-      e1: 'General',
       PostNews: null,
       News: {
         text: '',
@@ -620,12 +242,10 @@ export default {
       this.passed = responses.data.versions
     },
     async postNews () {
-      this.News.department = this.e1.text
       this.News.sender = this.$store.state.user.local.username
       News.Post(this.News)
       this.getNews()
       this.PostNews = false
-      this.$router.push('/home')
     },
     async getNews () {
       const response = await News.fetchNews()

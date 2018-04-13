@@ -1,7 +1,17 @@
 <template>
-  <div style="margin: 30px; margin-left: 200px;">
+  <div style="padding: 30px;">
     <br/><br/><br/>
     <h1>Changelog :</h1>
+    <br/><br/>
+    <h4>0.0.10 :</h4>
+    <p>
+      - Now limit news volume on Dashboard <br/>
+      - Enhance display of news <br/>
+      - Only General information on acceuil <br/>
+      - reorder menu <br/>
+      - Profil page now functionnal and begin real dashboard <br/>
+      - Profil viewer now upgrade to new model
+    </p>
     <br/><br/>
     <h4>0.0.9 :</h4>
     <p>
@@ -18,16 +28,6 @@
       - Searchbar now filtering with search item<br/>
       - have a default wallpaper for home <br/>
       - fix error loop on homepage
-    </p>
-    <br/><br/>
-    <h4>0.0.7 :</h4>
-    <p>
-      - Merge Discord actu and display it. <br/>
-      - Fix search button <br/>
-      - rework version display <br/>
-      - homepage refresh news each minutes <br/>
-      - change disconnect button <br/>
-      - Fix Background theme at home
     </p>
     <br/><br/>
   </div>

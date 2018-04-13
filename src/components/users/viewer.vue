@@ -1,21 +1,69 @@
 <template>
-  <div style="background-color: rgba(200, 200, 200, 0.2); min-height: 100%; width: 75%; margin-left: 12.5%">
-    <br/>
-    <div>
-      <div style="position: relative;">
-        <span id="photo" v-if="user.picture">
-          <img width="300px" :src="user.picture"/>
-        </span>
-        <div style="display: flex; padding-top: 25px;">
-          <span style="font-size: 2em; display: block;" v-if="user">{{ user.username }} <span style="font-size: 0.5em;">({{ user.mail }})</span><br/></span><br/>
+  <div style="margin-top:-60px;">
+    <div class="page-inner">
+        <div class="profile-cover" style="background: url('/static/Wallpaper 10.jpg'); -webkit-background-size: cover; background-size: cover;">
+            <div class="row">
+                <div class="col-md-3 profile-image">
+                    <div class="profile-image-container">
+                        <img :src="user.picture" alt="">
+                    </div>
+                </div>
+            </div>
         </div>
-        <br/>
-        workplace : <span v-if="user">{{ user.work }}</span><br/>
-        workplace rank : <span v-if="user">{{ user.qualifier }}</span><br/><br/><br/>
-      </div>
+        <div id="main-wrapper">
+            <div class="row">
+                <div class="col-md-3 user-profile">
+                    <h3 class="text-center">{{ user.username }}</h3>
+                    <p class="text-center">{{ user.work }} ({{ user.qualifier }})</p>
+                    <hr>
+                    <ul class="list-unstyled text-center">
+                        <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
+                        <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.mail }}</a></p></li>
+                        <li><p><i class="fa fa-phone m-r-xs"></i>non renseigné</p></li>
+                    </ul>
+                    <hr>
+                    <button @click="NewTeam = $store.state.user.local.team; PostTeam ();" class="btn btn-primary btn-block">Add to team</button>
+                    <button class="btn btn-primary btn-block">Send message</button>
+                </div>
+                <div class="col-md-6 m-t-lg">
+                    <v-tabs style="margin: 10px;" fixed-tabs>
+                      <v-tab>
+                        All
+                      </v-tab>
+                      <v-tab>
+                        Department
+                      </v-tab>
+                      <v-tab>
+                        Team
+                      </v-tab>
+                    </v-tabs>
+                </div>
+                <div class="col-md-3 m-t-lg">
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <div class="panel-title">Team : {{ user.team }}</div>
+                        </div>
+                        <div class="panel-body">
+                          <div v-if="user.team !== 'none'" class="team">
+                                <div v-for="pers in Partner" :key="pers._id" class="team-member">
+                                   <div class="online on"></div>
+                                   <img :src="pers.picture" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <div class="panel-title">Description</div>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{ user.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <p style="margin: 15px;" v-if="user">{{ user.description }}</p>
   </div>
 </template>
 
@@ -26,7 +74,8 @@ export default {
   name: 'Profil',
   data () {
     return {
-      user: []
+      user: [],
+      Partner: []
     }
   },
   mounted () {
@@ -36,6 +85,21 @@ export default {
     async getUser (id) {
       const response = await AccountService.FindById(id)
       this.user = response.data.user
+      this.GetByTeam()
+    },
+    GetByTeam () {
+      var vue = this
+      AccountService.FindByTeam(this.user.team).then((response) => {
+        vue.Partner = response.data.users
+      })
+    },
+    PostTeam () {
+      AccountService.editTeam({
+        team: this.NewTeam,
+        mail: this.user.mail
+      })
+      this.user.team = this.NewTeam
+      this.GetByTeam()
     }
   }
 }

@@ -19,10 +19,12 @@
                     <ul class="list-unstyled text-center">
                         <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
                         <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.local.mail }}</a></p></li>
-                        <li><p><i class="fa fa-phone m-r-xs"></i>non renseigné</p></li>
+                        <li><p v-if="user.local.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.local.tel">{{user.local.tel}}</a></p></li>
                     </ul>
                     <hr>
                     <button @click="EditDescription = true" class="btn btn-primary btn-block">Modify Description</button>
+                    <button v-if="user.local.tel === 'none'" @click="EditTel = true" class="btn btn-primary btn-block">Add my number</button>
+                    <button v-else @click="EditTel = true" class="btn btn-primary btn-block">Change my number</button>
                 </div>
                 <div class="col-md-6 m-t-lg">
                     <v-tabs style="margin: 10px;" fixed-tabs>
@@ -120,10 +122,10 @@
                             </ul>
                         </div>
                       </v-tab-item>
-                      <v-tab>
-                        Team
+                      <v-tab v-if="$store.state.user.local.team !== 'none'">
+                        {{ $store.state.user.local.team }}
                       </v-tab>
-                      <v-tab-item style="margin-top: 10px;">
+                      <v-tab-item v-if="$store.state.user.local.team !== 'none'" style="margin-top: 10px;">
                         <div class="panel panel-white">
                             <div class="panel-body">
                                 <div class="post">
@@ -201,8 +203,6 @@
     <div>
       <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
         <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-          <v-card-title style="color: blue;">Nouvelle description :</v-card-title>
-          <v-divider></v-divider>
             <v-flex xs8>
               <v-text-field v-model="NewDescription"
                 name="Description"
@@ -219,7 +219,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-        <v-dialog style="z-index:25;" v-model="CreateTeam" scrollable max-width="1000px">
+        <v-dialog style="z-index:25;" v-model="CreateTeam" scrollable max-width="800px">
           <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
             <v-card-title style="color: blue;">Nouvelle team :</v-card-title>
             <v-divider></v-divider>
@@ -228,7 +228,7 @@
                   name="TeamName"
                   label="Team Name"
                   id="TeamName"
-                  style="width: 990px; margin: 5px;"
+                  style="width: 700px; margin: 5px;"
                 ></v-text-field>
               </v-flex>
             <v-divider></v-divider>
@@ -255,6 +255,27 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+    <v-dialog style="z-index:25;" v-model="EditTel" scrollable max-width="500px">
+      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+          <v-flex xs8>
+            <v-divider></v-divider>
+            <label>
+              <v-text-field v-model="NewTel"
+                name="NewTel"
+                label="Phone number"
+                id="NewTel"
+                style="width: 450px; margin: 5px;"
+              ></v-text-field>
+            </label>
+          </v-flex>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="EditTel = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="changeTel()">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </div>
   </div>
 </template>
@@ -277,6 +298,8 @@ export default {
       EditPicture: null,
       NewPicture: '',
       NewTeam: '',
+      EditTel: false,
+      NewTel: '',
       PostNews: null,
       CreateTeam: false,
       News: {
@@ -411,6 +434,14 @@ export default {
         .catch(function (error) {
           console.log('FAILURE : ' + error)
         })
+    },
+    changeTel () {
+      AccountService.editTel({
+        tel: this.NewTel,
+        mail: this.user.local.mail
+      })
+      this.user.local.tel = this.NewTel
+      this.EditTel = false
     }
   }
 }

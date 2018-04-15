@@ -3,7 +3,7 @@
   <br/><br/>
     <h1>Version Manager</h1>
     <br/><br/>
-    <h3>{{ VersionDisplay }} : {{ $store.state.user.work }}</h3>
+    <h3>{{ VersionDisplay }}</h3>
       <v-card v-for="value in versions" :key="value.version" style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
         <v-card-media
           :src="value.picture"
@@ -60,8 +60,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  <v-dialog style="z-index:25;" v-model="dialog" scrollable max-width="1000px">
-    <v-btn color="primary" dark slot="activator" style="color: black;">Add version</v-btn>
+  <v-dialog style="z-index:25;" v-model="dialog" scrollable max-width="800px">
+    <button class="btn btn-default pull-right" slot="activator">Add version</button>
     <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
       <v-card-title style="color: blue;">Create a version :</v-card-title>
       <v-divider></v-divider>
@@ -70,55 +70,55 @@
             name="device"
             label="Version device"
             id="device"
-            style="width: 990px; margin: 5px;"
+            style="width: 300px; margin: 10px; display: inline-block;"
           ></v-text-field>
           <v-text-field v-model="editeable.importance"
             name="importance"
             label="Version importance (hotfix,...)"
             id="importance"
-            style="width: 990px; margin: 5px;"
-          ></v-text-field>
+            style="width: 300px; margin: 10px; display: inline-block;"
+          ></v-text-field><br/>
           <v-text-field v-model="editeable.version"
             name="version"
             label="Version number"
             id="version"
-            style="width: 990px; margin: 5px;"
+            style="width: 300px; margin: 10px; display: inline-block;"
           ></v-text-field>
+          <v-text-field v-model="editeable.picture"
+            name="picture"
+            label="Version picture (url)"
+            id="picture"
+            style="width: 300px; margin: 10px; display: inline-block;"
+          ></v-text-field><br/>
           <v-text-field v-model="editeable.changelog"
               name="changelog"
               label="Changelog"
               textarea
-              style="width: 990px; margin: 5px;"
-            ></v-text-field>
-            <v-text-field v-model="editeable.picture"
-              name="picture"
-              label="Version picture (url)"
-              id="picture"
-              style="width: 990px; margin: 5px;"
-            ></v-text-field>
+              style="width: 620px; margin: 5px; margin: 10px; display: inline-block;"
+            ></v-text-field><br/>
             <v-text-field v-model="editeable.tester"
               name="tester"
               label="Tester"
               id="tester"
-              style="width: 990px; margin: 5px;"
+              style="width: 300px; margin: 10px; display: inline-block;"
             ></v-text-field>
             <v-text-field v-model="editeable.target"
               name="target"
               label="release target"
               id="target"
-              style="width: 990px; margin: 5px;"
-            ></v-text-field>
+              style="width: 300px; margin: 10px; display: inline-block;"
+            ></v-text-field><br/>
             <v-text-field v-model="editeable.scheduled"
               name="scheduled"
               label="Testcase volume"
               id="scheduled"
-              style="width: 990px; margin: 5px;"
+              style="width: 300px; margin: 10px; display: inline-block;"
             ></v-text-field>
             <v-text-field v-model="editeable.time"
               name="time"
               label="estimated time"
               id="time"
-              style="width: 990px; margin: 5px;"
+              style="width: 300px; margin: 10px; display: inline-block;"
             ></v-text-field>
         </v-flex>
       <v-divider></v-divider>

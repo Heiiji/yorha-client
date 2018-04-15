@@ -49,5 +49,8 @@ export default {
   },
   editTeam (params) {
     return Api().put('account/team', params)
+  },
+  editTel (params) {
+    return Api().put('account/tel', params)
   }
 }

@@ -11,6 +11,8 @@ import Home       from '@/components/home'
 import Mattermost from '@/components/mattermost'
 import Inventory  from '@/components/inventaire'
 import Annonce    from '@/components/annonce'
+import YTShadowLive   from '@/components/YTShadowLive'
+import Timeline   from '@/components/timeline'
 // versions
 import Displayer  from '@/components/versions/displayer'
 import Downloads  from '@/components/versions/downloads'
@@ -65,6 +67,11 @@ export default new Router({
       component: Overview
     },
     {
+      path: '/timeline',
+      name: 'Timeline',
+      component: Timeline
+    },
+    {
       path: '/posts',
       name: 'Posts',
       component: Posts
@@ -78,6 +85,11 @@ export default new Router({
       path: '/posts/:id',
       name: 'EditPost',
       component: EditPost
+    },
+    {
+      path: '/document/YTShadowLive/:id',
+      name: 'YTShadowLive',
+      component: YTShadowLive
     },
     {
       path: '/downloads',

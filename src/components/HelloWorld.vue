@@ -1,7 +1,7 @@
 <template>
   <div class="page-inner">
             <div style="text-align: left;" class="page-title">
-                <h3>Acceuil</h3>
+                <h3>Accueil</h3>
                 <div class="page-breadcrumb">
                     <ol class="breadcrumb">
                         <li><a>Home</a></li>
@@ -17,19 +17,18 @@
               </v-card>
             </v-flex>
             <v-flex xs8 style="max-height: 800px;">
-              <a v-for="news in allNews" :key="news._id" :href="news.link" v-if="news.department === 'General'">
+              <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <v-card-text class="px-0"><strong>{{ news.sender }} :</strong> {{ news.text }}</v-card-text>
                 </v-card><br/>
               </a>
             </v-flex>
             <v-flex xs4>
-              <div v-for="news in DiscNews" :key="news._id" style="background-color: rgba(255, 255, 255, 0.9); margin: 5px;">
-                  <div class="panel-body">
-                      <div class="live-tile" data-mode="flip" data-speed="750" data-delay="3000">
-                          <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                          <div style=" color: black;"><h2 class="no-m">{{ news.name }}</h2><span>{{ news.text }}</span></div>
-                      </div>
+              <button class="btn btn-primary btn-block" @click="PostAnn = true">Post document</button>
+              <div class="socialp" v-for="news in DiscNews" :key="news._id" @click="news.show = true;">
+                  <div style="margin: 15px; position: relative;" class="panel-body">
+                      <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                      <div><h2 class="no-m" style="color: rgb(30, 80, 160);">{{ news.name }}</h2><span style="text-align: left; display: inline-block; font-size: 1.7em;" v-html="(news.text.match(/.{0,200}/g))[0] + ' ...'"></span></div>
                   </div>
               </div><br/>
               <QwickLook target="finnish">
@@ -140,76 +139,89 @@
                 </div>
             </div>
         </div>
-
-  <v-dialog style="z-index:25;" v-model="PostNews" scrollable max-width="1000px">
-    <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-      <v-card-title style="color: blue;">News :</v-card-title>
-      <v-text-field v-model="News.title"
-        name="title"
-        label="title"
-        id="title"
-        style="width: 990px; margin: 5px;"
-      ></v-text-field><br/>
-      <v-divider></v-divider>
-      <v-text-field v-model="News.link"
-        name="link"
-        label="target url"
-        id="link"
-        style="width: 990px; margin: 5px;"
-      ></v-text-field><br/>
-      <v-divider></v-divider>
-        <v-flex xs8>
-          <v-text-field v-model="News.text"
-              name="News"
-              label="Text"
-              textarea
-              style="width: 990px; margin: 5px;"
-            ></v-text-field>
-        </v-flex>
-      <v-divider></v-divider>
-      Focus :
-      <v-flex xs3>
-          <v-select
-            :items="department"
-            v-model="e1"
-            label="General"
-            single-line
-          ></v-select>
-        </v-flex>
-        <br/>
-        <v-switch
-          :label="`Public visibility: ${News.visibility.toString()}`"
-          v-model="News.visibility"
-        ></v-switch>
-        <br/><br/>
-      <v-card-actions>
-        <v-btn color="blue darken-1" flat @click.native="PostNews = false">Close</v-btn>
-        <v-btn color="blue darken-1" flat @click="postNews()">Save</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+        <span v-if="DiscNews">
+        <v-dialog style="z-index:25;" v-model="DiscNews.msg1.show" scrollable max-width="1000px">
+          <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+            <v-card-title style="color: blue;">{{DiscNews.msg1.name}}</v-card-title>
+            <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg1.text"></p>
+          </v-card>
+        </v-dialog>
+        <v-dialog style="z-index:25;" v-model="DiscNews.msg2.show" scrollable max-width="1000px">
+          <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+            <v-card-title style="color: blue;">{{DiscNews.msg2.name}}</v-card-title>
+            <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg2.text"></p>
+          </v-card>
+        </v-dialog>
+      </span>
+      <v-dialog style="z-index:25;" v-model="PostAnn" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+          <v-card-title style="color: blue;">Post de :
+            <v-select
+              :items="docs"
+              v-model="document.type"
+              label="Select type"
+              single-line
+              required
+            ></v-select>
+          </v-card-title>
+          <v-container grid-list-md>
+            <v-layout row wrap>
+              <v-flex xs12>
+                  <v-text-field
+                  name="url"
+                  label="Video URL"
+                  required
+                  v-model="document.url"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs6><v-date-picker required v-model="document.date" :landscape="true" :reactive="true"></v-date-picker></v-flex>
+              <v-flex xs6><v-text-field required box multi-line label="Text" v-model="document.text"></v-text-field></v-flex>
+            </v-layout>
+          </v-container>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false; PostAnn = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="PostAnnonce()">Save</v-btn>
+        </v-card-actions>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
 <script>
 import VersionService from '@/services/VersionService'
+import DocService from '@/services/docService'
 import QwickLook from '@/components/versions/WorkingDisplay.vue'
 import News from '@/services/NewsService'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       versions: [],
       passed: [],
-      PostNews: null,
+      PostAnn: null,
+      picker: null,
+      docs: [
+        { text: 'Résumé Live Shadow',
+          id: 0}
+      ],
       News: {
         text: '',
         title: '',
         link: '',
-        department: 'General',
+        department: 'Annonce',
         visibility: true,
-        sender: ''
+        sender: '',
+        senderPic: ''
+      },
+      document: {
+        type: '',
+        date: null,
+        text: '',
+        url: '',
+        sender: '',
+        senderPic: ''
       },
       department: [
         { text: 'Test' },
@@ -241,30 +253,44 @@ export default {
       const responses = await VersionService.fetchPosts('finnish')
       this.passed = responses.data.versions
     },
-    async postNews () {
-      this.News.sender = this.$store.state.user.local.username
-      News.Post(this.News)
-      this.getNews()
-      this.PostNews = false
+    PostAnnonce () {
+      var vue = this
+      this.document.sender = this.$store.state.user.local.username
+      this.document.senderPic = this.$store.state.user.local.picture
+      this.document.type = this.document.type.text
+      DocService.PostYTShadowLive(this.document).then((response) => {
+        vue.News.sender = vue.$store.state.user.local.username
+        vue.News.senderPic = vue.$store.state.user.local.picture
+        vue.News.title = vue.document.type
+        vue.News.link = '/document/YTShadowLive/' + response.data.id
+        vue.News.text = vue.document.text.match(/.{0,300}/g)[0] + ' ...'
+        News.Post(this.News).then((response) => {
+          vue.News.department = 'General'
+          vue.News.text = 'Le bilan du dernier Shadow Live est en ligne !'
+          News.Post(this.News).then((reponse) => {
+            vue.PostAnn = false
+            vue.getNews()
+          })
+        })
+      })
     },
     async getNews () {
       const response = await News.fetchNews()
       if (response.data) {
         if (response.data.news) {
           this.allNews = response.data.news
-          this.allNews.forEach(function (element) {
-            element.link = '/#/annonces/id/' + element._id
-          })
         }
       }
       this.DiscNews = {
         msg1: {
           name: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+          text: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
+          show: false
         },
         msg2: {
           name: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+          text: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
+          show: false
         }
         /*
         msg3: {
@@ -273,6 +299,8 @@ export default {
         }
         */
       }
+      this.DiscNews.msg1.text = this.DiscNews.msg1.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+      this.DiscNews.msg2.text = this.DiscNews.msg2.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
     }
   }
 }
@@ -305,7 +333,20 @@ export default {
   box-shadow: 1px 1px 12px #555;
   padding: 10px;
 }
-
+.socialp {
+  color: black;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  -webkit-transition: box-shadow 1s, -webkit-transform 1s;
+  transition: box-shadow 1s, transform 1s;
+}
+.socialp:hover {
+  box-shadow: 1px 1px 12px #555;
+  -webkit-transition: box-shadow 1s, -webkit-transform 1s;
+  transition: box-shadow 1s, transform 1s;
+}
 h1, h2 {
   font-weight: normal;
 }

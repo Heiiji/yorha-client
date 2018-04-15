@@ -76,7 +76,7 @@
               </v-btn>
               <v-list>
                 <v-list-tile style="z-index: 20; background-color: white;" v-for="(item, i) in rangs" :key="i">
-                  <v-list-tile-title style="z-index: 21;" @click="ChangeStatus(user._id, item.title)">{{ item.title }}</v-list-tile-title>
+                  <v-list-tile-title style="z-index: 21;" @click="ChangeStatus(user._id, item.text)">{{ item.text }}</v-list-tile-title>
                 </v-list-tile>
               </v-list>
             </v-menu>
@@ -100,11 +100,15 @@ export default {
         status: ''
       },
       rangs: [
-        { title: 'Test' },
-        { title: 'QA' },
-        { title: 'R&D' },
-        { title: 'Dev' },
-        { title: 'Market' }
+        { text: 'Test' },
+        { text: 'Marketing' },
+        { text: 'Support' },
+        { text: 'Dev' },
+        { text: 'Web' },
+        { text: 'Infra' },
+        { text: 'RH' },
+        { text: 'R&D' },
+        { text: 'International' }
       ]
     }
   },

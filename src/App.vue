@@ -63,21 +63,9 @@
             </form>
         </div>
 </nav>
-    <div class="menu-wrap">
-        <nav class="profile-menu">
-            <div class="profile"><img src="/static/assets/images/profile-menu-image.png" width="60" alt="David Green"/><span>David Green</span></div>
-            <div class="profile-menu-list">
-                <a href="#"><i class="fa fa-star"></i><span>Favorites</span></a>
-                <a href="#"><i class="fa fa-bell"></i><span>Alerts</span></a>
-                <a href="#"><i class="fa fa-envelope"></i><span>Messages</span></a>
-                <a href="#"><i class="fa fa-comment"></i><span>Comments</span></a>
-            </div>
-        </nav>
-        <button class="close-button" id="close-button">Close Menu</button>
-    </div>
     <form class="search-form" v-on:submit.prevent="searching()" action="/SearchUser">
         <div class="input-group">
-            <input type="text" name="search" v-model="search" class="form-control search-input" placeholder="Search...">
+            <input type="text" name="search" v-model="search" style="width: 93%;" class="form-control search-input" placeholder="Search...">
             <span class="input-group-btn">
                 <button class="btn btn-default close-search waves-effect waves-button waves-classic" type="button"><i class="fa fa-times"></i></button>
             </span>
@@ -101,10 +89,7 @@
                     <div class="top-menu">
                         <ul class="nav navbar-nav navbar-left">
                             <li>
-                                <a falsehref="javascript:void(0);" class="waves-effect waves-button waves-classic sidebar-toggle"><i class="fa fa-bars"></i></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" class="waves-effect waves-button waves-classic toggle-fullscreen"><i class="fa fa-expand"></i></a>
+                                <a href="javascript:void(0);" class="waves-effect waves-button waves-classic sidebar-toggle"><i class="fa fa-bars"></i></a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -201,20 +186,10 @@
                 <ul v-if="user.local" class="menu accordion-menu">
                     <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
                     <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
-                    <v-menu v-if="user.local" offset-x>
-                      <li slot="activator" style="width: 140%;"><a class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Tools</p></a></li>
-                      <v-list style="background-color: rgba(32, 33, 35, 0.8); color: white;">
-                        <v-list-tile v-if="user.local.work === 'Test'">
-                          <v-list-tile-title style="padding-right: 5px; cursor: pointer;" @click="$router.push('/posts')"><v-icon dark style="margin: 5px;">phonelink</v-icon>Version Manager</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile>
-                          <a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" style="text-decoration: none; color: white;"><v-list-tile-title ><v-icon style="margin: 5px;" dark>favorite</v-icon>Dr House</v-list-tile-title></a>
-                        </v-list-tile>
-                        <v-list-tile>
-                          <a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" style="text-decoration: none; color: white;"><v-list-tile-title ><v-icon style="margin: 5px;" dark>poll</v-icon>Jira</v-list-tile-title></a>
-                        </v-list-tile>
-                      </v-list>
-                    </v-menu>
+                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/posts')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>phonelink</v-icon></span><p>Version Manager</p></a></li>
+                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>favorite</v-icon></span><p>Dr House</p></a></li>
+                    <li style="width: 80%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>poll</v-icon></span><p>Jira</p></a></li>
+                    <li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>
                     <v-menu offset-x>
                       <li slot="activator" style="width: 140%;"><a class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p> Doc</p></a></li>
                       <v-list style="background-color: rgba(32, 33, 35, 0.8); color: white;">
@@ -232,232 +207,6 @@
         </div>
         <router-view class="page-inner" :Search="search" v-on:refresh="checkUser()" />
     </main>
-    <!--<nav class="cd-nav-container" id="cd-nav">
-        <header>
-            <h3>Navigation</h3>
-            <a href="#0" class="cd-close-nav">Close</a>
-        </header>
-        <ul class="cd-nav list-unstyled">
-            <li class="cd-selected" data-menu="index">
-                <a href="javsacript:void(0);">
-                    <span>
-                        <i class="glyphicon glyphicon-home"></i>
-                    </span>
-                    <p>Dashboard</p>
-                </a>
-            </li>
-            <li data-menu="profile">
-                <a href="javsacript:void(0);">
-                    <spstatic/assets/images/profile-menu-image.pnan>
-                        <i class="glyphicon glyphicon-user"></i>
-                    </span>
-                    <p>Profile</p>
-                </a>
-            </li>
-            <li data-menu="inbox">
-                <a href="javsacript:void(0);">
-                    <span>
-                        <i class="glyphicon glyphicon-envelope"></i>
-                    </span>
-                    <p>Mailbox</p>
-                </a>
-            </li>
-            <li data-menu="#">
-                <a href="javsacript:void(0);">
-                    <span>
-                        <i class="glyphicon glyphicon-tasks"></i>
-                    </span>
-                    <p>Tasks</p>
-                </a>
-            </li>
-            <li data-menu="#">
-                <a href="javsacript:void(0);">
-                    <span>
-                        <i class="glyphicon glyphicon-cog"></i>
-                    </span>
-                    <p>Settings</p>
-                </a>
-            </li>
-            <li data-menu="calendar">
-                <a href="javsacript:void(0);">
-                    <span>
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </span>
-                    <p>Calendar</p>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="cd-overlay"></div>
-    <v-navigation-drawer fixed
-                         :clipped="$vuetify.breakpoint.lgAndUp"
-                         app
-                         dark
-                         v-model="drawer"
-                         v-if="$route.fullPath === '/home'"
-                         style="z-index: 30; box-shadow: 0.9px 0px 0px #222; background-color: rgba(80, 80, 140, 0.2);">
-      <v-list dense>
-        <template v-for="item in items">
-          <span v-if="item.display" :key="item.display">
-            <v-layout row
-                      v-if="item.heading"
-                      align-center
-                      :key="item.heading">
-              <v-flex xs6>
-                <v-subheader v-if="item.heading">
-                  {{ item.heading }}
-                </v-subheader>
-              </v-flex>
-              <v-flex xs6 class="text-xs-center">
-                <a href="#!" class="body-2 black--text">EDIT</a>
-              </v-flex>
-            </v-layout>
-            <v-list-group v-else-if="item.children"
-                          v-model="item.model"
-                          :key="item.text"
-                          :prepend-icon="item.model ? item.icon : item['icon-alt']"
-                          append-icon="">
-              <v-list-tile slot="activator">
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ item.text }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list-group>
-            <v-list-tile v-else @click="redirect(item.link)" :key="item.text">
-              <v-list-tile-action>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ item.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </span>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-    <v-navigation-drawer fixed
-                         :clipped="$vuetify.breakpoint.lgAndUp"
-                         app
-                         v-model="drawer"
-                         v-else
-                         style="z-index: 30; box-shadow: 0.9px 0px 0px #aaa;">
-      <v-list dense>
-        <template v-for="item in items">
-          <span v-if="item.display" :key="item.display">
-            <v-layout row
-                      v-if="item.heading"
-                      align-center
-                      :key="item.heading">
-              <v-flex xs6>
-                <v-subheader v-if="item.heading">
-                  {{ item.heading }}
-                </v-subheader>
-              </v-flex>
-              <v-flex xs6 class="text-xs-center">
-                <a href="#!" class="body-2 black--text">EDIT</a>
-              </v-flex>
-            </v-layout>
-            <v-list-group v-else-if="item.children"
-                          v-model="item.model"
-                          :key="item.text"
-                          :prepend-icon="item.model ? item.icon : item['icon-alt']"
-                          append-icon="">
-              <v-list-tile slot="activator">
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ item.text }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list-group>
-            <v-list-tile v-else @click="redirect(item.link)" :key="item.text">
-              <v-list-tile-action>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ item.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </span>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar color="blue darken-3"
-               style="z-index: 20;"
-               v-if="$route.fullPath !== '/home'"
-               dark
-               app
-               :clipped-left="$vuetify.breakpoint.lgAndUp"
-               fixed>
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span style="cursor:pointer;" @click="redirect('/')" class="hidden-sm-and-down">Yorha</span>
-      </v-toolbar-title>
-      <v-text-field flat
-                    solo-inverted
-                    label="Search Users"
-                    v-model="search"
-                    style="border-radius: 10px;"
-                    class="hidden-sm-and-down"></v-text-field>
-      <v-btn @click="searching()" icon>
-        <v-icon style="padding: 10px;" >search</v-icon>
-      </v-btn>
-      <v-spacer></v-spacer>
-      <a href="https://inbox.google.com/u/0/" target="_blank" style="text-decoration: none;">
-        <v-btn icon>
-          <v-icon>mail</v-icon>
-        </v-btn>
-      </a>
-      <v-btn @click="$router.push('/home')" icon>
-        <v-icon>home</v-icon>
-      </v-btn>
-      <v-btn v-if="signed === true" @click="logout()" icon>
-        <img width="20px" src="http://www.clker.com/cliparts/a/U/q/S/B/e/white-button-power-md.png" />
-      </v-btn>
-      <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
-        <v-avatar size="32px" tile>
-          <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
-        </v-avatar>
-      </v-btn>
-      <v-btn v-else @click="login()" color="primary" fab small dark>
-          <v-icon>account_circle</v-icon>
-      </v-btn>
-    </v-toolbar>
-    <v-toolbar
-               style="z-index: 20; background-color: rgba(30, 30, 200, 0.2);"
-               v-else
-               dark
-               app
-               :clipped-left="$vuetify.breakpoint.lgAndUp"
-               fixed>
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span style="cursor:pointer;" @click="redirect('/')" class="hidden-sm-and-down">Yorha</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <a href="https://inbox.google.com/u/0/" target="_blank" style="text-decoration: none;">
-        <v-btn icon>
-          <v-icon>mail</v-icon>
-        </v-btn>
-      </a>
-      <v-btn v-if="signed === true" @click="logout()" icon>
-        <img width="20px" src="http://www.clker.com/cliparts/a/U/q/S/B/e/white-button-power-md.png" />
-      </v-btn>
-      <v-btn v-if="signed === true" @click="redirect('/profil')" icon large>
-        <v-avatar size="32px" tile>
-          <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
-        </v-avatar>
-      </v-btn>
-      <v-btn v-else @click="login()" color="primary" fab small dark>
-          <v-icon>account_circle</v-icon>
-      </v-btn>
-    </v-toolbar>-->
   </v-app>
 </template>
 
@@ -471,6 +220,9 @@
   color: #fff;
   margin-left: 15px;
   box-shadow: 0 3px 0 #0f69ff;
+}
+.navbar {
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
 }
 </style>
 

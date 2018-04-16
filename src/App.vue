@@ -183,14 +183,25 @@
                         </a>
                     </div>
                 </div>
-                <ul v-if="user.local" class="menu accordion-menu">
+                <ul class="menu accordion-menu">
                     <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
                     <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
-                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a @click="$router.push('/posts')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>phonelink</v-icon></span><p>Version Manager</p></a></li>
-                    <li v-if="user.local.work === 'Test'" style="width: 80%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>favorite</v-icon></span><p>Dr House</p></a></li>
-                    <li style="width: 80%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>poll</v-icon></span><p>Jira</p></a></li>
+                    <li style="width: 80%;"><a @click="$router.push('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Department</p></a></li>
+                    <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
+                        <ul class="sub-menu">
+                            <li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>
+                            <li v-if="work === 'Test'" style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
+                            <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
+                        </ul>
+                    </li>
+                    <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Document</p><span class="arrow"></span></a>
+                        <ul class="sub-menu">
+                            <li v-if="work === 'Test'" style="width: 85%;"><a>Compte rendu</a></li>
+                            <li v-if="work === 'Test'" style="width: 85%;"><a>Assets</a></li>
+                        </ul>
+                    </li>
                     <li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>
-                    <v-menu offset-x>
+                    <!--<v-menu offset-x>
                       <li slot="activator" style="width: 140%;"><a class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p> Doc</p></a></li>
                       <v-list style="background-color: rgba(32, 33, 35, 0.8); color: white;">
                         <v-list-tile>
@@ -200,9 +211,9 @@
                           <v-list-tile-title style="padding-right: 5px; cursor: pointer;"><v-icon dark style="margin: 5px;">phonelink</v-icon>Comptes rendu</v-list-tile-title>
                         </v-list-tile>
                       </v-list>
-                    </v-menu>
+                    </v-menu>-->
                     <li style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelog</p></a></li>
-                </ul>
+                  </ul>
             </div>
         </div>
         <router-view class="page-inner" :Search="search" v-on:refresh="checkUser()" />
@@ -242,6 +253,7 @@ export default {
     search: '',
     menu: '',
     drawer: false,
+    work: 'Test',
     department: [
       { text: 'Test' },
       { text: 'Marketing' },
@@ -327,6 +339,7 @@ export default {
       var vue = this
       if (vue.$route.fullPath) {
       }
+      this.work = vue.user.local.work
       // check on router change for refresh
       if (vue.user.local) {
         vue.items[3].display = false

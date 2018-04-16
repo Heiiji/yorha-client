@@ -6,9 +6,10 @@ import NewPost    from '@/components/NewPost'
 import EditPost   from '@/components/EditPost'
 import Overview   from '@/components/Overview'
 import Management from '@/components/Management'
-import Changelog  from '@/components/changelog'
-import Home       from '@/components/home'
-import Mattermost from '@/components/mattermost'
+const Changelog   = () => import('@/components/changelog')
+const Home        = () => import('@/components/home')
+const Mattermost  = () => import('@/components/mattermost')
+const Departments = () => import('@/components/departments')
 import Inventory  from '@/components/inventaire'
 import Annonce    from '@/components/annonce'
 import YTShadowLive   from '@/components/YTShadowLive'
@@ -16,7 +17,7 @@ import Timeline   from '@/components/timeline'
 // versions
 import Displayer  from '@/components/versions/displayer'
 import Downloads  from '@/components/versions/downloads'
-import Posts      from '@/components/versions/Posts'
+const Posts       = () => import('@/components/versions/Posts')
 // users files
 import SearchUser from '@/components/users/SearchUser'
 import Viewer     from '@/components/users/viewer'
@@ -35,6 +36,11 @@ export default new Router({
       path: '/Home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/department',
+      name: 'Department',
+      component: Departments
     },
     {
       path: '/Profil',

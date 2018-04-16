@@ -3,6 +3,15 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.0.12 :</h4>
+    <p>
+      - First implementation of lazy loading <br/>
+      - fix overflow on discord news and minor fix for desktop responsive <br/>
+      - add department main page <br/>
+      - change menu display with dropdown <br/>
+      - simplification of version manager
+    </p>
+    <br/><br/>
     <h4>0.0.11 :</h4>
     <p>
       - add phone number system <br/>
@@ -17,16 +26,6 @@
       - fix search bar close button <br/>
       - put button for annonces <br/>
       - resize many of dialogues
-    </p>
-    <br/><br/>
-    <h4>0.0.10 :</h4>
-    <p>
-      - Now limit news volume on Dashboard <br/>
-      - Enhance display of news <br/>
-      - Only General information on accueil <br/>
-      - reorder menu <br/>
-      - Profil page now functionnal and begin real dashboard <br/>
-      - Profil viewer now upgrade to new model
     </p>
     <br/><br/>
   </div>

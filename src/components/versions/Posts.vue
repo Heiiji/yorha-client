@@ -65,29 +65,25 @@
     <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
       <v-card-title style="color: blue;">Create a version :</v-card-title>
       <v-divider></v-divider>
+        <v-flex style="padding-left: 40px;" xs11>
+          <v-select
+            :items="modules"
+            v-model="editeable.device"
+            label="Devices"
+            single-line
+          ></v-select>
+        </v-flex>
         <v-flex xs12>
-          <v-text-field v-model="editeable.device"
-            name="device"
-            label="Version device"
-            id="device"
-            style="width: 300px; margin: 10px; display: inline-block;"
-          ></v-text-field>
           <v-text-field v-model="editeable.importance"
             name="importance"
             label="Version importance (hotfix,...)"
             id="importance"
             style="width: 300px; margin: 10px; display: inline-block;"
-          ></v-text-field><br/>
+          ></v-text-field>
           <v-text-field v-model="editeable.version"
             name="version"
             label="Version number"
             id="version"
-            style="width: 300px; margin: 10px; display: inline-block;"
-          ></v-text-field>
-          <v-text-field v-model="editeable.picture"
-            name="picture"
-            label="Version picture (url)"
-            id="picture"
             style="width: 300px; margin: 10px; display: inline-block;"
           ></v-text-field><br/>
           <v-text-field v-model="editeable.changelog"
@@ -177,6 +173,20 @@ export default {
       edition: false,
       Validator: '',
       versions: [],
+      modules: [
+        { text: 'Windows' },
+        { text: 'Mac OS' },
+        { text: 'Shadow Box' },
+        { text: 'IOS' },
+        { text: 'Android' },
+        { text: 'O-Capture' },
+        { text: 'O-Controller' },
+        { text: 'Shadow Input' },
+        { text: 'WatchDog' },
+        { text: 'Updater' },
+        { text: 'Shadow Serial' },
+        { text: 'Shadow Intel' }
+      ],
       editeable: {
         device: '',
         target: '',
@@ -204,7 +214,11 @@ export default {
     }
   },
   mounted () {
-    this.getVersion(this.$store.state.user.work)
+    if (this.$store.state.user.local) {
+      this.getVersion(this.$store.state.user.local.work)
+    } else {
+      this.$router.push('/')
+    }
   },
   methods: {
     async getVersion (arg) {
@@ -214,17 +228,11 @@ export default {
         this.versions = response.data.versions
       } else {
         this.VersionDisplay = 'Versions On Rail'
-        if (arg === 'Test') {
-          const response = await VersionService.fetchPosts('current')
-          this.versions = response.data.versions
-        } else {
-          const response = await VersionService.fetchPosts(this.$store.state.user.work)
-          this.versions = response.data.versions
-        }
+        const response = await VersionService.fetchPosts('current')
+        this.versions = response.data.versions
       }
       this.versions.forEach(function (element) {
         element.changelog = element.changelog.replace(/\r?\n/g, '<br />')
-        console.log(element.changelog)
       })
     },
     async giveQA (id) {
@@ -232,6 +240,34 @@ export default {
       this.$router.push('/home')
     },
     PostVersion () {
+      this.editeable.device = this.editeable.device.text
+      if (this.editeable.device === 'Windows' || this.editeable.device === 'Updater' || this.editeable.device === 'Shadow Serial' || this.editeable.device === 'Shadow Intel') {
+        this.editeable.picture = '/static/Windows.jpg'
+      } else {
+        if (this.editeable.device === 'Mac OS') {
+          this.editeable.picture = '/static/MacOS.jpg'
+        } else {
+          if (this.editeable.device === 'Shadow Box') {
+            this.editeable.picture = '/static/shadow-box.jpg'
+          } else {
+            if (this.editeable.device === 'IOS') {
+              this.editeable.picture = '/static/IOS.jpg'
+            } else {
+              if (this.editeable.device === 'Android') {
+                this.editeable.picture = '/static/Google.jpg'
+              } else {
+                if (this.editeable.device === 'O-Capture') {
+                  this.editeable.picture = '/static/O-Capture.jpg'
+                } else {
+                  if (this.editeable.device === 'O-Controller' || this.editeable.device === 'Shadow Input') {
+                    this.editeable.picture = '/static/O-Controler.jpg'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       if (this.edition === false) {
         const response = VersionService.addVersion(this.editeable)
         console.log(response)

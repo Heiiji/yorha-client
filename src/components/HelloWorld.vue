@@ -141,20 +141,20 @@
         </div>
         <span v-if="DiscNews">
         <v-dialog style="z-index:25;" v-model="DiscNews.msg1.show" scrollable max-width="1000px">
-          <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+          <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
             <v-card-title style="color: blue;">{{DiscNews.msg1.name}}</v-card-title>
             <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg1.text"></p>
           </v-card>
         </v-dialog>
         <v-dialog style="z-index:25;" v-model="DiscNews.msg2.show" scrollable max-width="1000px">
-          <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+          <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
             <v-card-title style="color: blue;">{{DiscNews.msg2.name}}</v-card-title>
             <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg2.text"></p>
           </v-card>
         </v-dialog>
       </span>
       <v-dialog style="z-index:25;" v-model="PostAnn" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
           <v-card-title style="color: blue;">Post de :
             <v-select
               :items="docs"

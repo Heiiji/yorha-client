@@ -47,16 +47,6 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    login ({ commit }, creds) {
-      commit(LOGIN)
-      return new Promise(resolve => {
-        setTimeout(() => {
-          localStorage.setItem('token', 'JWT')
-          commit(LOGIN_SUCCESS)
-          resolve()
-        }, 1000)
-      })
-    }
   },
   getters: {
     isLoggedIn: state => {

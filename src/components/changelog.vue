@@ -3,6 +3,11 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.0.13 :</h4>
+    <p>
+      - update depedency and server <br/>
+    </p>
+    <br/><br/>
     <h4>0.0.12 :</h4>
     <p>
       - First implementation of lazy loading <br/>

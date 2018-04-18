@@ -38,6 +38,14 @@ export default {
     return Api().get('/account/' + id)
   },
 
+  SendMSG (params) {
+    return Api().put('SendMSG', params)
+  },
+
+  GetMSG (param) {
+    return Api().get('GetMSG/' + param)
+  },
+
   editDescription (params) {
     return Api().put('account/description', params)
   },

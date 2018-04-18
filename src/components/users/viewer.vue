@@ -23,7 +23,7 @@
                     </ul>
                     <hr>
                     <button @click="NewTeam = $store.state.user.local.team; PostTeam ();" class="btn btn-primary btn-block">Add to team</button>
-                    <button class="btn btn-primary btn-block">Send message</button>
+                    <button @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
                 </div>
                 <div class="col-md-6 m-t-lg">
                     <v-tabs style="margin: 10px;" fixed-tabs>
@@ -64,6 +64,27 @@
             </div>
         </div>
     </div>
+
+  <v-dialog style="z-index:25;" v-model="sendMSG" scrollable max-width="500px">
+    <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+        <v-flex xs8>
+          <v-divider></v-divider>
+          <label>
+            <v-text-field v-model="msg.text"
+              name="NewMSG"
+              label="Message"
+              id="NewMSG"
+              style="width: 450px; margin: 5px;"
+            ></v-text-field>
+          </label>
+        </v-flex>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn color="blue darken-1" flat @click.native="sendMSG = false;">Close</v-btn>
+        <v-btn color="blue darken-1" flat @click.native="SendMSG()">Send</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
   </div>
 </template>
 
@@ -75,7 +96,14 @@ export default {
   data () {
     return {
       user: [],
-      Partner: []
+      Partner: [],
+      sendMSG: false,
+      msg: {
+        target: '',
+        text: '',
+        sender: '',
+        senderPic: ''
+      }
     }
   },
   mounted () {
@@ -92,6 +120,12 @@ export default {
       AccountService.FindByTeam(this.user.team).then((response) => {
         vue.Partner = response.data.users
       })
+    },
+    SendMSG () {
+      this.msg.sender = this.$store.state.user.local.username
+      this.msg.senderPic = this.$store.state.user.local.picture
+      this.msg.target = this.user.mail
+      AccountService.SendMSG(this.msg)
     },
     PostTeam () {
       AccountService.editTeam({

@@ -97,25 +97,16 @@
                                 <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">2</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">20</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
-                                    <li><p class="drop-title">You have 2 new  messages !</p></li>
                                     <li class="dropdown-menu-list slimscroll messages">
                                         <ul class="list-unstyled">
-                                            <li>
-                                                <a href="#">
-                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" src="/static/assets/images/avatar2.png" alt=""></div>
-                                                    <p class="msg-name">Sandra Smith</p>
-                                                    <p class="msg-text">Hey ! I'm working on your project</p>
-                                                    <p class="msg-time">3 minutes ago</p>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="msg-img"><div class="online off"></div><img class="img-circle" src="/static/assets/images/avatar4.png" alt=""></div>
-                                                    <p class="msg-name">Amily Lee</p>
-                                                    <p class="msg-text">Hi David !</p>
-                                                    <p class="msg-time">8 minutes ago</p>
+                                            <li v-for="msg in messages" :key="msg._id">
+                                                <a>
+                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
+                                                    <p class="msg-name">{{ msg.sender }}</p>
+                                                    <p class="msg-text"> {{ msg.text }}</p>
+                                                    <p class="msg-time">{{ msg.date }}</p>
                                                 </a>
                                             </li>
                                         </ul>
@@ -201,17 +192,6 @@
                         </ul>
                     </li>
                     <li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>
-                    <!--<v-menu offset-x>
-                      <li slot="activator" style="width: 140%;"><a class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p> Doc</p></a></li>
-                      <v-list style="background-color: rgba(32, 33, 35, 0.8); color: white;">
-                        <v-list-tile>
-                          <v-list-tile-title style="padding-right: 5px; cursor: pointer;"><v-icon dark style="margin: 5px;">phonelink</v-icon>Assets</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile>
-                          <v-list-tile-title style="padding-right: 5px; cursor: pointer;"><v-icon dark style="margin: 5px;">phonelink</v-icon>Comptes rendu</v-list-tile-title>
-                        </v-list-tile>
-                      </v-list>
-                    </v-menu>-->
                     <li style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelog</p></a></li>
                   </ul>
             </div>
@@ -250,6 +230,7 @@ export default {
     signed: false,
     firebaseApp: [],
     token: [],
+    messages: [],
     search: '',
     menu: '',
     drawer: false,
@@ -340,12 +321,15 @@ export default {
       if (vue.$route.fullPath) {
       }
       this.work = vue.user.local.work
-      // check on router change for refresh
       if (vue.user.local) {
         vue.items[3].display = false
         if (vue.user.local.work === 'Test') {
           vue.items[0].display = true
         }
+        AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
+          console.log(response)
+          vue.messages = response.data.msgs
+        })
       }
     }
   },

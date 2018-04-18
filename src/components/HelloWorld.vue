@@ -260,7 +260,7 @@ export default {
       this.document.sender = this.$store.state.user.local.username
       this.document.senderPic = this.$store.state.user.local.picture
       this.document.type = this.document.type.text
-      this.document.token = this.$store.state.user.token
+      this.document.token = this.$store.state.user.local.token
       DocService.PostYTShadowLive(this.document).then((response) => {
         vue.News.sender = vue.$store.state.user.local.username
         vue.News.senderPic = vue.$store.state.user.local.picture

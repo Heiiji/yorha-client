@@ -97,7 +97,7 @@
                                 <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">20</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages">
                                         <ul class="list-unstyled">
@@ -187,8 +187,8 @@
                     </li>
                     <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Document</p><span class="arrow"></span></a>
                         <ul class="sub-menu">
-                            <li v-if="work === 'Test'" style="width: 85%;"><a>Compte rendu</a></li>
-                            <li v-if="work === 'Test'" style="width: 85%;"><a>Assets</a></li>
+                            <li style="width: 85%;"><a>Compte rendu</a></li>
+                            <li style="width: 85%;"><a>Assets</a></li>
                         </ul>
                     </li>
                     <li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>
@@ -231,6 +231,7 @@ export default {
     firebaseApp: [],
     token: [],
     messages: [],
+    msgNbr: 0,
     search: '',
     menu: '',
     drawer: false,
@@ -295,7 +296,6 @@ export default {
           vue.user.local = response.data
           vue.checkUser()
           window.$cookies.set('user_session', vue.user.local.token, '1d')
-          console.log(vue.user)
         })
       }).catch(function (error) {
         console.log(error)
@@ -329,6 +329,10 @@ export default {
         AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
           console.log(response)
           vue.messages = response.data.msgs
+          vue.msgNbr = 0
+          vue.messages.forEach(function (element) {
+            vue.msgNbr += 1
+          })
         })
       }
     }

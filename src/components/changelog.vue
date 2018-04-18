@@ -7,7 +7,8 @@
     <p>
       - ajout de la possibilité d'envoyer un message direct avec notif <br/>
       - update depedency and server <br/>
-      - fix first login issue
+      - fix first login issue<br/>
+      - security fix
     </p>
     <br/><br/>
     <h4>0.0.12 :</h4>

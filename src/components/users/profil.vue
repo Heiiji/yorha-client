@@ -22,6 +22,14 @@
                         <li><p v-if="user.local.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.local.tel">{{user.local.tel}}</a></p></li>
                     </ul>
                     <hr>
+
+                        <div class="panel-heading">
+                            <div class="panel-title">Description</div>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{ user.local.description }}</p>
+                        </div>
+                    <hr>
                     <button @click="EditDescription = true" class="btn btn-primary btn-block">Modify Description</button>
                     <button v-if="user.local.tel === 'none'" @click="EditTel = true" class="btn btn-primary btn-block">Add my number</button>
                     <button v-else @click="EditTel = true" class="btn btn-primary btn-block">Change my number</button>
@@ -169,6 +177,53 @@
                             </ul>
                         </div>
                       </v-tab-item>
+                      <v-tab>
+                        Whatever
+                      </v-tab>
+                      <v-tab-item v-if="$store.state.user.local.team !== 'none'" style="margin-top: 10px;">
+                        <div class="panel panel-white">
+                            <div class="panel-body">
+                                <div class="post">
+                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
+                                    <div class="post-options">
+                                        <a href="#"><i class="icon-camera"></i></a>
+                                        <a href="#"><i class="icon-link"></i></a>
+                                        <button class="btn btn-default pull-right" @click="News.department = 'Whatever'; postNews();">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-timeline">
+                            <ul class="list-unstyled">
+                                <li v-for="item in allNews" v-if="item.department === 'Whatever'" :key="item._id" class="timeline-item" style="display: block;">
+                                    <div class="panel panel-white">
+                                        <div class="panel-body">
+                                            <div class="timeline-item-header">
+                                                <img :src="item.senderPic" alt="">
+                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
+                                                <small>date</small>
+                                            </div>
+                                            <div class="timeline-item-post">
+                                                <p>{{ item.text }}</p>
+                                                <div class="timeline-options">
+                                                    <a href="#"><i class="icon-share"></i> Share</a>
+                                                </div>
+                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                                    <div class="timeline-comment-header">
+                                                        <img :src="comm.senderPic" alt="">
+                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                    </div>
+                                                    <p class="timeline-comment-text">{{comm.text}}</p>
+                                                </div>
+                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
+                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                      </v-tab-item>
                     </v-tabs>
                 </div>
                 <div class="col-md-3 m-t-lg">
@@ -186,14 +241,6 @@
                                 <br/>
                                 <button @click="NewTeam = 'none'; PostTeam ();" class="btn btn-primary btn-block">Quit team</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-white">
-                        <div class="panel-heading">
-                            <div class="panel-title">Description</div>
-                        </div>
-                        <div class="panel-body">
-                            <p>{{ user.local.description }}</p>
                         </div>
                     </div>
                 </div>
@@ -334,9 +381,13 @@ export default {
     }
   },
   mounted () {
-    this.user = this.$store.state.user
-    this.getNews()
-    this.GetByTeam()
+    if (!this.$store.state.user.local) {
+      this.$router.push('/')
+    } else {
+      this.user = this.$store.state.user
+      this.getNews()
+      this.GetByTeam()
+    }
   },
   methods: {
     PostDescription (desc) {

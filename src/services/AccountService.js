@@ -34,6 +34,10 @@ export default {
     return Api().get('accountTeam/' + params)
   },
 
+  FindByDepartment (params) {
+    return Api().get('accountDep/' + params)
+  },
+
   FindById (id) {
     return Api().get('/account/' + id)
   },

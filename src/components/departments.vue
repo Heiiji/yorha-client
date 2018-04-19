@@ -1,7 +1,8 @@
 <template>
   <div>
     <br/><br/>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+    <a @click="$router.push('/department/marketing')">
+    <v-card class="select-dep">
       <v-card-media
         src="https://www.tanikal.com/wp-content/uploads/2017/11/Digital-Marketing-Media-Technology-Graphic-1024x586.jpg"
         height="200px"
@@ -14,7 +15,9 @@
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+  <a @click="$router.push('/department/Support')">
+    <v-card class="select-dep">
       <v-card-media
         src="https://geekyapar.com/wp-content/uploads/2014/04/green-lantern-batman-dark-dc-comics-comics-superman-superheroes-justice-league-aquaman-flash-comic-hero-wonder-woman-cyborg-dc-comics-69099.jpg"
         height="200px"
@@ -27,7 +30,9 @@
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+    <a @click="$router.push('/department/Dev')">
+    <v-card class="select-dep">
       <v-card-media
         src="http://tradinginsider.fr/wp-content/uploads/2017/02/langages-programmation.jpg"
         height="200px"
@@ -40,7 +45,9 @@
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+    <a @click="$router.push('/department/Virtualisation')">
+    <v-card class="select-dep">
       <v-card-media
         src="https://2.bp.blogspot.com/-xzvFgugRD_g/WIFbOryxaUI/AAAAAAAAIRs/eBhmxmsTnq80ValKcwusGejmuDWtfkIYgCLcB/s640/1vir.gif"
         height="200px"
@@ -48,12 +55,14 @@
       </v-card-media>
       <v-card-title primary-title>
         <div>
-          <div class="headline">La VM</div>
+          <div class="headline">La Virtualisation</div>
           <span class="grey--text">Power to say 'no'</span>
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+    <a @click="$router.push('/department/test')">
+    <v-card class="select-dep">
       <v-card-media
         src="https://www.desktopbackground.org/p/2014/04/22/750944_free-thor-hammer-wallpapers-for-iphone-y2j-wallx_1600x1200_h.jpg"
         height="200px"
@@ -66,7 +75,9 @@
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+    <a @click="$router.push('/department/web')">
+    <v-card class="select-dep">
       <v-card-media
         src="http://www.forallworld.com/data_images/wallpapers/5/15945-internet.jpg"
         height="200px"
@@ -79,9 +90,11 @@
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+    <a @click="$router.push('/department/infra')">
+    <v-card class="select-dep">
       <v-card-media
-        src="https://cdn.allwallpaper.in/wallpapers/1920x1200/16571/computers-computer-technology-data-center-science-server-1920x1200-wallpaper.jpg"
+        src="/static/departments/infra-wide.png"
         height="200px"
       >
       </v-card-media>
@@ -92,7 +105,9 @@
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+    <a @click="$router.push('/department/R&D')">
+    <v-card class="select-dep">
       <v-card-media
         src="http://smkn2kra.sch.id/wp-content/uploads/2015/02/computer-wallpaper-background-21-high-quality-background-and-wallpaper-1-1024x640.jpg"
         height="200px"
@@ -105,7 +120,9 @@
         </div>
       </v-card-title>
     </v-card>
-    <v-card style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
+  </a>
+    <a @click="$router.push('/department/RH')">
+    <v-card class="select-dep">
       <v-card-media
         src="http://blog.prodware.es/wp-content/uploads/2012/05/PLM-y-social-media11.jpg"
         height="200px"
@@ -118,8 +135,53 @@
         </div>
       </v-card-title>
     </v-card>
+  </a>
+    <a @click="$router.push('/department/LIMA')">
+    <v-card class="select-dep">
+      <v-card-media
+        src="http://www.gotechnologix.com/wp-content/uploads/2016/05/mobile-device-technology-wallpaper.jpg"
+        height="200px"
+      >
+      </v-card-media>
+      <v-card-title primary-title>
+        <div>
+          <div class="headline">LIMA</div>
+          <span class="grey--text">Your file around the world </span>
+        </div>
+      </v-card-title>
+    </v-card>
+  </a>
+    <a @click="$router.push('/department/Administration')">
+    <v-card class="select-dep">
+      <v-card-media
+        src="https://www.dorchesterwealth.com/wp-content/themes/silvio/images/investment-management_bg.jpg"
+        height="200px"
+      >
+      </v-card-media>
+      <v-card-title primary-title>
+        <div>
+          <div class="headline">Administration</div>
+          <span class="grey--text">We command all of you</span>
+        </div>
+      </v-card-title>
+    </v-card>
+  </a>
   </div>
 </template>
+<style>
+.select-dep {
+  width: 400px;
+  z-index: 20;
+  margin: 15px;
+  display: inline-block;
+}
+.select-dep:hover {
+  box-shadow: 5px 5px 4px #888888;
+  cursor: pointer;
+  -webkit-transition: box-shadow 0.4s;
+  transition: box-shadow 0.4s;
+}
+</style>
 <script>
 export default {
   name: 'Departments',

@@ -31,6 +31,12 @@
                       <div><h2 class="no-m" style="color: rgb(30, 80, 160);">{{ news.name }}</h2><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(news.text.match(/.{0,200}/g))[0] + ' ...'"></span></div>
                   </div>
               </div><br/>
+              <div v-if="TwitNews[0]" class="socialp">
+                  <div style="margin: 15px; position: relative;" class="panel-body"  @click="showTwit = true;">
+                      <img src="http://pnd-rdc.net/wp-content/uploads/2017/12/logo-twitter-rond.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,200}/g))[0] + ' ...'"></span></div>
+                  </div>
+              </div><br/>
               <QwickLook target="finnish">
               </QwickLook>
             </v-flex>
@@ -139,7 +145,7 @@
                 </div>
             </div>
         </div>
-        <span v-if="DiscNews">
+        <span v-if="DiscNews.msg1">
         <v-dialog style="z-index:25;" v-model="DiscNews.msg1.show" scrollable max-width="1000px">
           <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
             <v-card-title style="color: blue;">{{DiscNews.msg1.name}}</v-card-title>
@@ -153,6 +159,11 @@
           </v-card>
         </v-dialog>
       </span>
+      <v-dialog style="z-index:25;" v-model="showTwit" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+          <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="TwitNews[0]"></p>
+        </v-card>
+      </v-dialog>
       <v-dialog style="z-index:25;" v-model="PostAnn" scrollable max-width="1000px">
         <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
           <v-card-title style="color: blue;">Post de :
@@ -238,6 +249,8 @@ export default {
       ],
       allNews: [],
       DiscNews: [],
+      TwitNews: [],
+      showTwit: false,
       target: 'current'
     }
   },
@@ -284,15 +297,16 @@ export default {
           this.allNews = response.data.news
         }
       }
+      this.TwitNews = response.data.lastTweets
       this.DiscNews = {
         msg1: {
-          name: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
+          name: response.data.lastDiscordMsgs[2].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+          text: response.data.lastDiscordMsgs[2].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
           show: false
         },
         msg2: {
-          name: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
+          name: response.data.lastDiscordMsgs[1].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+          text: response.data.lastDiscordMsgs[1].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
           show: false
         }
         /*

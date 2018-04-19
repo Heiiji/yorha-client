@@ -3,11 +3,19 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
-    <h4>0.0.13 :</h4>
+    <h4>0.1.0 :</h4>
     <p>
       - ajout de la possibilité d'envoyer un message direct avec notif <br/>
+      - Ajout des pages uniques par department, elle seront personnalisable a souhait <br/>
+      - suppression de l'image de profil dans le menu <br/>
+      - change top logo of website<br/>
+      - add twitter news <br/>
+      - Ajout du chanel whatever <br/>
       - update depedency and server <br/>
       - fix first login issue<br/>
+      - fix version manager issue when edit then send new <br/>
+      - fix qwicklogin on profil<br/>
+      - Correction d'orthographe<br/>
       - security fix
     </p>
     <br/><br/>

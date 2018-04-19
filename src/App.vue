@@ -80,7 +80,7 @@
                     </a>
                 </div>
                 <div class="logo-box">
-                    <a href="/" class="logo-text" style="background-color: rgb(33, 150, 243);"><span>Yorha</span></a>
+                    <a href="/" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100px" src="/static/Shadow_Horizontal_White.png" /></a>
                 </div>
                 <div class="search-button">
                     <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
@@ -97,7 +97,7 @@
                                 <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">{{ msgNbr }}</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages">
                                         <ul class="list-unstyled">
@@ -164,12 +164,9 @@
             <div class="page-sidebar-inner slimscroll">
               <div class="sidebar-header">
                     <div class="sidebar-profile">
-                        <a href="javascript:void(0);" id="profile-menu-link">
-                            <div v-if="user.local" class="sidebar-profile-image">
-                                <img :src="user.local.picture" class="img-circle img-responsive" alt="">
-                            </div>
+                        <a id="profile-menu-link">
                             <div v-if="user.local" class="sidebar-profile-details">
-                                <span>{{ user.local.username }}<br><small>{{ user.local.work }}</small></span>
+                                <span><small>{{ user.local.work }}</small></span>
                             </div>
                         </a>
                     </div>
@@ -177,7 +174,7 @@
                 <ul class="menu accordion-menu">
                     <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
                     <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
-                    <li style="width: 80%;"><a @click="$router.push('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Department</p></a></li>
+                    <li style="width: 80%;"><a @click="$router.push('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
                     <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
                         <ul class="sub-menu">
                             <li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>
@@ -185,14 +182,14 @@
                             <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
                         </ul>
                     </li>
-                    <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Document</p><span class="arrow"></span></a>
+                    <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
                         <ul class="sub-menu">
                             <li style="width: 85%;"><a>Compte rendu</a></li>
                             <li style="width: 85%;"><a>Assets</a></li>
                         </ul>
                     </li>
                     <li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>
-                    <li style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelog</p></a></li>
+                    <li style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelogs</p></a></li>
                   </ul>
             </div>
         </div>
@@ -327,7 +324,6 @@ export default {
           vue.items[0].display = true
         }
         AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
-          console.log(response)
           vue.messages = response.data.msgs
           vue.msgNbr = 0
           vue.messages.forEach(function (element) {

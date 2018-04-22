@@ -5,11 +5,16 @@
     <br/><br/>
     <h4>0.1.1 :</h4>
     <p>
+      - Add Full chat page and notif <br/>
       - Add calendar display for meeting room <br/>
+      - Add feedback system <br/>
+      - delete timeline page and hide incoming features<br/>
       - update marketing page <br/>
       - Fix animation of social actu <br/>
       - Fix useless include <br/>
+      - message box in profil <br/>
       - Fix display wrong version passed <br/>
+      - Fix document display when isn't fully loaded<br/>
       - Fix Version manager disponibility <br/>
     </p>
     <br/><br/>
@@ -27,15 +32,6 @@
       - fix qwicklogin on profil<br/>
       - Correction d'orthographe<br/>
       - security fix
-    </p>
-    <br/><br/>
-    <h4>0.0.12 :</h4>
-    <p>
-      - First implementation of lazy loading <br/>
-      - fix overflow on discord news and minor fix for desktop responsive <br/>
-      - add department main page <br/>
-      - change menu display with dropdown <br/>
-      - simplification of version manager
     </p>
     <br/><br/>
   </div>

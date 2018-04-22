@@ -45,9 +45,15 @@ export default {
   SendMSG (params) {
     return Api().put('SendMSG', params)
   },
+  MakeAsRead (param) {
+    return Api().put('MakeAsRead', param)
+  },
 
   GetMSG (param) {
     return Api().get('GetMSG/' + param)
+  },
+  getMyMsg (param) {
+    return Api().get('GetMyMsg/' + param)
   },
   SendFeedback (feedback) {
     return Api().put('feedback', feedback)

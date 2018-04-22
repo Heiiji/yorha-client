@@ -10,6 +10,7 @@ const Changelog   = () => import('@/components/changelog')
 const Home        = () => import('@/components/home')
 const Mattermost  = () => import('@/components/mattermost')
 const Calendar  = () => import('@/components/calendar')
+const Chat  = () => import('@/components/chat')
 import Inventory  from '@/components/inventaire'
 import Annonce    from '@/components/annonce'
 import YTShadowLive   from '@/components/YTShadowLive'
@@ -49,6 +50,11 @@ export default new Router({
       path: '/Home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/chat',
+      name: 'Chat',
+      component: Chat
     },
     {
       path: '/department/test',

@@ -101,7 +101,7 @@
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages">
                                         <ul class="list-unstyled">
-                                            <li v-for="msg in messages" :key="msg._id">
+                                            <li v-for="msg in messages" :key="msg._id" @click="$router.push('/chat')">
                                                 <a>
                                                     <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -111,7 +111,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="drop-all"><a href="#" class="text-center">All Messages</a></li>
+                                    <li class="drop-all"><a @click="$router.push('/chat')" class="text-center">All Messages</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -213,7 +213,7 @@
               <v-divider></v-divider>
               <v-card-actions>
                 <v-btn color="blue darken-1" flat @click.native="feedback = false;">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="sendFeedback()">Save</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="sendFeedback()">Send</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -288,7 +288,6 @@ export default {
       this.$router.push('/SearchUser')
     },
     onSignInSuccess (googleUser) {
-      // See https://developers.google.com/identity/sign-in/web/reference#users
       this.$store.GoogleToken = googleUser
       Api().post('/account', {
         username: googleUser.getBasicProfile().getName(),
@@ -339,7 +338,7 @@ export default {
       }
     },
     sendFeedback () {
-      AccountServices.SendFeedback(this.FeedbackText)
+      AccountServices.SendFeedback({text: this.FeedbackText})
     },
     checkUser () {
       var vue = this
@@ -355,7 +354,9 @@ export default {
           vue.messages = response.data.msgs
           vue.msgNbr = 0
           vue.messages.forEach(function (element) {
-            vue.msgNbr += 1
+            if (element.asread === false) {
+              vue.msgNbr += 1
+            }
           })
         })
       }

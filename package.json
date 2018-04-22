@@ -18,6 +18,7 @@
     "firebase": "^4.12.1",
     "firebaseui": "^2.7.0",
     "nodemailer": "^4.6.4",
+    "npm": "^5.8.0",
     "unsplash-api": "^1.2.0",
     "unsplash-js": "^4.8.0",
     "vue": "^2.5.16",

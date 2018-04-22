@@ -102,7 +102,8 @@ export default {
         target: '',
         text: '',
         sender: '',
-        senderPic: ''
+        senderPic: '',
+        senderMail: ''
       }
     }
   },
@@ -125,7 +126,9 @@ export default {
       this.msg.sender = this.$store.state.user.local.username
       this.msg.senderPic = this.$store.state.user.local.picture
       this.msg.target = this.user.mail
+      this.msg.senderMail = this.$store.state.user.local.mail
       AccountService.SendMSG(this.msg)
+      this.sendMSG = false
     },
     PostTeam () {
       AccountService.editTeam({

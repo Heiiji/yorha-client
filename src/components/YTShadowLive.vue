@@ -1,8 +1,13 @@
 <template>
   <div>
-    <h2 v-if="Doc">{{Doc.title}} - {{Doc.date.replace(/..............$/g, '.')}}</h2>
-    <a :href="Doc.link" target="_blank">regarder la video</a>
-    <p v-html="Doc.body.replace(/\r?\n/g, '<br />')"></p>
+    <span v-if="Doc">
+      <h2>{{Doc.title}} - {{Doc.date.replace(/..............$/g, '.')}}</h2>
+      <a :href="Doc.link" target="_blank">regarder la video</a>
+      <p v-html="Doc.body.replace(/\r?\n/g, '<br />')"></p>
+    </span>
+    <span v-else>
+      <h2>Chargement</h2>
+    </span>
   </div>
 </template>
 <script>

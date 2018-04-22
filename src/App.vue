@@ -150,6 +150,9 @@
                                   <v-icon>account_circle</v-icon>
                               </v-btn>
                             </li>
+                                <li>
+                                    <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><v-icon medium>event</v-icon></a>
+                                </li>
                             <li v-if="signed === true">
                                 <a @click="logout()" class="log-out waves-effect waves-button waves-classic">
                                     <span><i class="fa fa-sign-out m-r-xs"></i>Log out</span>
@@ -188,12 +191,32 @@
                             <li style="width: 85%;"><a>Assets</a></li>
                         </ul>
                     </li>
-                    <li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>
+                    <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
+                    <li style="width: 80%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>mail</v-icon></span><p>Feedback</p></a></li>
                     <li style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelogs</p></a></li>
                   </ul>
             </div>
         </div>
         <router-view class="page-inner" :Search="search" v-on:refresh="checkUser()" />
+          <v-dialog style="z-index:25;" v-model="feedback" scrollable max-width="800px">
+            <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+              <v-card-title style="color: blue;">feedback :</v-card-title>
+              <v-divider></v-divider>
+                <v-flex xs8>
+                  <v-text-field v-model="FeedbackText"
+                    textarea
+                    name="FeedbackText"
+                    id="FeedbackText"
+                    style="width: 700px; margin: 5px;"
+                  ></v-text-field>
+                </v-flex>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <v-btn color="blue darken-1" flat @click.native="feedback = false;">Close</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="sendFeedback()">Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
     </main>
   </v-app>
 </template>
@@ -227,6 +250,8 @@ export default {
     signed: false,
     firebaseApp: [],
     token: [],
+    feedback: false,
+    FeedbackText: '',
     messages: [],
     msgNbr: 0,
     search: '',
@@ -312,6 +337,9 @@ export default {
         this.drawer = false
         this.$router.push(link)
       }
+    },
+    sendFeedback () {
+      AccountServices.SendFeedback(this.FeedbackText)
     },
     checkUser () {
       var vue = this

@@ -3,6 +3,16 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
+    <h4>0.1.1 :</h4>
+    <p>
+      - Add calendar display for meeting room <br/>
+      - update marketing page <br/>
+      - Fix animation of social actu <br/>
+      - Fix useless include <br/>
+      - Fix display wrong version passed <br/>
+      - Fix Version manager disponibility <br/>
+    </p>
+    <br/><br/>
     <h4>0.1.0 :</h4>
     <p>
       - ajout de la possibilité d'envoyer un message direct avec notif <br/>
@@ -26,22 +36,6 @@
       - add department main page <br/>
       - change menu display with dropdown <br/>
       - simplification of version manager
-    </p>
-    <br/><br/>
-    <h4>0.0.11 :</h4>
-    <p>
-      - add phone number system <br/>
-      - HomePage news are now just official feed like meeting synthese, right button authorize today just Shadow live synthese <br/>
-      - Fix department available for users<br/>
-      - fix display of team name <br/>
-      - Enhance discord display and add popup system <br/>
-      - change menu display <br/>
-      - external tools now open in new tab <br/>
-      - add timeline page <br/>
-      - delete fullscreen shortcut <br/>
-      - fix search bar close button <br/>
-      - put button for annonces <br/>
-      - resize many of dialogues
     </p>
     <br/><br/>
   </div>

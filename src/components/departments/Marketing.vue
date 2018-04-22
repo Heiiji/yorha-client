@@ -4,7 +4,7 @@
           <div class="row">
               <div class="col-md-3 profile-image">
                   <div class="profile-image-container">
-                      <img src="http://xpartan.es/wp-content/uploads/2015/02/rich-ratio-1.jpg" alt="">
+                      <img src="/static/departments/victor.png" alt="">
                   </div>
               </div>
           </div>

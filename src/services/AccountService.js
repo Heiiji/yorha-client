@@ -49,6 +49,9 @@ export default {
   GetMSG (param) {
     return Api().get('GetMSG/' + param)
   },
+  SendFeedback (feedback) {
+    return Api().put('feedback', feedback)
+  },
 
   editDescription (params) {
     return Api().put('account/description', params)

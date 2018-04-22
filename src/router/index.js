@@ -9,6 +9,7 @@ import Management from '@/components/Management'
 const Changelog   = () => import('@/components/changelog')
 const Home        = () => import('@/components/home')
 const Mattermost  = () => import('@/components/mattermost')
+const Calendar  = () => import('@/components/calendar')
 import Inventory  from '@/components/inventaire'
 import Annonce    from '@/components/annonce'
 import YTShadowLive   from '@/components/YTShadowLive'
@@ -113,6 +114,11 @@ export default new Router({
       path: '/Profil',
       name: 'Profil',
       component: Profil
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: Calendar
     },
     {
       path: '/Profil/:id',

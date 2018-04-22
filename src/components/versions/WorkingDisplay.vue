@@ -27,6 +27,7 @@
         <v-list-group v-model="item.active"
                       v-for="item in versions"
                       :key="item._id"
+                      v-if="item.status === 'GO' || item.status === 'NOGO'"
                       style="display: block;  overflow: hidden;"
                       @click="$router.push('/version/id/' + item._id)">
           <v-list-tile slot="activator">

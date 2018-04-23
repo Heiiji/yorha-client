@@ -19,11 +19,13 @@
             <v-flex xs8 style="max-height: 800px;">
               <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <v-card-text class="px-0"><strong>{{ news.sender }} :</strong> {{ news.text }}</v-card-text>
+                  <img v-if="news.title === 'Résumé Live Shadow'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />
+                  <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card><br/>
               </a>
             </v-flex>
             <v-flex xs4>
+              <!--<button class="btn btn-primary btn-block" @click="HelpDesk = true" style="width: 100%; margin: 0px; margin-bottom: 5px;">Help Desk</button>-->
               <button class="btn btn-primary btn-block" @click="PostAnn = true" style="width: 100%; margin: 0px;">Post document</button>
               <div class="socialp" v-for="news in DiscNews" :key="news._id" @click="news.show = true;">
                   <div style="margin: 15px; position: relative;" class="panel-body">
@@ -37,8 +39,8 @@
                       <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
                   </div>
               </div><br/>
-              <QwickLook target="finnish">
-              </QwickLook>
+              <!--<QwickLook target="finnish">
+              </QwickLook>-->
             </v-flex>
           </v-layout>
         </v-container>
@@ -93,11 +95,27 @@
         </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-dialog style="z-index:25;" v-model="HelpDesk" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+          <v-card-title style="color: blue;">Expliquer votre probleme :</v-card-title>
+          <v-container grid-list-md>
+            <v-layout row wrap>
+              <v-flex xs11><v-text-field required box multi-line v-model="HDesk.text"></v-text-field></v-flex>
+            </v-layout>
+          </v-container>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false; PostAnn = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="PostHelpDesk()">Send</v-btn>
+        </v-card-actions>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
 <script>
 import VersionService from '@/services/VersionService'
+import AccountService from '@/services/AccountService'
 import DocService from '@/services/docService'
 import QwickLook from '@/components/versions/WorkingDisplay.vue'
 import News from '@/services/NewsService'
@@ -110,6 +128,13 @@ export default {
       passed: [],
       PostAnn: null,
       picker: null,
+      HelpDesk: false,
+      HDesk: {
+        sender: '',
+        senderMail: '',
+        senderPic: '',
+        text: ''
+      },
       docs: [
         { text: 'Résumé Live Shadow',
           id: 0}
@@ -186,6 +211,9 @@ export default {
           })
         })
       })
+    },
+    PostHelpDesk () {
+      AccountService.SendHelpDesk()
     },
     async getNews () {
       const response = await News.fetchNews()

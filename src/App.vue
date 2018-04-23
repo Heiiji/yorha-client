@@ -181,7 +181,7 @@
                     <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
                         <ul class="sub-menu">
                             <li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>
-                            <li v-if="work === 'Test'" style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
+                            <li v-if="work === 'Test' || work === 'Support'" style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
                             <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
                         </ul>
                     </li>
@@ -192,7 +192,6 @@
                     </li>
                     <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
                     <li style="width: 80%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>mail</v-icon></span><p>Feedback</p></a></li>
-                    <li style="width: 80%;"><a @click="$router.push('/changelog')" class="waves-effect waves-button"><span class="menu-icon"><v-icon dark>settings</v-icon></span><p>Changelogs</p></a></li>
                   </ul>
             </div>
         </div>

@@ -6,6 +6,8 @@
     <h4>0.1.2 :</h4>
     <p>
       - Document panel now functionnal and now can search documents on searchbar <br/>
+      - fix display of main news (more elegant)<br/>
+      - DrHouse is now integrated <br/>
       - Fix feedback dialog didn't close after send.<br/>
       - fix discord and twitter img source <br/>
       - Fix login issue on Version Manager <br/>

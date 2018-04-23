@@ -6,5 +6,8 @@ export default {
   },
   getYTShadowLive (params) {
     return Api().get('/document/YTLiveShadow/' + params)
+  },
+  Search (param) {
+    return Api().get('/SearchDocuments/' + param)
   }
 }

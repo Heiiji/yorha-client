@@ -27,13 +27,13 @@
               <button class="btn btn-primary btn-block" @click="PostAnn = true" style="width: 100%; margin: 0px;">Post document</button>
               <div class="socialp" v-for="news in DiscNews" :key="news._id" @click="news.show = true;">
                   <div style="margin: 15px; position: relative;" class="panel-body">
-                      <img src="https://vignette.wikia.nocookie.net/central/images/6/60/Discord-logo.png/revision/latest?cb=20170621125902" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                      <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
                       <div><h2 class="no-m" style="color: rgb(30, 80, 160);">{{ news.name }}</h2><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(news.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
                   </div>
               </div><br/>
               <div v-if="TwitNews[0]" class="socialp">
                   <div style="margin: 15px; position: relative;" class="panel-body"  @click="showTwit = true;">
-                      <img src="http://pnd-rdc.net/wp-content/uploads/2017/12/logo-twitter-rond.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                      <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
                       <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
                   </div>
               </div><br/>

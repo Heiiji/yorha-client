@@ -168,7 +168,10 @@
   </a>
   </div>
 </template>
-<style>
+<style scoped>
+.card {
+  display: inline-block;
+}
 .select-dep {
   width: 400px;
   z-index: 20;

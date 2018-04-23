@@ -32,7 +32,7 @@
                       @click="$router.push('/version/id/' + item._id)">
           <v-list-tile slot="activator">
             <v-list-tile-content>
-              <v-list-tile-title><v-icon v-if="item.status === 'GO'">check circle</v-icon><v-icon v-if="item.status === 'NOGO'">error</v-icon>{{ item.support }} <strong>{{ item.version }}</strong> => <span :class="item.status">{{ item.score }}% : {{ item.status }}</span></v-list-tile-title>
+              <v-list-tile-title>[{{ item.target }}]{{ item.support }} <strong>{{ item.version }}</strong> => <span :class="item.status">{{ item.score }}% : {{ item.status }}</span></v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list-group>

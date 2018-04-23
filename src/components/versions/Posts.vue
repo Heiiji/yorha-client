@@ -18,9 +18,9 @@
         </v-card-title>
         <v-card-actions v-if="VersionDisplay == 'Versions On Rail'">
           <v-btn v-on:click="Edition(value)" flat>Edit</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.work === 'Test'" @click="GoTest(value.path)">Test it</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.work === 'Test'" @click="SetFinnished = true; Validator = value._id; Edition(value)">Set as finnished</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.work === 'Proximity'" @click="dialogProxi = true">Give to QA</v-btn>
+          <v-btn flat color="purple" v-if="$store.state.user.local.work === 'Test'" @click="GoTest(value.path)">Test it</v-btn>
+          <v-btn flat color="purple" v-if="$store.state.user.local.work === 'Test'" @click="SetFinnished = true; Validator = value._id; Edition(value)">Set as finnished</v-btn>
+          <v-btn flat color="purple" v-if="$store.state.user.local.work === 'Proximity'" @click="dialogProxi = true">Give to QA</v-btn>
           <v-spacer></v-spacer>
           <v-btn icon @click.native="show = !show">
             <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>

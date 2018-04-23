@@ -187,8 +187,7 @@
                     </li>
                     <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
                         <ul class="sub-menu">
-                            <li style="width: 85%;"><a>Compte rendu</a></li>
-                            <li style="width: 85%;"><a>Assets</a></li>
+                            <li style="width: 85%;"><a @click="search = 'LiveShadow'; $router.push('/SearchUser')">Live Shadow</a></li>
                         </ul>
                     </li>
                     <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
@@ -213,7 +212,7 @@
               <v-divider></v-divider>
               <v-card-actions>
                 <v-btn color="blue darken-1" flat @click.native="feedback = false;">Close</v-btn>
-                <v-btn color="blue darken-1" flat @click.native="sendFeedback()">Send</v-btn>
+                <v-btn color="blue darken-1" flat @click.native="sendFeedback(); feedback = false;">Send</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>

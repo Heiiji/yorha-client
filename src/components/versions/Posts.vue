@@ -305,14 +305,6 @@ export default {
     SetAsFinnished (id) {
       this.finnished.id = id
       VersionService.SetAsFinnished(this.finnished)
-      if (this.finnished.status === 'GO') {
-        NewsService.Post({
-          text: this.editeable.device + ' : ' + this.editeable.importance + ' ready on ' + this.editeable.version,
-          title: 'New version ready to published',
-          link: '',
-          department: 'General'
-        })
-      }
       this.$router.push('/')
     }
   }

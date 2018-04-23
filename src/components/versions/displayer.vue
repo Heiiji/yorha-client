@@ -13,7 +13,7 @@
         <p style="white-space: pre; text-align: left;">{{ version.changelog }}</p>
       </div>
       <h3>Bug on this release : </h3>
-      <p>{{ version.Bugs }}</p>
+      <p v-html="version.Bugs"></p>
     </div>
   </div>
 </template>

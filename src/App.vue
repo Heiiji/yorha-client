@@ -256,7 +256,7 @@ export default {
     search: '',
     menu: '',
     drawer: false,
-    work: 'Test',
+    work: 'none',
     department: [
       { text: 'Test' },
       { text: 'Marketing' },

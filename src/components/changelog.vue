@@ -3,12 +3,13 @@
     <br/><br/><br/>
     <h1>Changelog :</h1>
     <br/><br/>
-    <h4>0.1.1.1 :</h4>
+    <h4>0.1.2 :</h4>
     <p>
       - Document panel now functionnal and now can search documents on searchbar <br/>
       - Fix feedback dialog didn't close after send.<br/>
       - fix discord and twitter img source <br/>
       - Fix login issue on Version Manager <br/>
+      - Fix Menu right management <br/>
     </p>
     <br/><br/>
     <h4>0.1.1 :</h4>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 100px;">
     <span v-if="Doc">
       <h2>{{Doc.title}} - <span v-if="Doc.date">{{Doc.date.replace(/..............$/g, '.')}}</span></h2>
       <a :href="Doc.link" target="_blank">regarder la video</a>

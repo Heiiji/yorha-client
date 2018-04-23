@@ -10,7 +10,7 @@
         <span>tested by : {{ version.tester }}</span>
         <br/><br/>
         <h4>Changelog : </h4>
-        <p style="white-space: pre; text-align: left;">{{ version.changelog }}</p>
+        <p style="white-space: pre; text-align: left;" v-html="version.changelog"></p>
       </div>
       <h3>Bug on this release : </h3>
       <p v-html="version.Bugs"></p>

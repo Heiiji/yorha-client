@@ -80,7 +80,7 @@
                     </a>
                 </div>
                 <div class="logo-box">
-                    <a href="/" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100px" src="/static/Shadow_Horizontal_White.png" /></a>
+                    <a @click="redirect('/')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100px" src="/static/Shadow_Horizontal_White.png" /></a>
                 </div>
                 <div v-if="signed === true" class="search-button">
                     <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>

@@ -54,7 +54,7 @@
                         </div>
                         <div class="profile-timeline">
                             <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === $store.state.user.local.work || item.department === 'General' || item.department === $store.state.user.local.team" :key="item._id" class="timeline-item" style="display: block;">
+                                <li v-for="item in allNews" v-if="item.department === 'General'" :key="item._id" class="timeline-item" style="display: block;">
                                     <div class="panel panel-white">
                                         <div class="panel-body">
                                             <div class="timeline-item-header">

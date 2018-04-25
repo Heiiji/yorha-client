@@ -175,37 +175,37 @@
                     </div>
                 </div>
                 <ul class="menu accordion-menu">
-                    <li style="width: 80%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
-                    <li v-if="user.local" style="width: 80%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
-                    <li style="width: 80%;"><a @click="$router.push('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
-                    <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
+                    <li style="width: 80%; margin-left: 10%;"><a @click="$router.push('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
+                    <li v-if="user.local" style="width: 80%; margin-left: 10%;"><a @click="$router.push('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
+                    <li style="width: 80%; margin-left: 10%;"><a @click="$router.push('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
+                    <li style="width: 80%; margin-left: 10%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
                         <ul class="sub-menu">
                            <!--<li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>-->
-                            <li v-if="work === 'Test' || work === 'Support'" style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
+                            <li style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
                             <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
                         </ul>
                     </li>
-                    <li style="width: 80%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
+                    <li style="width: 80%; margin-left: 10%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
                         <ul class="sub-menu">
                             <li style="width: 85%;"><a @click="search = 'LiveShadow'; $router.push('/SearchUser')">Live Shadow</a></li>
                         </ul>
                     </li>
                     <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
-                    <li style="width: 80%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>mail</v-icon></span><p>Feedback</p></a></li>
+                    <li style="width: 80%; margin-left: 10%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>mail</v-icon></span><p>Feedback</p></a></li>
                   </ul>
             </div>
         </div>
         <router-view class="page-inner" :Search="search" v-on:refresh="checkUser()" />
           <v-dialog style="z-index:25;" v-model="feedback" scrollable max-width="800px">
             <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-              <v-card-title style="color: blue;">feedback :</v-card-title>
+              <v-card-title style="color: grey; font-size: 1.4em; text-align: center; display: block;">feedback</v-card-title>
               <v-divider></v-divider>
                 <v-flex xs8>
                   <v-text-field v-model="FeedbackText"
                     textarea
                     name="FeedbackText"
                     id="FeedbackText"
-                    style="width: 700px; margin: 5px;"
+                    style="width: 700px; margin: 5px; margin-left: 50px;"
                   ></v-text-field>
                 </v-flex>
               <v-divider></v-divider>

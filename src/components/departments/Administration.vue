@@ -14,7 +14,7 @@
           <div class="row">
               <div class="col-md-3 user-profile">
                   <h3 class="text-center">Administration</h3>
-                  <p class="text-center">Command all of departments</p>
+                  <p class="text-center">No hierarchy. Only us.</p>
                   <hr>
                   <button @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
               </div>

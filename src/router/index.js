@@ -33,6 +33,7 @@ const DAdministration = () => import('@/components/departments/Administration')
 import Displayer  from '@/components/versions/displayer'
 import Downloads  from '@/components/versions/downloads'
 const Posts       = () => import('@/components/versions/Posts')
+const Login       = () => import('@/components/landingPage')
 // users files
 import SearchUser from '@/components/users/SearchUser'
 import Viewer     from '@/components/users/viewer'
@@ -46,6 +47,11 @@ export default new Router({
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/Home',

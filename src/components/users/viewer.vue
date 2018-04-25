@@ -19,7 +19,7 @@
                     <ul class="list-unstyled text-center">
                         <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
                         <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.mail }}</a></p></li>
-                        <li><p><i class="fa fa-phone m-r-xs"></i>non renseigné</p></li>
+                        <li><p v-if="user.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.tel">{{user.tel}}</a></p></li>
                     </ul>
                     <hr>
                     <button @click="NewTeam = $store.state.user.local.team; PostTeam ();" class="btn btn-primary btn-block">Add to team</button>

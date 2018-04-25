@@ -10,7 +10,6 @@ export default {
   },
 
   QwickLog (params) {
-    console.log(params)
     return Api().put('QwickLogin', params)
   },
 

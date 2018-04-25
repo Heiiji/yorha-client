@@ -302,6 +302,9 @@ export default {
       var provider = new firebase.auth.GoogleAuthProvider()
       var vue = this
       firebase.auth().signInWithPopup(provider).then(function (result) {
+        if (result.user.email.search('@blade-group') === -1) {
+          window.location.href = 'http://www.blade-group.com/'
+        }
         Api().post('/account', {
           username: result.user.displayName,
           mail: result.user.email,
@@ -318,6 +321,7 @@ export default {
         })
       }).catch(function (error) {
         console.log(error)
+        window.location.href = 'http://www.blade-group.com/'
       })
     },
     logout () {
@@ -374,15 +378,17 @@ export default {
         vue.signed = true
         vue.checkUser()
       })
+    } else {
+      this.firebaseApp = firebase.initializeApp({
+        apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
+        authDomain: 'yorha-198313.firebaseapp.com',
+        databaseURL: 'https://yorha-198313.firebaseio.com',
+        projectId: 'yorha-198313',
+        storageBucket: 'yorha-198313.appspot.com',
+        messagingSenderId: '774476919196'
+      })
+      this.login()
     }
-    this.firebaseApp = firebase.initializeApp({
-      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
-      authDomain: 'yorha-198313.firebaseapp.com',
-      databaseURL: 'https://yorha-198313.firebaseio.com',
-      projectId: 'yorha-198313',
-      storageBucket: 'yorha-198313.appspot.com',
-      messagingSenderId: '774476919196'
-    })
   },
   props: {
     source: String

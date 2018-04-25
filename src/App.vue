@@ -303,7 +303,9 @@ export default {
       var vue = this
       firebase.auth().signInWithPopup(provider).then(function (result) {
         if (result.user.email.search('@blade-group') === -1) {
-          window.location.href = 'http://www.blade-group.com/'
+          if (result.user.email.search('@forgetbox') === -1) {
+            window.location.href = 'http://www.blade-group.com/'
+          }
         }
         Api().post('/account', {
           username: result.user.displayName,

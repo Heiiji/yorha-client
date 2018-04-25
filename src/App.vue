@@ -370,25 +370,32 @@ export default {
   },
   mounted () {
     var vue = this
+    this.firebaseApp = firebase.initializeApp({
+      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
+      authDomain: 'yorha-198313.firebaseapp.com',
+      databaseURL: 'https://yorha-198313.firebaseio.com',
+      projectId: 'yorha-198313',
+      storageBucket: 'yorha-198313.appspot.com',
+      messagingSenderId: '774476919196'
+    })
     var token = window.$cookies.get('user_session')
     if (token) {
       AccountServices.QwickLog({token: token}).then((response) => {
-        vue.user = response.data
-        vue.user.local = response.data
-        vue.$store.state.user = response.data
-        vue.$store.state.user.local = response.data
-        vue.signed = true
-        vue.checkUser()
+        if (!response.data.username) {
+          vue.login()
+        } else {
+          vue.user = response.data
+          vue.user.local = response.data
+          vue.$store.state.user = response.data
+          vue.$store.state.user.local = response.data
+          vue.signed = true
+          vue.checkUser()
+        }
+      }).catch((error) => {
+        console.log(error)
+        vue.login()
       })
     } else {
-      this.firebaseApp = firebase.initializeApp({
-        apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
-        authDomain: 'yorha-198313.firebaseapp.com',
-        databaseURL: 'https://yorha-198313.firebaseio.com',
-        projectId: 'yorha-198313',
-        storageBucket: 'yorha-198313.appspot.com',
-        messagingSenderId: '774476919196'
-      })
       this.login()
     }
   },

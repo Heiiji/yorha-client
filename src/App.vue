@@ -357,6 +357,8 @@ export default {
             }
           })
         })
+        this.user.local.picture = '/static/profil/' + this.user.local.username + '.png'
+        this.$store.state.user.local.picture = this.user.local.picture
       }
     }
   },

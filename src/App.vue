@@ -93,7 +93,7 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li v-if="signed === true">
+                            <li>
                                 <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
                             </li>
                             <li v-if="signed === true" class="dropdown">

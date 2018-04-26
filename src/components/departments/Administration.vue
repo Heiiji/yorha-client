@@ -83,6 +83,7 @@ export default {
     return {
       user: [],
       users: [],
+      Partner: [],
       sendMSG: false,
       msg: {
         target: '',
@@ -93,9 +94,15 @@ export default {
     }
   },
   mounted () {
-    this.users = AccountService.FindByDepartment(this.$route.params.name)
+    this.GetByDep()
   },
   methods: {
+    GetByDep () {
+      var vue = this
+      AccountService.FindByDep('Administration').then((response) => {
+        vue.users = response.data.users
+      })
+    }
   }
 }
 </script>

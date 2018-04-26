@@ -108,7 +108,8 @@ export default {
         { text: 'Infra' },
         { text: 'RH' },
         { text: 'R&D' },
-        { text: 'International' }
+        { text: 'International' },
+        { text: 'LIMA' }
       ]
     }
   },

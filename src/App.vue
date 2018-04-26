@@ -80,16 +80,16 @@
                     </a>
                 </div>
                 <div class="logo-box">
-                    <a @click="redirect('/')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100px" src="/static/Shadow_Horizontal_White.png" /></a>
+                    <a @click="redirect('/')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
                 </div>
                 <div v-if="signed === true" class="search-button">
                     <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
                 </div>
                 <div class="topmenu-outer">
                     <div class="top-menu">
-                        <ul v-if="signed === true" class="nav navbar-nav navbar-left">
+                        <ul class="nav navbar-nav navbar-left">
                             <li>
-                                <a href="javascript:void(0);" class="waves-effect waves-button waves-classic sidebar-toggle"><i class="fa fa-bars"></i></a>
+                                <a @click="changeIMG();" href="javascript:void(0);" class="waves-effect waves-button waves-classic sidebar-toggle"><i class="fa fa-bars"></i></a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -256,6 +256,7 @@ export default {
     menu: '',
     drawer: false,
     work: 'none',
+    MainImg: '/static/Shadow_Horizontal_White.png',
     department: [
       { text: 'Test' },
       { text: 'Marketing' },
@@ -282,6 +283,13 @@ export default {
     ]
   }),
   methods: {
+    changeIMG () {
+      if (this.MainImg === '/static/Shadow_Horizontal_White.png') {
+        this.MainImg = '/static/Shadow_Icon_White.png'
+      } else {
+        this.MainImg = '/static/Shadow_Horizontal_White.png'
+      }
+    },
     searching () {
       this.$router.push('/SearchUser')
     },

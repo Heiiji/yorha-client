@@ -92,9 +92,15 @@ export default {
     }
   },
   mounted () {
-    this.users = AccountService.FindByDepartment(this.$route.params.name)
+    this.GetByDep()
   },
   methods: {
+    GetByDep () {
+      var vue = this
+      AccountService.FindByDep('Support').then((response) => {
+        vue.users = response.data.users
+      })
+    }
   }
 }
 </script>

@@ -416,8 +416,9 @@ export default {
     async postNews () {
       this.News.sender = this.$store.state.user.local.username
       this.News.senderPic = this.$store.state.user.local.picture
-      News.Post(this.News)
-      this.getNews()
+      News.Post(this.News).then(() => {
+        this.getNews()
+      })
       this.PostNews = false
     },
     async postReply (target, message) {
@@ -428,8 +429,9 @@ export default {
         sender: sender,
         message: message,
         senderPic: senderPic
+      }).then(() => {
+        this.getNews()
       })
-      this.getNews()
     },
     async getNews () {
       var vue = this

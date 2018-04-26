@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Vue        from 'vue'
 import Router     from 'vue-router'
+
 import HelloWorld from '@/components/HelloWorld'
 import NewPost    from '@/components/NewPost'
 import EditPost   from '@/components/EditPost'
@@ -39,9 +40,11 @@ import SearchUser from '@/components/users/SearchUser'
 import Viewer     from '@/components/users/viewer'
 import Profil     from '@/components/users/profil'
 
+import firebase from 'firebase'
+
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
@@ -215,3 +218,13 @@ export default new Router({
     }
   ]
 })
+
+// router.beforeEach((to, from, next) => {
+//   let currentUser = firebase.auth().currentUser
+
+//   if (!currentUser) {
+//     next('Login')
+//   }
+// })
+
+export default router

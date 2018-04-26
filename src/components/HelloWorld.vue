@@ -177,6 +177,7 @@ export default {
     }
   },
   mounted () {
+    this.firebaseApp = this.$store.state.firebase
     this.getVersion()
     this.getNews()
   },
@@ -195,19 +196,21 @@ export default {
       this.document.sender = this.$store.state.user.local.username
       this.document.senderPic = this.$store.state.user.local.picture
       this.document.type = this.document.type.text
-      this.document.token = this.$store.state.user.local.token
-      DocService.PostYTShadowLive(this.document).then((response) => {
-        vue.News.sender = vue.$store.state.user.local.username
-        vue.News.senderPic = vue.$store.state.user.local.picture
-        vue.News.title = vue.document.type
-        vue.News.link = '/document/YTShadowLive/' + response.data.id
-        vue.News.text = vue.document.text.match(/.{0,300}/g)[0] + ' ...'
-        News.Post(this.News).then((response) => {
-          vue.News.department = 'General'
-          vue.News.text = 'Le bilan du dernier Shadow Live est en ligne !'
-          News.Post(this.News).then((reponse) => {
-            vue.PostAnn = false
-            vue.getNews()
+      this.firebaseApp.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+        vue.document.token = idToken
+        DocService.PostYTShadowLive(vue.document).then((response) => {
+          vue.News.sender = vue.$store.state.user.local.username
+          vue.News.senderPic = vue.$store.state.user.local.picture
+          vue.News.title = vue.document.type
+          vue.News.link = '/document/YTShadowLive/' + response.data.id
+          vue.News.text = vue.document.text.match(/.{0,300}/g)[0] + ' ...'
+          News.Post(vue.News).then((response) => {
+            vue.News.department = 'General'
+            vue.News.text = 'Le bilan du dernier Shadow Live est en ligne !'
+            News.Post(vue.News).then((reponse) => {
+              vue.PostAnn = false
+              vue.getNews()
+            })
           })
         })
       })

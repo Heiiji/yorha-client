@@ -300,36 +300,15 @@ export default {
     },
     login () {
       var provider = new firebase.auth.GoogleAuthProvider()
-      var vue = this
       firebase.auth().signInWithPopup(provider).then(function (result) {
-        if (result.user.email.search('@blade-group') === -1) {
-          if (result.user.email.search('@forgetbox') === -1) {
-            window.location.href = 'http://www.blade-group.com/'
-            return
-          }
-        }
-        vue.signed = true
-        Api().post('/account', {
-          username: result.user.displayName,
-          mail: result.user.email,
-          picture: result.user.photoURL
-        }).then((response) => {
-          vue.token = result.credential.accessToken
-          vue.user = result.user
-          vue.signed = true
-          vue.$store.state.user = result.user
-          vue.$store.state.user.local = response.data
-          vue.user.local = response.data
-          vue.checkUser()
-          window.$cookies.set('user_session', vue.user.local.token, '1d')
-          vue.$router.push('/')
-        })
+        console.log('cuccess')
       }).catch(function (error) {
         console.log(error)
       })
     },
     logout () {
       window.$cookies.remove('user_session')
+      this.firebaseApp.auth().signOut()
       location.reload()
     },
     onSignInError (error) {
@@ -350,10 +329,12 @@ export default {
     },
     checkUser () {
       var vue = this
+      vue.user = vue.$store.state.user
       if (vue.$route.fullPath) {
       }
       this.work = vue.user.local.work
       if (vue.user.local) {
+        vue.signed = true
         vue.items[3].display = false
         if (vue.user.local.work === 'Test') {
           vue.items[0].display = true
@@ -374,29 +355,32 @@ export default {
   },
   mounted () {
     var vue = this
-    this.firebaseApp = firebase.initializeApp({
-      apiKey: 'AIzaSyDPS2033t0N1gNNswDuL6C1_ZmZY9T_0wA',
-      authDomain: 'yorha-198313.firebaseapp.com',
-      databaseURL: 'https://yorha-198313.firebaseio.com',
-      projectId: 'yorha-198313',
-      storageBucket: 'yorha-198313.appspot.com',
-      messagingSenderId: '774476919196'
-    })
-    var token = window.$cookies.get('user_session')
-    if (token) {
-      AccountServices.QwickLog({token: token}).then((response) => {
-        vue.user = response.data
-        vue.user.local = response.data
-        vue.$store.state.user = response.data
-        vue.$store.state.user.local = response.data
-        vue.signed = true
-        vue.checkUser()
-      }).catch((error) => {
-        if (!this.signed) {
-          this.$router.push('/login')
-        }
-        console.log(error)
-      })
+    this.firebaseApp = this.$store.state.firebase
+    var user = this.firebaseApp.auth().currentUser
+    if (user) {
+    //   firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+    //     vue.signed = true
+    //     Api().post('/account', {
+    //       username: user.displayName,
+    //       mail: user.email,
+    //       picture: user.photoURL,
+    //       Token: idToken
+    //     }).then((response) => {
+    //       console.log('logged')
+    //       // var me = user
+    //       user.username = user.displayName
+    //       vue.$store.state.user = user
+    //       vue.$store.state.user.local = response.data
+    //       console.log('validate')
+    //       vue.$router.push('/')
+    //       vue.checkUser()
+    //     })
+    //   }).catch(function (error) {
+    //     console.log(error)
+    //     this.$router.push('/login')
+    //   })
+      vue.checkUser()
+      vue.signed = true
     } else {
       this.$router.push('/login')
     }
@@ -406,7 +390,12 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.checkUser()
+      if (!this.$store.state.firebase.auth().currentUser) {
+        this.$router.push('/login')
+      } else {
+        this.signed = true
+        this.user = this.$store.state.user
+      }
     }
   },
   events: {

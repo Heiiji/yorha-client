@@ -84,7 +84,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         username: user.displayName,
         email: user.email,
         emailVerified: user.emailVerified,
-        photoURL: user.photoURL,
+        photoURL: '/static/profil/' + user.displayName + '.png',
         isAnonymous: user.isAnonymous,
         uid: user.uid,
         providerData: user.providerData
@@ -92,7 +92,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       Api().post('/account', {
         username: client.displayName,
         mail: client.email,
-        picture: client.photoURL,
+        picture: '/static/profil/' + user.displayName + '.png',
         Token: idToken
       }).then((response) => {
         console.log('logged')

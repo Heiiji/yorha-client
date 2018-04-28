@@ -31,7 +31,7 @@
                           <div class="panel-title">The hacker : </div>
                       </div>
                       <div class="panel-body">
-                        <div v-if="users !== 'none'" class="team">
+                        <div class="team">
                               <div v-for="pers in users" :key="pers._id" class="team-member">
                                  <div class="online on"></div>
                                  <img :src="pers.picture" alt="">

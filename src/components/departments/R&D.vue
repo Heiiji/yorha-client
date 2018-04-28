@@ -30,8 +30,8 @@
                           <div class="panel-title">Soldiers : </div>
                       </div>
                       <div class="panel-body">
-                        <div v-if="user.team !== 'none'" class="team">
-                              <div v-for="pers in Partner" :key="pers._id" class="team-member">
+                        <div class="team">
+                              <div v-for="pers in users" :key="pers._id" class="team-member">
                                  <div class="online on"></div>
                                  <img :src="pers.picture" alt="">
                               </div>

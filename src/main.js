@@ -34,6 +34,34 @@ var config = {
 }
 
 firebase.initializeApp(config)
+const messaging = firebase.messaging();
+messaging.usePublicVapidKey("BArxWf6-kEP-6rFeLKjgoUnsptCqJwLGZ5rCZVloLX0Z1a9-F9JKXitJBOan0o0n8By8LAqbZ_ALw_Jm4uTMwvc")
+
+messaging.requestPermission().then(function() {
+  console.log('Notification permission granted.');
+  // TODO(developer): Retrieve an Instance ID token for use with FCM.
+  // ...
+}).catch(function(err) {
+  console.log('Unable to get permission to notify.', err);
+})
+
+messaging.getToken().then(function(currentToken) {
+  if (currentToken) {
+    sendTokenToServer(currentToken);
+    updateUIForPushEnabled(currentToken);
+  } else {
+    // Show permission request.
+    console.log('No Instance ID token available. Request permission to generate one.');
+    // Show permission UI.
+    updateUIForPushPermissionRequired();
+    setTokenSentToServer(false);
+  }
+}).catch(function(err) {
+  console.log('An error occurred while retrieving token. ', err);
+  showToken('Error retrieving Instance ID token. ', err);
+  setTokenSentToServer(false);
+})
+
 
 // eslint-disable-next-line
 const store = new Vuex.Store({
@@ -96,11 +124,9 @@ firebase.auth().onAuthStateChanged(function(user) {
         Token: idToken
       }).then((response) => {
         console.log('logged')
-        var token = response.data.token
         var me = client
         store.state.user = client
         store.state.user.local = response.data
-        window.$cookies.set('user_session', token, '1d')
         console.log('validate')
         router.push('/')
       })

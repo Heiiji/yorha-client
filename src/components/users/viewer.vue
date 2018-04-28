@@ -22,7 +22,14 @@
                         <li><p v-if="user.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.tel">{{user.tel}}</a></p></li>
                     </ul>
                     <hr>
-                    <button @click="NewTeam = $store.state.user.local.team; PostTeam ();" class="btn btn-primary btn-block">Add to team</button>
+                        <v-menu style="background-color: rgba(0, 0, 0, 0); display: block;" dark offset-x>
+                          <v-btn style="background-color: rgba(33, 110, 210, 1); width: 100%; padding-bottom: 40px;" dark slot="activator">Add To Team</v-btn>
+                          <v-list>
+                            <v-list-tile v-for="item in $store.state.user.local.teams" :key="item">
+                              <v-list-tile-title @click="NewTeam = item; PostTeam ();" style="cursor: pointer;">{{ item }}</v-list-tile-title>
+                            </v-list-tile>
+                          </v-list>
+                        </v-menu>
                     <button @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
                 </div>
                 <div class="col-md-6 m-t-lg">
@@ -41,23 +48,20 @@
                 <div class="col-md-3 m-t-lg">
                     <div class="panel panel-white">
                         <div class="panel-heading">
-                            <div class="panel-title">Team : {{ user.team }}</div>
-                        </div>
-                        <div class="panel-body">
-                          <div v-if="user.team !== 'none'" class="team">
-                                <div v-for="pers in Partner" :key="pers._id" class="team-member">
-                                   <div class="online on"></div>
-                                   <img :src="pers.picture" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-white">
-                        <div class="panel-heading">
                             <div class="panel-title">Description</div>
                         </div>
                         <div class="panel-body">
                             <p>{{ user.description }}</p>
+                        </div>
+                    </div>
+                    <div v-for="team in Teams" :key="team.name" class="panel panel-white">
+                        <div class="panel-heading">
+                            <div class="panel-title">Team : {{ team.name }}</div>
+                        </div>
+                        <div class="panel-body">
+                              <div v-for="pers in team.users" :key="pers._id" class="team-member">
+                                 <img width="30px" style="border-radius: 15px;" :src="pers.picture" alt="">
+                              </div>
                         </div>
                     </div>
                 </div>
@@ -98,6 +102,7 @@ export default {
       user: [],
       Partner: [],
       sendMSG: false,
+      Teams: [],
       msg: {
         target: '',
         text: '',
@@ -118,8 +123,11 @@ export default {
     },
     GetByTeam () {
       var vue = this
-      AccountService.FindByTeam(this.user.team).then((response) => {
-        vue.Partner = response.data.users
+      vue.Teams = []
+      vue.user.teams.forEach((elem) => {
+        AccountService.FindByTeam(elem).then((response) => {
+          vue.Teams.push({name: elem, users: response.data.users})
+        })
       })
     },
     SendMSG () {

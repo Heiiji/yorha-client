@@ -130,53 +130,6 @@
                             </ul>
                         </div>
                       </v-tab-item>
-                      <v-tab v-if="$store.state.user.local.team !== 'none'">
-                        {{ $store.state.user.local.team }}
-                      </v-tab>
-                      <v-tab-item v-if="$store.state.user.local.team !== 'none'" style="margin-top: 10px;">
-                        <div class="panel panel-white">
-                            <div class="panel-body">
-                                <div class="post">
-                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
-                                    <div class="post-options">
-                                        <a href="#"><i class="icon-camera"></i></a>
-                                        <a href="#"><i class="icon-link"></i></a>
-                                        <button class="btn btn-default pull-right" @click="News.department = $store.state.user.local.team; postNews();">Post</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-timeline">
-                            <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === $store.state.user.local.team" :key="item._id" class="timeline-item" style="display: block;">
-                                    <div class="panel panel-white">
-                                        <div class="panel-body">
-                                            <div class="timeline-item-header">
-                                                <img :src="item.senderPic" alt="">
-                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>date</small>
-                                            </div>
-                                            <div class="timeline-item-post">
-                                                <p>{{ item.text }}</p>
-                                                <div class="timeline-options">
-                                                    <a href="#"><i class="icon-share"></i> Share</a>
-                                                </div>
-                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                                    <div class="timeline-comment-header">
-                                                        <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>date</small></p>
-                                                    </div>
-                                                    <p class="timeline-comment-text">{{comm.text}}</p>
-                                                </div>
-                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
-                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                      </v-tab-item>
                       <v-tab>
                         Whatever
                       </v-tab>
@@ -224,25 +177,122 @@
                             </ul>
                         </div>
                       </v-tab-item>
+                      <v-tab>
+                        <v-menu style="background-color: rgba(0, 0, 0, 0)" offset-y>
+                          <v-btn style="background-color: rgba(0, 0, 0, 0); box-shadow: none; padding-bottom: 45px;" slot="activator">{{ activeTeam }}</v-btn>
+                          <v-list>
+                            <v-list-tile v-for="item in Teams" :key="item.name">
+                              <v-list-tile-title @click="activeTeam = item.name" style="cursor: pointer;">{{ item.name }}</v-list-tile-title>
+                            </v-list-tile>
+                          </v-list>
+                        </v-menu>
+                      </v-tab>
+                      <v-tab-item style="margin-top: 10px;">
+                        <div class="panel panel-white">
+                            <div class="panel-body">
+                                <div class="post">
+                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
+                                    <div class="post-options">
+                                        <a href="#"><i class="icon-camera"></i></a>
+                                        <a href="#"><i class="icon-link"></i></a>
+                                        <button class="btn btn-default pull-right" @click="News.department = activeTeam; postNews();">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-timeline">
+                            <ul class="list-unstyled">
+                                <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" style="display: block;">
+                                    <div class="panel panel-white">
+                                        <div class="panel-body">
+                                            <div class="timeline-item-header">
+                                                <img :src="item.senderPic" alt="">
+                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
+                                                <small>date</small>
+                                            </div>
+                                            <div class="timeline-item-post">
+                                                <p>{{ item.text }}</p>
+                                                <div class="timeline-options">
+                                                    <a href="#"><i class="icon-share"></i> Share</a>
+                                                </div>
+                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                                    <div class="timeline-comment-header">
+                                                        <img :src="comm.senderPic" alt="">
+                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                    </div>
+                                                    <p class="timeline-comment-text">{{comm.text}}</p>
+                                                </div>
+                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
+                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                      </v-tab-item><v-tab-item style="margin-top: 10px;">
+                        <div class="panel panel-white">
+                            <div class="panel-body">
+                                <div class="post">
+                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
+                                    <div class="post-options">
+                                        <a href="#"><i class="icon-camera"></i></a>
+                                        <a href="#"><i class="icon-link"></i></a>
+                                        <button class="btn btn-default pull-right" @click="News.department = activeTeam; postNews();">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-timeline">
+                            <ul class="list-unstyled">
+                                <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" style="display: block;">
+                                    <div class="panel panel-white">
+                                        <div class="panel-body">
+                                            <div class="timeline-item-header">
+                                                <img :src="item.senderPic" alt="">
+                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
+                                                <small>date</small>
+                                            </div>
+                                            <div class="timeline-item-post">
+                                                <p>{{ item.text }}</p>
+                                                <div class="timeline-options">
+                                                    <a href="#"><i class="icon-share"></i> Share</a>
+                                                </div>
+                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                                    <div class="timeline-comment-header">
+                                                        <img :src="comm.senderPic" alt="">
+                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                    </div>
+                                                    <p class="timeline-comment-text">{{comm.text}}</p>
+                                                </div>
+                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
+                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                      </v-tab-item>
                     </v-tabs>
                 </div>
                 <div class="col-md-3 m-t-lg">
-                    <div class="panel panel-white">
+                    <div v-for="team in Teams" :key="team.name" class="panel panel-white">
                         <div class="panel-heading">
-                            <div class="panel-title">Team : {{ user.local.team }}</div>
+                            <div class="panel-title">Team : {{ team.name }}</div>
                         </div>
                         <div class="panel-body">
-                          <button v-if="user.local.team === 'none'" @click="CreateTeam = true" class="btn btn-primary btn-block">Create a team</button>
-                            <div v-else class="team">
-                                <div v-for="pers in Partner" :key="pers._id" class="team-member">
+                            <div class="team">
+                                <div v-for="pers in team.users" :key="pers._id" class="team-member">
                                    <div class="online on"></div>
                                    <img :src="pers.picture" alt="">
                                 </div>
                                 <br/>
-                                <button @click="NewTeam = 'none'; PostTeam ();" class="btn btn-primary btn-block">Quit team</button>
+                                <button @click="NewTeam = team.name; PostTeam ();" class="btn btn-primary btn-block">Quit team</button>
                             </div>
                         </div>
                     </div>
+                    <button @click="CreateTeam = true" class="btn btn-primary btn-block">Create a team</button>
                 </div>
             </div>
         </div>
@@ -330,6 +380,7 @@
 <script>
 import AccountService from '@/services/AccountService'
 import News from '@/services/NewsService'
+import Api from '@/services/Api'
 import axios from 'axios'
 
 export default {
@@ -349,6 +400,11 @@ export default {
       NewTel: '',
       PostNews: null,
       CreateTeam: false,
+      activeTeam: '',
+      selectedTeam: {
+        name: '',
+        pers: []
+      },
       News: {
         text: '',
         title: '',
@@ -371,6 +427,7 @@ export default {
       ],
       allNews: [],
       Partner: [],
+      Teams: [],
       background: [
         { text: 'Landscape' },
         { text: 'Cat' },
@@ -385,11 +442,39 @@ export default {
       this.$router.push('/')
     } else {
       this.user = this.$store.state.user
+      console.log(this.$store.state.user.local.teams)
       this.getNews()
       this.GetByTeam()
     }
   },
   methods: {
+    Refresh () {
+      var vue = this
+      this.$store.state.firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+        var client = {
+          displayName: vue.$store.state.user.displayName,
+          username: vue.$store.state.user.displayName,
+          email: vue.$store.state.user.email,
+          emailVerified: vue.$store.state.user.emailVerified,
+          photoURL: '/static/profil/' + vue.$store.state.user.displayName + '.png',
+          isAnonymous: vue.$store.state.user.isAnonymous,
+          uid: vue.$store.state.user.uid,
+          providerData: vue.$store.state.user.providerData
+        }
+        Api().post('/account', {
+          username: client.displayName,
+          mail: client.email,
+          picture: '/static/profil/' + vue.$store.state.user.displayName + '.png',
+          Token: idToken
+        }).then((response) => {
+          console.log('logged')
+          vue.$store.state.user = client
+          vue.$store.state.user.local = response.data
+          console.log('validate')
+          vue.GetByTeam()
+        })
+      })
+    },
     PostDescription (desc) {
       AccountService.editDescription({
         description: desc,
@@ -405,12 +490,18 @@ export default {
       })
       this.user.local.team = this.NewTeam
       this.CreateTeam = false
-      this.GetByTeam()
+      this.Refresh()
     },
     GetByTeam () {
       var vue = this
-      AccountService.FindByTeam(this.user.local.team).then((response) => {
-        vue.Partner = response.data.users
+      vue.Teams = []
+      vue.$store.state.user.local.teams.forEach((elem) => {
+        AccountService.FindByTeam(this.user.local.team).then((response) => {
+          vue.Teams.push({name: elem, users: response.data.users})
+        }).then(() => {
+          vue.activeTeam = vue.Teams[0].name
+          vue.selectedTeam = vue.Teams[0]
+        })
       })
     },
     async postNews () {

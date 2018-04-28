@@ -226,6 +226,7 @@ export default {
         }
       }
       this.TwitNews = response.data.lastTweets
+      this.TwitNews[0] = this.TwitNews[0].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
       this.DiscNews = {
         msg1: {
           name: response.data.lastDiscordMsgs[2].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
@@ -246,6 +247,8 @@ export default {
       }
       this.DiscNews.msg1.text = this.DiscNews.msg1.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
       this.DiscNews.msg2.text = this.DiscNews.msg2.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+      this.DiscNews.msg1.text = this.DiscNews.msg1.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      this.DiscNews.msg2.text = this.DiscNews.msg2.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
     }
   }
 }

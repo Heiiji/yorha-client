@@ -62,15 +62,7 @@
                 <input type="text" class="form-control" placeholder="Say something">
             </form>
         </div>
-</nav>
-    <form v-if="$store.state.user.local" class="search-form" v-on:submit.prevent="searching()" action="/SearchUser">
-        <div class="input-group">
-            <input type="text" name="search" v-model="search" style="width: 93%;" class="form-control search-input" placeholder="Search...">
-            <span class="input-group-btn">
-                <button class="btn btn-default close-search waves-effect waves-button waves-classic" type="button"><i class="fa fa-times"></i></button>
-            </span>
-        </div>
-    </form>
+    </nav>
     <main class="page-content content-wrap">
         <div class="navbar">
             <div class="navbar-inner">
@@ -82,8 +74,10 @@
                 <div class="logo-box">
                     <a @click="redirect('/')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
                 </div>
-                <div v-if="signed === true" class="search-button">
-                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
+                <div v-if="signed === true">
+                    <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/SearchUser">
+                        <input type="text" name="search" v-model="search" style="width: 100%;" class="form-control search-input" placeholder="Search...">
+                    </form>
                 </div>
                 <div class="topmenu-outer">
                     <div class="top-menu">
@@ -93,9 +87,6 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a>
-                            </li>
                             <li v-if="signed === true" class="dropdown">
                                 <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">

@@ -14,55 +14,6 @@
             <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar5.png" alt=""><span>Nick Doe<small>Hi! How're you?</small></span></a>
         </div>
 </nav>
-    <nav v-if="$store.state.user.local" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-        <h3><span class="pull-left">Sandra Smith</span> <a href="javascript:void(0);" class="pull-right" id="closeRight2"><i class="fa fa-angle-right"></i></a></h3>
-        <div class="slimscroll chat">
-            <div class="chat-item chat-item-left">
-                <div class="chat-image">
-                    <img src="/static/assets/images/avatar2.png" alt="">
-                </div>
-                <div class="chat-message">
-                    Hi There!
-                </div>
-            </div>
-            <div class="chat-item chat-item-right">
-                <div class="chat-message">
-                    Hi! How are you?
-                </div>
-            </div>
-            <div class="chat-item chat-item-left">
-                <div class="chat-image">
-                    <img src="/static/assets/images/avatar2.png" alt="">
-                </div>
-                <div class="chat-message">
-                    Fine! do you like my project?
-                </div>
-            </div>
-            <div class="chat-item chat-item-right">
-                <div class="chat-message">
-                    Yes, It's clean and creative, good job!
-                </div>
-            </div>
-            <div class="chat-item chat-item-left">
-                <div class="chat-image">
-                    <img src="/static/assets/images/avatar2.png" alt="">
-                </div>
-                <div class="chat-message">
-                    Thanks, I tried!
-                </div>
-            </div>
-            <div class="chat-item chat-item-right">
-                <div class="chat-message">
-                    Good luck with your sales!
-                </div>
-            </div>
-        </div>
-        <div class="chat-write">
-            <form class="form-horizontal" action="javascript:void(0);">
-                <input type="text" class="form-control" placeholder="Say something">
-            </form>
-        </div>
-    </nav>
     <main class="page-content content-wrap">
         <div class="navbar">
             <div class="navbar-inner">
@@ -90,9 +41,9 @@
                             <li v-if="signed === true" class="dropdown">
                                 <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
-                                    <li class="dropdown-menu-list slimscroll messages">
+                                    <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
-                                            <li v-for="msg in messages" :key="msg._id" @click="redirect('/chat')">
+                                            <li v-for="msg in messages" :key="msg._id" v-if="msg.asread === false" @click="redirect('/chat')">
                                                 <a>
                                                     <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -105,7 +56,7 @@
                                     <li class="drop-all"><a @click="redirect('/chat')" class="text-center">All Messages</a></li>
                                 </ul>
                             </li>
-                            <li v-if="signed === true" class="dropdown">
+                            <!--<li v-if="signed === true" class="dropdown">
                                 <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-success pull-right">2</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li><p class="drop-title">You have 2 pending tasks !</p></li>
@@ -118,18 +69,11 @@
                                                     <p class="task-details">New user registered.</p>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="#">
-                                                    <div class="task-icon badge badge-danger"><i class="icon-energy"></i></div>
-                                                    <span class="badge badge-roundless badge-default pull-right">24min ago</span>
-                                                    <p class="task-details">Database error.</p>
-                                                </a>
-                                            </li>
                                         </ul>
                                     </li>
                                     <li class="drop-all"><a href="#" class="text-center">All Tasks</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li>
                               <div v-if="signed === true" @click="redirect('/profil')" style="padding: 20px; cursor: pointer;">
                                 <span style="font-size: 0.8em; margin: 15px;">{{user.local.username}}</span>
@@ -178,7 +122,7 @@
                         </li>
                         <li style="width: 80%; margin-left: 10%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
                             <ul class="sub-menu">
-                                <li style="width: 85%;"><a @click="search = 'LiveShadow'; redirect('/SearchUser')">Live Shadow</a></li>
+                                <li style="width: 85%;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
@@ -327,6 +271,7 @@ export default {
       AccountServices.SendFeedback({text: this.FeedbackText})
     },
     checkUser () {
+      console.log('ch')
       var vue = this
       vue.user = vue.$store.state.user
       if (vue.$route.fullPath) {
@@ -342,12 +287,12 @@ export default {
           vue.messages = response.data.msgs
           vue.msgNbr = 0
           vue.messages.forEach(function (element) {
+            console.log(element)
             if (element.asread === false) {
               vue.msgNbr += 1
             }
           })
         })
-        this.user.local.picture = '/static/profil/' + this.user.local.username + '.png'
         this.$store.state.user.local.picture = this.user.local.picture
       }
     }
@@ -357,27 +302,6 @@ export default {
     this.firebaseApp = this.$store.state.firebase
     var user = this.firebaseApp.auth().currentUser
     if (user) {
-    //   firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
-    //     vue.signed = true
-    //     Api().post('/account', {
-    //       username: user.displayName,
-    //       mail: user.email,
-    //       picture: user.photoURL,
-    //       Token: idToken
-    //     }).then((response) => {
-    //       console.log('logged')
-    //       // var me = user
-    //       user.username = user.displayName
-    //       vue.$store.state.user = user
-    //       vue.$store.state.user.local = response.data
-    //       console.log('validate')
-    //       vue.$router.push('/')
-    //       vue.checkUser()
-    //     })
-    //   }).catch(function (error) {
-    //     console.log(error)
-    //     this.$router.push('/login')
-    //   })
       vue.checkUser()
       vue.signed = true
     } else {
@@ -394,6 +318,7 @@ export default {
       } else {
         this.signed = true
         this.user = this.$store.state.user
+        this.checkUser()
       }
     }
   },

@@ -1,13 +1,7 @@
 <template>
   <div class="page-inner">
             <div style="text-align: left;" class="page-title">
-                <h3>Accueil</h3>
-                <div class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li><a>Home</a></li>
-                        <li class="active">General</li>
-                    </ol>
-                </div>
+                <h3>Home</h3>
             </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
@@ -19,7 +13,7 @@
             <v-flex xs8 style="max-height: 800px;">
               <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
-                  <img v-if="news.title === 'Résumé Live Shadow'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />
+                  <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card><br/>
               </a>
@@ -136,7 +130,7 @@ export default {
         text: ''
       },
       docs: [
-        { text: 'Résumé Live Shadow',
+        { text: 'Shadow Live Summary',
           id: 0}
       ],
       News: {
@@ -196,6 +190,7 @@ export default {
       this.document.sender = this.$store.state.user.local.username
       this.document.senderPic = this.$store.state.user.local.picture
       this.document.type = this.document.type.text
+      this.document.title = vue.document.type
       this.firebaseApp.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
         vue.document.token = idToken
         DocService.PostYTShadowLive(vue.document).then((response) => {
@@ -206,7 +201,7 @@ export default {
           vue.News.text = vue.document.text.match(/.{0,300}/g)[0] + ' ...'
           News.Post(vue.News).then((response) => {
             vue.News.department = 'General'
-            vue.News.text = 'Le bilan du dernier Shadow Live est en ligne !'
+            vue.News.text = 'Last Shadow Live summary is online !'
             News.Post(vue.News).then((reponse) => {
               vue.PostAnn = false
               vue.getNews()

@@ -9,7 +9,7 @@
         </v-toolbar>
         <v-list subheader>
           <v-subheader>Recent chat</v-subheader>
-          <v-list-tile avatar v-for="chat in conv" :key="chat[0]._id" @click="messages = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+          <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id" @click="memoire = index; messages = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
             <v-list-tile-content>
               <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
             </v-list-tile-content>
@@ -34,7 +34,7 @@
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title v-html="item.sender"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.text"></v-list-tile-sub-title>
+                <v-list-tile-sub-title v-html="item.text.replace(/\r?\n/g, '<br />')"></v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
           </template>
@@ -64,17 +64,9 @@ export default {
   data () {
     return {
       messages: [],
+      memoire: -1,
       conv: [],
       target: '',
-      items: [
-        { active: true, title: 'Jason Oner', avatar: '/static/doc-images/lists/1.jpg' },
-        { active: true, title: 'Ranee Carlson', avatar: '/static/doc-images/lists/2.jpg' },
-        { title: 'Cindy Baker', avatar: '/static/doc-images/lists/3.jpg' },
-        { title: 'Ali Connors', avatar: '/static/doc-images/lists/4.jpg' }
-      ],
-      items2: [
-        { title: 'Travis Howard', avatar: '/static/doc-images/lists/5.jpg' }
-      ],
       msg: {
         target: '',
         text: '',
@@ -86,6 +78,9 @@ export default {
   },
   mounted () {
     this.getConv()
+    window.setInterval(() => {
+      this.getConv()
+    }, 10000)
   },
   methods: {
     MakeIsRead () {
@@ -100,6 +95,7 @@ export default {
         vue.messages.sort(function (a, b) {
           return a.sender - b.sender
         })
+        vue.conv = []
         vue.messages.forEach(function (element) {
           if (vue.conv[nbr]) {
             if (vue.conv[nbr][0].sender === element.sender) {
@@ -135,7 +131,7 @@ export default {
               }
               return a.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7') - b.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7')
             })
-            value.data.msgs.length -= nbrd
+            value.data.msgs.length = value.data.msgs.length - nbrd
             Array.prototype.push.apply(element, value.data.msgs)
             element.sort(function (a, b) {
               if (!a) {
@@ -148,8 +144,11 @@ export default {
             })
           })
         })
-        vue.messages = null
-        console.log(this.conv)
+        if (vue.memoire >= 0) {
+          vue.messages = vue.conv[vue.memoire]
+        } else {
+          vue.messages = null
+        }
       })
     },
     SendMSG () {
@@ -158,6 +157,7 @@ export default {
       this.msg.target = this.target
       this.msg.senderMail = this.$store.state.user.local.mail
       AccountServices.SendMSG(this.msg).then((response) => {
+        this.msg.text = ''
         this.getConv()
       })
     }

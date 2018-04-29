@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 100px;">
     <span v-if="Doc">
-      <h2>{{Doc.title}} - <span v-if="Doc.date">{{Doc.date.replace(/..............$/g, '.')}}</span></h2>
+      <h2>Shadow Live Summary - <span v-if="Doc.date">{{Doc.date.replace(/..............$/g, '.')}}</span></h2>
       <a :href="Doc.link" target="_blank">regarder la video</a>
       <p v-html="Doc.body.replace(/\r?\n/g, '<br />')"></p>
     </span>

@@ -22,8 +22,10 @@
                         <li><p v-if="user.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.tel">{{user.tel}}</a></p></li>
                     </ul>
                     <hr>
-                        <v-menu style="background-color: rgba(0, 0, 0, 0); display: block;" dark offset-x>
-                          <v-btn style="background-color: rgba(33, 110, 210, 1); width: 100%; padding-bottom: 40px;" dark slot="activator">Add To Team</v-btn>
+                        <v-menu style="background-color: rgba(0, 0, 0, 0); display: block;" dark offset-y>
+                          <v-btn style="background-color: rgba(33, 110, 210, 1); width: 100%; padding-bottom: 40px;" dark slot="activator">Add To Team
+                            <img src="https://www.thrivingparish.org/wp-content/uploads/2018/01/white-down-arrow-png-2.png" style="display: absolute; top: 10%; right: 10px; width: 20px; margin-left: 10px;" />
+                          </v-btn>
                           <v-list>
                             <v-list-tile v-for="item in $store.state.user.local.teams" :key="item">
                               <v-list-tile-title @click="NewTeam = item; PostTeam ();" style="cursor: pointer;">{{ item }}</v-list-tile-title>
@@ -59,8 +61,9 @@
                             <div class="panel-title">Team : {{ team.name }}</div>
                         </div>
                         <div class="panel-body">
-                              <div v-for="pers in team.users" :key="pers._id" class="team-member">
+                              <div v-for="pers in team.users" :key="pers._id" class="team-member" style="display: block; margin: 3px;">
                                  <img width="30px" style="border-radius: 15px;" :src="pers.picture" alt="">
+                                 <span>{{ pers.username }}</span>
                               </div>
                         </div>
                     </div>

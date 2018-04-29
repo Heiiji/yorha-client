@@ -37,7 +37,7 @@
                 <div class="col-md-6 m-t-lg">
                     <v-tabs style="margin: 10px;" fixed-tabs>
                       <v-tab>
-                        All
+                        General
                       </v-tab>
                       <v-tab-item style="margin-top: 10px;">
                         <div class="panel panel-white">
@@ -179,7 +179,10 @@
                       </v-tab-item>
                       <v-tab>
                         <v-menu style="background-color: rgba(0, 0, 0, 0)" offset-y>
-                          <v-btn style="background-color: rgba(0, 0, 0, 0); box-shadow: none; padding-bottom: 45px;" slot="activator">{{ activeTeam }}</v-btn>
+                          <v-btn style="background-color: rgba(0, 0, 0, 0); box-shadow: none; padding-bottom: 45px;" slot="activator">
+                            {{ activeTeam }}
+                            <img src="https://rockandtait.com/wp-content/uploads/2016/07/arrow-down-icon-png-4.png" style="display: absolute; top: 10%; right: 10px; width: 20px; margin-left: 10px;" />
+                            </v-btn>
                           <v-list>
                             <v-list-tile v-for="item in Teams" :key="item.name">
                               <v-list-tile-title @click="activeTeam = item.name" style="cursor: pointer;">{{ item.name }}</v-list-tile-title>
@@ -283,7 +286,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="team">
-                                <div v-for="pers in team.users" :key="pers._id" class="team-member">
+                                <div @click="$router.push('/profil/' + pers._id)" v-for="pers in team.users" :key="pers._id" class="team-member" style="cursor: pointer;">
                                    <div class="online on"></div>
                                    <img :src="pers.picture" alt="">
                                 </div>
@@ -496,7 +499,7 @@ export default {
       var vue = this
       vue.Teams = []
       vue.$store.state.user.local.teams.forEach((elem) => {
-        AccountService.FindByTeam(this.user.local.team).then((response) => {
+        AccountService.FindByTeam(elem).then((response) => {
           vue.Teams.push({name: elem, users: response.data.users})
         }).then(() => {
           vue.activeTeam = vue.Teams[0].name

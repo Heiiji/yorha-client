@@ -1,6 +1,6 @@
 <template>
   <div><div class="page-inner" style="padding: 0px;">
-      <div class="profile-cover" style="background: url('http://smkn2kra.sch.id/wp-content/uploads/2015/02/computer-wallpaper-background-21-high-quality-background-and-wallpaper-1-1024x640.jpg') center; -webkit-background-size: cover; background-size: cover;">
+      <div class="profile-cover" style="background: url('/static/departments/R&D-wide.jpg') center; -webkit-background-size: cover; background-size: cover;">
           <div class="row">
               <div class="col-md-3 profile-image">
                   <div class="profile-image-container">
@@ -15,14 +15,37 @@
                   <h3 class="text-center">La R&D</h3>
                   <p class="text-center">Research and desaster</p>
                   <hr>
-                  <button @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
+                  <button @click="sendMSG = true" class="btn btn-primary btn-block">Add a card</button>
               </div>
               <div class="col-md-6 m-t-lg">
-                  <v-tabs style="margin: 10px;" fixed-tabs>
-                    <v-tab>
-                      All
-                    </v-tab>
-                  </v-tabs>
+                  <v-card style="margin: 10px;">
+                    <v-card-media src="/static/departments/R&D-wide.jpg" height="200px">
+                    </v-card-media>
+                    <v-card-title primary-title>
+                      <div>
+                        <h3 class="headline mb-0">USB Login key <span style="color: orange; font-size: 0.6em;">(Waiting hardware command)</span></h3>
+                        <hr/>
+                        <div>This is an amazing project, no ? <br/> Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias nostrum explicabo quam mollitia suscipit illo temporibus velit facilis libero. Modi earum animi consectetur maiores vel aperiam, eveniet perferendis voluptatibus reprehenderit!<br/><br/><br/> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt natus provident minima saepe officiis quod excepturi voluptas ipsa, perferendis nulla vero maxime ad, numquam eveniet nobis. Facere quos ea optio?</div>
+                      </div>
+                    </v-card-title>
+                    <v-card-actions>
+                      <v-btn flat color="orange">More</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                  <v-card style="margin: 10px;">
+                    <v-card-media src="http://blog.logicalincrements.com/wp-content/uploads/2017/03/pc-master-race.jpg" height="200px">
+                    </v-card-media>
+                    <v-card-title primary-title>
+                      <div>
+                        <h3 class="headline mb-0">Automatic Benchmark <span style="color: green; font-size: 0.6em;">(Experiment in Shabane)</span></h3>
+                        <hr/>
+                        <div>This is an amazing project, no ? <br/> Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias nostrum explicabo quam mollitia suscipit illo temporibus velit facilis libero. Modi earum animi consectetur maiores vel aperiam, eveniet perferendis voluptatibus reprehenderit!<br/><br/><br/> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt natus provident minima saepe officiis quod excepturi voluptas ipsa, perferendis nulla vero maxime ad, numquam eveniet nobis. Facere quos ea optio?</div>
+                      </div>
+                    </v-card-title>
+                    <v-card-actions>
+                      <v-btn flat color="orange">More</v-btn>
+                    </v-card-actions>
+                  </v-card>
               </div>
               <div class="col-md-3 m-t-lg">
                   <div class="panel panel-white">

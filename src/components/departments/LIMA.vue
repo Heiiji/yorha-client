@@ -5,7 +5,7 @@
           <div class="row">
               <div class="col-md-3 profile-image">
                   <div class="profile-image-container">
-                      <img src="https://index.tnwcdn.com/images/f30ff33cc200ee4634bb06ba04105e6294b08513.jpg" alt="">
+                      <img src="/static/departments/lima-profil.png" alt="">
                   </div>
               </div>
           </div>

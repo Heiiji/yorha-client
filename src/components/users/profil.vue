@@ -444,6 +444,7 @@ export default {
     if (!this.$store.state.user.local) {
       this.$router.push('/')
     } else {
+      this.firebaseApp = this.$store.state.firebase
       this.user = this.$store.state.user
       console.log(this.$store.state.user.local.teams)
       this.getNews()
@@ -536,7 +537,7 @@ export default {
           tmp.forEach(function (element) {
             News.GetReply(element._id).then((reponse) => {
               element.reply = reponse.data.reply
-              element.message = 'Reply'
+              element.message = ''
               vue.allNews = tmp
             })
           })

@@ -111,11 +111,13 @@ export default {
         text: '',
         sender: '',
         senderPic: '',
-        senderMail: ''
+        senderMail: '',
+        token: ''
       }
     }
   },
   mounted () {
+    this.firebaseApp = this.$store.state.firebase
     this.getUser(this.$route.params.id)
   },
   methods: {
@@ -134,11 +136,15 @@ export default {
       })
     },
     SendMSG () {
+      var vue = this
       this.msg.sender = this.$store.state.user.local.username
       this.msg.senderPic = this.$store.state.user.local.picture
       this.msg.target = this.user.mail
       this.msg.senderMail = this.$store.state.user.local.mail
-      AccountService.SendMSG(this.msg)
+      this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
+        vue.msg.token = idToken
+        AccountService.SendMSG(vue.msg)
+      })
       this.sendMSG = false
     },
     PostTeam () {

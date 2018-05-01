@@ -72,15 +72,17 @@ export default {
         text: '',
         sender: '',
         senderPic: '',
-        senderMail: ''
+        senderMail: '',
+        token: ''
       }
     }
   },
   mounted () {
+    this.firebaseApp = this.$store.state.firebase
     this.getConv()
     window.setInterval(() => {
       this.getConv()
-    }, 10000)
+    }, 30000)
   },
   methods: {
     MakeIsRead () {
@@ -152,13 +154,17 @@ export default {
       })
     },
     SendMSG () {
+      var vue = this
       this.msg.sender = this.$store.state.user.local.username
       this.msg.senderPic = this.$store.state.user.local.picture
       this.msg.target = this.target
       this.msg.senderMail = this.$store.state.user.local.mail
-      AccountServices.SendMSG(this.msg).then((response) => {
-        this.msg.text = ''
-        this.getConv()
+      this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
+        vue.msg.token = idToken
+        AccountServices.SendMSG(vue.msg).then((response) => {
+          vue.msg.text = ''
+          vue.getConv()
+        })
       })
     }
   }

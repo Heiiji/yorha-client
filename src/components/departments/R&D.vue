@@ -15,9 +15,10 @@
                   <h3 class="text-center">La R&D</h3>
                   <p class="text-center">Research and desaster</p>
                   <hr>
-                  <button @click="sendMSG = true" class="btn btn-primary btn-block">Add a card</button>
+                  <button v-if="$store.state.user.local.work === 'R&D'" class="btn btn-primary btn-block">Add a card</button>
               </div>
               <div class="col-md-6 m-t-lg">
+                <span v-if="$store.state.user.local.work === 'R&D'">
                   <v-card style="margin: 10px;">
                     <v-card-media src="/static/departments/R&D-wide.jpg" height="200px">
                     </v-card-media>
@@ -46,6 +47,7 @@
                       <v-btn flat color="orange">More</v-btn>
                     </v-card-actions>
                   </v-card>
+                </span>
               </div>
               <div class="col-md-3 m-t-lg">
                   <div class="panel panel-white">
@@ -66,7 +68,7 @@
                           <div class="panel-title">Description</div>
                       </div>
                       <div class="panel-body">
-                          <p>{{ user.description }}</p>
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem officia illum labore itaque iure perspiciatis alias quisquam praesentium ratione facere? A nobis iure iusto esse architecto recusandae quas maxime fuga!</p>
                       </div>
                   </div>
               </div>

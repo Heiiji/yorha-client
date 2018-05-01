@@ -3,86 +3,28 @@
     <br/><br/><br/>
     <h1>User Management</h1>
     <br/>
-
-    <v-expansion-panel style="z-index: 20;">
-      <v-expansion-panel-content
-        hide-actions
-      >
-        <v-layout style="z-index: 20;" align-center row spacer slot="header">
-          <v-flex xs4 sm2 md1>
-            <v-avatar size="32px" tile>
-              <img style="border-radius: 20px;" src="https://www.atlantic-avitaillement.fr/wp-content/uploads/765-default-avatar.png" alt="Profil">
-            </v-avatar>
-          </v-flex>
-          <v-flex sm5 md3 hidden-xs-only>
-            <strong>Username</strong>
-          </v-flex>
-          <v-flex no-wrap xs5 sm3>
-            <strong>email</strong>
-          </v-flex>
-          <v-flex
-            class="grey--text"
-            ellipsis
-            hidden-sm-and-down
-          >
-            Workplace
-          </v-flex>
-          <v-flex
-            class="grey--text"
-            ellipsis
-            hidden-sm-and-down
-          >
-            qualifier
-          </v-flex>
-        </v-layout>
-      </v-expansion-panel-content>
-      <br/><br/>
-        <v-expansion-panel-content
-          hide-actions
-          v-for="(user, i) in users"
-          :key="i"
-        >
-          <v-layout style="z-index: 20;" align-center row spacer slot="header">
-            <v-flex xs4 sm2 md1>
-              <v-avatar size="32px" tile>
-                <img style="border-radius: 20px;" :src="user.picture" alt="Profil">
-              </v-avatar>
-            </v-flex>
-            <v-flex sm5 md3 hidden-xs-only>
-              <strong v-html="user.username"/>
-            </v-flex>
-            <v-flex no-wrap xs5 sm3>
-              <strong v-html="user.mail"/>
-            </v-flex>
-            <v-flex
-              class="grey--text"
-              ellipsis
-              v-if="user.work"
-              hidden-sm-and-down
-            >
-              {{ user.work }}
-            </v-flex>
-            <v-flex
-              class="grey--text"
-              ellipsis
-              hidden-sm-and-down
-              v-if="user.qualifier"
-            >
-              {{ user.qualifier }}
-            </v-flex>
-            <v-menu bottom left>
-              <v-btn icon slot="activator" dark>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-              <v-list>
-                <v-list-tile style="z-index: 20; background-color: white;" v-for="(item, i) in rangs" :key="i">
-                  <v-list-tile-title style="z-index: 21;" @click="ChangeStatus(user._id, item.text)">{{ item.text }}</v-list-tile-title>
-                </v-list-tile>
-              </v-list>
-            </v-menu>
-          </v-layout>
-        </v-expansion-panel-content>
-    </v-expansion-panel>
+    <v-card v-for="(user, i) in users" :key="i" style="margin: 10px; display: inline-block; width: 400px;">
+                    <v-card-media :src="user.picture" height="300px">
+                    </v-card-media>
+                    <v-card-title primary-title>
+                      <div>
+                        <h3 class="headline mb-0">{{ user.username }} <br/> <span style="color: blue; font-size: 0.6em;">({{ user.mail }})</span></h3>
+                        <hr/>
+                        <h4>Workplace : {{ user.work }}</h4>
+                        <h4>Rank : {{ user.qualifier }}</h4>
+                      </div>
+                    </v-card-title>
+                    <v-card-actions>
+                      <v-menu bottom left>
+                      <v-btn flat color="orange" slot="activator">Change</v-btn>
+                      <v-list>
+                        <v-list-tile style="z-index: 20; background-color: white;" v-for="(item, i) in rangs" :key="i">
+                          <v-list-tile-title style="z-index: 21;" @click="ChangeStatus(user._id, item.text)">{{ item.text }}</v-list-tile-title>
+                        </v-list-tile>
+                      </v-list>
+                      </v-menu>
+                    </v-card-actions>
+                  </v-card>
   </div>
 </template>
 

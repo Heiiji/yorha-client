@@ -133,7 +133,7 @@
         <router-view class="page-inner" :Search="search" v-on:refresh="checkUser()" />
           <v-dialog style="z-index:25;" v-model="feedback" scrollable max-width="800px">
             <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-              <v-card-title style="color: grey; font-size: 1.4em; text-align: center; display: block;">feedback</v-card-title>
+              <v-card-title style="color: grey; font-size: 1.4em; text-align: center; display: block;">feedback (by default, it's anonyme)</v-card-title>
               <v-divider></v-divider>
                 <v-flex xs8>
                   <v-text-field v-model="FeedbackText"
@@ -287,7 +287,6 @@ export default {
           vue.messages = response.data.msgs
           vue.msgNbr = 0
           vue.messages.forEach(function (element) {
-            console.log(element)
             if (element.asread === false) {
               vue.msgNbr += 1
             }

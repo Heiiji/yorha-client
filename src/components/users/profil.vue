@@ -60,7 +60,7 @@
                                             <div class="timeline-item-header">
                                                 <img :src="item.senderPic" alt="">
                                                 <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>date</small>
+                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
                                                 <p>{{ item.text }}</p>
@@ -70,7 +70,7 @@
                                                 <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
                                                     <div class="timeline-comment-header">
                                                         <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
@@ -107,7 +107,7 @@
                                             <div class="timeline-item-header">
                                                 <img :src="item.senderPic" alt="">
                                                 <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>date</small>
+                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
                                                 <p>{{ item.text }}</p>
@@ -117,7 +117,7 @@
                                                 <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
                                                     <div class="timeline-comment-header">
                                                         <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
@@ -154,7 +154,7 @@
                                             <div class="timeline-item-header">
                                                 <img :src="item.senderPic" alt="">
                                                 <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>date</small>
+                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
                                                 <p>{{ item.text }}</p>
@@ -164,7 +164,7 @@
                                                 <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
                                                     <div class="timeline-comment-header">
                                                         <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
@@ -177,7 +177,7 @@
                             </ul>
                         </div>
                       </v-tab-item>
-                      <v-tab>
+                      <v-tab v-if="Teams[0]">
                         <v-menu style="background-color: rgba(0, 0, 0, 0)" offset-y>
                           <v-btn style="background-color: rgba(0, 0, 0, 0); box-shadow: none; padding-bottom: 45px;" slot="activator">
                             {{ activeTeam }}
@@ -211,7 +211,7 @@
                                             <div class="timeline-item-header">
                                                 <img :src="item.senderPic" alt="">
                                                 <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>date</small>
+                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
                                                 <p>{{ item.text }}</p>
@@ -221,7 +221,7 @@
                                                 <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
                                                     <div class="timeline-comment-header">
                                                         <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
@@ -254,7 +254,7 @@
                                             <div class="timeline-item-header">
                                                 <img :src="item.senderPic" alt="">
                                                 <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>date</small>
+                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
                                                 <p>{{ item.text }}</p>
@@ -264,7 +264,7 @@
                                                 <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
                                                     <div class="timeline-comment-header">
                                                         <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>date</small></p>
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
@@ -393,6 +393,9 @@ export default {
       edition: false,
       user: [],
       file: '',
+      navigator: {
+        language: ''
+      },
       e1: null,
       EditDescription: null,
       NewDescription: '',
@@ -441,6 +444,7 @@ export default {
     }
   },
   mounted () {
+    this.navigator.language = navigator.language
     if (!this.$store.state.user.local) {
       this.$router.push('/')
     } else {
@@ -535,6 +539,7 @@ export default {
         if (response.data.news) {
           var tmp = response.data.news
           tmp.forEach(function (element) {
+            element.date = new Date(element.date)
             News.GetReply(element._id).then((reponse) => {
               element.reply = reponse.data.reply
               element.message = ''

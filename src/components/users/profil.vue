@@ -1,6 +1,6 @@
 <template>
   <div style="margin-top:-60px;">
-    <div class="page-inner">
+    <div v-if="user.local" class="page-inner">
         <div class="profile-cover" style="background: url('/static/Wallpaper 10.jpg'); -webkit-background-size: cover; background-size: cover;">
             <div class="row">
                 <div class="col-md-3 profile-image">
@@ -542,27 +542,15 @@ export default {
             element.date = new Date(element.date)
             News.GetReply(element._id).then((reponse) => {
               element.reply = reponse.data.reply
+              element.reply.forEach(function (el) {
+                el.date = new Date(el.date)
+              })
               element.message = ''
+              vue.allNews = ''
               vue.allNews = tmp
             })
           })
         }
-      }
-      this.DiscNews = {
-        msg1: {
-          name: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo3.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
-        },
-        msg2: {
-          name: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo2.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
-        }
-        /*
-        msg3: {
-          name: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
-        }
-        */
       }
     },
     handleFileUpload () {

@@ -77,7 +77,7 @@
                             <li>
                               <div v-if="signed === true" @click="redirect('/profil')" style="padding: 20px; cursor: pointer;">
                                 <span style="font-size: 0.8em; margin: 15px;">{{user.local.username}}</span>
-                                <v-avatar size="32px" tile>
+                                <v-avatar v-if="user.local" size="32px" tile>
                                   <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
                                 </v-avatar>
                               </div>
@@ -279,10 +279,6 @@ export default {
       this.work = vue.user.local.work
       if (vue.user.local) {
         vue.signed = true
-        vue.items[3].display = false
-        if (vue.user.local.work === 'Test') {
-          vue.items[0].display = true
-        }
         AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
           vue.messages = response.data.msgs
           vue.msgNbr = 0

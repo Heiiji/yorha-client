@@ -1,7 +1,8 @@
 <template>
   <div class="page-inner">
-            <div style="text-align: left;" class="page-title">
+            <div style="text-align: left; position: relative; width: 100%;" class="page-title">
                 <h3>Home</h3>
+                <button class="btn btn-primary btn-block" @click="PostAnn = true" style="width: 150px; position: absolute; right: 20px; top: 10px;">Post document</button>
             </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
@@ -10,31 +11,29 @@
                 <v-card-text class="px-0">12</v-card-text>
               </v-card>
             </v-flex>
-            <v-flex xs7 style="max-height: 800px;">
+            <v-flex xs4 v-for="news in DiscNews" :key="news._id">
+            <div class="socialp" @click="news.show = true;">
+                  <div style="margin: 15px; position: relative;" class="panel-body">
+                      <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                      <div><h2 class="no-m" style="color: rgb(30, 80, 160);">{{ news.name }}</h2><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(news.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                  </div>
+              </div>
+            </v-flex>
+            <v-flex xs4>
+              <div v-if="TwitNews[0]" class="socialp">
+                  <div style="margin: 15px; position: relative;" class="panel-body"  @click="showTwit = true;">
+                      <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                  </div>
+              </div>
+            </v-flex>
+            <v-flex xs12 style="max-height: 800px;">
               <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card><br/>
               </a>
-            </v-flex>
-            <v-flex xs4>
-              <!--<button class="btn btn-primary btn-block" @click="HelpDesk = true" style="width: 100%; margin: 0px; margin-bottom: 5px;">Help Desk</button>-->
-              <button class="btn btn-primary btn-block" @click="PostAnn = true" style="width: 100%; margin: 0px;">Post document</button>
-              <div class="socialp" v-for="news in DiscNews" :key="news._id" @click="news.show = true;">
-                  <div style="margin: 15px; position: relative;" class="panel-body">
-                      <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                      <div><h2 class="no-m" style="color: rgb(30, 80, 160);">{{ news.name }}</h2><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(news.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
-                  </div>
-              </div><br/>
-              <div v-if="TwitNews[0]" class="socialp">
-                  <div style="margin: 15px; position: relative;" class="panel-body"  @click="showTwit = true;">
-                      <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
-                  </div>
-              </div><br/>
-              <!--<QwickLook target="finnish">
-              </QwickLook>-->
             </v-flex>
           </v-layout>
         </v-container>
@@ -278,6 +277,9 @@ export default {
 }
 .socialp {
   color: black;
+  display: inline-block;
+  width: 100%;
+  height: 150px;
   background-color: rgba(255, 255, 255, 0.9);
   margin: 5px;
   padding: 10px;

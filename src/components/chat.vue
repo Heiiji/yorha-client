@@ -109,8 +109,9 @@ export default {
             vue.conv[nbr].splice(0, 0, element)
           }
         })
-        nbr = 0
         vue.conv.forEach(function (element) {
+          nbr = 0
+          nbrd = 0
           AccountServices.getMyMsg(vue.$store.state.user.local.mail).then((value) => {
             value.data.msgs.forEach(function (tar) {
               var mail = ''

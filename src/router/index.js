@@ -7,7 +7,7 @@ import NewPost    from '@/components/NewPost'
 import EditPost   from '@/components/EditPost'
 import Overview   from '@/components/Overview'
 import Management from '@/components/Management'
-import Trombi     from '@/components/Trombi'
+import Trombi     from '@/components/trombi'
 const Changelog   = () => import('@/components/changelog')
 const Home        = () => import('@/components/home')
 const Mattermost  = () => import('@/components/mattermost')

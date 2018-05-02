@@ -14,7 +14,7 @@
                 </div>
                 <div v-if="signed === true">
                     <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/rechercher">
-                        <input type="text" name="search" v-model="search" style="width: 100%;" class="form-control search-input" placeholder="Search...">
+                        <input type="text" name="search" v-model="search" style="width: 100%; margin-left: 20px;" class="form-control search-input" placeholder="Search...">
                     </form>
                 </div>
                 <div class="topmenu-outer">
@@ -40,7 +40,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="drop-all"><a @click="redirect('/chat')" class="text-center">All Messages</a></li>
+                                    <li class="drop-all" style="width: 100%; text-align: center;"><a @click="redirect('/chat')" class="text-center">All Messages</a></li>
                                 </ul>
                             </li>
                             <!--<li v-if="signed === true" class="dropdown">

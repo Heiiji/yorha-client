@@ -497,7 +497,6 @@ export default {
         mail: this.user.local.mail,
         action: 'create'
       }).then((response) => {
-        console.log(response)
         if (response.data.success === true) {
           this.user.local.team = this.NewTeam
           this.Refresh()

@@ -18,11 +18,36 @@
                   <button @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
               </div>
               <div class="col-md-6 m-t-lg">
-                  <v-tabs style="margin: 10px;" fixed-tabs>
-                    <v-tab>
-                      All
-                    </v-tab>
-                  </v-tabs>
+                    <div class="profile-timeline">
+                            <ul class="list-unstyled">
+                                <li v-for="item in allNews" v-if="item.department === 'RH'" :key="item._id" class="timeline-item" style="display: block;">
+                                    <div class="panel panel-white">
+                                        <div class="panel-body">
+                                            <div class="timeline-item-header">
+                                                <img :src="item.senderPic" alt="">
+                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
+                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
+                                            </div>
+                                            <div class="timeline-item-post">
+                                                <p>{{ item.text }}</p>
+                                                <div class="timeline-options">
+                                                    <a href="#"><i class="icon-share"></i> Share</a>
+                                                </div>
+                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                                    <div class="timeline-comment-header">
+                                                        <img :src="comm.senderPic" alt="">
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
+                                                    </div>
+                                                    <p class="timeline-comment-text">{{comm.text}}</p>
+                                                </div>
+                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
+                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
               </div>
               <div class="col-md-3 m-t-lg">
                   <div class="panel panel-white">
@@ -75,6 +100,7 @@
 </template>
 <script>
 import AccountService from '@/services/AccountService'
+import News from '@/services/NewsService'
 
 export default {
   name: 'Profil',
@@ -83,6 +109,10 @@ export default {
       user: [],
       users: [],
       sendMSG: false,
+      allNews: [],
+      navigator: {
+        language: ''
+      },
       msg: {
         target: '',
         text: '',
@@ -92,7 +122,9 @@ export default {
     }
   },
   mounted () {
+    this.navigator.language = navigator.language
     this.GetByDep()
+    this.getNews()
   },
   methods: {
     GetByDep () {
@@ -100,6 +132,27 @@ export default {
       AccountService.FindByDep('RH').then((response) => {
         vue.users = response.data.users
       })
+    },
+    async getNews () {
+      var vue = this
+      const response = await News.fetchNews()
+      if (response.data) {
+        if (response.data.news) {
+          var tmp = response.data.news
+          tmp.forEach(function (element) {
+            element.date = new Date(element.date)
+            News.GetReply(element._id).then((reponse) => {
+              element.reply = reponse.data.reply
+              element.reply.forEach(function (el) {
+                el.date = new Date(el.date)
+              })
+              element.message = ''
+              vue.allNews = ''
+              vue.allNews = tmp
+            })
+          })
+        }
+      }
     }
   }
 }

@@ -291,7 +291,7 @@
                                    <img :src="pers.picture" alt="">
                                 </div>
                                 <br/>
-                                <button @click="NewTeam = team.name; PostTeam ();" class="btn btn-primary btn-block">Quit team</button>
+                                <button @click="NewTeam = team.name; DelTeam ();" class="btn btn-primary btn-block">Quit team</button>
                             </div>
                         </div>
                     </div>
@@ -494,11 +494,32 @@ export default {
     PostTeam () {
       AccountService.editTeam({
         team: this.NewTeam,
-        mail: this.user.local.mail
+        mail: this.user.local.mail,
+        action: 'create'
+      }).then((response) => {
+        console.log(response)
+        if (response.data.success === true) {
+          this.user.local.team = this.NewTeam
+          this.Refresh()
+          this.CreateTeam = false
+        } else {
+          this.NewTeam = 'Team already exist'
+        }
       })
-      this.user.local.team = this.NewTeam
-      this.CreateTeam = false
-      this.Refresh()
+    },
+    DelTeam () {
+      AccountService.editTeam({
+        team: this.NewTeam,
+        mail: this.user.local.mail,
+        action: 'delete'
+      }).then((response) => {
+        console.log(response)
+        if (response.data.success === true) {
+          this.user.local.team = this.NewTeam
+          this.Refresh()
+        }
+        this.CreateTeam = false
+      })
     },
     GetByTeam () {
       var vue = this

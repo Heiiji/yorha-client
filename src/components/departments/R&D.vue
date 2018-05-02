@@ -15,10 +15,65 @@
                   <h3 class="text-center">La R&D</h3>
                   <p class="text-center">Research and desaster</p>
                   <hr>
+                  <div class="panel panel-white">
+                      <div class="panel-heading">
+                          <div class="panel-title">Soldiers : </div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="team">
+                              <div v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
+                                 <div class="online on"></div>
+                                 <img :src="pers.picture" alt="">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="panel panel-white">
+                      <div class="panel-heading">
+                          <div class="panel-title">Description</div>
+                      </div>
+                      <div class="panel-body">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem officia illum labore itaque iure perspiciatis alias quisquam praesentium ratione facere? A nobis iure iusto esse architecto recusandae quas maxime fuga!</p>
+                      </div>
+                  </div>
+                  <hr>
                   <button v-if="$store.state.user.local.work === 'R&D'" class="btn btn-primary btn-block">Add a card</button>
               </div>
-              <div class="col-md-6 m-t-lg">
+              <div class="col-md-5 m-t-lg">
+                    <div class="profile-timeline">
+                            <ul class="list-unstyled">
+                                <li v-for="item in allNews" v-if="item.department === 'R&D'" :key="item._id" class="timeline-item" style="display: block;">
+                                    <div class="panel panel-white">
+                                        <div class="panel-body">
+                                            <div class="timeline-item-header">
+                                                <img :src="item.senderPic" alt="">
+                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
+                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
+                                            </div>
+                                            <div class="timeline-item-post">
+                                                <p>{{ item.text }}</p>
+                                                <div class="timeline-options">
+                                                    <a href="#"><i class="icon-share"></i> Share</a>
+                                                </div>
+                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                                    <div class="timeline-comment-header">
+                                                        <img :src="comm.senderPic" alt="">
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
+                                                    </div>
+                                                    <p class="timeline-comment-text">{{comm.text}}</p>
+                                                </div>
+                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
+                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+              </div>
+              <div class="col-md-4 m-t-lg">
                 <span v-if="$store.state.user.local.work === 'R&D'">
+                    <h2 style="text-align: center; color: grey;">Project</h2>
                   <v-card style="margin: 10px;">
                     <v-card-media src="/static/departments/R&D-wide.jpg" height="200px">
                     </v-card-media>
@@ -49,29 +104,6 @@
                   </v-card>
                 </span>
               </div>
-              <div class="col-md-3 m-t-lg">
-                  <div class="panel panel-white">
-                      <div class="panel-heading">
-                          <div class="panel-title">Soldiers : </div>
-                      </div>
-                      <div class="panel-body">
-                        <div class="team">
-                              <div v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
-                                 <div class="online on"></div>
-                                 <img :src="pers.picture" alt="">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="panel panel-white">
-                      <div class="panel-heading">
-                          <div class="panel-title">Description</div>
-                      </div>
-                      <div class="panel-body">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem officia illum labore itaque iure perspiciatis alias quisquam praesentium ratione facere? A nobis iure iusto esse architecto recusandae quas maxime fuga!</p>
-                      </div>
-                  </div>
-              </div>
           </div>
       </div>
   </div>
@@ -100,6 +132,7 @@
 </template>
 <script>
 import AccountService from '@/services/AccountService'
+import News from '@/services/NewsService'
 
 export default {
   name: 'Profil',
@@ -108,6 +141,10 @@ export default {
       user: [],
       users: [],
       sendMSG: false,
+      allNews: [],
+      navigator: {
+        language: ''
+      },
       msg: {
         target: '',
         text: '',
@@ -117,7 +154,9 @@ export default {
     }
   },
   mounted () {
+    this.navigator.language = navigator.language
     this.GetByDep()
+    this.getNews()
   },
   methods: {
     GetByDep () {
@@ -125,6 +164,27 @@ export default {
       AccountService.FindByDep('R&D').then((response) => {
         vue.users = response.data.users
       })
+    },
+    async getNews () {
+      var vue = this
+      const response = await News.fetchNews()
+      if (response.data) {
+        if (response.data.news) {
+          var tmp = response.data.news
+          tmp.forEach(function (element) {
+            element.date = new Date(element.date)
+            News.GetReply(element._id).then((reponse) => {
+              element.reply = reponse.data.reply
+              element.reply.forEach(function (el) {
+                el.date = new Date(el.date)
+              })
+              element.message = ''
+              vue.allNews = ''
+              vue.allNews = tmp
+            })
+          })
+        }
+      }
     }
   }
 }

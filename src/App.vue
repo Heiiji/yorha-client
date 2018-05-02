@@ -1,19 +1,6 @@
 <template>
   <v-app id="app" data-app>
     <div class="overlay"></div>
-    <nav v-if="$store.state.user.local" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s1">
-        <h3><span class="pull-left">Chat</span><a href="javascript:void(0);" class="pull-right" id="closeRight"><i class="fa fa-times"></i></a></h3>
-        <div class="slimscroll">
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar2.png" alt=""><span>Sandra smith<small>Hi! How're you?</small></span></a>
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar3.png" alt=""><span>Amily Lee<small>Hi! How're you?</small></span></a>
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar4.png" alt=""><span>Christopher Palmer<small>Hi! How're you?</small></span></a>
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar5.png" alt=""><span>Nick Doe<small>Hi! How're you?</small></span></a>
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar2.png" alt=""><span>Sandra smith<small>Hi! How're you?</small></span></a>
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar3.png" alt=""><span>Amily Lee<small>Hi! How're you?</small></span></a>
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar4.png" alt=""><span>Christopher Palmer<small>Hi! How're you?</small></span></a>
-            <a href="javascript:void(0);" class="showRight2"><img src="/static/assets/images/avatar5.png" alt=""><span>Nick Doe<small>Hi! How're you?</small></span></a>
-        </div>
-</nav>
     <main class="page-content content-wrap">
         <div class="navbar">
             <div class="navbar-inner">
@@ -26,7 +13,7 @@
                     <a @click="redirect('/')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
                 </div>
                 <div v-if="signed === true">
-                    <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/SearchUser">
+                    <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/rechercher">
                         <input type="text" name="search" v-model="search" style="width: 100%;" class="form-control search-input" placeholder="Search...">
                     </form>
                 </div>
@@ -126,6 +113,7 @@
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
+                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/trombi')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>face</v-icon></span><p>Trombi</p></a></li>
                         <li style="width: 80%; margin-left: 10%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>mail</v-icon></span><p>Feedback</p></a></li>
                     </ul>
                 </div>

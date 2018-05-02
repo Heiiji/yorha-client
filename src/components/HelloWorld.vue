@@ -10,7 +10,7 @@
                 <v-card-text class="px-0">12</v-card-text>
               </v-card>
             </v-flex>
-            <v-flex xs8 style="max-height: 800px;">
+            <v-flex xs7 style="max-height: 800px;">
               <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />

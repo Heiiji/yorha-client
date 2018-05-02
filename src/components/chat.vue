@@ -2,9 +2,9 @@
   <div>
     <v-layout row>
     <v-flex xs12 sm4>
-      <v-card style="height: 1000px;">
+      <v-card style="height: 90%;">
         <v-toolbar color="teal" dark>
-          <v-toolbar-title class="text-xs-center">Your conversation</v-toolbar-title>
+          <v-toolbar-title class="text-xs-center">Your conversation <button class="btn btn-default pull-right" style="opacity: 0.8; position: absolute; right: 10px; top: 15%; background-color: white; color: black;" @click="getConv()">Refresh</button></v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-list subheader>
@@ -21,7 +21,7 @@
       </v-card>
     </v-flex>
     <v-flex style="height: 1000px; position: relative;" xs12 sm10>
-      <v-card style="position: absolute; bottom: 0px; width: 100%;">
+      <v-card style="position: absolute; bottom: 10%; width: 100%;">
         <v-list two-line>
           <template v-for="(item) in messages">
             <v-list-tile
@@ -80,9 +80,6 @@ export default {
   mounted () {
     this.firebaseApp = this.$store.state.firebase
     this.getConv()
-    window.setInterval(() => {
-      this.getConv()
-    }, 30000)
   },
   methods: {
     MakeIsRead () {
@@ -116,7 +113,13 @@ export default {
         vue.conv.forEach(function (element) {
           AccountServices.getMyMsg(vue.$store.state.user.local.mail).then((value) => {
             value.data.msgs.forEach(function (tar) {
-              if (tar.target !== element[0].senderMail) {
+              var mail = ''
+              if (element[0].senderMail === vue.$store.state.user.local.mail) {
+                mail = element[0].target
+              } else {
+                mail = element[0].senderMail
+              }
+              if (tar.target !== mail) {
                 delete value.data.msgs[nbr]
                 nbrd += 1
               } else {
@@ -137,10 +140,10 @@ export default {
             Array.prototype.push.apply(element, value.data.msgs)
             element.sort(function (a, b) {
               if (!a) {
-                return (1)
+                return (-1)
               }
               if (!b) {
-                return (-1)
+                return (1)
               }
               return a.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7') - b.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7')
             })

@@ -1,6 +1,6 @@
 <template>
   <div>
-    recherche : {{Search}}<br/>
+    <br/>
     <v-card v-for="(user, i) in users" :key="i">
                     <v-card-media @click="$router.push('/profil/' + user._id)" :src="user.picture" height="300px">
                     </v-card-media>
@@ -79,8 +79,9 @@ export default {
     Search: ''
   },
   mounted () {
-    this.takeUsers(this.Search)
-    this.takeDoc(this.Search)
+    var vue = this
+    vue.takeUsers(vue.Search)
+    vue.takeDoc(vue.Search)
   },
   methods: {
     takeUsers (arg) {

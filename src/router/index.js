@@ -7,6 +7,7 @@ import NewPost    from '@/components/NewPost'
 import EditPost   from '@/components/EditPost'
 import Overview   from '@/components/Overview'
 import Management from '@/components/Management'
+import Trombi     from '@/components/Trombi'
 const Changelog   = () => import('@/components/changelog')
 const Home        = () => import('@/components/home')
 const Mattermost  = () => import('@/components/mattermost')
@@ -200,6 +201,11 @@ let router = new Router({
       path: '/management',
       name: 'Management',
       component: Management
+    },
+    {
+      path: '/trombi',
+      name: 'Trombi',
+      component: Trombi
     },
     {
       path: '/inventaire',

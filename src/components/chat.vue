@@ -2,14 +2,14 @@
   <div>
     <v-layout row>
     <v-flex xs12 sm4>
-      <v-card style="height: 90%;">
+      <v-card style="height: 90%; padding-left: 15px;">
         <v-toolbar color="teal" dark>
           <v-toolbar-title class="text-xs-center">Your conversation <button class="btn btn-default pull-right" style="opacity: 0.8; position: absolute; right: 10px; top: 15%; background-color: white; color: black;" @click="getConv()">Refresh</button></v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-list subheader>
           <v-subheader>Recent chat</v-subheader>
-          <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id" @click="memoire = index; messages = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+          <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; messages = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
             <v-list-tile-content>
               <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
             </v-list-tile-content>
@@ -23,11 +23,10 @@
     <v-flex style="height: 1000px; position: relative;" xs12 sm10>
       <v-card style="position: absolute; bottom: 10%; width: 100%;">
         <v-list two-line>
-          <template v-for="(item) in messages">
+          <div v-for="(item, index) in messages" :key="item._id + index">
             <v-list-tile
               avatar
               ripple
-              :key="item._id"
             >
               <v-list-tile-avatar>
                 <img :src="item.senderPic">
@@ -37,7 +36,7 @@
                 <v-list-tile-sub-title v-html="item.text.replace(/\r?\n/g, '<br />')"></v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
-          </template>
+          </div>
             <div class="panel panel-white">
               <div class="panel-body">
                 <div class="post">
@@ -87,74 +86,69 @@ export default {
     },
     getConv () {
       var nbr = 0
-      var nbrd = 0
       var vue = this
       AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
-        vue.messages = response.data.msgs
-        vue.messages.sort(function (a, b) {
-          return a.sender - b.sender
-        })
-        vue.conv = []
-        vue.messages.forEach(function (element) {
-          if (vue.conv[nbr]) {
-            if (vue.conv[nbr][0].sender === element.sender) {
-              vue.conv[nbr].splice(0, 0, element)
-            } else {
-              nbr += 1
-              vue.conv[nbr] = []
-              vue.conv[nbr].splice(0, 0, element)
-            }
+        response.data.msgs.sort(function (a, b) {
+          if (a.senderMail > b.senderMail) {
+            return 1
           } else {
-            vue.conv[nbr] = []
-            vue.conv[nbr].splice(0, 0, element)
+            return -1
           }
         })
-        vue.conv.forEach(function (element) {
-          nbr = 0
-          nbrd = 0
-          AccountServices.getMyMsg(vue.$store.state.user.local.mail).then((value) => {
-            value.data.msgs.forEach(function (tar) {
-              var mail = ''
-              if (element[0].senderMail === vue.$store.state.user.local.mail) {
-                mail = element[0].target
+        console.log(response.data.msgs)
+        vue.messages = response.data.msgs
+        vue.conv = []
+        AccountServices.getMyMsg(vue.$store.state.user.local.mail).then((value) => {
+          var rep = value.data.msgs
+          rep.sort(function (a, b) {
+            if (a.target > b.target) {
+              return 1
+            } else {
+              return -1
+            }
+          })
+          for (let i = 0; i < 100; i++) {
+            if (vue.messages[i]) {
+              if (vue.conv[nbr]) {
+                if (vue.conv[nbr][0].senderMail === vue.messages[i].senderMail) {
+                  vue.conv[nbr].splice(1, 0, vue.messages[i])
+                } else {
+                  nbr += 1
+                  vue.conv[nbr] = []
+                  vue.conv[nbr].splice(0, 0, vue.messages[i])
+                  for (let j = 0; j < 100; j++) {
+                    if (vue.conv[nbr] && rep[j]) {
+                      if (vue.conv[nbr][0].senderMail === rep[j].target) {
+                        vue.conv[nbr].splice(1, 0, rep[j])
+                      }
+                    }
+                  }
+                }
               } else {
-                mail = element[0].senderMail
+                vue.conv[nbr] = []
+                vue.conv[nbr].splice(0, 0, vue.messages[i])
+                for (let j = 0; j < 100; j++) {
+                  if (vue.conv[nbr] && rep[j]) {
+                    if (vue.conv[nbr][0].senderMail === rep[j].target) {
+                      vue.conv[nbr].splice(1, 0, rep[j])
+                    }
+                  }
+                }
               }
-              if (tar.target !== mail) {
-                delete value.data.msgs[nbr]
-                nbrd += 1
-              } else {
-                tar._id += tar._id
-              }
-              nbr += 1
-            })
-            value.data.msgs.sort(function (a, b) {
-              if (!a) {
-                return (-1)
-              }
-              if (!b) {
-                return (1)
-              }
-              return a.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7') - b.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7')
-            })
-            value.data.msgs.length = value.data.msgs.length - nbrd
-            Array.prototype.push.apply(element, value.data.msgs)
-            element.sort(function (a, b) {
-              if (!a) {
-                return (-1)
-              }
-              if (!b) {
-                return (1)
-              }
+            }
+          }
+          vue.conv.forEach((elem) => {
+            console.log(elem)
+            elem.sort(function (a, b) {
               return a.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7') - b.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7')
             })
           })
+          if (vue.memoire >= 0) {
+            vue.messages = vue.conv[vue.memoire]
+          } else {
+            vue.messages = ''
+          }
         })
-        if (vue.memoire >= 0) {
-          vue.messages = vue.conv[vue.memoire]
-        } else {
-          vue.messages = null
-        }
       })
     },
     SendMSG () {

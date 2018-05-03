@@ -30,7 +30,7 @@
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
-                                            <li v-for="msg in messages" :key="msg._id" v-if="msg.asread === false" @click="redirect('/chat')">
+                                            <li v-for="msg in messages" :key="msg._id" v-if="msg.asread === false" @click="msgNbr = 0; redirect('/chat')">
                                                 <a>
                                                     <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -40,7 +40,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="drop-all" style="width: 100%; text-align: center;"><a @click="redirect('/chat')" class="text-center">All Messages</a></li>
+                                    <li class="drop-all" style="width: 100%; text-align: center;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
                                 </ul>
                             </li>
                             <!--<li v-if="signed === true" class="dropdown">
@@ -259,7 +259,6 @@ export default {
       AccountServices.SendFeedback({text: this.FeedbackText})
     },
     checkUser () {
-      console.log('ch')
       var vue = this
       vue.user = vue.$store.state.user
       if (vue.$route.fullPath) {

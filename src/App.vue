@@ -1,7 +1,40 @@
 <template>
   <v-app id="app" data-app>
     <div class="overlay"></div>
+                <span class="mobileOnly">
+                  <v-navigation-drawer stateless hide-overlay :mini-variant.sync="mini" v-model="Mdrawer" style="position: absolute; top: 0px;">
+                    <v-toolbar flat class="transparent">
+                      <v-list class="pa-0">
+                        <v-list-tile avatar>
+                          <v-list-tile-avatar>
+                            <img :src="user.local.picture" >
+                          </v-list-tile-avatar>
+                          <v-list-tile-content>
+                            <v-list-tile-title>{{ user.username }}</v-list-tile-title>
+                          </v-list-tile-content>
+                          <v-list-tile-action>
+                            <v-btn icon @click.native.stop="mini = !mini">
+                              <v-icon>chevron_left</v-icon>
+                            </v-btn>
+                          </v-list-tile-action>
+                        </v-list-tile>
+                      </v-list>
+                    </v-toolbar>
+                    <v-list class="pt-0" dense>
+                      <v-divider></v-divider>
+                      <v-list-tile v-for="item in items" :key="item.text">
+                        <v-list-tile-action>
+                          <v-icon>{{ item.icon }}</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content style="cursor: pointer;" @click="redirect(item.link)">
+                          <v-list-tile-title>{{ item.text }}</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                    </v-list>
+                  </v-navigation-drawer>
+                </span>
     <main class="page-content content-wrap">
+                <span class="noMobile">
         <div class="navbar">
             <div class="navbar-inner">
                 <div v-if="signed === true" class="sidebar-pusher">
@@ -85,6 +118,7 @@
                 </div>
             </div>
         </div>
+        </span>
             <div class="page-sidebar sidebar">
                 <div class="page-sidebar-inner slimscroll">
                 <div class="sidebar-header">
@@ -100,15 +134,15 @@
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
-                            <ul class="sub-menu">
+                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
+                            <ul v-if="tools" class="sub-menu">
                             <!--<li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>-->
                                 <li style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
                                 <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
                             </ul>
                         </li>
-                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a href="#" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
-                            <ul class="sub-menu">
+                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="document = !document" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
+                            <ul v-if="document" class="sub-menu" style="display: inline-block;">
                                 <li style="width: 85%;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
                             </ul>
                         </li>
@@ -156,6 +190,22 @@
 .navbar {
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
 }
+@media (max-width:850px) {
+  .noMobile {
+    display: none;
+  }
+  .mobileOnly {
+    display: inline;
+  }
+  .page-content {
+    padding-left: 80px;
+  }
+}
+@media (min-width:850px) {
+  .mobileOnly {
+    display: none;
+  }
+}
 </style>
 
 <script>
@@ -167,6 +217,8 @@ import firebase from 'firebase'
 
 export default {
   data: () => ({
+    tools: false,
+    document: false,
     user: [],
     signed: false,
     firebaseApp: [],
@@ -192,17 +244,15 @@ export default {
       { text: 'International' },
       { text: 'US' }
     ],
+    Mdrawer: true,
+    mini: true,
+    right: null,
     items: [
-      { display: false, icon: 'phonelink', text: 'Version Manager', link: '/posts' },
-      { display: true, icon: 'assignment', text: 'Online version', link: '/overview' },
-      { display: false, icon: 'contacts', text: 'Management', link: '/management' },
+      { display: false, icon: 'home', text: 'Home', link: '/' },
+      { display: true, icon: 'reorder', text: 'Dashboard', link: '/profil' },
+      { display: false, icon: 'work', text: 'Department', link: '/department' },
       { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
-      { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
-      { display: false, icon: 'content_copy', text: 'Inventory', link: '/' },
-      { display: true, icon: 'assessment', text: 'Benchmark', link: '/benchmark' },
-      { display: true, icon: 'favorite', text: 'Dr House', link: 'https://backoffice.pa1.blade-group.fr:2448/drhouse/status' },
-      { display: true, icon: 'poll', text: 'Jira', link: 'https://o-computers.atlassian.net/secure/Dashboard.jspa' },
-      { display: true, icon: 'settings', text: 'Changelog', link: '/changelog' }
+      { display: false, icon: 'face', text: 'Trombi', link: '/trombi' }
     ]
   }),
   methods: {

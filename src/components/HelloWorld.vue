@@ -27,13 +27,29 @@
                   </div>
               </div>
             </v-flex>
-            <v-flex xs12 style="max-height: 800px;">
+            <v-flex xs8 style="max-height: 800px;">
               <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
                 <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                   <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card><br/>
               </a>
+            </v-flex>
+            <v-flex xs4>
+              <div class="socialp" style="height: 200px; cursor: auto; background-color: rgba(250, 250, 250, 0.8)">
+                  <div style="margin: 15px; position: relative;" class="panel-body">
+                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
+                          <img :src="randUser.picture" style="width: 100px; float: left;" />
+                          <form v-on:submit.prevent="PlayRandUser()" ><v-text-field
+                            name="Name"
+                            :label="name"
+                            single-line
+                            v-model="randUserReponse"
+                            style="position: absolute; right: 10px; top: 40%; width: 70%;"
+                          ></v-text-field></form>
+                        </span></div>
+                  </div>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
@@ -103,6 +119,22 @@
         </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-dialog style="z-index:25;" v-model="randPopup" scrollable max-width="500px">
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+          <v-card-title style="color: blue;">{{randUserResult}} :</v-card-title>
+          <v-container grid-list-md>
+            <v-layout row wrap>
+              <img :src="randUser.picture" style="float: left; width: 150px; height: 150px;" />
+              <h2 style="text-align: center;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>
+            </v-layout>
+          </v-container>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="randPopup = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="randPopup = false; getRandUser();">retry</v-btn>
+        </v-card-actions>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
@@ -122,6 +154,9 @@ export default {
       PostAnn: null,
       picker: null,
       HelpDesk: false,
+      randUserReponse: '',
+      randPopup: false,
+      randUserResult: '',
       HDesk: {
         sender: '',
         senderMail: '',
@@ -165,6 +200,7 @@ export default {
       allNews: [],
       DiscNews: [],
       TwitNews: [],
+      randUser: [],
       showTwit: false,
       target: 'current'
     }
@@ -173,6 +209,7 @@ export default {
     this.firebaseApp = this.$store.state.firebase
     this.getVersion()
     this.getNews()
+    this.getRandUser()
   },
   components: {
     QwickLook
@@ -183,6 +220,21 @@ export default {
       this.versions = response.data.versions
       const responses = await VersionService.fetchPosts('finnish')
       this.passed = responses.data.versions
+    },
+    async getRandUser () {
+      var vue = this
+      AccountService.GetRand().then((response) => {
+        vue.randUser = response.data.user
+      })
+    },
+    async PlayRandUser () {
+      var vue = this
+      vue.randPopup = true
+      if (vue.randUserReponse.toUpperCase() === vue.randUser.username.toUpperCase()) {
+        vue.randUserResult = 'Success'
+      } else {
+        vue.randUserResult = 'Failed'
+      }
     },
     PostAnnonce () {
       var vue = this
@@ -291,6 +343,14 @@ export default {
   box-shadow: 1px 1px 12px #555;
   -webkit-transition: box-shadow 0.1s, -webkit-transform 0.1s;
   transition: box-shadow 0.1s, transform 0.1s;
+}
+@media (max-width:900px) {
+  .socialp {
+    display: none;
+  }
+  .noMobile {
+    display: none;
+  }
 }
 h1, h2 {
   font-weight: normal;

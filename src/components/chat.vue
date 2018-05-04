@@ -4,7 +4,7 @@
     <v-flex xs12 sm4>
       <v-card style="height: 90%; padding-left: 15px;">
         <v-toolbar color="teal" dark>
-          <v-toolbar-title class="text-xs-center">Your conversation <button class="btn btn-default pull-right" style="opacity: 0.8; position: absolute; right: 10px; top: 15%; background-color: white; color: black;" @click="getConv()">Refresh</button></v-toolbar-title>
+          <v-toolbar-title class="text-xs-center">Your conversation</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-list subheader>
@@ -79,6 +79,9 @@ export default {
   mounted () {
     this.firebaseApp = this.$store.state.firebase
     this.getConv()
+    window.setInterval(() => {
+      this.getConv()
+    }, 5000)
   },
   methods: {
     MakeIsRead () {
@@ -138,7 +141,6 @@ export default {
             }
           }
           vue.conv.forEach((elem) => {
-            console.log(elem)
             elem.sort(function (a, b) {
               return a.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7') - b.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7')
             })

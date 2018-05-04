@@ -13,6 +13,10 @@ export default {
     return Api().put('QwickLogin', params)
   },
 
+  GetRand () {
+    return Api().get('accountRand')
+  },
+
   FindByStatus (params) {
     return Api().get('account/status/' + params)
   },

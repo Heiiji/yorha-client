@@ -1,6 +1,6 @@
 <template>
-  <div style="margin-top:-60px;">
-    <div v-if="user.local" class="page-inner">
+  <div>
+    <div v-if="user.local" class="page-inner" style="padding-top: 0px;">
         <div class="profile-cover" style="background: url('/static/Wallpaper 10.jpg'); -webkit-background-size: cover; background-size: cover;">
             <div class="row">
                 <div class="col-md-3 profile-image">

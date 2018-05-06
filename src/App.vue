@@ -1,7 +1,7 @@
 <template>
   <v-app id="app" data-app>
     <div class="overlay"></div>
-                <span class="mobileOnly">
+                <span class="mobileOnly" v-if="signed === true">
                   <v-navigation-drawer stateless hide-overlay :mini-variant.sync="mini" v-model="Mdrawer" style="position: absolute; top: 0px;">
                     <v-toolbar flat class="transparent">
                       <v-list class="pa-0">

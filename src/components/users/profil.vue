@@ -291,6 +291,7 @@
                                    <img :src="pers.picture" alt="">
                                 </div>
                                 <br/>
+                                <button @click="$router.push('taskmanager/' + team.name);" class="btn btn-primary btn-block">Task Manager</button>
                                 <button @click="NewTeam = team.name; DelTeam ();" class="btn btn-primary btn-block">Quit team</button>
                             </div>
                         </div>

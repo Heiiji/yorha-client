@@ -8,6 +8,7 @@ import Vuex       from 'vuex'
 import VueFire    from 'vuefire'
 import VueCookie  from 'vue-cookies'
 import firebase   from 'firebase'
+import VueDragDrop from 'vue-drag-drop'
 import Api        from './services/Api.js'
 
 import 'vuetify/dist/vuetify.min.css'
@@ -17,6 +18,7 @@ Vue.use(Vuex)
 Vue.use(Vuetify)
 Vue.use(VueFire)
 Vue.use(VueCookie)
+Vue.use(VueDragDrop)
 
 Vue.config.productionTip = false
 
@@ -122,6 +124,8 @@ new Vue({
     sharedState: store.state
   },
   methods: {
+  },
+  created () {
   },
   template: '<App/>'
 }).$mount('#app')

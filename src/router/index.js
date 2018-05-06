@@ -14,6 +14,7 @@ const Mattermost  = () => import('@/components/mattermost')
 const Calendar  = () => import('@/components/calendar')
 const DrHouse  = () => import('@/components/DrHouse')
 const Chat  = () => import('@/components/chat')
+const TaskManager  = () => import('@/components/TaskManager')
 import Inventory  from '@/components/inventaire'
 import Annonce    from '@/components/annonce'
 import YTShadowLive   from '@/components/YTShadowLive'
@@ -56,6 +57,11 @@ let router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/taskmanager/:team',
+      name: 'TaskManager',
+      component: TaskManager
     },
     {
       path: '/Home',

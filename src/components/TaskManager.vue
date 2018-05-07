@@ -35,7 +35,7 @@
       >
       <v-icon>archive</v-icon>
     </v-btn>
-    <v-btn
+    <!--<v-btn
         color="blue"
         dark
         absolute
@@ -45,7 +45,7 @@
         @click="ProjectDisplay = !ProjectDisplay"
       >
       <v-icon>class</v-icon>
-    </v-btn>
+    </v-btn>-->
     <v-flex v-if="BackofficeDisplay" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; margin-right: 80px;" xs12>
       <drop @drop="handleDrop('backoffice')">
           <h2>backoffice</h2><br/>
@@ -55,6 +55,7 @@
                   <v-card-title primary-title :style="card.style">
                     <div class="headline">{{ card.title }}</div><br/>
                     <div>{{ card.text }}</div>
+                    <v-icon dark class="editIcon" @click="EditCard = card; selected = card.users; displayEditCard = true">create</v-icon>
                     <div class="team">
                         <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
                            <img :src="pers.picture" alt="">
@@ -74,8 +75,9 @@
             <drag class="coll" v-for="(card, index) in cards" :key="index" v-if="card.categorie === title" @drag="dragProject = 0; myListener(index)" style="margin: 5px; text-align: left;">
                 <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
                   <v-card-title primary-title :style="card.style">
-                    <div class="headline" @click="EditCard = card; selected = card.users; EditCard.display = true">{{ card.title }}</div><br/>
+                    <div class="headline">{{ card.title }}</div><br/>
                     <div>{{ card.text }}</div>
+                    <v-icon dark class="editIcon" @click="EditCard = card; selected = card.users; displayEditCard = true">create</v-icon>
                     <div class="team">
                         <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
                            <img :src="pers.picture" alt="">
@@ -210,15 +212,6 @@
               label="title"
               style="width: 700px; margin: 5px;"
             ></v-text-field>
-            <v-flex>
-              <v-subheader>State</v-subheader>
-              <v-select
-                :items="['none', 'Finnished Project']"
-                v-model="NewColl.state"
-                label="color"
-                single-line
-              ></v-select>
-            </v-flex>
           </v-flex>
         <v-divider></v-divider>
         <v-card-actions>
@@ -227,7 +220,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog style="z-index:25;" v-model="EditCard.display" scrollable max-width="800px">
+    <v-dialog style="z-index:25;" v-model="displayEditCard" scrollable max-width="800px">
       <v-card v-if="EditCard.style" style="background-color: rgba(247,247,250,0.98); text-align: center;">
         <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
           <v-card-title :style="card.style" primary-title>
@@ -306,14 +299,25 @@
               </v-flex>
         <v-divider></v-divider>
         <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="EditCard.display = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="EditColl('new')">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="displayEditCard = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="EditCards()">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
 </template>
 <style scoped>
+.editIcon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(50, 50, 50, 0.8);
+  border-radius: 10px;
+  opacity: 0;
+}
+.card:hover .editIcon {
+  opacity: 1;
+}
 .headline {
   width: 100%;
   display: block;
@@ -346,6 +350,7 @@ export default {
       BackofficeDisplay: false,
       ProjectDisplay: false,
       NewCol: false,
+      displayEditCard: false,
       Teams: [],
       EditCard: {
         display: false
@@ -400,6 +405,8 @@ export default {
         vue.EditColl('edit')
       } else {
         vue.cards[vue.dragTarget].categorie = data
+        vue.EditCard = vue.cards[vue.dragTarget]
+        vue.EditCards()
       }
     },
     GetCard () {
@@ -448,6 +455,17 @@ export default {
           token: idToken,
           name: vue.$route.params.team,
           coll: vue.categories
+        })
+      })
+    },
+    EditCards () {
+      var vue = this
+      this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
+        vue.EditCard.token = idToken
+        vue.EditCard.users = vue.selected
+        console.log(vue.EditCard)
+        TaskService.PutTask(vue.EditCard).then((response) => {
+          vue.GetCard()
         })
       })
     },

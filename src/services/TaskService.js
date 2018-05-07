@@ -9,5 +9,8 @@ export default {
   },
   PutTeam (params) {
     return Api().put('/CollTask/', params)
+  },
+  PutTask (params) {
+    return Api().put('/task', params)
   }
 }

@@ -559,6 +559,13 @@ export default {
       if (response.data) {
         if (response.data.news) {
           var tmp = response.data.news
+          tmp.sort(function (a, b) {
+            if (a.date < b.date) {
+              return 1
+            } else {
+              return -1
+            }
+          })
           tmp.forEach(function (element) {
             element.date = new Date(element.date)
             News.GetReply(element._id).then((reponse) => {

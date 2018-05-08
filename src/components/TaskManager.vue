@@ -35,7 +35,7 @@
       >
       <v-icon>archive</v-icon>
     </v-btn>
-    <!--<v-btn
+    <v-btn
         color="blue"
         dark
         absolute
@@ -45,7 +45,8 @@
         @click="ProjectDisplay = !ProjectDisplay"
       >
       <v-icon>class</v-icon>
-    </v-btn>-->
+    </v-btn>
+    <h1 style="text-align: center; color: white; font-family: Ubuntu;">{{ $route.params.team }}</h1>
     <v-flex v-if="BackofficeDisplay" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; margin-right: 80px;" xs12>
       <drop @drop="handleDrop('backoffice')">
           <h2>backoffice</h2><br/>
@@ -90,15 +91,17 @@
         </drop>
     </v-flex>
   </div>
-  <v-flex v-if="ProjectDisplay" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; padding: 15px; border-radius: 20px;" xs12>
-    <h2>Projets 1 <v-progress-linear v-model="pr1"></v-progress-linear></h2>
-      <v-flex v-for="(card, index) in cards" :key="index" xs2 style="display: inline-block;">
+  <v-flex v-for="project in projects" :key="project.name" v-if="ProjectDisplay && typeof project === 'object'" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; padding: 15px; border-radius: 20px;" xs12>
+    <h2>{{ project.name }} <v-progress-linear v-model="project.progress"></v-progress-linear></h2>
+      <v-flex v-for="(card, index) in cards" :key="index" v-if="card.project === project.name" xs2 style="display: inline-block;">
     <drag @drag="dragProject = 0; myListener(index)" style="margin: 5px; text-align: left;">
         <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
-          <v-icon v-if="card.categorie === 'do'" style="position: absolute; top: 10px; right: 10px;">done</v-icon>
+          <v-icon v-if="card.finnished" style="position: absolute; top: 10px; right: 10px;">done</v-icon>
           <v-icon v-else style="position: absolute; top: 10px; right: 10px;">restore</v-icon>
           <v-card-title :style="card.style" primary-title>
             <div class="headline">{{ card.title }}</div><br/>
+            <v-icon v-if="card.finnished" dark class="editIcon" @click="setAsFinnished(card)">restore</v-icon>
+            <v-icon v-else dark class="editIcon" @click="setAsFinnished(card)">done</v-icon>
             <div>{{ card.text }}</div>
             <div class="team">
                 <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
@@ -174,6 +177,15 @@
                     </template>
                   </v-select>
                 </v-flex>
+                <v-flex xs12 sm6>
+                  <v-subheader v-text="'linked project'"></v-subheader>
+                    <v-select
+                      v-model="card.project"
+                      item-text="project name"
+                      label="project name"
+                      autocomplete
+                    ></v-select>
+                </v-flex>
               </v-layout>
             </v-container>
             <v-flex>
@@ -235,6 +247,16 @@
         </v-card>
         <v-divider></v-divider>
           <v-flex v-if="EditCard.style" xs8>
+            <v-flex xs12 sm12>
+              <v-subheader v-text="'linked project'"></v-subheader>
+                <v-select
+                  v-model="EditCard.project"
+                  :items="ProjList"
+                  item-text="project name"
+                  label="project name"
+                  autocomplete
+                ></v-select>
+            </v-flex>
             <v-text-field v-model="EditCard.title"
               name="title"
               label="title"
@@ -344,7 +366,9 @@ export default {
   data () {
     return {
       selected: [],
-      categories: ['Todo', 'do', 'undo', 'fr', 'iouyergf', 'zerg'],
+      categories: [],
+      projects: {},
+      ProjList: [],
       colWidth: '100',
       NewCard: false,
       BackofficeDisplay: false,
@@ -376,7 +400,8 @@ export default {
           'border-radius': '5px'
         },
         users: {
-        }
+        },
+        project: ''
       },
       cards: []
     }
@@ -393,7 +418,6 @@ export default {
     handleDrop (data, index) {
       var vue = this
       var tmp
-      console.log(vue.dragProject)
       if (vue.dragProject === 1) {
         vue.dragProject = 0
         tmp = vue.categories[vue.dragTarget]
@@ -411,10 +435,47 @@ export default {
     },
     GetCard () {
       var vue = this
+      var nbr = 0
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         TaskService.GetMine(vue.$route.params.team, idToken).then((response) => {
           vue.cards = response.data.task
           vue.categories = response.data.coll
+          vue.cards.sort(function (a, b) {
+            if (a.project > b.project) {
+              return 1
+            } else {
+              return -1
+            }
+          })
+          for (let i = 0; i < vue.cards.length; i++) {
+            if (vue.cards[i] && vue.cards[i].project !== 'none' && vue.cards[i].project !== '') {
+              if (vue.projects[nbr]) {
+                if (vue.projects[nbr].name === vue.cards[i].project) {
+                  vue.projects[nbr].progress += vue.cards[i].finnished ? 1 : 0
+                  vue.projects[nbr].total += 1
+                } else {
+                  nbr += 1
+                  vue.ProjList.push(vue.cards[i].project)
+                  vue.projects.length = vue.projects.length + 1
+                  vue.projects[nbr] = []
+                  vue.projects[nbr].name = vue.cards[i].project
+                  vue.projects[nbr].progress = vue.cards[i].finnished ? 1 : 0
+                  vue.projects[nbr].total = 1
+                }
+              } else {
+                vue.projects[nbr] = []
+                vue.projects.length = 1
+                vue.ProjList.push(vue.cards[i].project)
+                vue.projects[nbr].name = vue.cards[i].project
+                vue.projects[nbr].progress = vue.cards[i].finnished ? 1 : 0
+                vue.projects[nbr].total = 1
+              }
+            }
+          }
+          for (let i = 0; i < vue.projects.length; i++) {
+            vue.projects[i].progress = vue.projects[i].progress / vue.projects[i].total
+            vue.projects[i].progress *= 100
+          }
           vue.columns.width = (100 / vue.categories.length) + '%'
           vue.cards.forEach((element) => {
             for (let j = 0; j < element.users.length; j++) {
@@ -440,6 +501,13 @@ export default {
         })
       })
     },
+    setAsFinnished (card) {
+      var vue = this
+      card.finnished = !card.finnished
+      TaskService.SetAsFinnished(card).then((response) => {
+        vue.GetCard()
+      })
+    },
     EditColl (action) {
       var vue = this
       if (action === 'new') {
@@ -463,7 +531,6 @@ export default {
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         vue.EditCard.token = idToken
         vue.EditCard.users = vue.selected
-        console.log(vue.EditCard)
         TaskService.PutTask(vue.EditCard).then((response) => {
           vue.GetCard()
         })

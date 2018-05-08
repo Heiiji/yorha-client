@@ -12,5 +12,8 @@ export default {
   },
   PutTask (params) {
     return Api().put('/task', params)
+  },
+  SetAsFinnished (params) {
+    return Api().put('/FinnishedTask', params)
   }
 }

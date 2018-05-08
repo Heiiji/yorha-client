@@ -287,7 +287,6 @@
                         <div class="panel-body">
                             <div class="team">
                                 <div @click="$router.push('/profil/' + pers._id)" v-for="pers in team.users" :key="pers._id" class="team-member" style="cursor: pointer;">
-                                   <div class="online on"></div>
                                    <img :src="pers.picture" alt="">
                                 </div>
                                 <br/>

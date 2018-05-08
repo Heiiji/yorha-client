@@ -36,16 +36,16 @@
               </a>
             </v-flex>
             <v-flex xs4>
-              <div class="socialp" style="height: 200px; cursor: auto; background-color: rgba(250, 250, 250, 0.8)">
+              <div class="socialp" style="height: 230px; cursor: auto; background-color: rgba(250, 250, 250, 0.8);">
                   <div style="margin: 15px; position: relative;" class="panel-body">
                       <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
-                          <img :src="randUser.picture" style="width: 100px; float: left;" />
+                          <img :src="randUser.picture" style="width: 25%; float: left;" />
                           <form v-on:submit.prevent="PlayRandUser()" ><v-text-field
                             name="Name"
                             :label="name"
                             single-line
                             v-model="randUserReponse"
-                            style="position: absolute; right: 10px; top: 40%; width: 70%;"
+                            style="position: absolute; right: 10px; top: 40%; width: 65%;"
                           ></v-text-field></form>
                         </span></div>
                   </div>
@@ -120,18 +120,20 @@
         </v-card>
       </v-dialog>
       <v-dialog style="z-index:25;" v-model="randPopup" scrollable max-width="500px">
-        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
-          <v-card-title style="color: blue;">{{randUserResult}} :</v-card-title>
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center; padding: 20px;">
+          <v-card-title style="color: blue; text-align: center; font-size: 1.2em; display: block;">{{randUserResult}}</v-card-title>
           <v-container grid-list-md>
+            <hr/>
             <v-layout row wrap>
               <img :src="randUser.picture" style="float: left; width: 150px; height: 150px;" />
-              <h2 style="text-align: center;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>
+              <h2 style="text-align: center; padding: 15px;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>
             </v-layout>
           </v-container>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="blue darken-1" flat @click.native="randPopup = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="randPopup = false; getRandUser();">retry</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="$router.push('/profil/' + randUser._id)">Go to profil</v-btn>
+          <v-btn color="blue darken-1" style="position: absolute; right: 10px;" flat @click.native="randPopup = false; getRandUser();">retry</v-btn>
         </v-card-actions>
         </v-card>
       </v-dialog>

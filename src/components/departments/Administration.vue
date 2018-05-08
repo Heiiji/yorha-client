@@ -16,7 +16,18 @@
                   <h3 class="text-center">Administration</h3>
                   <p class="text-center">No hierarchy. Only us.</p>
                   <hr>
-                  <button @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
+                  <div class="panel panel-white">
+                      <div class="panel-heading">
+                          <div class="panel-title">Gods : </div>
+                      </div>
+                      <div class="panel-body">
+                        <div v-if="users !== 'none'" class="team">
+                              <div v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
+                                 <img :src="pers.picture" alt="">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
               </div>
               <div class="col-md-6 m-t-lg">
                     <div class="profile-timeline">
@@ -51,19 +62,6 @@
                         </div>
               </div>
               <div class="col-md-3 m-t-lg">
-                  <div class="panel panel-white">
-                      <div class="panel-heading">
-                          <div class="panel-title">Gods : </div>
-                      </div>
-                      <div class="panel-body">
-                        <div v-if="users !== 'none'" class="team">
-                              <div v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
-                                 <div class="online on"></div>
-                                 <img :src="pers.picture" alt="">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
                   <div class="panel panel-white">
                       <div class="panel-heading">
                           <div class="panel-title">Description</div>

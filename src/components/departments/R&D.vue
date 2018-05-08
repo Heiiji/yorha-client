@@ -22,7 +22,6 @@
                       <div class="panel-body">
                         <div class="team">
                               <div v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
-                                 <div class="online on"></div>
                                  <img :src="pers.picture" alt="">
                               </div>
                           </div>

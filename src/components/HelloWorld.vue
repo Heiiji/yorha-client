@@ -274,6 +274,11 @@ export default {
         }
       }
       this.TwitNews = response.data.lastTweets
+      if (navigator.language === 'fr-FR') {
+        this.TwitNews = response.data.lastTweets
+      } else {
+        this.TwitNews = response.data.lastTweetsen
+      }
       this.TwitNews[0] = this.TwitNews[0].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
       this.DiscNews = {
         msg1: {

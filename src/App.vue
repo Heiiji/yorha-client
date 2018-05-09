@@ -1,7 +1,7 @@
 <template>
   <v-app id="app" data-app>
     <div class="overlay"></div>
-                <span class="mobileOnly" v-if="signed === true">
+                <span class="mobileOnly" v-if="signed === true && $route.path != '/home'">
                   <v-navigation-drawer stateless hide-overlay :mini-variant.sync="mini" v-model="Mdrawer" style="position: absolute; top: 0px;">
                     <v-toolbar flat class="transparent">
                       <v-list class="pa-0">
@@ -34,7 +34,7 @@
                   </v-navigation-drawer>
                 </span>
     <main class="page-content content-wrap">
-                <span class="noMobile">
+                <span v-if="$route.path != '/home'" class="noMobile">
         <div class="navbar">
             <div class="navbar-inner">
                 <div v-if="signed === true" class="sidebar-pusher">
@@ -43,7 +43,7 @@
                     </a>
                 </div>
                 <div class="logo-box">
-                    <a @click="redirect('/')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
+                    <a @click="redirect('/home')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
                 </div>
                 <div v-if="signed === true">
                     <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/rechercher">
@@ -119,13 +119,13 @@
             </div>
         </div>
         </span>
-            <div class="page-sidebar sidebar">
+            <div v-if="$route.path != '/home'" class="page-sidebar sidebar">
                 <div class="page-sidebar-inner slimscroll">
                 <div class="sidebar-header">
                         <div class="sidebar-profile">
                             <a id="profile-menu-link">
                                 <div v-if="user.local" class="sidebar-profile-details">
-                                    <span><small>{{ user.local.work }}</small></span>
+                                    <span><small>{{ $store.state.user.local.work }}</small></span>
                                 </div>
                             </a>
                         </div>

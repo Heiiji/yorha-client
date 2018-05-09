@@ -104,7 +104,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         store.state.user = client
         store.state.user.local = response.data
         console.log('validate')
-        router.push('/')
+        router.push('/home')
       })
     })
   } else {

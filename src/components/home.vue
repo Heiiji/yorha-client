@@ -1,15 +1,14 @@
 <template>
-  <div style="position: relative; width: 100%; height: 100%">
+  <div style="position: relative; width: 100%; height: 100%; font-family: Roboto;">
     <img :src="'/static/Wallpaper 10.jpg'" style="z-index: 0; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;" />
     <img :src="image" style="z-index: 1; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;" />
     <div style="position: fixed; left: 40%; top: 43%; z-index: 2; cursor: pointer;">
-      <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px;">email</v-icon><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
+      <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px;">email</v-icon></a>
       <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
           <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
               <ul class="list-unstyled">
                   <li v-for="msg in messages" :key="msg._id" v-if="msg.asread === false" @click="msgNbr = 0; redirect('/chat')">
                       <a>
-                          <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
                           <p class="msg-name">{{ msg.sender }}</p>
                           <p class="msg-text"> {{ msg.text }}</p>
                           <p class="msg-time">{{ msg.date }}</p>
@@ -17,7 +16,7 @@
                   </li>
               </ul>
           </li>
-          <li class="drop-all" style="width: 100%; text-align: center;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
+          <li class="drop-all" style="width: 100%; text-align: center; margin: 0px;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
       </ul>
       <span @click="$router.push('/profil')" style="color: black; background-color: rgba(250, 250, 250, 1); padding: 20px; padding-left: 0px; border-radius: 20px;">
         <v-avatar size="57px" style="margin: 0; padding: 0; margin-right: 10px; margin-left: -10px;" tile>
@@ -34,7 +33,7 @@
             </div>
         </div>
           <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
-            <div class="socialp">
+            <div class="socialp" style="padding: 20px;">
               <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: right; width: 40px; margin-right: 15px;" />
               <v-card-text class="px-0" style="font-size: 1.3em;"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
             </div><br/>

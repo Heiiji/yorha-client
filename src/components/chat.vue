@@ -37,7 +37,7 @@
               </v-list-tile-content>
             </v-list-tile>
           </div>
-            <div class="panel panel-white">
+            <div v-if="memoire >= 0" class="panel panel-white">
               <div class="panel-body">
                 <div class="post">
                   <textarea class="form-control" placeholder="Message" v-model="msg.text" rows="4=6"></textarea>
@@ -98,7 +98,6 @@ export default {
             return -1
           }
         })
-        console.log(response.data.msgs)
         vue.messages = response.data.msgs
         vue.conv = []
         AccountServices.getMyMsg(vue.$store.state.user.local.mail).then((value) => {

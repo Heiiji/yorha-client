@@ -74,6 +74,11 @@ let router = new Router({
       component: Chat
     },
     {
+      path: '/chat/:conv',
+      name: 'Chat',
+      component: Chat
+    },
+    {
       path: '/department/test',
       name: 'Test',
       component: DTest

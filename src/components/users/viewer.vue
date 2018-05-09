@@ -22,7 +22,7 @@
                         <li><p v-if="user.tel === 'none' || user.tel === ''"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.tel">{{user.tel}}</a></p></li>
                     </ul>
                     <hr>
-                        <v-menu style="background-color: rgba(0, 0, 0, 0); display: block;" dark offset-y>
+                        <v-menu v-if="user.username != $store.state.user.local.username" style="background-color: rgba(0, 0, 0, 0); display: block;" dark offset-y>
                           <v-btn style="background-color: rgba(33, 110, 210, 1); width: 100%; padding-bottom: 40px;" dark slot="activator">Add To Team
                             <img src="https://www.thrivingparish.org/wp-content/uploads/2018/01/white-down-arrow-png-2.png" style="display: absolute; top: 10%; right: 10px; width: 20px; margin-left: 10px;" />
                           </v-btn>
@@ -32,7 +32,7 @@
                             </v-list-tile>
                           </v-list>
                         </v-menu>
-                    <button @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
+                    <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
                 </div>
                 <div class="col-md-6 m-t-lg">
                     <div class="profile-timeline">

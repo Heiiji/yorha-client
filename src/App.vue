@@ -52,11 +52,6 @@
                 </div>
                 <div class="topmenu-outer">
                     <div class="top-menu">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li>
-                                <a @click="changeIMG();" href="javascript:void(0);" class="waves-effect waves-button waves-classic sidebar-toggle"><i class="fa fa-bars"></i></a>
-                            </li>
-                        </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li v-if="signed === true" class="dropdown">
                                 <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
@@ -73,7 +68,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="drop-all" style="width: 100%; text-align: center;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
+                                    <li class="drop-all" style="width: 100%; text-align: center; margin: 0px;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
                                 </ul>
                             </li>
                             <!--<li v-if="signed === true" class="dropdown">
@@ -123,11 +118,9 @@
                 <div class="page-sidebar-inner slimscroll">
                 <div class="sidebar-header">
                         <div class="sidebar-profile">
-                            <a id="profile-menu-link">
-                                <div v-if="user.local" class="sidebar-profile-details">
-                                    <span><small>{{ $store.state.user.local.work }}</small></span>
-                                </div>
-                            </a>
+                            <div v-if="user.local" class="sidebar-profile-details">
+                                <span><small>{{ $store.state.user.local.work }}</small></span>
+                            </div>
                         </div>
                     </div>
                     <ul class="menu accordion-menu">
@@ -147,8 +140,8 @@
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
-                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/trombi')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>face</v-icon></span><p>Trombi</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>mail</v-icon></span><p>Feedback</p></a></li>
+                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/trombi')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>face</v-icon></span><p>Trombi</p></a></li>
+                        <li style="width: 80%; margin-left: 10%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>mail</v-icon></span><p>Feedback</p></a></li>
                     </ul>
                 </div>
             </div>
@@ -156,7 +149,7 @@
           <v-dialog style="z-index:25;" v-model="feedback" scrollable max-width="800px">
             <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
               <v-card-title style="color: grey; font-size: 1.4em; text-align: center; display: block;">feedback (by default, it's anonyme)</v-card-title>
-              <v-divider></v-divider>
+              <hr style="margin: 0px;"/>
                 <v-flex xs8>
                   <v-text-field v-model="FeedbackText"
                     textarea
@@ -177,6 +170,12 @@
 </template>
 
 <style>
+.page-inner {
+  margin-left: 160px;
+}
+.sidebar {
+  position: fixed;
+}
 .g-signin-button {
   /* This is where you control how the button looks. Be creative! */
   display: inline-block;

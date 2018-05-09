@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="user.local" class="page-inner" style="padding-top: 0px;">
+    <div v-if="user.local" style="padding-top: 0px;">
         <div class="profile-cover" style="background: url('/static/Wallpaper 10.jpg'); -webkit-background-size: cover; background-size: cover;">
             <div class="row">
                 <div class="col-md-3 profile-image">
@@ -450,7 +450,6 @@ export default {
     } else {
       this.firebaseApp = this.$store.state.firebase
       this.user = this.$store.state.user
-      console.log(this.$store.state.user.local.teams)
       this.getNews()
       this.GetByTeam()
     }
@@ -478,7 +477,6 @@ export default {
           console.log('logged')
           vue.$store.state.user = client
           vue.$store.state.user.local = response.data
-          console.log('validate')
           vue.GetByTeam()
         })
       })

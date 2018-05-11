@@ -1,9 +1,10 @@
 <template>
   <div style="position: relative; width: 100%; height: 100%; font-family: Roboto;">
-    <img :src="image" style="z-index: 1; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;" />
     <div style="z-index: 0; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background: url('/static/Wallpaper 10.jpg'); background-size: cover;">
     </div>
-    <div style="position: fixed; left: 40%; top: 2%; z-index: 2;">
+    <div :style="'z-index: 1; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background: url(\''+ image +'\'); background-size: cover;'">
+    </div>
+    <div style="position: fixed; left: 0%; top: 2%; width: 100%; text-align: center; z-index: 2;">
       <span style="color: black; background-color: rgba(250, 250, 250, 1); padding: 20px; border-radius: 20px;">
         {{ date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) }}
       </span>
@@ -126,7 +127,7 @@
   padding: 30px;
   border-radius: 10px;
   height: 70%;
-  min-width: 30%;
+  width: 48%;
   overflow-y: scroll;
 }
 .chat::-webkit-scrollbar {
@@ -149,6 +150,9 @@
   display: inline-block;
   cursor: pointer;
   font-size: 1.2em;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(0, 0, 0, 0);
 }
 .channel:hover {
   background-color: rgba(10, 11, 13, 0.8);
@@ -230,6 +234,19 @@ p {
   letter-spacing: 0.1em;
   font-size: 12px;
   padding: 20px 0 0;
+}
+@media (max-width:1300px) {
+  .socialp {
+    display: none;
+  }
+}
+@media (max-width:700px) {
+  .buttonp {
+    display: none;
+  }
+  .chat {
+    width: 100%;
+  }
 }
 </style>
 <script>

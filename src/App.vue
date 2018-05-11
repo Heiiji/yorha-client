@@ -199,6 +199,9 @@
   .page-content {
     padding-left: 80px;
   }
+  .page-inner {
+    margin-left: 0px;
+  }
 }
 @media (min-width:850px) {
   .mobileOnly {

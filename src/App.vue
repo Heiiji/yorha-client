@@ -336,6 +336,9 @@ export default {
       vue.checkUser()
       vue.signed = true
     } else {
+      if (vue.$route.path !== '/' && vue.$route.path !== '/login') {
+        vue.$store.state.request = vue.$route.path
+      }
       this.$router.push('/login')
     }
   },
@@ -345,6 +348,9 @@ export default {
   watch: {
     $route (to, from) {
       if (!this.$store.state.firebase.auth().currentUser) {
+        if (this.$route.path !== '/' && this.$route.path !== '/login') {
+          this.$store.state.request = this.$route.path
+        }
         this.$router.push('/login')
       } else {
         this.signed = true

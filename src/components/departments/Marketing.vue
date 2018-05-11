@@ -1,5 +1,5 @@
 <template>
-  <div><div class="page-inner" style="padding: 0px;">
+  <div><div style="padding: 0px;">
       <div class="profile-cover" style="background: url('https://www.tanikal.com/wp-content/uploads/2017/11/Digital-Marketing-Media-Technology-Graphic-1024x586.jpg') center; -webkit-background-size: cover; background-size: cover;">
           <div class="row">
               <div class="col-md-3 profile-image">

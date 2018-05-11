@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="page-inner" style="padding: 0px;">
+    <div style="padding: 0px;">
       <div class="profile-cover" style="background: url('https://images8.alphacoders.com/694/694485.jpg') center; -webkit-background-size: cover; background-size: cover; margin: 0px; padding: 0px;">
           <div class="row">
               <div class="col-md-3 profile-image">

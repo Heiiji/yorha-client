@@ -43,6 +43,7 @@ const store = new Vuex.Store({
     isLogged: false,
     firebase: firebase,
     GoogleToken: [],
+    request: '',
     user: {
       username: '',
       status: ''
@@ -103,8 +104,11 @@ firebase.auth().onAuthStateChanged(function(user) {
         var me = client
         store.state.user = client
         store.state.user.local = response.data
-        console.log('validate')
-        router.push('/home')
+        if (store.state.request) {
+          router.push(store.state.request)
+        } else {
+          router.push('/home')
+        }
       })
     })
   } else {

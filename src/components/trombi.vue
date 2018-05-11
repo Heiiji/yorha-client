@@ -1,5 +1,5 @@
 <template>
-  <div class="posts">
+  <div>
     <br/><br/><br/>
     <h1 style="text-align: center; color: grey;" >Trombinoscope</h1>
     <br/>

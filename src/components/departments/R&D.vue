@@ -1,5 +1,5 @@
 <template>
-  <div><div class="page-inner" style="padding: 0px;">
+  <div><div style="padding: 0px;">
       <div class="profile-cover" style="background: url('/static/departments/R&D-wide.jpg') center; -webkit-background-size: cover; background-size: cover;">
           <div class="row">
               <div class="col-md-3 profile-image">
@@ -78,7 +78,7 @@
                     </v-card-media>
                     <v-card-title primary-title>
                       <div>
-                        <h3 class="headline mb-0">USB Login key <span style="color: orange; font-size: 0.6em;">(Waiting hardware command)</span></h3>
+                        <h3 class="headline mb-0">USB Login key <span style="color: red; font-size: 0.6em;">(hidden)</span></h3>
                         <hr/>
                         <div>This is an amazing project, no ? <br/> Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias nostrum explicabo quam mollitia suscipit illo temporibus velit facilis libero. Modi earum animi consectetur maiores vel aperiam, eveniet perferendis voluptatibus reprehenderit!<br/><br/><br/> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt natus provident minima saepe officiis quod excepturi voluptas ipsa, perferendis nulla vero maxime ad, numquam eveniet nobis. Facere quos ea optio?</div>
                       </div>
@@ -92,7 +92,7 @@
                     </v-card-media>
                     <v-card-title primary-title>
                       <div>
-                        <h3 class="headline mb-0">Automatic Benchmark <span style="color: green; font-size: 0.6em;">(Experiment in Shabane)</span></h3>
+                        <h3 class="headline mb-0">Automatic Benchmark <span style="color: red; font-size: 0.6em;">(hidden)</span></h3>
                         <hr/>
                         <div>This is an amazing project, no ? <br/> Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias nostrum explicabo quam mollitia suscipit illo temporibus velit facilis libero. Modi earum animi consectetur maiores vel aperiam, eveniet perferendis voluptatibus reprehenderit!<br/><br/><br/> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt natus provident minima saepe officiis quod excepturi voluptas ipsa, perferendis nulla vero maxime ad, numquam eveniet nobis. Facere quos ea optio?</div>
                       </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="page-inner" style="padding: 0px;">
+    <div style="padding: 0px;">
       <div class="profile-cover" style="background: url('http://www.gotechnologix.com/wp-content/uploads/2016/05/mobile-device-technology-wallpaper.jpg') center; -webkit-background-size: cover; background-size: cover; margin: 0px; padding: 0px;">
           <div class="row">
               <div class="col-md-3 profile-image">

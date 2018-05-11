@@ -351,6 +351,11 @@ export default {
   -webkit-transition: box-shadow 0.1s, -webkit-transform 0.1s;
   transition: box-shadow 0.1s, transform 0.1s;
 }
+.card:hover {
+  box-shadow: 1px 1px 12px #555;
+  -webkit-transition: box-shadow 0.1s, -webkit-transform 0.1s;
+  transition: box-shadow 0.1s, transform 0.1s;
+}
 @media (max-width:900px) {
   .socialp {
     display: none;

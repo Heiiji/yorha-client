@@ -236,12 +236,4 @@ let router = new Router({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   let currentUser = firebase.auth().currentUser
-
-//   if (!currentUser) {
-//     next('Login')
-//   }
-// })
-
 export default router

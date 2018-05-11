@@ -33,6 +33,16 @@
                     <button @click="EditDescription = true" class="btn btn-primary btn-block">Modify Description</button>
                     <button v-if="user.local.tel === 'none'" @click="EditTel = true" class="btn btn-primary btn-block">Add my number</button>
                     <button v-else @click="EditTel = true" class="btn btn-primary btn-block">Change my number</button>
+                    <v-flex xs12 sm12>
+                      <v-select
+                        :items="AvTheme"
+                        v-model="homeTheme"
+                        label="Home wallpaper theme"
+                        style="width: 100%;"
+                        @change="PostTheme($event)"
+                        autocomplete
+                      ></v-select>
+                    </v-flex>
                 </div>
                 <div class="col-md-6 m-t-lg">
                     <v-tabs style="margin: 10px;" fixed-tabs>
@@ -74,8 +84,16 @@
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
-                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
-                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                                <v-text-field
+                                                  name="reply"
+                                                  label="Reply"
+                                                  style="position: absolute; width: 75%;"
+                                                  v-model="item.message"
+                                                  single-line
+                                                ></v-text-field>
+                                                <v-btn fab small @click="postReply(item._id, item.message)" color="white" style="position: relative; left: 85%;">
+                                                  <v-icon dark>send</v-icon>
+                                                </v-btn>
                                             </div>
                                         </div>
                                     </div>
@@ -121,8 +139,16 @@
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
-                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
-                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                                <v-text-field
+                                                  name="reply"
+                                                  label="Reply"
+                                                  style="position: absolute; width: 75%;"
+                                                  v-model="item.message"
+                                                  single-line
+                                                ></v-text-field>
+                                                <v-btn fab small @click="postReply(item._id, item.message)" color="white" style="position: relative; left: 85%;">
+                                                  <v-icon dark>send</v-icon>
+                                                </v-btn>
                                             </div>
                                         </div>
                                     </div>
@@ -168,8 +194,16 @@
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
-                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
-                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                                <v-text-field
+                                                  name="reply"
+                                                  label="Reply"
+                                                  style="position: absolute; width: 75%;"
+                                                  v-model="item.message"
+                                                  single-line
+                                                ></v-text-field>
+                                                <v-btn fab small @click="postReply(item._id, item.message)" color="white" style="position: relative; left: 85%;">
+                                                  <v-icon dark>send</v-icon>
+                                                </v-btn>
                                             </div>
                                         </div>
                                     </div>
@@ -225,8 +259,16 @@
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
-                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
-                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                                <v-text-field
+                                                  name="reply"
+                                                  label="Reply"
+                                                  style="position: absolute; width: 75%;"
+                                                  v-model="item.message"
+                                                  single-line
+                                                ></v-text-field>
+                                                <v-btn fab small @click="postReply(item._id, item.message)" color="white" style="position: relative; left: 85%;">
+                                                  <v-icon dark>send</v-icon>
+                                                </v-btn>
                                             </div>
                                         </div>
                                     </div>
@@ -268,8 +310,16 @@
                                                     </div>
                                                     <p class="timeline-comment-text">{{comm.text}}</p>
                                                 </div>
-                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
-                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
+                                                <v-text-field
+                                                  name="reply"
+                                                  label="Reply"
+                                                  style="position: absolute; width: 75%;"
+                                                  v-model="item.message"
+                                                  single-line
+                                                ></v-text-field>
+                                                <v-btn fab small @click="postReply(item._id, item.message)" color="white" style="position: relative; left: 85%;">
+                                                  <v-icon dark>send</v-icon>
+                                                </v-btn>
                                             </div>
                                         </div>
                                     </div>
@@ -391,6 +441,8 @@ export default {
   data () {
     return {
       edition: false,
+      homeTheme: '',
+      AvTheme: ['cat', 'city', 'landscape', 'dog', 'abstract'],
       user: [],
       file: '',
       navigator: {
@@ -481,6 +533,14 @@ export default {
         })
       })
     },
+    PostTheme (target) {
+      var vue = this
+      vue.$store.state.user.local.homeTheme = target
+      AccountService.editHomeTheme({
+        newTheme: target,
+        mail: vue.$store.state.user.local.mail
+      })
+    },
     PostDescription (desc) {
       AccountService.editDescription({
         description: desc,
@@ -510,7 +570,6 @@ export default {
         mail: this.user.local.mail,
         action: 'delete'
       }).then((response) => {
-        console.log(response)
         if (response.data.success === true) {
           this.user.local.team = this.NewTeam
           this.Refresh()
@@ -586,7 +645,6 @@ export default {
       formData.append('file', this.file)
       formData.append('username', this.user.local.username)
       formData.append('mail', this.user.email)
-      console.log(formData.get('file'))
       axios.post('http://localhost:8081/account/photo',
         formData,
         {

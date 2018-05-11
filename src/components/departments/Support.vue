@@ -1,5 +1,5 @@
 <template>
-  <div><div class="page-inner" style="padding: 0px;">
+  <div><div style="padding: 0px;">
       <div class="profile-cover" style="background: url('https://geekyapar.com/wp-content/uploads/2014/04/green-lantern-batman-dark-dc-comics-comics-superman-superheroes-justice-league-aquaman-flash-comic-hero-wonder-woman-cyborg-dc-comics-69099.jpg'); -webkit-background-size: cover; background-size: cover;">
           <div class="row">
               <div class="col-md-3 profile-image">

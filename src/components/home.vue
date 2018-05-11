@@ -1,9 +1,13 @@
 <template>
   <div style="position: relative; width: 100%; height: 100%; font-family: Roboto;">
-    <img :src="'/static/Wallpaper 10.jpg'" style="z-index: 0; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;" />
     <img :src="image" style="z-index: 1; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;" />
-    <div style="position: fixed; left: 40%; top: 43%; z-index: 2; cursor: pointer;">
-      <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px;">email</v-icon></a>
+    <div style="z-index: 0; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background: url('/static/Wallpaper 10.jpg'); background-size: cover;">
+    </div>
+    <div style="position: fixed; left: 40%; top: 2%; z-index: 2;">
+      <span style="color: black; background-color: rgba(250, 250, 250, 1); padding: 20px; border-radius: 20px;">
+        {{ date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) }}
+      </span>
+      <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px; position: relative;">email</v-icon><span v-if="msgNbr > 0" class="badge badge-success" style="position: absolute; top: 10%; left: 20%;">{{ msgNbr }}</span></a>
       <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
           <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
               <ul class="list-unstyled">
@@ -18,7 +22,7 @@
           </li>
           <li class="drop-all" style="width: 100%; text-align: center; margin: 0px;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
       </ul>
-      <span @click="$router.push('/profil')" style="color: black; background-color: rgba(250, 250, 250, 1); padding: 20px; padding-left: 0px; border-radius: 20px;">
+      <span class="profilDot" @click="$router.push('/profil')">
         <v-avatar size="57px" style="margin: 0; padding: 0; margin-right: 10px; margin-left: -10px;" tile>
           <img style="border-radius: 27px;" :src="$store.state.user.local.picture" alt="Profil">
         </v-avatar>{{ $store.state.user.local.username }}
@@ -50,13 +54,108 @@
         <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="TwitNews[0]"></p>
       </v-card>
     </v-dialog>
-    <div style="z-index: 2;" class="clock">
-      <p class="date">{{ date }}</p>
-      <p class="time">{{ time }}</p>
+    <div style="z-index: 2;" class="chat">
+      <div class="list">
+        <div class="channel" @click="selectedChannel = 'General'">General</div>
+        <div class="channel" @click="selectedChannel = $store.state.user.local.work">Department</div>
+        <div class="channel" @click="selectedChannel = 'Whatever'">Whatever</div>
+        <div v-for="team in Teams" :key="team.name" class="channel" @click="selectedChannel = team.name">{{ team.name }}</div>
+      </div>
+      <div class="posts">
+        <ul class="list-unstyled">
+            <li v-for="item in allNews" v-if="item.department === selectedChannel" :key="item._id" class="timeline-item" style="display: block;">
+                <div class="panel" style="background-color: rgba(250, 250, 250, 0.8);">
+                    <div class="panel-body">
+                        <div class="timeline-item-header">
+                            <img :src="item.senderPic" width="30px" style="border-radius: 15px; float: left; margin: 5px;" alt="">
+                            <p>{{ item.sender }}</p>
+                            <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
+                        </div>
+                        <div class="timeline-item-post">
+                            <p>{{ item.text }}</p>
+                            <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                <div class="timeline-comment-header">
+                                    <p>{{comm.sender}} <small>| {{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
+                                </div>
+                                <p>{{comm.text}}</p>
+                            </div>
+                            <v-text-field
+                              name="reply"
+                              label="Reply"
+                              style="position: absolute; width: 75%;"
+                              v-model="item.message"
+                              single-line
+                            ></v-text-field>
+                            <v-btn fab small @click="postReply(item._id, item.message)" color="white" style="position: relative; left: 85%;">
+                              <v-icon dark>send</v-icon>
+                            </v-btn>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 <style scoped>
+.timeline-comment {
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 0px solid #f1f1f1;
+}
+.profilDot {
+  color: black;
+  background-color: rgba(250, 250, 250, 1);
+  padding: 20px;
+  padding-left: 0px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.profilDot:hover {
+  background-color: rgba(220, 220, 220, 1);
+}
+.panel {
+  border-radius: 3px;
+}
+.chat {
+  color: #ffffff;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(50,50,50, 0.2);
+  padding: 30px;
+  border-radius: 10px;
+  height: 70%;
+  min-width: 30%;
+  overflow-y: scroll;
+}
+.chat::-webkit-scrollbar {
+  display: none;
+}
+.chat .posts {
+  width: 100%;
+  color: black;
+}
+.chat .list {
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  background-color: rgba(0, 0, 0, 0);
+  color: #daf6ff;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 175, 230, 0);
+}
+.channel {
+  padding: 10px;
+  margin: 0px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+.channel:hover {
+  background-color: rgba(10, 11, 13, 0.8);
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: white;
+}
 .buttonp {
   cursor: pointer;
   position: fixed;
@@ -109,7 +208,7 @@ p {
   text-align: center;
   position: fixed;
   bottom: 1%;
-  left: 15%;
+  left: 5%;
   background-color: rgba(50,50,50, 0.2);
   padding: 30px;
   border-radius: 10px;
@@ -138,7 +237,7 @@ import News from '@/services/NewsService'
 import Unsplash from 'unsplash-js'
 import AccountServices from '@/services/AccountService'
 
-var week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+// var week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 // var timerID = setInterval(this.updateTime(), 1000)
 
 const unsplash = new Unsplash({
@@ -150,9 +249,14 @@ const unsplash = new Unsplash({
 export default {
   data: () => ({
     image: '',
+    navigator: {
+      language: ''
+    },
     time: '',
+    selectedChannel: 'General',
     allNews: [],
     TwitNews: [],
+    Teams: [],
     messages: [],
     msgNbr: 0,
     showTwit: false,
@@ -163,7 +267,7 @@ export default {
     updateTime () {
       var cd = new Date()
       this.time = this.zeroPadding(cd.getHours(), 2) + ':' + this.zeroPadding(cd.getMinutes(), 2)
-      this.date = this.zeroPadding(cd.getFullYear(), 4) + '-' + this.zeroPadding(cd.getMonth() + 1, 2) + '-' + this.zeroPadding(cd.getDate(), 2) + ' ' + week[cd.getDay()]
+      this.date = new Date()
     },
     zeroPadding (num, digit) {
       var zero = ''
@@ -179,14 +283,51 @@ export default {
         this.$router.push(link)
       }
     },
+    GetByTeam () {
+      var vue = this
+      vue.Teams = []
+      vue.$store.state.user.local.teams.forEach((elem) => {
+        AccountServices.FindByTeam(elem).then((response) => {
+          vue.Teams.push({name: elem, users: response.data.users})
+        }).then(() => {
+          vue.activeTeam = vue.Teams[0].name
+          vue.selectedTeam = vue.Teams[0]
+        })
+      })
+    },
+    async postReply (target, message) {
+      var sender = this.$store.state.user.local.username
+      var senderPic = this.$store.state.user.local.picture
+      News.PutReply({
+        target: target,
+        sender: sender,
+        message: message,
+        senderPic: senderPic
+      }).then(() => {
+        this.getNews()
+      })
+    },
     async getNews () {
+      var vue = this
+      var tmp = []
       const response = await News.fetchNews()
       if (response.data) {
         if (response.data.news) {
-          this.allNews = response.data.news
+          tmp = response.data.news
         }
       }
-      console.log(navigator.language)
+      tmp.forEach(function (element) {
+        element.date = new Date(element.date)
+        News.GetReply(element._id).then((reponse) => {
+          element.reply = reponse.data.reply
+          element.reply.forEach(function (el) {
+            el.date = new Date(el.date)
+          })
+          element.message = ''
+          vue.allNews = ''
+          vue.allNews = tmp
+        })
+      })
       if (navigator.language === 'fr-FR') {
         this.TwitNews = response.data.lastTweets
       } else {
@@ -218,8 +359,10 @@ export default {
     }
   },
   mounted () {
+    this.navigator.language = navigator.language
     this.updateTime()
     this.getNews()
+    this.GetByTeam()
     var vue = this
     var query = 'landscape'
     if (this.$store.state.user) {
@@ -241,10 +384,25 @@ export default {
         this.image = lots.urls.custom
       })
     })
+    this.updateTime()
+    // window.setInterval(() => {
+    //   this.updateTime()
+    // }, 500)
     window.setInterval(() => {
-      this.updateTime()
-    }, 500)
-    window.setInterval(() => {
+      if (this.$store.state.user) {
+        if (this.$store.state.user.local) {
+          query = this.$store.state.user.local.homeTheme
+        }
+        AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
+          vue.messages = response.data.msgs
+          vue.msgNbr = 0
+          vue.messages.forEach(function (element) {
+            if (element.asread === false) {
+              vue.msgNbr += 1
+            }
+          })
+        })
+      }
       if (query === 'city' && vue.$store.state.user.local) {
         if (vue.$store.state.user.local.homeTheme !== 'city') {
           query = this.$store.state.user.local.homeTheme
@@ -255,7 +413,7 @@ export default {
           })
         }
       }
-    }, 1000)
+    }, 3000)
   }
 }
 </script>

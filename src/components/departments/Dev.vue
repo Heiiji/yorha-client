@@ -1,5 +1,5 @@
 <template>
-  <div><div class="page-inner" style="padding: 0px;">
+  <div><div style="padding: 0px;">
       <div class="profile-cover" style="background: url('http://tradinginsider.fr/wp-content/uploads/2017/02/langages-programmation.jpg') center; -webkit-background-size: cover; background-size: cover;">
           <div class="row">
               <div class="col-md-3 profile-image">

@@ -29,7 +29,76 @@
         </v-avatar>{{ $store.state.user.local.username }}
       </span>
     </div>
-    <v-icon @click="$router.push('/')" class="buttonp" size="50">home</v-icon>
+    <v-navigation-drawer
+      v-model="drawer"
+      temporary
+      absolute
+      style="position: fixed;"
+    >
+      <v-list class="pa-1">
+        <v-list-tile style="height: 100px; background: url('/static/Wallpaper 13.jpg') center; background-size: cover;">
+        </v-list-tile>
+      </v-list>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+        <v-list-tile @click="redirect('/')">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="redirect('/profil')">
+          <v-list-tile-action>
+            <v-icon>calendar_view_day</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Dashboard</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="redirect('/department')">
+          <v-list-tile-action>
+            <v-icon>group</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Departments</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-expansion-panel>
+          <v-expansion-panel-content>
+            <div slot="header">Tools</div>
+            <v-card>
+              <v-list-tile @click="redirect('https://backoffice.pa1.blade-group.fr:2448/drhouse/status')">
+                <v-list-tile-action>
+                  <v-icon>verified_user</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>Dr House</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile @click="redirect('https://o-computers.atlassian.net/secure/Dashboard.jspa')">
+                <v-list-tile-action>
+                  <v-icon>assessment</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>JIRA</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-list-tile @click="redirect('/trombi')">
+          <v-list-tile-action>
+            <v-icon>face</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>trombi</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-icon class="buttonp" @click.stop="drawer = !drawer" size="30">menu</v-icon>
     <div style="position: fixed; top: 0px; right: 0px; width: 400px; padding: 25px; z-index: 2;">
         <div v-if="TwitNews[0]" class="socialp">
             <div style="margin: 15px; position: relative;" class="panel-body"  @click="showTwit = true;">
@@ -57,15 +126,15 @@
     </v-dialog>
     <div style="z-index: 2;" class="chat">
       <div class="list">
-        <div class="channel" @click="selectedChannel = 'General'">General</div>
-        <div class="channel" @click="selectedChannel = $store.state.user.local.work">Department</div>
-        <div class="channel" @click="selectedChannel = 'Whatever'">Whatever</div>
-        <div v-for="team in Teams" :key="team.name" class="channel" @click="selectedChannel = team.name">{{ team.name }}</div>
+        <div :class="selectedChannel === 'General' ? 'channel2' : 'channel'" @click="selectedChannel = 'General'">General</div>
+        <div :class="selectedChannel === $store.state.user.local.work ? 'channel2' : 'channel'" @click="selectedChannel = $store.state.user.local.work">Department</div>
+        <div :class="selectedChannel === 'Whatever' ? 'channel2' : 'channel'" @click="selectedChannel = 'Whatever'">Whatever</div>
+        <div v-for="team in Teams" :key="team.name" :class="selectedChannel === team.name ? 'channel2' : 'channel'" @click="selectedChannel = team.name">{{ team.name }}</div>
       </div>
       <div class="posts">
         <ul class="list-unstyled">
             <li v-for="item in allNews" v-if="item.department === selectedChannel" :key="item._id" class="timeline-item" style="display: block;">
-                <div class="panel" style="background-color: rgba(250, 250, 250, 0.8);">
+                <div class="panel" style="background-color: rgba(250, 250, 250, 0.9);">
                     <div class="panel-body">
                         <div class="timeline-item-header">
                             <img :src="item.senderPic" width="30px" style="border-radius: 15px; float: left; margin: 5px;" alt="">
@@ -113,6 +182,7 @@
   cursor: pointer;
 }
 .profilDot:hover {
+  box-shadow: 6px 6px 20px #333;
   background-color: rgba(220, 220, 220, 1);
 }
 .panel {
@@ -123,7 +193,6 @@
   position: fixed;
   bottom: 10px;
   left: 10px;
-  background-color: rgba(50,50,50, 0.2);
   padding: 30px;
   border-radius: 10px;
   height: 70%;
@@ -136,13 +205,26 @@
 .chat .posts {
   width: 100%;
   color: black;
+  margin: 0px;
+  padding: 20px;
 }
 .chat .list {
   text-align: center;
   font-family: 'Share Tech Mono', monospace;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(10, 10, 13, 0.9);
   color: #daf6ff;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 175, 230, 0);
+  border-radius: 4px;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 11, 13, 0.9);
+}
+.channel2 {
+  padding: 10px;
+  margin: 0px;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.2em;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: white;
 }
 .channel {
   padding: 10px;
@@ -150,15 +232,15 @@
   display: inline-block;
   cursor: pointer;
   font-size: 1.2em;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: rgba(0, 0, 0, 0);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(0, 0, 0, 0);
 }
 .channel:hover {
   background-color: rgba(10, 11, 13, 0.8);
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: white;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: white;
 }
 .buttonp {
   cursor: pointer;
@@ -273,6 +355,11 @@ export default {
     selectedChannel: 'General',
     allNews: [],
     TwitNews: [],
+    drawer: null,
+    items: [
+      { title: 'Home', icon: 'dashboard' },
+      { title: 'About', icon: 'question_answer' }
+    ],
     Teams: [],
     messages: [],
     msgNbr: 0,

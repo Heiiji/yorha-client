@@ -44,6 +44,7 @@ const store = new Vuex.Store({
     firebase: firebase,
     GoogleToken: [],
     request: '',
+    forceMenu: false,
     user: {
       username: '',
       status: ''

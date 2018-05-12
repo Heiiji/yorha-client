@@ -1,40 +1,8 @@
 <template>
   <v-app id="app" data-app>
     <div class="overlay"></div>
-                <span class="mobileOnly" v-if="signed === true && $route.path != '/home'">
-                  <v-navigation-drawer stateless hide-overlay :mini-variant.sync="mini" v-model="Mdrawer" style="position: absolute; top: 0px;">
-                    <v-toolbar flat class="transparent">
-                      <v-list class="pa-0">
-                        <v-list-tile avatar>
-                          <v-list-tile-avatar>
-                            <img :src="user.local.picture" >
-                          </v-list-tile-avatar>
-                          <v-list-tile-content>
-                            <v-list-tile-title>{{ user.username }}</v-list-tile-title>
-                          </v-list-tile-content>
-                          <v-list-tile-action>
-                            <v-btn icon @click.native.stop="mini = !mini">
-                              <v-icon>chevron_left</v-icon>
-                            </v-btn>
-                          </v-list-tile-action>
-                        </v-list-tile>
-                      </v-list>
-                    </v-toolbar>
-                    <v-list class="pt-0" dense>
-                      <v-divider></v-divider>
-                      <v-list-tile v-for="item in items" :key="item.text">
-                        <v-list-tile-action>
-                          <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content style="cursor: pointer;" @click="redirect(item.link)">
-                          <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                  </v-navigation-drawer>
-                </span>
     <main class="page-content content-wrap">
-                <span v-if="$route.path != '/home'" class="noMobile">
+                <span v-if="$route.path != '/home' || $store.state.forceMenu" class="noMobile">
         <div class="navbar">
             <div class="navbar-inner">
                 <div v-if="signed === true" class="sidebar-pusher">
@@ -114,7 +82,7 @@
             </div>
         </div>
         </span>
-            <div v-if="$route.path != '/home'" class="page-sidebar sidebar">
+            <div v-if="$route.path != '/home' || $store.state.forceMenu" class="page-sidebar sidebar">
                 <div class="page-sidebar-inner slimscroll">
                 <div class="sidebar-header">
                         <div class="sidebar-profile">
@@ -166,13 +134,81 @@
             </v-card>
           </v-dialog>
     </main>
+    <v-icon class="buttonp mobileOnly" style="z-index: 10; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon>
+
+    <v-navigation-drawer
+      v-model="Mdrawer2"
+      temporary
+      absolute
+      style="position: fixed;"
+    >
+      <v-list class="pa-1">
+        <v-list-tile style="height: 100px; background: url('/static/Wallpaper 13.jpg') center; background-size: cover;">
+        </v-list-tile>
+      </v-list>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+        <v-list-tile @click="redirect('/')">
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="redirect('/profil')">
+          <v-list-tile-action>
+            <v-icon>calendar_view_day</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Dashboard</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="redirect('/department')">
+          <v-list-tile-action>
+            <v-icon>group</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Departments</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-expansion-panel>
+          <v-expansion-panel-content>
+            <div slot="header">Tools</div>
+            <v-card>
+              <v-list-tile @click="redirect('https://backoffice.pa1.blade-group.fr:2448/drhouse/status')">
+                <v-list-tile-action>
+                  <v-icon>verified_user</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>Dr House</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile @click="redirect('https://o-computers.atlassian.net/secure/Dashboard.jspa')">
+                <v-list-tile-action>
+                  <v-icon>assessment</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>JIRA</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-list-tile @click="redirect('/trombi')">
+          <v-list-tile-action>
+            <v-icon>face</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>trombi</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
   </v-app>
 </template>
 
 <style>
-.page-inner {
-  margin-left: 160px;
-}
 .sidebar {
   position: fixed;
 }
@@ -193,11 +229,14 @@
   .noMobile {
     display: none;
   }
+  .page-inner {
+    margin-left: 0px;
+  }
   .mobileOnly {
     display: inline;
   }
   .page-content {
-    padding-left: 80px;
+    padding-left: 0px;
   }
   .page-inner {
     margin-left: 0px;
@@ -206,6 +245,9 @@
 @media (min-width:850px) {
   .mobileOnly {
     display: none;
+  }
+  .page-inner {
+    margin-left: 160px;
   }
 }
 </style>
@@ -224,6 +266,7 @@ export default {
     user: [],
     signed: false,
     firebaseApp: [],
+    Mdrawer2: false,
     token: [],
     feedback: false,
     FeedbackText: '',
@@ -350,6 +393,7 @@ export default {
   },
   watch: {
     $route (to, from) {
+      this.$store.state.forceMenu = false
       if (!this.$store.state.firebase.auth().currentUser) {
         if (this.$route.path !== '/' && this.$route.path !== '/login') {
           this.$store.state.request = this.$route.path

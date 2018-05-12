@@ -101,13 +101,47 @@
       </v-list>
     </v-navigation-drawer>
     <v-icon class="buttonp" @click.stop="drawer = !drawer" size="30">menu</v-icon>
-    <div style="position: fixed; top: 0px; right: 0px; width: 400px; padding: 25px; z-index: 2;">
-        <div v-if="TwitNews[0]" class="socialp">
-            <div style="margin: 15px; position: relative;" class="panel-body"  @click="showTwit = true;">
-                <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
-            </div>
-        </div>
+    <div style="position: fixed; top: 0px; right: 0px; width: 500px; padding: 25px; z-index: 2; height: 100%; overflow-y: scroll; overflow-x: hidden;">
+      <v-carousel class="socialp" hide-controls>
+        <v-carousel-item  style="padding-top: 5px;">
+          <div style="margin: 15px; position: relative;" class="panel-body"  @click="twittText = TwitNews[0]; showTwit = true;">
+              <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+              <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+          </div>
+        </v-carousel-item>
+        <v-carousel-item style="padding-top: 5px;">
+          <div style="margin: 15px; position: relative;" class="panel-body"  @click="twittText = TwitNews[1]; showTwit = true;">
+              <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+              <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[1].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+          </div>
+        </v-carousel-item>
+        <v-carousel-item style="padding-top: 5px;">
+          <div style="margin: 15px; position: relative;" class="panel-body"  @click="twittText = TwitNews[2]; showTwit = true;">
+              <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+              <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[2].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+          </div>
+        </v-carousel-item>
+      </v-carousel>
+      <v-carousel class="socialp" hide-controls>
+        <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg1">
+          <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg1.show = true;">
+              <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+              <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg1.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+          </div>
+        </v-carousel-item>
+        <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg2">
+          <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg2.show = true;">
+              <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+              <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg2.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+          </div>
+        </v-carousel-item>
+        <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg3">
+          <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg3.show = true;">
+              <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+              <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg3.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+          </div>
+        </v-carousel-item>
+      </v-carousel>
           <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
             <div class="socialp" style="padding: 20px;">
               <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: right; width: 40px; margin-right: 15px;" />
@@ -115,15 +149,33 @@
             </div><br/>
           </a>
     </div>
-    <v-dialog style="z-index:25;" v-model="DiscNews.msg1.show" scrollable max-width="1000px">
-      <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
-        <v-card-title style="color: blue;">{{DiscNews.msg1.name}}</v-card-title>
-        <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg1.text"></p>
-      </v-card>
-    </v-dialog>
+    <span v-if="DiscNews.msg1">
+      <v-dialog style="z-index:25;" v-model="DiscNews.msg1.show" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+          <v-card-title style="color: blue;">{{DiscNews.msg1.name}}</v-card-title>
+          <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg1.text"></p>
+        </v-card>
+      </v-dialog>
+    </span>
+    <span v-if="DiscNews.msg2">
+      <v-dialog style="z-index:25;" v-model="DiscNews.msg2.show" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+          <v-card-title style="color: blue;">{{DiscNews.msg2.name}}</v-card-title>
+          <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg2.text"></p>
+        </v-card>
+      </v-dialog>
+    </span>
+    <span v-if="DiscNews.msg3">
+      <v-dialog style="z-index:25;" v-model="DiscNews.msg3.show" scrollable max-width="1000px">
+        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+          <v-card-title style="color: blue;">{{DiscNews.msg3.name}}</v-card-title>
+          <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg3.text"></p>
+        </v-card>
+      </v-dialog>
+    </span>
     <v-dialog style="z-index:25;" v-model="showTwit" scrollable max-width="1000px">
       <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
-        <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="TwitNews[0]"></p>
+        <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="twittText"></p>
       </v-card>
     </v-dialog>
     <div style="z-index: 2;" class="chat">
@@ -266,6 +318,7 @@
   color: black;
   display: inline-block;
   width: 100%;
+  height: 200px;
   background-color: rgba(255, 255, 255, 1);
   margin: 5px;
   border-radius: 3px;
@@ -357,6 +410,7 @@ export default {
     selectedChannel: 'General',
     allNews: [],
     TwitNews: [],
+    twittText: '',
     drawer: null,
     items: [
       { title: 'Home', icon: 'dashboard' },
@@ -447,6 +501,8 @@ export default {
         this.TwitNews = response.data.lastTweetsen
       }
       this.TwitNews[0] = this.TwitNews[0].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      this.TwitNews[1] = this.TwitNews[0].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      this.TwitNews[2] = this.TwitNews[0].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
       this.DiscNews = {
         msg1: {
           name: response.data.lastDiscordMsgs[2].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
@@ -457,18 +513,25 @@ export default {
           name: response.data.lastDiscordMsgs[1].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
           text: response.data.lastDiscordMsgs[1].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
           show: false
-        }
-        /*
+        },
         msg3: {
-          name: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+          name: response.data.lastDiscordMsgs[0].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+          text: response.data.lastDiscordMsgs[0].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
+          show: false
         }
-        */
       }
-      this.DiscNews.msg1.text = this.DiscNews.msg1.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
-      this.DiscNews.msg2.text = this.DiscNews.msg2.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
-      this.DiscNews.msg1.text = this.DiscNews.msg1.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
-      this.DiscNews.msg2.text = this.DiscNews.msg2.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      if (vue.DiscNews.msg1) {
+        vue.DiscNews.msg1.text = vue.DiscNews.msg1.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+        vue.DiscNews.msg1.text = vue.DiscNews.msg1.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      }
+      if (vue.DiscNews.msg2) {
+        vue.DiscNews.msg2.text = vue.DiscNews.msg2.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+        vue.DiscNews.msg2.text = vue.DiscNews.msg2.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      }
+      if (vue.DiscNews.msg3) {
+        vue.DiscNews.msg3.text = vue.DiscNews.msg3.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+        vue.DiscNews.msg3.text = vue.DiscNews.msg3.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      }
     }
   },
   mounted () {

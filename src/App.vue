@@ -135,7 +135,6 @@
           </v-dialog>
     </main>
     <v-icon class="buttonp mobileOnly" style="z-index: 10; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon>
-
     <v-navigation-drawer
       v-model="Mdrawer2"
       temporary

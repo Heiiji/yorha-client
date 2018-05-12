@@ -51,7 +51,8 @@ export default {
         { text: 'RH' },
         { text: 'R&D' },
         { text: 'International' },
-        { text: 'LIMA' }
+        { text: 'LIMA' },
+        { text: 'Administration' }
       ]
     }
   },

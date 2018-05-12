@@ -8,21 +8,23 @@
       <span style="color: black; background-color: rgba(250, 250, 250, 1); padding: 20px; border-radius: 20px;">
         {{ date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) }}
       </span>
-      <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px; position: relative;">email</v-icon><span v-if="msgNbr > 0" class="badge badge-success" style="position: absolute; top: 10%; left: 20%;">{{ msgNbr }}</span></a>
-      <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
-          <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
-              <ul class="list-unstyled">
-                  <li v-for="msg in messages" :key="msg._id" v-if="msg.asread === false" @click="msgNbr = 0; redirect('/chat')">
-                      <a>
-                          <p class="msg-name">{{ msg.sender }}</p>
-                          <p class="msg-text"> {{ msg.text }}</p>
-                          <p class="msg-time">{{ msg.date }}</p>
-                      </a>
-                  </li>
-              </ul>
-          </li>
-          <li class="drop-all" style="width: 100%; text-align: center; margin: 0px;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
-      </ul>
+      <div style="position: relative; display: inline-block;">
+        <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px; position: relative;">email</v-icon><span v-if="msgNbr > 0" class="badge badge-success" style="position: absolute; top: 10%; left: 20%;">{{ msgNbr }}</span></a>
+        <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
+            <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
+                <ul class="list-unstyled">
+                    <li v-for="msg in messages" :key="msg._id" v-if="msg.asread === false" @click="msgNbr = 0; redirect('/chat')">
+                        <a>
+                            <p class="msg-name">{{ msg.sender }}</p>
+                            <p class="msg-text"> {{ msg.text }}</p>
+                            <p class="msg-time">{{ msg.date }}</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="drop-all" style="width: 100%; text-align: center; margin: 0px;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
+        </ul>
+      </div>
       <span class="profilDot" @click="$router.push('/profil')">
         <v-avatar size="57px" style="margin: 0; padding: 0; margin-right: 10px; margin-left: -10px;" tile>
           <img style="border-radius: 27px;" :src="$store.state.user.local.picture" alt="Profil">
@@ -418,6 +420,13 @@ export default {
       if (response.data) {
         if (response.data.news) {
           tmp = response.data.news
+          tmp.sort(function (a, b) {
+            if (a.date < b.date) {
+              return 1
+            } else {
+              return -1
+            }
+          })
         }
       }
       tmp.forEach(function (element) {

@@ -239,13 +239,13 @@ p {
   .socialp {
     display: none;
   }
+  .chat {
+    width: 100%;
+  }
 }
 @media (max-width:700px) {
   .buttonp {
     display: none;
-  }
-  .chat {
-    width: 100%;
   }
 }
 </style>

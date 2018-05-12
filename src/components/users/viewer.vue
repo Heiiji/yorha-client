@@ -1,7 +1,8 @@
 <template>
   <div style="margin-top:-60px;">
-    <div class="page-inner">
-        <div class="profile-cover" style="background: url('/static/Wallpaper 10.jpg'); -webkit-background-size: cover; background-size: cover;">
+    <div>
+        <div class="profile-cover" style="background: none;">
+            <v-parallax style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;" src="/static/Wallpaper 7.jpg"></v-parallax>
             <div class="row">
                 <div class="col-md-3 profile-image">
                     <div class="profile-image-container">

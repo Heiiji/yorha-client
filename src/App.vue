@@ -54,7 +54,7 @@
                     <div class="top-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li v-if="signed === true" class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px;">email</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
@@ -105,7 +105,7 @@
                                 </li>
                             <li v-if="signed === true">
                                 <a @click="logout()" class="log-out waves-effect waves-button waves-classic">
-                                    <span><i class="fa fa-sign-out m-r-xs"></i>Log out</span>
+                                    <span>Log out</span>
                                 </a>
                             </li>
                         </ul>
@@ -127,14 +127,14 @@
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><span class="arrow"></span></a>
+                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><i dark class="material-icons">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">
                             <!--<li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>-->
                                 <li style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
                                 <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
                             </ul>
                         </li>
-                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="document = !document" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><span class="arrow"></span></a>
+                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="document = !document" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><i dark class="material-icons">keyboard_arrow_down</i></a>
                             <ul v-if="document" class="sub-menu" style="display: inline-block;">
                                 <li style="width: 85%;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
                             </ul>

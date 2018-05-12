@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-if="user.local" style="padding-top: 0px;">
-        <div class="profile-cover" style="background: url('/static/Wallpaper 10.jpg'); -webkit-background-size: cover; background-size: cover;">
+        <div class="profile-cover" style="background: none;">
+            <v-parallax style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;" src="/static/Wallpaper 7.jpg"></v-parallax>
             <div class="row">
                 <div class="col-md-3 profile-image">
                     <div class="profile-image-container">
@@ -336,8 +337,11 @@
                         </div>
                         <div class="panel-body">
                             <div class="team">
-                                <div @click="$router.push('/profil/' + pers._id)" v-for="pers in team.users" :key="pers._id" class="team-member" style="cursor: pointer;">
-                                   <img :src="pers.picture" alt="">
+                                <div v-for="pers in team.users" :key="pers._id" @click="$router.push('/profil/' + pers._id)" class="team-member" style="cursor: pointer;">
+                                    <v-tooltip style="display: inline;" bottom>
+                                      <img slot="activator" :src="pers.picture" alt="">
+                                      <span>{{pers.username}}</span>
+                                    </v-tooltip>
                                 </div>
                                 <br/>
                                 <button v-if="$store.state.user.local.work === 'R&D' || $store.state.user.local.mail === 'julien.juret@blade-group.com'" @click="$router.push('taskmanager/' + team.name);" class="btn btn-primary btn-block">Task Manager</button>

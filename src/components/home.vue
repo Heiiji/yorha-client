@@ -210,7 +210,7 @@
                               v-model="item.message"
                               single-line
                             ></v-text-field>
-                            <v-btn fab small @click="postReply(item._id, item.message)" color="white" style="position: relative; left: 85%;">
+                            <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
                               <v-icon dark>send</v-icon>
                             </v-btn>
                         </div>

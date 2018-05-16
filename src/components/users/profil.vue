@@ -596,7 +596,9 @@ export default {
     async postNews () {
       this.News.sender = this.$store.state.user.local.username
       this.News.senderPic = this.$store.state.user.local.picture
-      News.Post(this.News).then(() => {
+      var New = JSON.parse(JSON.stringify(this.News))
+      this.News = []
+      News.Post(New).then(() => {
         this.getNews()
       })
       this.PostNews = false

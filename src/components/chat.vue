@@ -9,7 +9,7 @@
         </v-toolbar>
         <v-list subheader>
           <v-subheader>Recent chat</v-subheader>
-          <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; messages = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+          <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
             <v-list-tile-content>
               <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
             </v-list-tile-content>
@@ -20,10 +20,10 @@
         </v-list>
       </v-card>
     </v-flex>
-    <v-flex style="height: 1000px; position: relative;" xs12 sm10>
+    <v-flex style="height: 1000px; position: relative; overflow-y: scroll;" xs12 sm10>
       <v-card style="position: absolute; bottom: 10%; width: 100%;">
         <v-list two-line>
-          <div v-for="(item, index) in messages" :key="item._id + index">
+          <div v-for="(item, index) in displayMsg" :key="item._id + index">
             <v-list-tile
               avatar
               ripple
@@ -33,7 +33,7 @@
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title v-html="item.sender"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="item.text.replace(/\r?\n/g, '<br />')"></v-list-tile-sub-title>
+                <v-list-tile-sub-title style="line-break: normal;" v-html="item.text.replace(/\r?\n/g, '<br />')"></v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
           </div>
@@ -63,8 +63,10 @@ export default {
   data () {
     return {
       messages: [],
+      displayMsg: [],
       memoire: -1,
       conv: [],
+      repere: '',
       target: '',
       msg: {
         target: '',
@@ -90,6 +92,7 @@ export default {
     getConv () {
       var nbr = 0
       var vue = this
+      var conv = []
       AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
         response.data.msgs.sort(function (a, b) {
           if (a.senderMail > b.senderMail) {
@@ -99,7 +102,6 @@ export default {
           }
         })
         vue.messages = response.data.msgs
-        vue.conv = []
         AccountServices.getMyMsg(vue.$store.state.user.local.mail).then((value) => {
           var rep = value.data.msgs
           rep.sort(function (a, b) {
@@ -111,41 +113,42 @@ export default {
           })
           for (let i = 0; i < 100; i++) {
             if (vue.messages[i]) {
-              if (vue.conv[nbr]) {
-                if (vue.conv[nbr][0].senderMail === vue.messages[i].senderMail) {
-                  vue.conv[nbr].splice(1, 0, vue.messages[i])
+              if (conv[nbr]) {
+                if (conv[nbr][0].senderMail === vue.messages[i].senderMail) {
+                  conv[nbr].splice(1, 0, vue.messages[i])
                 } else {
                   nbr += 1
-                  vue.conv[nbr] = []
-                  vue.conv[nbr].splice(0, 0, vue.messages[i])
+                  conv[nbr] = []
+                  conv[nbr].splice(0, 0, vue.messages[i])
                   for (let j = 0; j < 100; j++) {
-                    if (vue.conv[nbr] && rep[j]) {
-                      if (vue.conv[nbr][0].senderMail === rep[j].target) {
-                        vue.conv[nbr].splice(1, 0, rep[j])
+                    if (conv[nbr] && rep[j]) {
+                      if (conv[nbr][0].senderMail === rep[j].target) {
+                        conv[nbr].splice(1, 0, rep[j])
                       }
                     }
                   }
                 }
               } else {
-                vue.conv[nbr] = []
-                vue.conv[nbr].splice(0, 0, vue.messages[i])
+                conv[nbr] = []
+                conv[nbr].splice(0, 0, vue.messages[i])
                 for (let j = 0; j < 100; j++) {
-                  if (vue.conv[nbr] && rep[j]) {
-                    if (vue.conv[nbr][0].senderMail === rep[j].target) {
-                      vue.conv[nbr].splice(1, 0, rep[j])
+                  if (conv[nbr] && rep[j]) {
+                    if (conv[nbr][0].senderMail === rep[j].target) {
+                      conv[nbr].splice(1, 0, rep[j])
                     }
                   }
                 }
               }
             }
           }
-          vue.conv.forEach((elem) => {
-            elem.sort(function (a, b) {
+          for (let i = 0; i < conv.length; i++) {
+            conv[i].sort(function (a, b) {
               return a.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7') - b.date.replace(/^(....).(..).(..).(..).(..).(..).(...)./g, '$1$2$3$4$5$6$7')
             })
-          })
+          }
+          vue.conv = JSON.parse(JSON.stringify(conv))
           if (vue.memoire >= 0) {
-            vue.messages = vue.conv[vue.memoire]
+            vue.displayMsg = vue.conv[vue.memoire]
           } else {
             vue.messages = ''
           }

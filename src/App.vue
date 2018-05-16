@@ -134,7 +134,7 @@
             </v-card>
           </v-dialog>
     </main>
-    <span class="mobileOnly"><v-icon class="buttonp" style="z-index: 10; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon></span>
+    <span class="mobileOnly"><v-icon class="buttonp" style="z-index: 10; cursor: pointer; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon></span>
     <v-navigation-drawer
       v-model="Mdrawer2"
       temporary
@@ -147,7 +147,7 @@
       </v-list>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-        <v-list-tile @click="redirect('/')">
+        <v-list-tile @click="redirect('/home')">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -350,7 +350,10 @@ export default {
       }
     },
     sendFeedback () {
-      AccountServices.SendFeedback({text: this.FeedbackText})
+      var vue = this
+      if (vue.FeedbackText !== '' && vue.FeedbackText !== ' ') {
+        AccountServices.SendFeedback({text: vue.FeedbackText})
+      }
     },
     checkUser () {
       var vue = this

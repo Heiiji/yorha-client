@@ -20,7 +20,7 @@
                     <ul class="list-unstyled text-center">
                         <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
                         <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.local.mail }}</a></p></li>
-                        <li><p v-if="user.local.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.local.tel">{{user.local.tel}}</a></p></li>
+                        <li><p v-if="user.local.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>tel non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.local.tel">{{user.local.tel}}</a></p></li>
                     </ul>
                     <hr>
 

@@ -300,13 +300,6 @@ export default {
     ]
   }),
   methods: {
-    changeIMG () {
-      if (this.MainImg === '/static/Shadow_Horizontal_White.png') {
-        this.MainImg = '/static/Shadow_Icon_White.png'
-      } else {
-        this.MainImg = '/static/Shadow_Horizontal_White.png'
-      }
-    },
     searching () {
       this.$router.push('/SearchUser')
     },
@@ -324,7 +317,7 @@ export default {
       this.$router.push('/home')
     },
     login () {
-      var provider = new firebase.auth.GoogleAuthProvider()
+      let provider = new firebase.auth.GoogleAuthProvider()
       firebase.auth().signInWithPopup(provider).then(function (result) {
         console.log('cuccess')
       }).catch(function (error) {
@@ -335,9 +328,6 @@ export default {
       window.$cookies.remove('user_session')
       this.firebaseApp.auth().signOut()
       location.reload()
-    },
-    onSignInError (error) {
-      console.log('OH NOES', error)
     },
     redirect (link) {
       if (this.signed) {

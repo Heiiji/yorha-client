@@ -6,26 +6,70 @@
             </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
+            <v-flex xs4>
+            <v-carousel class="socialp" style="height: 230px; background-color: rgba(250, 250, 250, 0.8);" hide-controls>
+              <v-carousel-item  style="padding-top: 5px;">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="twittText = TwitNews[0]; showTwit = true;">
+                    <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+              <v-carousel-item style="padding-top: 5px;">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="twittText = TwitNews[1]; showTwit = true;">
+                    <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[1].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+              <v-carousel-item style="padding-top: 5px;">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="twittText = TwitNews[2]; showTwit = true;">
+                    <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[2].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+            </v-carousel>
+          </v-flex>
+          <v-flex xs4>
+            <v-carousel xs4 class="socialp" style="height: 230px; background-color: rgba(250, 250, 250, 0.8);" hide-controls>
+              <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg1">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg1.show = true;">
+                    <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg1.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+              <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg2">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg2.show = true;">
+                    <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg2.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+              <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg3">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg3.show = true;">
+                    <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg3.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+            </v-carousel>
+          </v-flex>
+          <v-flex xs4>
+            <div class="socialp" style="height: 230px; cursor: auto; background-color: rgba(250, 250, 250, 0.8);">
+                <div style="margin: 15px; position: relative;" class="panel-body">
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
+                        <img :src="randUser.picture" style="width: 25%; float: left;" />
+                        <form v-on:submit.prevent="PlayRandUser()" ><v-text-field
+                          name="Name"
+                          :label="name"
+                          single-line
+                          v-model="randUserReponse"
+                          style="position: absolute; right: 10px; top: 40%; width: 65%;"
+                        ></v-text-field></form>
+                      </span></div>
+                </div>
+            </div>
+          </v-flex>
             <v-flex style="display: none;" xs12>
               <v-card dark color="primary">
                 <v-card-text class="px-0">12</v-card-text>
               </v-card>
-            </v-flex>
-            <v-flex xs4 v-for="news in DiscNews" :key="news._id">
-            <div class="socialp" @click="news.show = true;">
-                  <div style="margin: 15px; position: relative;" class="panel-body">
-                      <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                      <div><h2 class="no-m" style="color: rgb(30, 80, 160);">{{ news.name }}</h2><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(news.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
-                  </div>
-              </div>
-            </v-flex>
-            <v-flex xs4>
-              <div v-if="TwitNews[0]" class="socialp">
-                  <div style="margin: 15px; position: relative;" class="panel-body"  @click="showTwit = true;">
-                      <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
-                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
-                  </div>
-              </div>
             </v-flex>
             <v-flex xs8 style="max-height: 800px;">
               <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
@@ -34,22 +78,6 @@
                   <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
                 </v-card><br/>
               </a>
-            </v-flex>
-            <v-flex xs4>
-              <div class="socialp" style="height: 230px; cursor: auto; background-color: rgba(250, 250, 250, 0.8);">
-                  <div style="margin: 15px; position: relative;" class="panel-body">
-                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
-                          <img :src="randUser.picture" style="width: 25%; float: left;" />
-                          <form v-on:submit.prevent="PlayRandUser()" ><v-text-field
-                            name="Name"
-                            :label="name"
-                            single-line
-                            v-model="randUserReponse"
-                            style="position: absolute; right: 10px; top: 40%; width: 65%;"
-                          ></v-text-field></form>
-                        </span></div>
-                  </div>
-              </div>
             </v-flex>
           </v-layout>
         </v-container>
@@ -69,7 +97,7 @@
       </span>
       <v-dialog style="z-index:25;" v-model="showTwit" scrollable max-width="1000px">
         <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
-          <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="TwitNews[0]"></p>
+          <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="twittText"></p>
         </v-card>
       </v-dialog>
       <v-dialog style="z-index:25;" v-model="PostAnn" scrollable max-width="1000px">
@@ -267,19 +295,21 @@ export default {
       AccountService.SendHelpDesk()
     },
     async getNews () {
+      var vue = this
       const response = await News.fetchNews()
       if (response.data) {
         if (response.data.news) {
           this.allNews = response.data.news
         }
       }
-      this.TwitNews = response.data.lastTweets
       if (navigator.language === 'fr-FR') {
         this.TwitNews = response.data.lastTweets
       } else {
         this.TwitNews = response.data.lastTweetsen
       }
       this.TwitNews[0] = this.TwitNews[0].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      this.TwitNews[1] = this.TwitNews[1].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      this.TwitNews[2] = this.TwitNews[2].replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
       this.DiscNews = {
         msg1: {
           name: response.data.lastDiscordMsgs[2].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
@@ -290,18 +320,25 @@ export default {
           name: response.data.lastDiscordMsgs[1].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
           text: response.data.lastDiscordMsgs[1].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
           show: false
-        }
-        /*
+        },
         msg3: {
-          name: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
-          text: response.data.msgNo1.replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4')
+          name: response.data.lastDiscordMsgs[0].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$3'),
+          text: response.data.lastDiscordMsgs[0].replace(/^([^|]*).([^|]*).([^|]*).([^|]*)/g, '$4'),
+          show: false
         }
-        */
       }
-      this.DiscNews.msg1.text = this.DiscNews.msg1.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
-      this.DiscNews.msg2.text = this.DiscNews.msg2.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
-      this.DiscNews.msg1.text = this.DiscNews.msg1.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
-      this.DiscNews.msg2.text = this.DiscNews.msg2.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      if (vue.DiscNews.msg1) {
+        vue.DiscNews.msg1.text = vue.DiscNews.msg1.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+        vue.DiscNews.msg1.text = vue.DiscNews.msg1.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      }
+      if (vue.DiscNews.msg2) {
+        vue.DiscNews.msg2.text = vue.DiscNews.msg2.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+        vue.DiscNews.msg2.text = vue.DiscNews.msg2.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      }
+      if (vue.DiscNews.msg3) {
+        vue.DiscNews.msg3.text = vue.DiscNews.msg3.text.replace(/@([^ ]*)/g, '<span style="color: blue;">@' + '$1' + '</span>')
+        vue.DiscNews.msg3.text = vue.DiscNews.msg3.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;">http' + '$1' + '</a>')
+      }
     }
   }
 }

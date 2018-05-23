@@ -1,9 +1,46 @@
 <template>
-  <div class="posts">
-  <br/><br/>
-    <h1>Version Manager</h1>
-    <br/><br/>
-    <h3>{{ VersionDisplay }}</h3>
+  <div>
+    <div style="text-align: left; position: relative; width: 100%; padding-bottom: 80px; margin-bottom: -80px;" class="page-title">
+        <h3>Version Manager / {{ VersionDisplay }}</h3>
+        <button class="btn btn-primary btn-block" @click="Verdialog = true; edition = false" style="width: 150px; position: absolute; right: 20px; top: 10px;">Add Version</button>
+    </div>
+    <div style="margin-top: 20px;">
+        <div v-if="users !== 'none'" class="team">
+              <div v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
+                 <img :src="pers.picture" alt="">
+              </div>
+          </div>
+    </div>
+      <v-container
+        fluid
+        style="min-height: 0;"
+        grid-list-lg
+      >
+    <v-flex style="cursor: pointer;" v-for="value in versions" :key="value.version" xs4>
+            <v-card  color="cyan darken-2" class="white--text">
+              <v-container fluid grid-list-lg>
+                <v-layout row>
+                  <v-flex xs7>
+                    <div>
+                      <div>
+                        <div class="headline">{{ value.support }} <strong>{{ value.version }}</strong></div>
+                        <span class="white--text">{{ value.state }} : <span :class="value.status">{{ value.status }}</span> : tested by {{ value.tester }}</span>
+                      </div>
+                    </div>
+                  </v-flex>
+                  <v-flex xs5>
+                    <v-card-media
+                      :src="value.picture"
+                      height="125px"
+                      style="border-radius: 5px;"
+                      contain
+                    ></v-card-media>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card>
+          </v-flex>
+        </v-container>
       <v-card v-for="value in versions" :key="value.version" style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
         <v-card-media
           :src="value.picture"
@@ -60,8 +97,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  <v-dialog style="z-index:25;" v-model="dialog" scrollable max-width="800px">
-    <button class="btn btn-default pull-right" slot="activator" @click="this.edition = false">Add version</button>
+  <v-dialog style="z-index:25;" v-model="Verdialog" scrollable max-width="800px">
     <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
       <v-card-title style="color: blue;">Create a version :</v-card-title>
       <v-divider></v-divider>
@@ -163,6 +199,7 @@
 </template>
 
 <script>
+import AccountService from '@/services/AccountService'
 import VersionService from '@/services/VersionService'
 import NewsService from '@/services/NewsService'
 
@@ -171,8 +208,10 @@ export default {
   data () {
     return {
       edition: false,
+      Verdialog: false,
       Validator: '',
       versions: [],
+      users: [],
       modules: [
         { text: 'Windows' },
         { text: 'Mac OS' },
@@ -216,6 +255,7 @@ export default {
   mounted () {
     if (this.$store.state.user.local) {
       this.getVersion(this.$store.state.user.local.work)
+      this.GetByDep()
     } else {
       this.$router.push('/')
     }
@@ -299,6 +339,12 @@ export default {
         this.dialog = true
       }
     },
+    GetByDep () {
+      var vue = this
+      AccountService.FindByDep('Test').then((response) => {
+        vue.users = response.data.users
+      })
+    },
     GoTest (url) {
       window.location.assign(url)
     },
@@ -350,8 +396,5 @@ a.add_post_link {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
-}
-.posts {
-  margin: 30px;
 }
 </style>

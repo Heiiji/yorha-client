@@ -1,6 +1,6 @@
 <template>
-  <div class="page-inner">
-            <div style="text-align: left; position: relative; width: 100%;" class="page-title">
+  <div>
+            <div style="text-align: left; position: relative; width: 100%; padding-bottom: 80px; margin-bottom: -80px;" class="page-title">
                 <h3>Home</h3>
                 <button class="btn btn-primary btn-block" @click="PostAnn = true" style="width: 150px; position: absolute; right: 20px; top: 10px;">Post document</button>
             </div>
@@ -50,7 +50,7 @@
               </v-carousel-item>
             </v-carousel>
           </v-flex>
-          <v-flex xs4>
+          <v-flex style="z-index: 1;" xs4>
             <div class="socialp" style="height: 230px; cursor: auto; background-color: rgba(250, 250, 250, 0.8);">
                 <div style="margin: 15px; position: relative;" class="panel-body">
                     <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>

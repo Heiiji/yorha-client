@@ -3,7 +3,7 @@
     <br/><br/><br/>
     <h1 style="text-align: center; color: grey;" >Trombinoscope</h1>
     <br/>
-    <v-card v-for="(user, i) in users" :key="i" style="margin: 10px; display: inline-block; width: 400px;">
+    <v-card v-for="(user, i) in users" :key="i" style="margin: 10px; display: inline-block; width: 380px;">
                     <v-card-media @click="$router.push('/profil/' + user._id)" :src="user.picture" height="300px">
                     </v-card-media>
                     <v-card-title @click="$router.push('/profil/' + user._id)" primary-title>
@@ -55,7 +55,13 @@ export default {
     },
     async getUsers (arg) {
       const response = await AccountService.FindUsers('all')
-      this.users = response.data.users
+      this.users = response.data.users.sort(function (a, b) {
+        if (a.username > b.username) {
+          return 1
+        } else {
+          return -1
+        }
+      })
     },
     ChangeStatus (id, newStatus) {
       this.modif.id = id

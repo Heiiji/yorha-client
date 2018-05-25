@@ -187,6 +187,7 @@ export default {
       randUserReponse: '',
       randPopup: false,
       randUserResult: '',
+      twittText: '',
       HDesk: {
         sender: '',
         senderMail: '',
@@ -237,9 +238,9 @@ export default {
   },
   mounted () {
     this.firebaseApp = this.$store.state.firebase
-    this.getVersion()
     this.getNews()
     this.getRandUser()
+    this.getVersion()
   },
   components: {
     QwickLook
@@ -259,11 +260,17 @@ export default {
     },
     async PlayRandUser () {
       var vue = this
+      let justName = vue.randUser.username.replace(/^([^ ]+) [a-z0-1.]+/gi, '$1')
+      console.log(justName)
       vue.randPopup = true
       if (vue.randUserReponse.toUpperCase() === vue.randUser.username.toUpperCase()) {
         vue.randUserResult = 'Success'
       } else {
-        vue.randUserResult = 'Failed'
+        if (justName.toUpperCase() === vue.randUserReponse.toUpperCase()) {
+          vue.randUserResult = 'Success'
+        } else {
+          vue.randUserResult = 'Failed'
+        }
       }
     },
     PostAnnonce () {

@@ -5,7 +5,6 @@ import Router     from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import NewPost    from '@/components/NewPost'
 import EditPost   from '@/components/EditPost'
-import Overview   from '@/components/Overview'
 import Management from '@/components/Management'
 import Trombi     from '@/components/trombi'
 const Changelog   = () => import('@/components/changelog')
@@ -33,8 +32,9 @@ const DWeb = () => import('@/components/departments/Web')
 const DLima = () => import('@/components/departments/LIMA')
 const DAdministration = () => import('@/components/departments/Administration')
 // versions
-import Displayer  from '@/components/versions/displayer'
+const Displayer   = () => import('@/components/versions/displayer')
 import Downloads  from '@/components/versions/downloads'
+const Overview    = () => import('@/components/versions/Overview')
 const Posts       = () => import('@/components/versions/Posts')
 const Login       = () => import('@/components/landingPage')
 // users files

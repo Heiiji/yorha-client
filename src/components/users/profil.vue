@@ -74,7 +74,7 @@
                                                 <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
-                                                <p>{{ item.text }}</p>
+                                                <p v-html="item.text"></p>
                                                 <div class="timeline-options">
                                                     <a href="#"><i class="icon-share"></i> Share</a>
                                                 </div>
@@ -129,7 +129,7 @@
                                                 <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
-                                                <p>{{ item.text }}</p>
+                                                <p v-html="item.text"></p>
                                                 <div class="timeline-options">
                                                     <a href="#"><i class="icon-share"></i> Share</a>
                                                 </div>
@@ -184,7 +184,7 @@
                                                 <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
-                                                <p>{{ item.text }}</p>
+                                                <p v-html="item.text"></p>
                                                 <div class="timeline-options">
                                                     <a href="#"><i class="icon-share"></i> Share</a>
                                                 </div>
@@ -249,7 +249,7 @@
                                                 <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
-                                                <p>{{ item.text }}</p>
+                                                <p v-html="item.text"></p>
                                                 <div class="timeline-options">
                                                     <a href="#"><i class="icon-share"></i> Share</a>
                                                 </div>
@@ -300,7 +300,7 @@
                                                 <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                                             </div>
                                             <div class="timeline-item-post">
-                                                <p>{{ item.text }}</p>
+                                                <p v-html="item.text"></p>
                                                 <div class="timeline-options">
                                                     <a href="#"><i class="icon-share"></i> Share</a>
                                                 </div>
@@ -630,6 +630,7 @@ export default {
           })
           tmp.forEach(function (element) {
             element.date = new Date(element.date)
+            element.text = element.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;" target="_blank">http' + '$1' + '</a>')
             News.GetReply(element._id).then((reponse) => {
               element.reply = reponse.data.reply
               element.reply.forEach(function (el) {

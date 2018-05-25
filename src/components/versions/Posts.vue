@@ -281,7 +281,7 @@ export default {
     },
     PostVersion () {
       this.editeable.device = this.editeable.device.text
-      if (this.editeable.device === 'Windows' || this.editeable.device === 'Updater' || this.editeable.device === 'Shadow Serial' || this.editeable.device === 'Shadow Intel') {
+      if (this.editeable.device === 'Windows' || this.editeable.device === 'Updater' || this.editeable.device === 'Shadow Serial' || this.editeable.device === 'Shadow Intel' || this.editeable.device === 'Watchdog') {
         this.editeable.picture = '/static/Windows.jpg'
       } else {
         if (this.editeable.device === 'Mac OS') {

@@ -9,6 +9,7 @@
         {{ date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}) }}
       </span>
       <div style="position: relative; display: inline-block;">
+        <a @click="redirect('/chat')" class="waves-effect waves-button waves-classic redirectMsg"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px; position: relative;">email</v-icon><span v-if="msgNbr > 0" class="badge badge-success" style="position: absolute; top: 10%; left: 20%;">{{ msgNbr }}</span></a>
         <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><v-icon width="57px" style="margin: 20px; padding: 10px; background-color: rgba(250, 250, 250, 1); border-radius: 20px; position: relative;">email</v-icon><span v-if="msgNbr > 0" class="badge badge-success" style="position: absolute; top: 10%; left: 20%;">{{ msgNbr }}</span></a>
         <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
             <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
@@ -100,8 +101,10 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    <span class="buttonDisp">
     <v-icon class="buttonp" @click.stop="drawer = !drawer" size="30">menu</v-icon>
-    <div style="position: fixed; top: 0px; right: 0px; width: 500px; padding: 25px; z-index: 2; height: 100%; overflow-y: scroll; overflow-x: hidden;">
+  </span>
+    <div style="position: fixed; top: 0px; right: 0px; width: 500px; padding: 25px; z-index: 2; height: 100%; overflow-y: scroll; overflow-x: hidden;" class="buttonDisp">
       <v-carousel class="socialp" hide-controls>
         <v-carousel-item  style="padding-top: 5px;">
           <div style="margin: 15px; position: relative;" class="panel-body"  @click="twittText = TwitNews[0]; showTwit = true;">
@@ -187,36 +190,55 @@
       </div>
       <div class="posts">
         <ul class="list-unstyled">
-            <li v-for="item in allNews" v-if="item.department === selectedChannel" :key="item._id" class="timeline-item" style="display: block;">
+            <li class="timeline-item" style="display: block;">
                 <div class="panel" style="background-color: rgba(250, 250, 250, 0.9);">
-                    <div class="panel-body">
-                        <div class="timeline-item-header">
-                            <img :src="item.senderPic" width="30px" style="border-radius: 15px; float: left; margin: 5px;" alt="">
-                            <p>{{ item.sender }}</p>
-                            <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
-                        </div>
+                    <div class="panel-body" style="padding-bottom: 3px;">
                         <div class="timeline-item-post">
-                            <p>{{ item.text }}</p>
-                            <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                <div class="timeline-comment-header">
-                                    <p>{{comm.sender}} <small>| {{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
-                                </div>
-                                <p>{{comm.text}}</p>
-                            </div>
                             <v-text-field
-                              name="reply"
-                              label="Reply"
-                              style="position: absolute; width: 75%;"
-                              v-model="item.message"
-                              single-line
+                              name="New message"
+                              label="New message"
+                              style="display: inline-block; width: 80%;"
+                              textarea
+                              v-model="News.text"
+                              rows="2"
                             ></v-text-field>
-                            <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
+                            <v-btn @click="postNews()" fab small color="white" style="float: right;">
                               <v-icon dark>send</v-icon>
                             </v-btn>
                         </div>
                     </div>
                 </div>
             </li>
+                <li v-for="item in allNews" v-if="item.department === selectedChannel" :key="item._id" class="timeline-item" style="display: block;">
+                    <div class="panel" style="background-color: rgba(250, 250, 250, 0.9);">
+                        <div class="panel-body">
+                            <div class="timeline-item-header">
+                                <img :src="item.senderPic" width="30px" style="border-radius: 15px; float: left; margin: 5px;" alt="">
+                                <p>{{ item.sender }}</p>
+                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
+                            </div>
+                            <div class="timeline-item-post">
+                                <p v-html="item.text"></p>
+                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                    <div class="timeline-comment-header">
+                                        <p>{{comm.sender}} <small>| {{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
+                                    </div>
+                                    <p>{{comm.text}}</p>
+                                </div>
+                                <v-text-field
+                                  name="reply"
+                                  label="Reply"
+                                  style="position: absolute; width: 75%;"
+                                  v-model="item.message"
+                                  single-line
+                                ></v-text-field>
+                                <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
+                                  <v-icon dark>send</v-icon>
+                                </v-btn>
+                            </div>
+                        </div>
+                    </div>
+                </li>
         </ul>
       </div>
     </div>
@@ -310,7 +332,7 @@
 }
 .buttonp:hover {
   background-color: rgba(230, 230, 230, 1);
-  box-shadow: 2px 2px 5px #333;
+  box-shadow: 2px 2px 4px #333;
   -webkit-transition: box-shadow 0.1s, background-color 0.1s, -webkit-transform 0.1s;
   transition: box-shadow 0.1s, background-color 0.1s, transform 0.1s;
 }
@@ -372,16 +394,28 @@ p {
   font-size: 12px;
   padding: 20px 0 0;
 }
+.redirectMsg {
+  display: none;
+}
 @media (max-width:1300px) {
   .socialp {
     display: none;
   }
+  .redirectMsg {
+    display: inline-block;
+  }
   .chat {
     width: 100%;
+  }
+  .dropdown-toggle {
+    display: none;
   }
 }
 @media (max-width:700px) {
   .buttonp {
+    display: none;
+  }
+  .buttonDisp {
     display: none;
   }
 }
@@ -412,6 +446,15 @@ export default {
     TwitNews: [],
     twittText: '',
     drawer: null,
+    News: {
+      text: '',
+      title: '',
+      link: '',
+      department: 'General',
+      visibility: true,
+      sender: '',
+      senderPic: ''
+    },
     items: [
       { title: 'Home', icon: 'dashboard' },
       { title: 'About', icon: 'question_answer' }
@@ -455,6 +498,17 @@ export default {
         })
       })
     },
+    async postNews () {
+      this.News.sender = this.$store.state.user.local.username
+      this.News.senderPic = this.$store.state.user.local.picture
+      this.News.department = this.selectedChannel
+      var New = JSON.parse(JSON.stringify(this.News))
+      this.News = []
+      News.Post(New).then(() => {
+        this.getNews()
+      })
+      this.PostNews = false
+    },
     async postReply (target, message) {
       var sender = this.$store.state.user.local.username
       var senderPic = this.$store.state.user.local.picture
@@ -485,6 +539,7 @@ export default {
       }
       tmp.forEach(function (element) {
         element.date = new Date(element.date)
+        element.text = element.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;" target="_blank">http' + '$1' + '</a>')
         News.GetReply(element._id).then((reponse) => {
           element.reply = reponse.data.reply
           element.reply.forEach(function (el) {

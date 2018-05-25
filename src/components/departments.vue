@@ -79,7 +79,7 @@
     <a @click="$router.push('/department/web')">
     <v-card class="select-dep">
       <v-card-media
-        src="http://www.desktop-screens.com/data/out/123/3625754-web-wallpapers.jpg"
+        src="/static/departments/Web-wide.jpg"
         height="200px"
       >
       </v-card-media>

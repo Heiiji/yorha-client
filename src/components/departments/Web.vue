@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="padding: 0px;">
-      <div class="profile-cover" style="background: url('http://www.forallworld.com/data_images/wallpapers/5/15945-internet.jpg') center; -webkit-background-size: cover; background-size: cover; margin: 0px; padding: 0px;">
+      <div class="profile-cover" style="background: url('/static/departments/Web-wide.jpg') center; -webkit-background-size: cover; background-size: cover; margin: 0px; padding: 0px;">
           <div class="row">
               <div class="col-md-3 profile-image">
                   <div class="profile-image-container">

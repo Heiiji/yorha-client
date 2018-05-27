@@ -106,41 +106,37 @@
   </span>
     <div style="position: fixed; top: 0px; right: 0px; width: 500px; padding: 25px; z-index: 2; height: 100%; overflow-y: scroll; overflow-x: hidden;" class="buttonDisp">
       <v-carousel class="socialp" hide-controls>
+        <img src="/static/twitter.png" style="position: absolute; right: 6px; top: 6px; width: 30px; opacity: 0.8;" />
         <v-carousel-item  style="padding-top: 5px;">
           <div style="margin: 15px; position: relative;" class="panel-body"  @click="twittText = TwitNews[0]; showTwit = true;">
-              <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
               <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
           </div>
         </v-carousel-item>
         <v-carousel-item style="padding-top: 5px;">
           <div style="margin: 15px; position: relative;" class="panel-body"  @click="twittText = TwitNews[1]; showTwit = true;">
-              <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
               <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[1].match(/.{0,50}/g))[0] + ' ...'"></span></div>
           </div>
         </v-carousel-item>
         <v-carousel-item style="padding-top: 5px;">
           <div style="margin: 15px; position: relative;" class="panel-body"  @click="twittText = TwitNews[2]; showTwit = true;">
-              <img src="/static/twitter.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
               <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[2].match(/.{0,50}/g))[0] + ' ...'"></span></div>
           </div>
         </v-carousel-item>
       </v-carousel>
       <v-carousel class="socialp" hide-controls>
+        <img src="/static/discord.png" style="position: absolute; right: 6px; top: 6px; width: 30px; opacity: 0.8;" />
         <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg1">
           <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg1.show = true;">
-              <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
               <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg1.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
           </div>
         </v-carousel-item>
         <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg2">
           <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg2.show = true;">
-              <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
               <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg2.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
           </div>
         </v-carousel-item>
         <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg3">
           <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg3.show = true;">
-              <img src="/static/discord.png" style="position: absolute; right: 5px; top: 0px; width: 30px; opacity: 0.8;" />
               <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg3.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
           </div>
         </v-carousel-item>
@@ -154,7 +150,7 @@
     </div>
     <span v-if="DiscNews.msg1">
       <v-dialog style="z-index:25;" v-model="DiscNews.msg1.show" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+        <v-card style="text-align: center;">
           <v-card-title style="color: blue;">{{DiscNews.msg1.name}}</v-card-title>
           <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg1.text"></p>
         </v-card>
@@ -162,7 +158,7 @@
     </span>
     <span v-if="DiscNews.msg2">
       <v-dialog style="z-index:25;" v-model="DiscNews.msg2.show" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+        <v-card style="text-align: center;">
           <v-card-title style="color: blue;">{{DiscNews.msg2.name}}</v-card-title>
           <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg2.text"></p>
         </v-card>
@@ -170,7 +166,7 @@
     </span>
     <span v-if="DiscNews.msg3">
       <v-dialog style="z-index:25;" v-model="DiscNews.msg3.show" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+        <v-card style="text-align: center;">
           <v-card-title style="color: blue;">{{DiscNews.msg3.name}}</v-card-title>
           <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg3.text"></p>
         </v-card>
@@ -181,12 +177,16 @@
         <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="twittText"></p>
       </v-card>
     </v-dialog>
-    <div style="z-index: 2;" class="chat">
+    <v-btn v-if="HideDashBoard" style="position: fixed; bottom: 10px; left: 10px; z-index: 1;" @click="HideDashBoard = !HideDashBoard" outline large fab color="white">
+      <v-icon>chat</v-icon>
+    </v-btn>
+    <div v-else style="z-index: 2;" class="chat">
       <div class="list">
         <div :class="selectedChannel === 'General' ? 'channel2' : 'channel'" @click="selectedChannel = 'General'">General</div>
         <div :class="selectedChannel === $store.state.user.local.work ? 'channel2' : 'channel'" @click="selectedChannel = $store.state.user.local.work">Department</div>
         <div :class="selectedChannel === 'Whatever' ? 'channel2' : 'channel'" @click="selectedChannel = 'Whatever'">Whatever</div>
         <div v-for="team in Teams" :key="team.name" :class="selectedChannel === team.name ? 'channel2' : 'channel'" @click="selectedChannel = team.name">{{ team.name }}</div>
+        <img @click="HideDashBoard = !HideDashBoard" src="https://www.thrivingparish.org/wp-content/uploads/2018/01/white-down-arrow-png-2.png" style="position: absolute; top: 30px; right: 30px; width: 50px; padding: 15px; cursor: pointer;" />
       </div>
       <div class="posts">
         <ul class="list-unstyled">
@@ -245,6 +245,9 @@
   </div>
 </template>
 <style scoped>
+.jumbotron {
+  background-color: rgba(0, 0, 0, 0);
+}
 .timeline-comment {
   border-top: 1px solid #f1f1f1;
   border-bottom: 0px solid #f1f1f1;
@@ -290,6 +293,8 @@
   background-color: rgba(10, 10, 13, 0.9);
   color: #daf6ff;
   border-radius: 4px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   text-shadow: 0 0 20px rgba(10, 175, 230, 1),  0 0 20px rgba(10, 11, 13, 0.9);
 }
 .channel2 {
@@ -445,6 +450,7 @@ export default {
     allNews: [],
     TwitNews: [],
     twittText: '',
+    HideDashBoard: false,
     drawer: null,
     News: {
       text: '',

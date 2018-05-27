@@ -1,20 +1,30 @@
 <template>
   <div>
-    <br/><br/><br/>
-    <h1 style="text-align: center; color: grey;" >Trombinoscope</h1>
+    <div style="text-align: left; position: relative; width: 100%; padding-bottom: 80px; margin-bottom: -80px;" class="page-title">
+        <h3>Trombinoscope</h3>
+    </div>
     <br/>
-    <v-card v-for="(user, i) in users" :key="i" style="margin: 10px; display: inline-block; width: 380px;">
-                    <v-card-media @click="$router.push('/profil/' + user._id)" :src="user.picture" height="300px">
-                    </v-card-media>
-                    <v-card-title @click="$router.push('/profil/' + user._id)" primary-title>
-                      <div>
-                        <h3 class="headline mb-0">{{ user.username }} <br/> <span style="color: blue; font-size: 0.6em;">({{ user.mail }})</span></h3>
-                        <hr/>
-                        <h4>Workplace : {{ user.work }}</h4>
-                        <h4>Rank : {{ user.qualifier }}</h4>
-                      </div>
-                    </v-card-title>
-                  </v-card>
+    <v-card v-for="(user, i) in users" :key="i" style="margin: 10px; display: inline-block; width: 380px; background-color: rgb(33, 110, 210);" color="blue darken-2" class="white--text">
+              <v-container fluid grid-list-lg>
+                <v-layout row>
+                <v-flex xs5>
+                  <v-card-media
+                    :src="user.picture"
+                    height="100px"
+                    style="border-radius: 10px;"
+                    @click="$router.push('/profil/' + user._id)"
+                    contain
+                  ></v-card-media>
+                </v-flex>
+                  <v-flex @click="$router.push('/profil/' + user._id)" xs7>
+                    <div>
+                      <div class="headline">{{ user.username }} </div>
+                      <div>{{ user.mail }}</div>
+                    </div>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card>
   </div>
 </template>
 

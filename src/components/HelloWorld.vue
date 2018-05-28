@@ -6,7 +6,7 @@
             </div>
         <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
-          <v-flex xs8 style="max-height: 800px;">
+          <v-flex xs8 class="noMobile" style="max-height: 800px;">
             <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
               <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
                 <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />
@@ -14,7 +14,67 @@
               </v-card><br/>
             </a>
           </v-flex>
-            <v-flex xs4>
+          <v-flex xs12 class="MobileOnly" style="max-height: 800px;">
+            <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
+              <v-card dark style="color: black; text-align: left; padding: 20px;" color="white">
+                <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="float: left; width: 55px; margin-right: 15px;" />
+                <v-card-text class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</v-card-text>
+              </v-card><br/>
+            </a>
+          </v-flex>
+            <v-flex class="noMobile" xs4>
+            <v-carousel class="socialp" style="height: 230px; background-color: rgba(250, 250, 250, 0.8);" hide-controls>
+              <img src="/static/twitter.png" style="position: absolute; right: 6px; top: 6px; width: 30px; opacity: 0.8;" />
+              <v-carousel-item  style="padding-top: 5px;">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="twittText = TwitNews[0]; showTwit = true;">
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[0].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+              <v-carousel-item style="padding-top: 5px;">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="twittText = TwitNews[1]; showTwit = true;">
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[1].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+              <v-carousel-item style="padding-top: 5px;">
+                <div style="margin: 15px; position: relative;" class="panel-body" @click="twittText = TwitNews[2]; showTwit = true;">
+                    <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(TwitNews[2].match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                </div>
+              </v-carousel-item>
+            </v-carousel>
+              <v-carousel xs4 class="socialp" style="height: 230px; background-color: rgba(250, 250, 250, 0.8);" hide-controls>
+                <img src="/static/discord.png" style="position: absolute; right: 6px; top: 6px; width: 30px; opacity: 0.8;" />
+                <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg1">
+                  <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg1.show = true;">
+                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg1.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                  </div>
+                </v-carousel-item>
+                <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg2">
+                  <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg2.show = true;">
+                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg2.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                  </div>
+                </v-carousel-item>
+                <v-carousel-item  style="padding-top: 5px;" v-if="DiscNews.msg3">
+                  <div style="margin: 15px; position: relative;" class="panel-body" @click="DiscNews.msg3.show = true;">
+                      <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;" v-html="(DiscNews.msg3.text.match(/.{0,50}/g))[0] + ' ...'"></span></div>
+                  </div>
+                </v-carousel-item>
+              </v-carousel>
+                <div class="socialp" style="height: 230px; cursor: auto; background-color: rgba(250, 250, 250, 0.8);">
+                    <div style="margin: 15px; position: relative;" class="panel-body">
+                        <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
+                            <img :src="randUser.picture" style="width: 25%; float: left;" />
+                            <form v-on:submit.prevent="PlayRandUser()" ><v-text-field
+                              name="Name"
+                              :label="name"
+                              single-line
+                              v-model="randUserReponse"
+                              style="position: absolute; right: 10px; top: 40%; width: 65%;"
+                            ></v-text-field></form>
+                          </span></div>
+                    </div>
+                </div>
+          </v-flex>
+            <v-flex class="MobileOnly" xs12>
             <v-carousel class="socialp" style="height: 230px; background-color: rgba(250, 250, 250, 0.8);" hide-controls>
               <img src="/static/twitter.png" style="position: absolute; right: 6px; top: 6px; width: 30px; opacity: 0.8;" />
               <v-carousel-item  style="padding-top: 5px;">
@@ -391,10 +451,12 @@ export default {
   transition: box-shadow 0.1s, transform 0.1s;
 }
 @media (max-width:900px) {
-  .socialp {
+  .noMobile {
     display: none;
   }
-  .noMobile {
+}
+@media (min-width:900px) {
+  .MobileOnly {
     display: none;
   }
 }

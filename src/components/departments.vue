@@ -46,21 +46,6 @@
       </v-card-title>
     </v-card>
   </a>
-    <a @click="$router.push('/department/Virtualisation')">
-    <v-card class="select-dep">
-      <v-card-media
-        src="https://2.bp.blogspot.com/-xzvFgugRD_g/WIFbOryxaUI/AAAAAAAAIRs/eBhmxmsTnq80ValKcwusGejmuDWtfkIYgCLcB/s640/1vir.gif"
-        height="200px"
-      >
-      </v-card-media>
-      <v-card-title primary-title>
-        <div>
-          <div class="headline">La Virtualisation</div>
-          <span class="grey--text">Power to say 'no'</span>
-        </div>
-      </v-card-title>
-    </v-card>
-  </a>
     <a @click="$router.push('/department/test')">
     <v-card class="select-dep">
       <v-card-media

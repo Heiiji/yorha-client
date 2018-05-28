@@ -230,6 +230,7 @@
   }
   .page-inner {
     margin-left: 0px;
+    padding-top: 0px;
   }
   .mobileOnly {
     display: inline;

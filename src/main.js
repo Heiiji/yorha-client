@@ -108,7 +108,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         if (store.state.request) {
           router.push(store.state.request)
         } else {
-          router.push('/home')
+          router.push('/')
         }
       })
     })

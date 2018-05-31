@@ -33,6 +33,7 @@ const DLima = () => import('@/components/departments/LIMA')
 const DAdministration = () => import('@/components/departments/Administration')
 // versions
 const Displayer   = () => import('@/components/versions/displayer')
+const EditV   = () => import('@/components/versions/Edit')
 import Downloads  from '@/components/versions/downloads'
 const Overview    = () => import('@/components/versions/Overview')
 const Posts       = () => import('@/components/versions/Posts')
@@ -167,6 +168,11 @@ let router = new Router({
       path: '/version/id/:id',
       name: 'Displayer',
       component: Displayer
+    },
+    {
+      path: '/version/edit/id/:id',
+      name: 'EditV',
+      component: EditV
     },
     {
       path: '/annonces/id/:id',

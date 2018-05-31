@@ -16,6 +16,7 @@
                     </v-card-title>
                     <v-card-actions>
                       <v-menu bottom left>
+                      <v-btn flat color="orange">isLeader</v-btn>
                       <v-btn flat color="orange" slot="activator">Change</v-btn>
                       <v-list>
                         <v-list-tile style="z-index: 20; background-color: white;" v-for="(item, i) in rangs" :key="i">

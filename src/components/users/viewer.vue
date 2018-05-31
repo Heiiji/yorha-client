@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top:-60px;">
+  <div>
     <div>
         <div class="profile-cover" style="background: none;">
             <v-parallax style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;" src="/static/Wallpaper 7.jpg"></v-parallax>

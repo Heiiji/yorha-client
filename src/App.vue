@@ -100,6 +100,7 @@
                             <!--<li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>-->
                                 <li style="width: 85%;"><a href="https://backoffice.pa1.blade-group.fr:2448/drhouse/status" target="_blank">Dr House</a></li>
                                 <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
+                                <li style="width: 85%;"><a href="/#/Overview">Overview</a></li>
                             </ul>
                         </li>
                         <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="document = !document" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><i dark class="material-icons">keyboard_arrow_down</i></a>

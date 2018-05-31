@@ -10,13 +10,9 @@
                  <img :src="pers.picture" alt="">
               </div>
           </div>
-    </div>
-      <v-container
-        fluid
-        style="min-height: 0;"
-        grid-list-lg
-      >
-    <v-flex style="cursor: pointer;" v-for="value in versions" :key="value.version" xs4>
+    </div><br/>
+    <div style="widht: 100%; display: block; margin-top: 60px;">
+    <v-flex style="cursor: pointer; display: inline-block; width: 400px; margin: 10px;" v-for="value in versions" :key="value.version" @click="$router.push('/version/edit/id/' + value._id)">
             <v-card  color="cyan darken-2" class="white--text">
               <v-container fluid grid-list-lg>
                 <v-layout row>
@@ -40,43 +36,7 @@
               </v-container>
             </v-card>
           </v-flex>
-        </v-container>
-      <v-card v-for="value in versions" :key="value.version" style="width: 500px; z-index: 20; margin: 20px; display: inline-block;">
-        <v-card-media
-          :src="value.picture"
-          height="200px"
-        >
-        </v-card-media>
-        <v-card-title primary-title>
-          <div>
-            <div class="headline">{{ value.support }} <strong>{{ value.version }}</strong></div>
-            <span class="grey--text">{{ value.state }} : <span :class="value.status">{{ value.status }}</span> : tested by {{ value.tester }}</span>
-          </div>
-        </v-card-title>
-        <v-card-actions v-if="VersionDisplay == 'Versions On Rail'">
-          <v-btn v-on:click="Edition(value)" flat>Edit</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.local.work === 'Test'" @click="GoTest(value.path)">Test it</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.local.work === 'Test'" @click="SetFinnished = true; Validator = value._id; Edition(value)">Set as finnished</v-btn>
-          <v-btn flat color="purple" v-if="$store.state.user.local.work === 'Proximity'" @click="dialogProxi = true">Give to QA</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn icon @click.native="show = !show">
-            <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
-          </v-btn>
-        </v-card-actions>
-        <v-card-actions v-else>
-          <v-btn v-on:click="$router.push('/version/id/' + value._id)" flat>Details</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn icon @click.native="show = !show">
-            <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
-          </v-btn>
-        </v-card-actions>
-        <v-slide-y-transition>
-          <v-card-text style="text-align: left; word-wrap: break-word;" v-html="value.changelog" v-show="show">
-            Changelog :
-             {{ value.changelog }}
-          </v-card-text>
-        </v-slide-y-transition>
-      </v-card>
+        </div>
       <v-layout row justify-center>
     <v-dialog style="z-index:25;" v-model="dialogProxi" scrollable max-width="1000px">
       <v-card style="background-color: rgba(250,250,250,1); text-align: center;">

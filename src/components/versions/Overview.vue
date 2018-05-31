@@ -2,6 +2,7 @@
   <div>
             <div style="text-align: left; position: relative; width: 100%; padding-bottom: 90px; margin-bottom: -90px;" class="page-title">
                 <h3>Overview</h3>
+                <button v-if="$store.state.user.local.work === 'Test'" class="btn btn-primary btn-block" @click="$router.push('/posts')" style="width: 150px; position: absolute; right: 180px; top: 10px;">Version Manager</button>
                 <button class="btn btn-primary btn-block" @click="getVersion()" style="width: 150px; position: absolute; right: 20px; top: 10px;">Refresh</button>
             </div>
             <v-layout style="margin-top: 10px; padding: 40px; padding-top: 0px;" row wrap>

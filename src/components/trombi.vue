@@ -4,7 +4,7 @@
         <h3>Trombinoscope</h3>
     </div>
     <br/>
-    <v-card v-for="(user, i) in users" :key="i" style="margin: 10px; display: inline-block; width: 380px; background-color: rgb(33, 110, 210);" color="blue darken-2" class="white--text">
+    <v-card v-for="(user, i) in users" :key="i" style="margin: 10px; display: inline-block; width: 380px; background-color: rgb(250, 250, 250)!important; color: black!important;" class="white--text">
               <v-container fluid grid-list-lg>
                 <v-layout row>
                 <v-flex xs5>

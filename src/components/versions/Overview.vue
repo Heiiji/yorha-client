@@ -2,10 +2,12 @@
   <div>
             <div style="text-align: left; position: relative; width: 100%; padding-bottom: 90px; margin-bottom: -90px;" class="page-title">
                 <h3>Overview</h3>
-                <button v-if="$store.state.user.local.work === 'Test'" class="btn btn-primary btn-block" @click="$router.push('/posts')" style="width: 150px; position: absolute; right: 180px; top: 10px;">Version Manager</button>
+                <button v-if="$store.state.user.local.work === 'Test'" class="btn btn-primary btn-block" @click="$router.push('/posts')" style="width: 150px; position: absolute; right: 340px; top: 10px;">Version Manager</button>
+                <button class="btn btn-primary btn-block" @click="$router.push('version/viewer')" style="width: 150px; position: absolute; right: 180px; top: 10px;">QA Report</button>
                 <button class="btn btn-primary btn-block" @click="getVersion()" style="width: 150px; position: absolute; right: 20px; top: 10px;">Refresh</button>
             </div>
-            <v-layout style="margin-top: 10px; padding: 40px; padding-top: 0px;" row wrap>
+            <a v-if="!version.prod.normal[0]" href="https://192.168.1.208:8081/overview/gap/prodvalid" target="_blank"><button class="btn btn-primary btn-block" style="width: 150px;">Unlock display</button></a>
+            <v-layout v-if="version.prod.normal[0]" style="margin-top: 10px; padding: 40px; padding-top: 0px;" row wrap>
               <v-flex xs6 style="z-index: 1;"><h2 style="text-align: center;">Prod</h2></v-flex>
               <v-flex xs6 style="z-index: 1;"><h2 style="text-align: center;">PreProd</h2></v-flex>
               <v-flex xs6>
@@ -137,8 +139,8 @@
                 </v-flex>
               </v-flex>
               </v-layout>
-              <v-layout style="margin-top: 10px; padding: 40px; padding-top: 0px;" row wrap>
-                <v-flex xs6 style="z-index: 1;"><h2 style="text-align: center;">Prod:valid</h2></v-flex>
+              <v-layout v-if="version.prod.normal[0]" style="margin-top: 10px; padding: 40px; padding-top: 0px;" row wrap>
+                <v-flex xs6 style="z-ndex: 1;"><h2 style="text-align: center;">Prod:valid</h2></v-flex>
                 <v-flex xs6 style="z-index: 1;"><h2 style="text-align: center;">PreProd:valid</h2></v-flex>
                 <v-flex xs6>
                   <v-flex
@@ -269,6 +271,7 @@
                   </v-flex>
                 </v-flex>
                 </v-layout>
+                <h2 style="margin-top: 250px;" v-else> your navigator have blocked request, you need to unlock this with button, then, refresh</h2>
   </div>
 </template>
 
@@ -280,6 +283,7 @@ export default {
   data () {
     return {
       prod: '',
+      lock: false,
       preprod: '',
       prodvalid: '',
       preprodvalid: '',

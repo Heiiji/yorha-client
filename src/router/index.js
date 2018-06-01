@@ -34,6 +34,7 @@ const DAdministration = () => import('@/components/departments/Administration')
 // versions
 const Displayer   = () => import('@/components/versions/displayer')
 const EditV   = () => import('@/components/versions/Edit')
+const HistoV   = () => import('@/components/versions/histo')
 import Downloads  from '@/components/versions/downloads'
 const Overview    = () => import('@/components/versions/Overview')
 const Posts       = () => import('@/components/versions/Posts')
@@ -163,6 +164,11 @@ let router = new Router({
       path: '/SearchUser',
       name: 'SearchUser',
       component: SearchUser
+    },
+    {
+      path: '/version/viewer',
+      name: 'Viewer',
+      component: HistoV
     },
     {
       path: '/version/id/:id',

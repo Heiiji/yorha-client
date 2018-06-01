@@ -28,6 +28,14 @@
                           </div>
                       </div>
                   </div>
+                      <div class="panel panel-white">
+                          <div class="panel-heading">
+                              <div class="panel-title">Description</div>
+                          </div>
+                          <div class="panel-body">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                          </div>
+                      </div>
               </div>
               <div class="col-md-6 m-t-lg">
                     <div class="profile-timeline">
@@ -62,14 +70,20 @@
                         </div>
               </div>
               <div class="col-md-3 m-t-lg">
-                  <div class="panel panel-white">
-                      <div class="panel-heading">
-                          <div class="panel-title">Description</div>
+                <span>
+                    <h2 style="text-align: center; color: grey;">Current work</h2>
+                  <v-card v-for="(version, index) in versions" :key="index" style="margin: 10px;">
+                    <v-card-media :src="version.picture" height="200px">
+                    </v-card-media>
+                    <v-card-title primary-title>
+                      <div>
+                        <h3 class="headline mb-0">{{ version.support }} <span style="color: black; font-size: 0.6em;">({{ version.version }})</span></h3>
+                        <hr/>
+                        <h3>{{ version.status }}</h3>
                       </div>
-                      <div class="panel-body">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                      </div>
-                  </div>
+                    </v-card-title>
+                  </v-card>
+                </span>
               </div>
           </div>
       </div>
@@ -99,6 +113,7 @@
 </template>
 <script>
 import AccountService from '@/services/AccountService'
+import VersionService from '@/services/VersionService'
 import News from '@/services/NewsService'
 
 export default {
@@ -108,6 +123,7 @@ export default {
       user: [],
       users: [],
       sendMSG: false,
+      versions: [],
       allNews: [],
       navigator: {
         language: ''
@@ -124,12 +140,27 @@ export default {
     this.navigator.language = navigator.language
     this.GetByDep()
     this.getNews()
+    this.getVersion('all')
   },
   methods: {
     GetByDep () {
       var vue = this
       AccountService.FindByDep('Test').then((response) => {
         vue.users = response.data.users
+      })
+    },
+    async getVersion (arg) {
+      if (arg === 'all') {
+        this.VersionDisplay = 'Archives'
+        const response = await VersionService.fetchPosts('old')
+        this.versions = response.data.versions
+      } else {
+        this.VersionDisplay = 'Versions On Rail'
+        const response = await VersionService.fetchPosts('current')
+        this.versions = response.data.versions
+      }
+      this.versions.forEach(function (element) {
+        element.changelog = element.changelog.replace(/\r?\n/g, '<br />')
       })
     },
     async getNews () {

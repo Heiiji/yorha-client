@@ -156,7 +156,7 @@
         <v-flex xs12>
           <v-divider></v-divider>
             <v-select
-              :items="['GO', 'NOGO', 'CANCELED']"
+              :items="['GO', 'NOGO', 'MEETING NEEDED', 'CANCELED']"
               v-model="goal.status"
               label="Status"
               single-line
@@ -199,7 +199,7 @@
         </v-flex>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn color="blue darken-1" @click="AddBugf()" flat>Save</v-btn>
+        <v-btn color="blue darken-1" @click="Publish()" flat>Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -215,6 +215,7 @@
 /* eslint-disable */
 import VersionService from '@/services/VersionService'
 import AccountService from '@/services/AccountService'
+import News from '@/services/NewsService'
 
 import graph from './QARG.js'
 
@@ -231,7 +232,8 @@ export default {
         failed: 0,
         error: 0,
         oth: 0,
-        defect: 0
+        defect: 0,
+        id: ''
       },
       AddBug: false,
       SetAsFinnished: false,
@@ -268,6 +270,7 @@ export default {
       this.datacollection.datasets[0].data[3] = response.data.versions.rDefect
       this.datacollection.datasets[0].data[4] = response.data.versions.rOth
       this.selected = response.data.versions.tester
+      this.goal.id = response.data.versions._id
     },
     ChangeSeverity (action) {
       let vue = this
@@ -301,6 +304,34 @@ export default {
       vue.version.tester = vue.selected
       VersionService.updateVersion(this.version)
       VersionService.SetAsFinnished(vue.goal)
+      if (vue.goal.status === 'GO') {
+        var New = {
+          text: vue.version.support + ' ' + vue.version.version + ' is ready to push for ' + vue.version.target,
+          title: 'New Version is ready to Push',
+          link: '',
+          department: 'Test',
+          visibility: true,
+          sender: vue.$store.state.user.local.username,
+          senderPic: vue.$store.state.user.local.picture
+        }
+        News.Post(New).then(() => {
+          vue.$router.push('/profil')
+        })
+      }
+      else if (vue.goal.status === 'NOGO') {
+        var New = {
+          text: '',
+          title: vue.version.support + ' ' + vue.version.version + ' : NOGO',
+          link: '',
+          department: 'Test',
+          visibility: true,
+          sender: vue.$router.state.user.local.username,
+          senderPic: vue.$router.state.user.local.picture
+        }
+        News.Post(New).then(() => {
+          this.getNews()
+        })
+      }
     },
     Save () {
       let vue = this

@@ -15,8 +15,8 @@
                       </div>
                     </v-card-title>
                     <v-card-actions>
+                    <v-btn flat @click="SetLead(user._id)" color="orange">isLeader</v-btn>
                       <v-menu bottom left>
-                      <v-btn flat color="orange">isLeader</v-btn>
                       <v-btn flat color="orange" slot="activator">Change</v-btn>
                       <v-list>
                         <v-list-tile style="z-index: 20; background-color: white;" v-for="(item, i) in rangs" :key="i">
@@ -68,6 +68,9 @@ export default {
     async getUsers (arg) {
       const response = await AccountService.FindUsers('all')
       this.users = response.data.users
+    },
+    SetLead (id) {
+      AccountService.SetQualifier({id: id, qualifier: 'SquadLeader'})
     },
     ChangeStatus (id, newStatus) {
       this.modif.id = id

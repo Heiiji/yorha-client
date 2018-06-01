@@ -95,6 +95,7 @@ export default {
       this.datacollection.datasets[0].data[2] = response.data.versions.rFailed
       this.datacollection.datasets[0].data[3] = response.data.versions.rDefect
       this.datacollection.datasets[0].data[4] = response.data.versions.rOth
+      this.version.changelog = this.version.changelog.replace(/\r?\n/g, '<br />')
     }
   }
 }

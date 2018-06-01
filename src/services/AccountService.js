@@ -78,6 +78,9 @@ export default {
   editTeam (params) {
     return Api().put('account/team', params)
   },
+  SetQualifier (param) {
+    return Api().put('account/qualifier', param)
+  },
   editTel (params) {
     return Api().put('account/tel', params)
   }

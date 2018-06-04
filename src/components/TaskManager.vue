@@ -1,5 +1,25 @@
 <template>
-  <div style="background-image: url('/static/Wallpaper 11.jpg'); background-size: cover; position: relative; min-height: 800px;">
+  <div style="background: url('/static/Wallpaper 10.jpg') center; background-size: cover;">
+    <div class="container">
+      <div class="right-container">
+        <div class="gantt-selected-info">
+          <div v-if="selectedTask">
+            <h2>{{selectedTask.text}}</h2>
+            <span><b>ID: </b>{{selectedTask.id}}</span><br/>
+            <span><b>Progress: </b>{{selectedTask.progress|toPercent}}%</span><br/>
+            <span><b>Start Date: </b>{{selectedTask.start_date|niceDate}}</span><br/>
+            <span><b>End Date: </b>{{selectedTask.end_date|niceDate}}</span><br/>
+          </div>
+          <div v-else class="select-task-prompt">
+            <h2>Click any task</h2>
+          </div>
+        </div>
+        <ul class="gantt-messages">
+          <li class="gantt-message" v-for="(message, index) in messages" :key="index">{{message}}</li>
+        </ul>
+      </div>
+      <gantt class="left-container" :tasks="tasks" @task-updated="logTaskUpdate" @link-updated="logLinkUpdate" @task-selected="selectTask"></gantt>
+    </div>
     <v-menu
         transition="slide-x-transition"
         bottom
@@ -46,286 +66,288 @@
       >
       <v-icon>class</v-icon>
     </v-btn>
-    <h1 style="text-align: center; color: white; font-family: Ubuntu;">{{ $route.params.team }}</h1>
-    <v-flex v-if="BackofficeDisplay" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; margin-right: 80px;" xs12>
-      <drop @drop="handleDrop('backoffice')">
-          <h2>backoffice</h2><br/>
-          <v-flex v-for="(card, index) in cards" :key="index" v-if="card.categorie === 'backoffice'" style="margin: 5px; display: inline-block;" xs2>
-            <drag @drag="dragProject = 0; myListener(index)" style="margin: 5px;">
-                <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
-                  <v-card-title primary-title :style="card.style">
-                    <div class="headline">{{ card.title }}</div><br/>
-                    <div>{{ card.text }}</div>
-                    <v-icon dark class="editIcon" @click="EditCard = card; selected = card.users; displayEditCard = true">create</v-icon>
-                    <div class="team">
-                        <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
-                           <img :src="pers.picture" alt="">
-                        </div>
-                    </div>
-                  </v-card-title>
-                </v-card>
-            </drag>
-          </v-flex>
-      </drop>
-    </v-flex>
-    <div style="position: relative; width: 100%; padding-right: 80px;">
-      <v-flex style="display: inline-block; text-align: center; height: 100%; position: relative; vertical-align: top;" :style="columns" v-for="(title, index) in categories" :key="title">
-        <drop style="display: block; height: 100%; width: 100%;" @drop="handleDrop(title, index)">
-            <drag @drag="dragProject = 1; myListener(index)"><h2 style="color: white">{{title}}</h2></drag><br/>
-            <hr style="width: 90%;"/>
-            <drag class="coll" v-for="(card, index) in cards" :key="index" v-if="card.categorie === title" @drag="dragProject = 0; myListener(index)" style="margin: 5px; text-align: left;">
-                <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
-                  <v-card-title primary-title :style="card.style">
-                    <div class="headline">{{ card.title }}</div><br/>
-                    <div>{{ card.text }}</div>
-                    <v-icon dark class="editIcon" @click="EditCard = card; selected = card.users; displayEditCard = true">create</v-icon>
-                    <div class="team">
-                        <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
-                           <img :src="pers.picture" alt="">
-                        </div>
-                    </div>
-                  </v-card-title>
-                </v-card>
-            </drag>
-            <hr style="width: 90%;"/>
+    <div style="display: block; height: 900px;">
+      <h1 style="text-align: center; color: white; font-family: Ubuntu;">{{ $route.params.team }}</h1>
+      <v-flex v-if="BackofficeDisplay" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; margin-right: 80px;" xs12>
+        <drop @drop="handleDrop('backoffice')">
+            <h2>backoffice</h2><br/>
+            <v-flex v-for="(card, index) in cards" :key="index" v-if="card.categorie === 'backoffice'" style="margin: 5px; display: inline-block;" xs2>
+              <drag @drag="dragProject = 0; myListener(index)" style="margin: 5px;">
+                  <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
+                    <v-card-title primary-title :style="card.style">
+                      <div class="headline">{{ card.title }}</div><br/>
+                      <div>{{ card.text }}</div>
+                      <v-icon dark class="editIcon" @click="EditCard = card; selected = card.users; displayEditCard = true">create</v-icon>
+                      <div class="team">
+                          <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
+                             <img :src="pers.picture" alt="">
+                          </div>
+                      </div>
+                    </v-card-title>
+                  </v-card>
+              </drag>
+            </v-flex>
         </drop>
+      </v-flex>
+      <div style="position: relative; width: 100%; padding-right: 80px;">
+        <v-flex style="display: inline-block; text-align: center; height: 100%; position: relative; vertical-align: top;" :style="columns" v-for="(title, index) in categories" :key="title">
+          <drop style="display: block; height: 100%; width: 100%;" @drop="handleDrop(title, index)">
+              <drag @drag="dragProject = 1; myListener(index)"><h2 style="color: white">{{title}}</h2></drag><br/>
+              <hr style="width: 90%;"/>
+              <drag class="coll" v-for="(card, index) in cards" :key="index" v-if="card.categorie === title" @drag="dragProject = 0; myListener(index)" style="margin: 5px; text-align: left;">
+                  <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
+                    <v-card-title primary-title :style="card.style">
+                      <div class="headline">{{ card.title }}</div><br/>
+                      <div>{{ card.text }}</div>
+                      <v-icon dark class="editIcon" @click="EditCard = card; selected = card.users; displayEditCard = true">create</v-icon>
+                      <div class="team">
+                          <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
+                             <img :src="pers.picture" alt="">
+                          </div>
+                      </div>
+                    </v-card-title>
+                  </v-card>
+              </drag>
+              <hr style="width: 90%;"/>
+          </drop>
+      </v-flex>
+    </div>
+    <v-flex v-for="project in projects" :key="project.name" v-if="ProjectDisplay && typeof project === 'object'" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; padding: 15px; border-radius: 20px;" xs12>
+      <h2>{{ project.name }} <v-progress-linear v-model="project.progress"></v-progress-linear></h2>
+        <v-flex v-for="(card, index) in cards" :key="index" v-if="card.project === project.name" xs2 style="display: inline-block;">
+      <drag @drag="dragProject = 0; myListener(index)" style="margin: 5px; text-align: left;">
+          <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
+            <v-icon v-if="card.finnished" style="position: absolute; top: 10px; right: 10px;">done</v-icon>
+            <v-icon v-else style="position: absolute; top: 10px; right: 10px;">restore</v-icon>
+            <v-card-title :style="card.style" primary-title>
+              <div class="headline">{{ card.title }}</div><br/>
+              <v-icon v-if="card.finnished" dark class="editIcon" @click="setAsFinnished(card)">restore</v-icon>
+              <v-icon v-else dark class="editIcon" @click="setAsFinnished(card)">done</v-icon>
+              <div>{{ card.text }}</div>
+              <div class="team">
+                  <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
+                     <img :src="pers.picture" alt="">
+                  </div>
+              </div>
+            </v-card-title>
+          </v-card>
+      </drag>
+      </v-flex>
     </v-flex>
-  </div>
-  <v-flex v-for="project in projects" :key="project.name" v-if="ProjectDisplay && typeof project === 'object'" style="background-color: rgba(200, 200, 200, 0.6); margin: 10px; padding: 15px; border-radius: 20px;" xs12>
-    <h2>{{ project.name }} <v-progress-linear v-model="project.progress"></v-progress-linear></h2>
-      <v-flex v-for="(card, index) in cards" :key="index" v-if="card.project === project.name" xs2 style="display: inline-block;">
-    <drag @drag="dragProject = 0; myListener(index)" style="margin: 5px; text-align: left;">
-        <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
-          <v-icon v-if="card.finnished" style="position: absolute; top: 10px; right: 10px;">done</v-icon>
-          <v-icon v-else style="position: absolute; top: 10px; right: 10px;">restore</v-icon>
-          <v-card-title :style="card.style" primary-title>
-            <div class="headline">{{ card.title }}</div><br/>
-            <v-icon v-if="card.finnished" dark class="editIcon" @click="setAsFinnished(card)">restore</v-icon>
-            <v-icon v-else dark class="editIcon" @click="setAsFinnished(card)">done</v-icon>
-            <div>{{ card.text }}</div>
-            <div class="team">
-                <div @click="$router.push('/profil/' + pers._id)" v-for="pers in card.users" :key="pers._id" class="team-member" style="cursor: pointer;">
-                   <img :src="pers.picture" alt="">
-                </div>
-            </div>
-          </v-card-title>
-        </v-card>
-    </drag>
-    </v-flex>
-  </v-flex>
-    <v-dialog style="z-index:25;" v-model="NewCard" scrollable max-width="800px">
-      <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
-        <v-card-title style="color: blue;">New card :</v-card-title>
-        <v-divider></v-divider>
-          <v-flex xs8>
-            <v-text-field v-model="card.title"
-              name="title"
-              label="title"
-              style="width: 700px; margin: 5px;"
-            ></v-text-field>
-              <v-text-field v-model="card.text"
-                name="text"
-                label="text"
-                textarea
-                id="text"
+      <v-dialog style="z-index:25;" v-model="NewCard" scrollable max-width="800px">
+        <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
+          <v-card-title style="color: blue;">New card :</v-card-title>
+          <v-divider></v-divider>
+            <v-flex xs8>
+              <v-text-field v-model="card.title"
+                name="title"
+                label="title"
                 style="width: 700px; margin: 5px;"
               ></v-text-field>
-              <v-container fluid>
-              <v-layout row wrap>
-                <v-flex xs12 sm6>
-                  <v-subheader v-text="'Selected users :'"></v-subheader>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-select
-                    :items="Teams[0]"
-                    v-model="selected"
-                    label="Select"
-                    item-text="username"
-                    item-value="username"
-                    multiple
-                    chips
-                    max-height="auto"
-                    autocomplete
-                  >
-                    <template slot="selection" slot-scope="data">
-                      <v-chip
-                        :selected="data.selected"
-                        :key="JSON.stringify(data.item)"
-                        close
-                        class="chip--select-multi"
-                        @input="data.parent.selectItem(data.item)"
-                      >
-                        <v-avatar>
-                          <img :src="data.item.picture">
-                        </v-avatar>
-                        {{ data.item.username }}
-                      </v-chip>
-                    </template>
-                    <template slot="item" slot-scope="data">
-                      <template v-if="typeof data.item !== 'object'">
-                        <v-list-tile-content v-text="data.item"></v-list-tile-content>
-                      </template>
-                      <template v-else>
-                        <v-list-tile-avatar>
-                          <img :src="data.item.picture">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                          <v-list-tile-title v-html="data.item.username"></v-list-tile-title>
-                          <v-list-tile-sub-title v-html="data.item.work"></v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </template>
-                    </template>
-                  </v-select>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-subheader v-text="'linked project'"></v-subheader>
+                <v-text-field v-model="card.text"
+                  name="text"
+                  label="text"
+                  textarea
+                  id="text"
+                  style="width: 700px; margin: 5px;"
+                ></v-text-field>
+                <v-container fluid>
+                <v-layout row wrap>
+                  <v-flex xs12 sm6>
+                    <v-subheader v-text="'Selected users :'"></v-subheader>
+                  </v-flex>
+                  <v-flex xs12 sm6>
                     <v-select
-                      v-model="card.project"
-                      item-text="project name"
-                      label="project name"
+                      :items="Teams[0]"
+                      v-model="selected"
+                      label="Select"
+                      item-text="username"
+                      item-value="username"
+                      multiple
+                      chips
+                      max-height="auto"
                       autocomplete
-                    ></v-select>
-                </v-flex>
-              </v-layout>
-            </v-container>
-            <v-flex>
-              <v-subheader>Text Color</v-subheader>
-              <v-select
-                :items="['black', 'white', 'cyan', 'grey']"
-                v-model="card.style.color"
-                label="color"
-                single-line
-              ></v-select>
-            </v-flex>
-            <v-flex>
-              <v-subheader>Background Color</v-subheader>
-              <v-select
-                :items="['black', 'white', 'cyan', 'grey']"
-                v-model="card.style['background-color']"
-                label="color"
-                single-line
-              ></v-select>
-            </v-flex>
-          </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="NewCard = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="PostCard()">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog style="z-index:25;" v-model="NewCol" scrollable max-width="800px">
-      <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
-        <v-card-title style="color: blue;">New collums :</v-card-title>
-        <v-divider></v-divider>
-          <v-flex xs8>
-            <v-text-field v-model="NewColl.title"
-              name="title"
-              label="title"
-              style="width: 700px; margin: 5px;"
-            ></v-text-field>
-          </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="NewCol = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="EditColl('new')">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-dialog style="z-index:25;" v-model="displayEditCard" scrollable max-width="800px">
-      <v-card v-if="EditCard.style" style="background-color: rgba(247,247,250,0.98); text-align: center;">
-        <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
-          <v-card-title :style="card.style" primary-title>
-            <div class="headline">{{ EditCard.title }}</div><br/>
-            <div>{{ EditCard.text }}</div>
-            <div class="team">
-                <div @click="$router.push('/profil/' + EditCard._id)" v-for="pers in EditCard.users" :key="pers._id" class="team-member" style="cursor: pointer;">
-                   <img :src="pers.picture" alt="">
-                </div>
-            </div>
-          </v-card-title>
-        </v-card>
-        <v-divider></v-divider>
-          <v-flex v-if="EditCard.style" xs8>
-            <v-flex xs12 sm12>
-              <v-subheader v-text="'linked project'"></v-subheader>
+                    >
+                      <template slot="selection" slot-scope="data">
+                        <v-chip
+                          :selected="data.selected"
+                          :key="JSON.stringify(data.item)"
+                          close
+                          class="chip--select-multi"
+                          @input="data.parent.selectItem(data.item)"
+                        >
+                          <v-avatar>
+                            <img :src="data.item.picture">
+                          </v-avatar>
+                          {{ data.item.username }}
+                        </v-chip>
+                      </template>
+                      <template slot="item" slot-scope="data">
+                        <template v-if="typeof data.item !== 'object'">
+                          <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                        </template>
+                        <template v-else>
+                          <v-list-tile-avatar>
+                            <img :src="data.item.picture">
+                          </v-list-tile-avatar>
+                          <v-list-tile-content>
+                            <v-list-tile-title v-html="data.item.username"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.work"></v-list-tile-sub-title>
+                          </v-list-tile-content>
+                        </template>
+                      </template>
+                    </v-select>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-subheader v-text="'linked project'"></v-subheader>
+                      <v-select
+                        v-model="card.project"
+                        item-text="project name"
+                        label="project name"
+                        autocomplete
+                      ></v-select>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+              <v-flex>
+                <v-subheader>Text Color</v-subheader>
                 <v-select
-                  v-model="EditCard.project"
-                  :items="ProjList"
-                  item-text="project name"
-                  label="project name"
-                  autocomplete
+                  :items="['black', 'white', 'cyan', 'grey']"
+                  v-model="card.style.color"
+                  label="color"
+                  single-line
                 ></v-select>
+              </v-flex>
+              <v-flex>
+                <v-subheader>Background Color</v-subheader>
+                <v-select
+                  :items="['black', 'white', 'cyan', 'grey']"
+                  v-model="card.style['background-color']"
+                  label="color"
+                  single-line
+                ></v-select>
+              </v-flex>
             </v-flex>
-            <v-text-field v-model="EditCard.title"
-              name="title"
-              label="title"
-              style="width: 700px; margin: 5px;"
-            ></v-text-field>
-              <v-text-field v-model="EditCard.text"
-                name="text"
-                label="text"
-                textarea
-                id="text"
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" flat @click.native="NewCard = false;">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="PostCard()">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog style="z-index:25;" v-model="NewCol" scrollable max-width="800px">
+        <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
+          <v-card-title style="color: blue;">New collums :</v-card-title>
+          <v-divider></v-divider>
+            <v-flex xs8>
+              <v-text-field v-model="NewColl.title"
+                name="title"
+                label="title"
                 style="width: 700px; margin: 5px;"
               ></v-text-field>
-              <v-container fluid>
-              <v-layout row wrap>
-                <v-flex xs12 sm6>
-                  <v-subheader v-text="'Selected users :'"></v-subheader>
-                </v-flex>
-                <v-flex xs12 sm6>
+            </v-flex>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" flat @click.native="NewCol = false;">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="EditColl('new')">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog style="z-index:25;" v-model="displayEditCard" scrollable max-width="800px">
+        <v-card v-if="EditCard.style" style="background-color: rgba(247,247,250,0.98); text-align: center;">
+          <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
+            <v-card-title :style="card.style" primary-title>
+              <div class="headline">{{ EditCard.title }}</div><br/>
+              <div>{{ EditCard.text }}</div>
+              <div class="team">
+                  <div @click="$router.push('/profil/' + EditCard._id)" v-for="pers in EditCard.users" :key="pers._id" class="team-member" style="cursor: pointer;">
+                     <img :src="pers.picture" alt="">
+                  </div>
+              </div>
+            </v-card-title>
+          </v-card>
+          <v-divider></v-divider>
+            <v-flex v-if="EditCard.style" xs8>
+              <v-flex xs12 sm12>
+                <v-subheader v-text="'linked project'"></v-subheader>
                   <v-select
-                    :items="Teams[0]"
-                    v-model="selected"
-                    label="Select"
-                    item-text="username"
-                    item-value="username"
-                    multiple
-                    chips
-                    max-height="auto"
+                    v-model="EditCard.project"
+                    :items="ProjList"
+                    item-text="project name"
+                    label="project name"
                     autocomplete
-                  >
-                    <template slot="selection" slot-scope="data">
-                      <v-chip
-                        :selected="data.selected"
-                        :key="JSON.stringify(data.item)"
-                        close
-                        class="chip--select-multi"
-                        @input="data.parent.selectItem(data.item)"
-                      >
-                        <v-avatar>
-                          <img :src="data.item.picture">
-                        </v-avatar>
-                        {{ data.item.username }}
-                      </v-chip>
-                    </template>
-                    <template slot="item" slot-scope="data">
-                      <template v-if="typeof data.item !== 'object'">
-                        <v-list-tile-content v-text="data.item"></v-list-tile-content>
-                      </template>
-                      <template v-else>
-                        <v-list-tile-avatar>
-                          <img :src="data.item.picture">
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                          <v-list-tile-title v-html="data.item.username"></v-list-tile-title>
-                          <v-list-tile-sub-title v-html="data.item.work"></v-list-tile-sub-title>
-                        </v-list-tile-content>
-                      </template>
-                    </template>
-                  </v-select>
-                </v-flex>
-              </v-layout>
-            </v-container>
+                  ></v-select>
               </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="displayEditCard = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="EditCards()">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+              <v-text-field v-model="EditCard.title"
+                name="title"
+                label="title"
+                style="width: 700px; margin: 5px;"
+              ></v-text-field>
+                <v-text-field v-model="EditCard.text"
+                  name="text"
+                  label="text"
+                  textarea
+                  id="text"
+                  style="width: 700px; margin: 5px;"
+                ></v-text-field>
+                <v-container fluid>
+                <v-layout row wrap>
+                  <v-flex xs12 sm6>
+                    <v-subheader v-text="'Selected users :'"></v-subheader>
+                  </v-flex>
+                  <v-flex xs12 sm6>
+                    <v-select
+                      :items="Teams[0]"
+                      v-model="selected"
+                      label="Select"
+                      item-text="username"
+                      item-value="username"
+                      multiple
+                      chips
+                      max-height="auto"
+                      autocomplete
+                    >
+                      <template slot="selection" slot-scope="data">
+                        <v-chip
+                          :selected="data.selected"
+                          :key="JSON.stringify(data.item)"
+                          close
+                          class="chip--select-multi"
+                          @input="data.parent.selectItem(data.item)"
+                        >
+                          <v-avatar>
+                            <img :src="data.item.picture">
+                          </v-avatar>
+                          {{ data.item.username }}
+                        </v-chip>
+                      </template>
+                      <template slot="item" slot-scope="data">
+                        <template v-if="typeof data.item !== 'object'">
+                          <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                        </template>
+                        <template v-else>
+                          <v-list-tile-avatar>
+                            <img :src="data.item.picture">
+                          </v-list-tile-avatar>
+                          <v-list-tile-content>
+                            <v-list-tile-title v-html="data.item.username"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.work"></v-list-tile-sub-title>
+                          </v-list-tile-content>
+                        </template>
+                      </template>
+                    </v-select>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+                </v-flex>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" flat @click.native="displayEditCard = false;">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="EditCards()">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -356,15 +378,86 @@
   -webkit-transition: min-width 0.1s, margin 0.1s, -webkit-transform 0.1s;
   transition: min-width 0.1s, margin 0.1s, transform 0.1s;
 }
+.container {
+  height: 900px;
+  width: 100%;
+}
+
+.left-container {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+.right-container {
+  display: none;
+  border-right: 1px solid #cecece;
+  float: right;
+  height: 100%;
+  width: 340px;
+  box-shadow: 0 0 5px 2px #aaa;
+  position: relative;
+  z-index:2;
+}
+
+.gantt-messages {
+  list-style-type: none;
+  color: white;
+  height: 50%;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-left: 5px;
+}
+
+.gantt-messages > .gantt-message {
+  background-color: #f4f4f4;
+  box-shadow:inset 5px 0 #d69000;
+  font-family: Geneva, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 5px 0;
+  padding: 8px 0 8px 10px;
+}
+
+.gantt-selected-info {
+border-bottom: 1px solid #cecece;
+color: white;
+  box-sizing: border-box;
+  font-family: Geneva, Arial, Helvetica, sans-serif;
+  height: 50%;
+  line-height: 28px;
+  padding: 10px;
+}
+
+.gantt-selected-info h2 {
+  border-bottom: 1px solid #cecece;
+}
+
+.select-task-prompt h2{
+  color: white;
+}
 </style>
 <script>
 import AccountService from '@/services/AccountService'
 import TaskService from '@/services/TaskService'
+import Gantt from './Gantt.vue'
 
 export default {
   name: 'TaskManager',
+  components: {Gantt},
   data () {
     return {
+      tasks: {
+        data: [
+          {id: 1, text: 'Task #1', start_date: '15-04-2017', duration: 3, progress: 0.6},
+          {id: 2, text: 'Task #2', start_date: '30-04-2017', duration: 3, progress: 0.4},
+          {id: 3, text: 'Task custom', start_date: '23-06-2017', duration: 20, progress: 0.2}
+        ],
+        links: [
+          {id: 1, source: 1, target: 2, type: '0'}
+        ]
+      },
+      selectedTask: null,
+      messages: [],
       selected: [],
       categories: [],
       projects: {},
@@ -410,6 +503,15 @@ export default {
     this.firebaseApp = this.$store.state.firebase
     this.GetByTeam()
     this.GetCard()
+  },
+  filters: {
+    toPercent (val) {
+      if (!val) return '0'
+      return Math.round((+val) * 100)
+    },
+    niceDate (obj) {
+      return `${obj.getFullYear()} / ${obj.getMonth()} / ${obj.getDate()}`
+    }
   },
   methods: {
     myListener (myArg, transferData, nativeEvent) {
@@ -542,6 +644,30 @@ export default {
       AccountService.FindByTeam(vue.$route.params.team).then((response) => {
         vue.Teams.push(response.data.users)
       })
+    },
+    selectTask (task) {
+      this.selectedTask = task
+    },
+
+    addMessage (message) {
+      this.messages.unshift(message)
+      if (this.messages.length > 40) {
+        this.messages.pop()
+      }
+    },
+
+    logTaskUpdate (id, mode, task) {
+      let text = (task && task.text ? ` (${task.text})` : '')
+      let message = `Task ${mode}: ${id} ${text}`
+      this.addMessage(message)
+    },
+
+    logLinkUpdate (id, mode, link) {
+      let message = `Link ${mode}: ${id}`
+      if (link) {
+        message += ` ( source: ${link.source}, target: ${link.target} )`
+      }
+      this.addMessage(message)
     }
   }
 }

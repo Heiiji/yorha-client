@@ -3,7 +3,7 @@
     <div class="overlay"></div>
     <main class="page-content content-wrap">
                 <span v-if="$route.path != '/home' || $store.state.forceMenu" class="noMobile">
-        <div class="navbar">
+        <div v-if="$route.path != '/login'" class="navbar">
             <div class="navbar-inner">
                 <div v-if="signed === true" class="sidebar-pusher">
                     <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
@@ -82,7 +82,7 @@
             </div>
         </div>
         </span>
-            <div v-if="$route.path != '/home' || $store.state.forceMenu" class="page-sidebar sidebar">
+            <div v-if="($route.path != '/home' || $store.state.forceMenu) && $route.path != '/login'" class="page-sidebar sidebar">
                 <div class="page-sidebar-inner slimscroll">
                 <div class="sidebar-header">
                         <div class="sidebar-profile">

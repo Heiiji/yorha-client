@@ -1,6 +1,9 @@
 import Api from '@/services/Api'
 
 export default {
+  GetBoard (token) {
+    return Api().get('/WorkBoard/' + token)
+  },
   GetMine (team, token) {
     return Api().get('/task/' + token + '/' + team)
   },

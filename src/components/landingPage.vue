@@ -163,7 +163,7 @@
 @media (max-width: 849px) {
   .shadowlogo {
     width: 300px;
-    left: 35%;
+    left: calc(50% - 150px);
     top: 30%;
     -webkit-animation-name: slidelogomedia;
     -webkit-animation-duration: 1s;
@@ -192,7 +192,7 @@
     position: fixed;
     align-items:center;
     justify-content:center;
-    left: calc(35% + 10px);
+    left: calc(50% - 130px);
     top: calc(30% + 80px);
     margin-left: 70px;
     z-index: 1;
@@ -219,7 +219,7 @@
     opacity: 0;
   }
   .logoblade {
-    left: 35%;
+    left: calc(50% - 140px);
     top: 30%;
     margin-top: 75px;
     margin-left: 70px;

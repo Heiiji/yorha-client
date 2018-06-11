@@ -136,7 +136,7 @@
             </v-card>
           </v-dialog>
     </main>
-    <span class="mobileOnly"><v-icon class="buttonp" style="z-index: 10; cursor: pointer; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon></span>
+    <span v-if="$route.path != '/login'" class="mobileOnly"><v-icon class="buttonp" style="z-index: 10; cursor: pointer; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon></span>
     <v-navigation-drawer
       v-model="Mdrawer2"
       temporary

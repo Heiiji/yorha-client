@@ -1,12 +1,55 @@
+<style scoped>
+  .iframeYT {
+    display: inline;
+    border: none;
+  }
+  .iframeYTmedia {
+    display: none;
+    border: none;
+  }
+  .containerYT {
+    text-align: center;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .containerYT span {
+    text-align: center;
+  }
+  .YTtitle {
+    padding-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 640px;
+  }
+  .YTdescriptor {
+    text-align: left;
+    padding-top: 50px;
+    font-size: 18px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 640px;
+  }
+@media (max-width: 960px) {
+  .iframeYT {
+    display: none;
+  }
+  .iframeYTmedia {
+    display: inline;
+  }
+}
+</style>
+
 <template>
-  <div style="padding: 100px;">
+  <div class="containerYT">
     <span v-if="Doc">
-      <h2>Shadow Live Summary - <span v-if="Doc.date">{{Doc.date.replace(/..............$/g, '.')}}</span></h2>
-      <a :href="Doc.link" target="_blank">regarder la video</a>
-      <p v-html="Doc.body.replace(/\r?\n/g, '<br />')"></p>
+      <h1 class="YTtitle">Shadow Live Summary - <span v-if="Doc.date">{{Doc.date.replace(/..............$/g, '.')}}</span></h1>
+      <iframe class="iframeYT" width="640" height="360" :src="Doc.link"></iframe>
+      <iframe class="iframeYTmedia" width="320" height="180" :src="Doc.link"></iframe>
+      <p class="YTdescriptor" v-html="Doc.body.replace(/\r?\n/g, '<br />')"></p>
     </span>
     <span v-else>
-      <h2>Chargement</h2>
+      <h1>Chargement</h1>
     </span>
   </div>
 </template>
@@ -27,6 +70,8 @@ export default {
     async getData (id) {
       const response = await DocService.getYTShadowLive(id)
       this.Doc = response.data.doc
+      var array = this.Doc.link.split('watch?v=')
+      this.Doc.link = array[0] + 'embed/' + array[1]
     }
   }
 }

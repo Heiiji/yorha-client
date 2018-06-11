@@ -307,7 +307,7 @@
   <div class="loginpage">
     <div class="backgroundlogin">
       <div class="shadowlogo">
-        <img src="/static/Shadow_Icon_White.png"/>
+        <img src="/static/Shadow_Icon_Black.png"/>
       </div>
       <div class="logoblade">
         <img src="static/bladelogo.png"/>

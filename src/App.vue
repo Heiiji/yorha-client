@@ -3,7 +3,7 @@
     <div class="overlay"></div>
     <main class="page-content content-wrap">
                 <span v-if="$route.path != '/home' || $store.state.forceMenu" class="noMobile">
-        <div class="navbar">
+        <div v-if="$route.path != '/login'" class="navbar">
             <div class="navbar-inner">
                 <div v-if="signed === true" class="sidebar-pusher">
                     <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
@@ -82,7 +82,7 @@
             </div>
         </div>
         </span>
-            <div v-if="$route.path != '/home' || $store.state.forceMenu" class="page-sidebar sidebar">
+            <div v-if="($route.path != '/home' || $store.state.forceMenu) && $route.path != '/login'" class="page-sidebar sidebar">
                 <div class="page-sidebar-inner slimscroll">
                 <div class="sidebar-header">
                         <div class="sidebar-profile">
@@ -136,7 +136,7 @@
             </v-card>
           </v-dialog>
     </main>
-    <span class="mobileOnly"><v-icon class="buttonp" style="z-index: 10; cursor: pointer; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon></span>
+    <span v-if="$route.path != '/login'" class="mobileOnly"><v-icon class="buttonp" style="z-index: 10; cursor: pointer; position: fixed; background-color: white; border-radius: 40px; padding: 10px; padding-left: 30px; padding-top: 30px; left: -30px; top: -30px;" @click.stop="Mdrawer2 = !Mdrawer2" size="30">menu</v-icon></span>
     <v-navigation-drawer
       v-model="Mdrawer2"
       temporary

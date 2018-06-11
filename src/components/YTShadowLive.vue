@@ -43,7 +43,7 @@
 <template>
   <div class="containerYT">
     <span v-if="Doc">
-      <h1 class="YTtitle">Shadow Live Summary - <span v-if="Doc.date">{{Doc.date.replace(/..............$/g, '.')}}</span></h1>
+      <h2 class="YTtitle">Shadow Live Summary<span v-if="Doc.date">{{' - ' + Doc.date.replace(/..............$/g, '')}}</span></h2>
       <iframe class="iframeYT" width="640" height="360" :src="Doc.link"></iframe>
       <iframe class="iframeYTmedia" width="320" height="180" :src="Doc.link"></iframe>
       <p class="YTdescriptor" v-html="Doc.body.replace(/\r?\n/g, '<br />')"></p>
@@ -72,6 +72,7 @@ export default {
       this.Doc = response.data.doc
       var array = this.Doc.link.split('watch?v=')
       this.Doc.link = array[0] + 'embed/' + array[1]
+      this.Doc.date = this.Doc.date.replace(/-/g, '/')
     }
   }
 }

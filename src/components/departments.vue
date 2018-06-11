@@ -1,11 +1,42 @@
+<style scoped>
+.card {
+  display: inline-block;
+  box-shadow: none;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+.card:hover {
+  opacity: 1;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+.card div {
+  box-shadow: none;
+  text-align: center;
+  margin: auto;
+}
+.select-dep {
+  margin-left: -1.2px;
+  margin-right: -2px;
+  border: none;
+  border-radius: 0px;
+  width: 25%;
+  min-width: 400px;
+  z-index: 20;
+  display: inline-block;
+}
+.select-dep:hover {
+  cursor: pointer;
+}
+</style>
 <template>
   <div>
-    <br/><br/>
     <a @click="$router.push('/department/marketing')">
     <v-card class="select-dep">
       <v-card-media
         src="https://www.tanikal.com/wp-content/uploads/2017/11/Digital-Marketing-Media-Technology-Graphic-1024x586.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -20,7 +51,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="https://geekyapar.com/wp-content/uploads/2014/04/green-lantern-batman-dark-dc-comics-comics-superman-superheroes-justice-league-aquaman-flash-comic-hero-wonder-woman-cyborg-dc-comics-69099.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -35,7 +66,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="http://tradinginsider.fr/wp-content/uploads/2017/02/langages-programmation.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -50,7 +81,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="https://www.desktopbackground.org/p/2014/04/22/750944_free-thor-hammer-wallpapers-for-iphone-y2j-wallx_1600x1200_h.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -65,7 +96,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="/static/departments/Web-wide.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -80,7 +111,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="/static/departments/infra-wide.png"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -95,7 +126,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="http://smkn2kra.sch.id/wp-content/uploads/2015/02/computer-wallpaper-background-21-high-quality-background-and-wallpaper-1-1024x640.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -110,7 +141,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="http://blog.prodware.es/wp-content/uploads/2012/05/PLM-y-social-media11.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -125,7 +156,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="http://www.gotechnologix.com/wp-content/uploads/2016/05/mobile-device-technology-wallpaper.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -140,7 +171,7 @@
     <v-card class="select-dep">
       <v-card-media
         src="https://www.dorchesterwealth.com/wp-content/themes/silvio/images/investment-management_bg.jpg"
-        height="200px"
+        height="260px"
       >
       </v-card-media>
       <v-card-title primary-title>
@@ -153,23 +184,6 @@
   </a>
   </div>
 </template>
-<style scoped>
-.card {
-  display: inline-block;
-}
-.select-dep {
-  width: 400px;
-  z-index: 20;
-  margin: 15px;
-  display: inline-block;
-}
-.select-dep:hover {
-  box-shadow: 5px 5px 4px #888888;
-  cursor: pointer;
-  -webkit-transition: box-shadow 0.4s;
-  transition: box-shadow 0.4s;
-}
-</style>
 <script>
 export default {
   name: 'Departments',

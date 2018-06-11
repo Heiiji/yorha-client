@@ -22,7 +22,7 @@
                     <div class="top-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li v-if="signed === true" class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px;">email</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px;">email</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
@@ -98,15 +98,15 @@
                         <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><i dark class="material-icons">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">
                             <!--<li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>-->
-                                <li style="width: 85%;"><a @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
-                                <li style="width: 85%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
-                                <li style="width: 85%;"><a @click="redirect('/Overview')">Version status</a></li>
+                                <li style="width: 95%;"><a @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
+                                <li style="width: 95%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
+                                <li style="width: 95%;"><a @click="redirect('/Overview')">Version status</a></li>
                             </ul>
                         </li>
                         <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="document = !document" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><i dark class="material-icons">keyboard_arrow_down</i></a>
-                            <ul v-if="document" class="sub-menu" style="display: inline-block;">
-                                <li style="width: 85%;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
-                                <li style="width: 85%;"><a @click="redirect('/version/viewer')">QA Report</a></li>
+                            <ul v-if="document" class="sub-menu">
+                                <li style="width: 95%;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
+                                <li style="width: 95%;"><a @click="redirect('/version/viewer')">QA Report</a></li>
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
@@ -210,23 +210,24 @@
 </template>
 
 <style>
+.top-menu .navbar-nav>li>a {
+  padding-bottom: 10px;
+}
 .sidebar {
   position: fixed;
-}
-.g-signin-button {
-  /* This is where you control how the button looks. Be creative! */
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 3px;
-  background-color: #3c82f7;
-  color: #fff;
-  margin-left: 15px;
-  box-shadow: 0 3px 0 #0f69ff;
 }
 .navbar {
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
 }
+@media (max-width:1100px) {
+  .navbar-right {
+    display: none !important;
+  }
+}
 @media (max-width:850px) {
+  .page-sidebar {
+    display: none;
+  }
   .noMobile {
     display: none;
   }
@@ -244,7 +245,7 @@
     margin-left: 0px;
   }
 }
-@media (min-width:850px) {
+@media (min-width:851px) {
   .mobileOnly {
     display: none;
   }

@@ -196,14 +196,11 @@
       </v-dialog>
       <v-dialog style="z-index:25;" v-model="randPopup" scrollable max-width="500px">
         <v-card style="background-color: rgba(250,250,250,0.95); text-align: center; padding: 20px;">
+          <div>
+            <img :src="randUser.picture" style="float: left; width: 100px; height: 100px; border-radius: 50px;" />
+            <h2 style="text-align: center; padding: 15px; padding-top: 5px; font-size: 1.3em;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>
+          </div>
           <v-card-title style="color: blue; text-align: center; font-size: 1.2em; display: block;">{{randUserResult}}</v-card-title>
-          <v-container grid-list-md>
-            <hr/>
-            <v-layout row wrap>
-              <img :src="randUser.picture" style="float: left; width: 150px; height: 150px;" />
-              <h2 style="text-align: center; padding: 15px;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>
-            </v-layout>
-          </v-container>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="blue darken-1" flat @click.native="randPopup = false;">Close</v-btn>

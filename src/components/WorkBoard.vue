@@ -96,6 +96,13 @@ export default {
       })
     },
     PutBoard () {
+      let vue = this
+      this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
+        vue.newBoard.token = idToken
+        TaskService.PutBoard(vue.newBoard).then((response) => {
+          vue.GetBoard()
+        })
+      })
     },
     ArchiveBoard () {
     }

@@ -4,6 +4,9 @@ export default {
   GetBoard (token) {
     return Api().get('/GetBoard/' + token)
   },
+  PutBoard (params) {
+    return Api().put('/PutBoard', params)
+  },
   GetMine (team, token) {
     return Api().get('/task/' + token + '/' + team)
   },

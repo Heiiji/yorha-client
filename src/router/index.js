@@ -9,7 +9,6 @@ import Management from '@/components/Management'
 import Trombi     from '@/components/trombi'
 const Changelog   = () => import('@/components/changelog')
 const Home        = () => import('@/components/home')
-const Mattermost  = () => import('@/components/mattermost')
 const Calendar  = () => import('@/components/calendar')
 const DrHouse  = () => import('@/components/DrHouse')
 const Chat  = () => import('@/components/chat')
@@ -245,11 +244,6 @@ let router = new Router({
       path: '/changelog',
       name: 'Changelog',
       component: Changelog
-    },
-    {
-      path: '/mattermost',
-      name: 'mattermost',
-      component: Mattermost
     }
   ]
 })

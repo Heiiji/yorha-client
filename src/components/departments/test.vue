@@ -29,11 +29,14 @@
                       </div>
                   </div>
                       <div class="panel panel-white">
+                        <v-btn v-if="$store.state.user.local.work === 'Test' && $store.state.user.local.qualifier === 'SquadLeader'" @click="NewDescription = description; EditDescription = true;" color="primary" style="float: right;" fab small dark>
+                          <v-icon>edit</v-icon>
+                        </v-btn>
                           <div class="panel-heading">
                               <div class="panel-title">Description</div>
                           </div>
                           <div class="panel-body">
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                              <p v-html="description.replace(/\n/g, '<br/>')" ></p>
                           </div>
                       </div>
               </div>
@@ -88,6 +91,24 @@
           </div>
       </div>
   </div>
+    <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
+      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+          <v-flex xs8>
+            <v-text-field v-model="NewDescription"
+              name="Description"
+              label="New Description"
+              id="Description"
+              textarea
+              style="width: 990px; margin: 5px;"
+            ></v-text-field>
+          </v-flex>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="EditDescription = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="ChangeDesc()">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
 <v-dialog style="z-index:25;" v-model="sendMSG" scrollable max-width="500px">
   <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
@@ -114,6 +135,7 @@
 <script>
 import AccountService from '@/services/AccountService'
 import VersionService from '@/services/VersionService'
+import DepService from '@/services/depService'
 import News from '@/services/NewsService'
 
 export default {
@@ -122,6 +144,9 @@ export default {
     return {
       user: [],
       users: [],
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      NewDescription: '',
+      EditDescription: false,
       sendMSG: false,
       versions: [],
       allNews: [],
@@ -137,8 +162,10 @@ export default {
     }
   },
   mounted () {
+    this.firebaseApp = this.$store.state.firebase
     this.navigator.language = navigator.language
     this.GetByDep()
+    this.GetDep()
     this.getNews()
     this.getVersion('all')
   },
@@ -147,6 +174,30 @@ export default {
       var vue = this
       AccountService.FindByDep('Test').then((response) => {
         vue.users = response.data.users
+      })
+    },
+    GetDep () {
+      var vue = this
+      this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
+        DepService.fetchDep(idToken, 'Test').then((response) => {
+          if (response.data.department.description) {
+            vue.description = response.data.department.description
+          }
+        })
+      })
+    },
+    ChangeDesc () {
+      var vue = this
+      vue.EditDescription = false
+      this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
+        let arg = {
+          token: idToken,
+          description: vue.NewDescription,
+          department: vue.$store.state.user.local.work
+        }
+        DepService.ChangeDesc(arg).then((res) => {
+          vue.GetDep()
+        })
       })
     },
     async getVersion (arg) {

@@ -34,16 +34,6 @@
                     <button @click="EditDescription = true" class="btn btn-primary btn-block">Modify Description</button>
                     <button v-if="user.local.tel === 'none'" @click="EditTel = true" class="btn btn-primary btn-block">Add my number</button>
                     <button v-else @click="EditTel = true" class="btn btn-primary btn-block">Change my number</button>
-                    <v-flex xs12 sm12>
-                      <v-select
-                        :items="AvTheme"
-                        v-model="homeTheme"
-                        label="Home wallpaper theme"
-                        style="width: 100%;"
-                        @change="PostTheme($event)"
-                        autocomplete
-                      ></v-select>
-                    </v-flex>
                 </div>
                 <div class="col-md-6 m-t-lg">
                     <v-tabs style="margin: 10px;" fixed-tabs>

@@ -15,7 +15,7 @@
                 </div>
                 <div v-if="signed === true">
                     <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/rechercher">
-                        <input type="text" name="search" v-model="search" style="width: 100%; margin-left: 20px;" class="form-control search-input" placeholder="Search...">
+                        <input type="text" name="search" v-model="search" style="width: 100%; margin-left: 20px; border-radius: 20px;" class="form-control search-input" placeholder="Search...">
                     </form>
                 </div>
                 <div class="topmenu-outer">
@@ -59,7 +59,6 @@
                             </li>-->
                             <li>
                               <div v-if="signed === true" @click="redirect('/profil')" style="padding: 20px; cursor: pointer;">
-                                <span style="font-size: 0.8em; margin: 15px;">{{user.local.username}}</span>
                                 <v-avatar v-if="user.local" size="32px" tile>
                                   <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
                                 </v-avatar>

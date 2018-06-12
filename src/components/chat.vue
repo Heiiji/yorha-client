@@ -1,7 +1,97 @@
+<style scoped>
+.conteneur {
+  position: fixed;
+  padding-top: 60px;
+  padding-left: 175px;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  margin: 0px;
+  height: 100%;
+}
+.title {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+}
+.userList {
+  position: relative;
+  width: 20%;
+  height: 100%;
+  margin-left: -16px;
+  display: inline-block;
+  border-right-color: black;
+  border-right-width: 1px;
+  border-right-style: solid;
+  background-color: rgba(240, 240, 240, 0.9);
+  margin: 0px;
+}
+.chatPlace {
+  position: relative;
+  display: inline-block;
+  width: 81.2%;
+  height: 100%;
+  margin: 0px;
+  background-color: rgba(210, 210, 210, 0.9);
+}
+.flex::-webkit-scrollbar {
+  display: none;
+}
+.list__tile--avatar {
+  height: auto !important;
+}
+</style>
 <template>
   <div>
-    <v-layout row>
-    <v-flex xs12 sm4>
+    <v-layout class="conteneur" row>
+      <div class="userList">
+        <div class="title">
+          <h3>Your conversations</h3>
+        </div>
+        <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+          <v-list-tile-content>
+            <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
+          </v-list-tile-content>
+          <v-list-tile-action>
+            <v-icon :color="chat[0].asread ? 'grey' : 'teal'">chat_bubble</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+      </div>
+      <div class="chatPlace">
+        <v-flex style="height: 100%; width: 100%; position: relative; overflow-y: scroll;">
+          <v-card style="position: absolute; bottom: 0px; width: 100%;">
+            <v-list style="height: auto;">
+              <div style="padding-bottom: 10px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
+                <v-list-tile
+                  avatar
+                  ripple
+                >
+                  <v-list-tile-avatar>
+                    <img :src="item.senderPic">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="item.sender"></v-list-tile-title>
+                    <v-list-tile-sub-title style="line-break: normal;" v-html="item.text"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </div>
+                  <div v-if="memoire >= 0" class="panel-body">
+                    <div class="post">
+                      <textarea class="form-control" placeholder="Message" v-model="msg.text" rows="4=6"></textarea>
+                      <div class="post-options">
+                        <a href="#"><i class="icon-camera"></i></a>
+                        <a href="#"><i class="icon-link"></i></a>
+                        <button class="btn btn-default pull-right" @click="SendMSG()">Send</button>
+                      </div>
+                    </div>
+                  </div>
+            </v-list>
+          </v-card>
+        </v-flex>
+      </div>
+    <!-- <v-flex xs12 sm4>
       <v-card style="height: 90%; padding-left: 15px;">
         <v-toolbar color="teal" dark>
           <v-toolbar-title class="text-xs-center">Your conversation</v-toolbar-title>
@@ -51,7 +141,7 @@
             </div>
         </v-list>
       </v-card>
-    </v-flex>
+    </v-flex> -->
   </v-layout>
   </div>
 </template>
@@ -147,6 +237,11 @@ export default {
             })
           }
           vue.conv = JSON.parse(JSON.stringify(conv))
+          vue.conv.forEach((elem) => {
+            elem.forEach((msg) => {
+              msg.text = msg.text.replace(/\r?\n/g, '<br />').replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;" target="_blank">http' + '$1' + '</a>')
+            })
+          })
           if (vue.memoire >= 0) {
             vue.displayMsg = vue.conv[vue.memoire]
           } else {

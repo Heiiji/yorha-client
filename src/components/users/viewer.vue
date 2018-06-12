@@ -35,10 +35,6 @@
                         </v-menu>
                     <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
                 </div>
-                <div class="col-md-6 m-t-lg">
-                    <div class="profile-timeline">
-                        </div>
-                </div>
                 <div class="col-md-3 m-t-lg">
                     <div class="panel panel-white">
                         <div class="panel-heading">

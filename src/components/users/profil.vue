@@ -35,291 +35,7 @@
                     <button v-if="user.local.tel === 'none'" @click="EditTel = true" class="btn btn-primary btn-block">Add my number</button>
                     <button v-else @click="EditTel = true" class="btn btn-primary btn-block">Change my number</button>
                 </div>
-                <div class="col-md-6 m-t-lg">
-                    <v-tabs style="margin: 10px;" fixed-tabs>
-                      <v-tab>
-                        General
-                      </v-tab>
-                      <v-tab-item style="margin-top: 10px;">
-                        <div class="panel panel-white">
-                            <div class="panel-body">
-                                <div class="post">
-                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
-                                    <div class="post-options">
-                                        <a href="#"><i class="icon-camera"></i></a>
-                                        <a href="#"><i class="icon-link"></i></a>
-                                        <button class="btn btn-default pull-right" @click="News.department = 'General'; postNews();">Post</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-timeline">
-                            <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === 'General'" :key="item._id" class="timeline-item" style="display: block;">
-                                    <div class="panel panel-white">
-                                        <div class="panel-body">
-                                            <div class="timeline-item-header">
-                                                <img :src="item.senderPic" alt="">
-                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
-                                            </div>
-                                            <div class="timeline-item-post">
-                                                <p v-html="item.text"></p>
-                                                <div class="timeline-options">
-                                                    <a href="#"><i class="icon-share"></i> Share</a>
-                                                </div>
-                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                                    <div class="timeline-comment-header">
-                                                        <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
-                                                    </div>
-                                                    <p class="timeline-comment-text">{{comm.text}}</p>
-                                                </div>
-                                                <v-text-field
-                                                  name="reply"
-                                                  label="Reply"
-                                                  style="position: absolute; width: 75%;"
-                                                  v-model="item.message"
-                                                  single-line
-                                                ></v-text-field>
-                                                <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
-                                                  <v-icon dark>send</v-icon>
-                                                </v-btn>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                      </v-tab-item>
-                      <v-tab>
-                        Department
-                      </v-tab>
-                      <v-tab-item style="margin-top: 10px;">
-                        <div class="panel panel-white">
-                            <div class="panel-body">
-                                <div class="post">
-                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
-                                    <div class="post-options">
-                                        <a href="#"><i class="icon-camera"></i></a>
-                                        <a href="#"><i class="icon-link"></i></a>
-                                        <button class="btn btn-default pull-right" @click="News.department = $store.state.user.local.work; postNews();">Post</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-timeline">
-                            <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === $store.state.user.local.work" :key="item._id" class="timeline-item" style="display: block;">
-                                    <div class="panel panel-white">
-                                        <div class="panel-body">
-                                            <div class="timeline-item-header">
-                                                <img :src="item.senderPic" alt="">
-                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
-                                            </div>
-                                            <div class="timeline-item-post">
-                                                <p v-html="item.text"></p>
-                                                <div class="timeline-options">
-                                                    <a href="#"><i class="icon-share"></i> Share</a>
-                                                </div>
-                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                                    <div class="timeline-comment-header">
-                                                        <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
-                                                    </div>
-                                                    <p class="timeline-comment-text">{{comm.text}}</p>
-                                                </div>
-                                                <v-text-field
-                                                  name="reply"
-                                                  label="Reply"
-                                                  style="position: absolute; width: 75%;"
-                                                  v-model="item.message"
-                                                  single-line
-                                                ></v-text-field>
-                                                <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
-                                                  <v-icon dark>send</v-icon>
-                                                </v-btn>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                      </v-tab-item>
-                      <v-tab>
-                        Whatever
-                      </v-tab>
-                      <v-tab-item v-if="$store.state.user.local.team !== 'none'" style="margin-top: 10px;">
-                        <div class="panel panel-white">
-                            <div class="panel-body">
-                                <div class="post">
-                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
-                                    <div class="post-options">
-                                        <a href="#"><i class="icon-camera"></i></a>
-                                        <a href="#"><i class="icon-link"></i></a>
-                                        <button class="btn btn-default pull-right" @click="News.department = 'Whatever'; postNews();">Post</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-timeline">
-                            <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === 'Whatever'" :key="item._id" class="timeline-item" style="display: block;">
-                                    <div class="panel panel-white">
-                                        <div class="panel-body">
-                                            <div class="timeline-item-header">
-                                                <img :src="item.senderPic" alt="">
-                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
-                                            </div>
-                                            <div class="timeline-item-post">
-                                                <p v-html="item.text"></p>
-                                                <div class="timeline-options">
-                                                    <a href="#"><i class="icon-share"></i> Share</a>
-                                                </div>
-                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                                    <div class="timeline-comment-header">
-                                                        <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
-                                                    </div>
-                                                    <p class="timeline-comment-text">{{comm.text}}</p>
-                                                </div>
-                                                <v-text-field
-                                                  name="reply"
-                                                  label="Reply"
-                                                  style="position: absolute; width: 75%;"
-                                                  v-model="item.message"
-                                                  single-line
-                                                ></v-text-field>
-                                                <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
-                                                  <v-icon dark>send</v-icon>
-                                                </v-btn>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                      </v-tab-item>
-                      <v-tab v-if="Teams[0]">
-                        <v-menu style="background-color: rgba(0, 0, 0, 0)" offset-y>
-                          <v-btn style="background-color: rgba(0, 0, 0, 0); box-shadow: none; padding-bottom: 45px;" slot="activator">
-                            {{ activeTeam }}
-                            <img src="https://rockandtait.com/wp-content/uploads/2016/07/arrow-down-icon-png-4.png" style="display: absolute; top: 10%; right: 10px; width: 20px; margin-left: 10px;" />
-                            </v-btn>
-                          <v-list>
-                            <v-list-tile v-for="item in Teams" :key="item.name">
-                              <v-list-tile-title @click="activeTeam = item.name" style="cursor: pointer;">{{ item.name }}</v-list-tile-title>
-                            </v-list-tile>
-                          </v-list>
-                        </v-menu>
-                      </v-tab>
-                      <v-tab-item style="margin-top: 10px;">
-                        <div class="panel panel-white">
-                            <div class="panel-body">
-                                <div class="post">
-                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
-                                    <div class="post-options">
-                                        <a href="#"><i class="icon-camera"></i></a>
-                                        <a href="#"><i class="icon-link"></i></a>
-                                        <button class="btn btn-default pull-right" @click="News.department = activeTeam; postNews();">Post</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-timeline">
-                            <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" style="display: block;">
-                                    <div class="panel panel-white">
-                                        <div class="panel-body">
-                                            <div class="timeline-item-header">
-                                                <img :src="item.senderPic" alt="">
-                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
-                                            </div>
-                                            <div class="timeline-item-post">
-                                                <p v-html="item.text"></p>
-                                                <div class="timeline-options">
-                                                    <a href="#"><i class="icon-share"></i> Share</a>
-                                                </div>
-                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                                    <div class="timeline-comment-header">
-                                                        <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
-                                                    </div>
-                                                    <p class="timeline-comment-text">{{comm.text}}</p>
-                                                </div>
-                                                <v-text-field
-                                                  name="reply"
-                                                  label="Reply"
-                                                  style="position: absolute; width: 75%;"
-                                                  v-model="item.message"
-                                                  single-line
-                                                ></v-text-field>
-                                                <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
-                                                  <v-icon dark>send</v-icon>
-                                                </v-btn>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                      </v-tab-item><v-tab-item style="margin-top: 10px;">
-                        <div class="panel panel-white">
-                            <div class="panel-body">
-                                <div class="post">
-                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
-                                    <div class="post-options">
-                                        <a href="#"><i class="icon-camera"></i></a>
-                                        <a href="#"><i class="icon-link"></i></a>
-                                        <button class="btn btn-default pull-right" @click="News.department = activeTeam; postNews();">Post</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-timeline">
-                            <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" style="display: block;">
-                                    <div class="panel panel-white">
-                                        <div class="panel-body">
-                                            <div class="timeline-item-header">
-                                                <img :src="item.senderPic" alt="">
-                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
-                                            </div>
-                                            <div class="timeline-item-post">
-                                                <p v-html="item.text"></p>
-                                                <div class="timeline-options">
-                                                    <a href="#"><i class="icon-share"></i> Share</a>
-                                                </div>
-                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                                    <div class="timeline-comment-header">
-                                                        <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
-                                                    </div>
-                                                    <p class="timeline-comment-text">{{comm.text}}</p>
-                                                </div>
-                                                <v-text-field
-                                                  name="reply"
-                                                  label="Reply"
-                                                  style="position: absolute; width: 75%;"
-                                                  v-model="item.message"
-                                                  single-line
-                                                ></v-text-field>
-                                                <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
-                                                  <v-icon dark>send</v-icon>
-                                                </v-btn>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                      </v-tab-item>
-                    </v-tabs>
-                </div>
+
                 <div class="col-md-3 m-t-lg">
                     <div v-for="team in Teams" :key="team.name" class="panel panel-white">
                         <div class="panel-heading">
@@ -383,23 +99,6 @@
           </v-card>
         </v-dialog>
 
-      <v-dialog style="z-index:25;" v-model="EditPicture" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-          <v-card-title style="color: blue;">Nouvelle image de profil :</v-card-title>
-          <v-divider></v-divider>
-            <v-flex xs8>
-              <label>File
-                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-              </label>
-            </v-flex>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-btn color="blue darken-1" flat @click.native="EditPicture = false;">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="changePhoto()">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
     <v-dialog style="z-index:25;" v-model="EditTel" scrollable max-width="500px">
       <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
           <v-flex xs8>
@@ -426,17 +125,13 @@
 
 <script>
 import AccountService from '@/services/AccountService'
-import News from '@/services/NewsService'
 import Api from '@/services/Api'
-import axios from 'axios'
 
 export default {
   name: 'Profil',
   data () {
     return {
       edition: false,
-      homeTheme: '',
-      AvTheme: ['cat', 'city', 'landscape', 'dog', 'abstract'],
       user: [],
       file: '',
       navigator: {
@@ -446,7 +141,6 @@ export default {
       EditDescription: null,
       NewDescription: '',
       EditPicture: null,
-      NewPicture: '',
       NewTeam: '',
       EditTel: false,
       NewTel: '',
@@ -496,7 +190,6 @@ export default {
     } else {
       this.firebaseApp = this.$store.state.firebase
       this.user = this.$store.state.user
-      this.getNews()
       this.GetByTeam()
     }
   },
@@ -525,14 +218,6 @@ export default {
           vue.$store.state.user.local = response.data
           vue.GetByTeam()
         })
-      })
-    },
-    PostTheme (target) {
-      var vue = this
-      vue.$store.state.user.local.homeTheme = target
-      AccountService.editHomeTheme({
-        newTheme: target,
-        mail: vue.$store.state.user.local.mail
       })
     },
     PostDescription (desc) {
@@ -582,79 +267,6 @@ export default {
           vue.selectedTeam = vue.Teams[0]
         })
       })
-    },
-    async postNews () {
-      this.News.sender = this.$store.state.user.local.username
-      this.News.senderPic = this.$store.state.user.local.picture
-      var New = JSON.parse(JSON.stringify(this.News))
-      this.News = []
-      News.Post(New).then(() => {
-        this.getNews()
-      })
-      this.PostNews = false
-    },
-    async postReply (target, message) {
-      var sender = this.$store.state.user.local.username
-      var senderPic = this.$store.state.user.local.picture
-      News.PutReply({
-        target: target,
-        sender: sender,
-        message: message,
-        senderPic: senderPic
-      }).then(() => {
-        this.getNews()
-      })
-    },
-    async getNews () {
-      var vue = this
-      const response = await News.fetchNews()
-      if (response.data) {
-        if (response.data.news) {
-          var tmp = response.data.news
-          tmp.sort(function (a, b) {
-            if (a.date < b.date) {
-              return 1
-            } else {
-              return -1
-            }
-          })
-          tmp.forEach(function (element) {
-            element.date = new Date(element.date)
-            element.text = element.text.replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;" target="_blank">http' + '$1' + '</a>')
-            News.GetReply(element._id).then((reponse) => {
-              element.reply = reponse.data.reply
-              element.reply.forEach(function (el) {
-                el.date = new Date(el.date)
-              })
-              element.message = ''
-              vue.allNews = ''
-              vue.allNews = tmp
-            })
-          })
-        }
-      }
-    },
-    handleFileUpload () {
-      this.file = this.$refs.file.files[0]
-    },
-    changePhoto () {
-      let formData = new FormData()
-      formData.append('file', this.file)
-      formData.append('username', this.user.local.username)
-      formData.append('mail', this.user.email)
-      axios.post('http://localhost:8081/account/photo',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-      ).then(function () {
-        console.log('SUCCESS!!')
-      })
-        .catch(function (error) {
-          console.log('FAILURE : ' + error)
-        })
     },
     changeTel () {
       AccountService.editTel({

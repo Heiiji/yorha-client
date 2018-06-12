@@ -43,6 +43,7 @@ const Login       = () => import('@/components/landingPage')
 import SearchUser from '@/components/users/SearchUser'
 import Viewer     from '@/components/users/viewer'
 import Profil     from '@/components/users/profil'
+import DashBoard  from '@/components/users/DashBoard'
 
 import firebase from 'firebase'
 
@@ -149,6 +150,11 @@ let router = new Router({
       path: '/Profil',
       name: 'Profil',
       component: Profil
+    },
+    {
+      path: '/DashBoard',
+      name: 'DashBoard',
+      component: DashBoard
     },
     {
       path: '/calendar',

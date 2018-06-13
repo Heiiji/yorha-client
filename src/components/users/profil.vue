@@ -1,124 +1,460 @@
+<style type="text/css">
+#photo {
+  float: left;
+  margin: 25px;
+}
+#editer {
+  opacity: 0;
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+  display: inline-block;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background-color: rgba(200, 200, 200, 0);
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+#photo:hover #editer {
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+  opacity: 1;
+  background-color: rgba(200, 200, 200, 0.7);
+}
+.rowimage {
+  padding-top: 50px;
+  text-align: center;
+}
+.userprofileimage {
+  margin: auto;
+  height: 200px;
+  width: 200px;
+}
+.profile-image-container img {
+  border-radius: 100px;
+}
+#main-wrapper {
+  display: flex;
+}
+.infoperso {
+  margin-top: 50px;
+  height: 100%;
+  width: 49%;
+  background-color: white;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+.mycontainer {
+  position: relative;
+  border-top: 1px solid rgba(0,0,0,0.12);
+}
+.userbtn {
+  display: block;
+  text-decoration: none;
+  -webkit-user-drag: none;
+  decoration: none;
+  text-decoration: none;
+}
+.userbtn:hover {
+  text-decoration: none;
+}
+.textcontainer {
+  padding: 24px;
+  margin-left: 8px;
+  display: flex;
+  align-items: baseline;
+  -webkit-box-align: baseline;
+  color: black;
+}
+.texttitle {
+  width: 200px;
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+.texttitle h5 {
+  font-size: 16px;
+  margin: 0px;
+}
+.texttitle h6 {
+  font-size: 16px;
+  margin: 0px;
+}
+.textdisp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  font-size: 14px;
+  padding-right: 24px;
+}
+.editicon {
+  display: flex;
+  -webkit-box-flex: 0;
+  height: 24px;
+  width: 36px;
+  color: rgba(0,0,0,0.65);
+  margin-left: 8px;
+  text-align: right;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: absolute;
+  right: 10px;
+}
+.team {
+  margin-left: 2%;
+}
+.teamcontainer {
+  border: none !important;
+}
+.iconteam {
+  width: 100% !important;
+}
+.formin {
+  padding: 0px !important;
+  width: 90%;
+  padding-top: 4px !important;
+}
+.formdiv {
+  margin-top: 0px;
+  -webkit-animation-name: slidein;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-delay: 0s;
+  -moz-animation-name: slidein;
+  -moz-animation-duration: 0.3s;
+  -moz-animation-delay: 0s;
+  -ms-animation-name: slidein;
+  -ms-animation-duration: 0.3s;
+  -ms-animation-delay: 0s;
+  -o-animation-name: slidein;
+  -o-animation-duration: 0.3s;
+  -o-animation-delay: 0s;
+  animation-name: slidein;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+  transition : all 0.3s;
+  -webkit-transition : all 0.3s;
+  -moz-transition : all 0.3s;
+}
+.formdiv label {
+ padding-left: 232px;
+ width: calc(100% - 44px);
+}
+.formdivteam label {
+ padding-left: 232px;
+ width: calc(100% - 88px);
+}
+.check {
+  position: absolute;
+  color: rgba(0,0,0,0.65);
+  margin-top: 10px;
+}
+.checkdone {
+  position: absolute;
+  color: rgba(0,0,0,0.65);
+  margin-top: 10px;
+  margin-left: 44px;
+}
+.teamcreate {
+  height: 35px;
+  margin-top: -20px;
+  margin-bottom: 0px !important;
+  padding-left: 2px !important;
+  -webkit-animation-name: slideinleft;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-delay: 0s;
+  -moz-animation-name: slideinleft;
+  -moz-animation-duration: 0.3s;
+  -moz-animation-delay: 0s;
+  -ms-animation-name: slideinleft;
+  -ms-animation-duration: 0.3s;
+  -ms-animation-delay: 0s;
+  -o-animation-name: slideinleft;
+  -o-animation-duration: 0.3s;
+  -o-animation-delay: 0s;
+  animation-name: slideinleft;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+  transition : all 0.3s;
+  -webkit-transition : all 0.3s;
+  -moz-transition : all 0.3s;
+}
+
+.btnteamcreate {
+  margin-right: 52px;
+  -webkit-animation-name: slideinleftbis;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-delay: 0s;
+  -moz-animation-name: slideinleftbis;
+  -moz-animation-duration: 0.3s;
+  -moz-animation-delay: 0s;
+  -ms-animation-name: slideinleftbis;
+  -ms-animation-duration: 0.3s;
+  -ms-animation-delay: 0s;
+  -o-animation-name: slideinleftbis;
+  -o-animation-duration: 0.3s;
+  -o-animation-delay: 0s;
+  animation-name: slideinleftbis;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+  transition : all 0.3s;
+  -webkit-transition : all 0.3s;
+  -moz-transition : all 0.3s;
+}
+.texttitlebigedit {
+  width: calc(200px + 5%);
+}
+.forminedit {
+  padding-top: 0px !important;
+  width: 100%;
+}
+
+@media (max-width: 849px) {
+  #main-wrapper {
+    display: block;
+  }
+  .team {
+    margin-left: 0px;
+  }
+  .infoperso {
+  width: 100%;
+  }
+  .formdiv label {
+    padding-left: 162px;
+  }
+  .texttitle {
+    width: 130px;
+  }
+  .texttitlebig {
+    width: 160px;
+  }
+  .texttitlebigedit {
+    width: calc(140px + 5%);
+  }
+  .forminedit {
+    width: 60%;
+  }
+}
+
+@keyframes slidein {
+  from {
+    margin-top: -61px;
+    opacity: 0;
+  }
+  30% {
+  opacity: 0;
+  }
+  71% {
+  opacity: 1;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+@keyframes slideinleft {
+  from {
+    margin-left: 150px;
+    opacity: 0;
+  }
+  30% {
+  opacity: 0;
+  }
+  71% {
+  opacity: 1;
+  }
+  to {
+    opacity: 1;
+    margin-left: 0px;
+  }
+}
+@keyframes slideinleftbis {
+  from {
+    margin-right: -44px;
+    opacity: 0;
+  }
+  30% {
+  opacity: 0;
+  }
+  71% {
+  opacity: 1;
+  }
+  to {
+    opacity: 1;
+    margin-right: 52px;
+  }
+}
+</style>
 <template>
   <div>
     <div v-if="user.local" style="padding-top: 0px;">
         <div class="profile-cover" style="background: none;">
-            <v-parallax style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;" src="/static/Wallpaper 7.jpg"></v-parallax>
-            <div class="row">
-                <div class="col-md-3 profile-image">
+            <div class="row rowimage">
+                <div class="userprofileimage">
                     <div class="profile-image-container">
-                        <img :src="user.local.picture" alt="">
+                        <img height="200px" width="200px" :src="user.local.picture" alt="">
+                        <h2 class="text-center">{{ user.local.username }}</h2>
                     </div>
                 </div>
             </div>
         </div>
         <div id="main-wrapper">
-            <div class="row">
-                <div class="col-md-3 user-profile">
-                    <h3 class="text-center">{{ user.local.username }}</h3>
-                    <p class="text-center">{{ user.local.work }} ({{ user.local.qualifier }})</p>
-                    <hr>
-                    <ul class="list-unstyled text-center">
-                        <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
-                        <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.local.mail }}</a></p></li>
-                        <li><p v-if="user.local.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>tel non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.local.tel">{{user.local.tel}}</a></p></li>
-                    </ul>
-                    <hr>
-
-                        <div class="panel-heading">
-                            <div class="panel-title">Description</div>
-                        </div>
-                        <div class="panel-body">
-                            <p>{{ user.local.description }}</p>
-                        </div>
-                    <hr>
-                    <button @click="EditDescription = true" class="btn btn-primary btn-block">Modify Description</button>
-                    <button v-if="user.local.tel === 'none'" @click="EditTel = true" class="btn btn-primary btn-block">Add my number</button>
-                    <button v-else @click="EditTel = true" class="btn btn-primary btn-block">Change my number</button>
+          <div class="infoperso">
+            <div class="mycontainer">
+              <a class="userbtn">
+                <div class="textcontainer">
+                  <div class="texttitle">
+                    <h5>Team</h5>
+                  </div>
+                  <div class="textdisp">
+                    {{ user.local.work }} ({{ user.local.qualifier }})
+                  </div>
                 </div>
-
-                <div class="col-md-3 m-t-lg">
-                    <div v-for="team in Teams" :key="team.name" class="panel panel-white">
-                        <div class="panel-heading">
-                            <div class="panel-title">Team : {{ team.name }}</div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="team">
-                                <div v-for="pers in team.users" :key="pers._id" @click="$router.push('/profil/' + pers._id)" class="team-member" style="cursor: pointer;">
-                                    <v-tooltip style="display: inline;" bottom>
-                                      <img slot="activator" :src="pers.picture" alt="">
-                                      <span>{{pers.username}}</span>
-                                    </v-tooltip>
-                                </div>
-                                <br/>
-                                <button v-if="$store.state.user.local.work === 'R&D' || $store.state.user.local.mail === 'julien.juret@blade-group.com'" @click="$router.push('taskmanager/' + team.name);" class="btn btn-primary btn-block">Task Manager</button>
-                                <button @click="NewTeam = team.name; DelTeam ();" class="btn btn-primary btn-block">Quit team</button>
-                            </div>
-                        </div>
-                    </div>
-                    <button @click="CreateTeam = true" class="btn btn-primary btn-block">Create a team</button>
-                </div>
+              </a>
             </div>
-        </div>
-    </div>
-    <div>
-      <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-            <v-flex xs8>
-              <v-text-field v-model="NewDescription"
-                name="Description"
-                label="New Description"
-                id="Description"
-                textarea
-                style="width: 990px; margin: 5px;"
-              ></v-text-field>
-            </v-flex>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-btn color="blue darken-1" flat @click.native="EditDescription = false;">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="PostDescription(NewDescription)">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-        <v-dialog style="z-index:25;" v-model="CreateTeam" scrollable max-width="800px">
-          <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-            <v-card-title style="color: blue;">Nouvelle team :</v-card-title>
-            <v-divider></v-divider>
-              <v-flex xs8>
-                <v-text-field v-model="NewTeam"
-                  name="TeamName"
-                  label="Team Name"
-                  id="TeamName"
-                  style="width: 700px; margin: 5px;"
-                ></v-text-field>
-              </v-flex>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-btn color="blue darken-1" flat @click.native="CreateTeam = false;">Close</v-btn>
-              <v-btn color="blue darken-1" flat @click.native="PostTeam()">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+            <div class="mycontainer">
+              <a class="userbtn">
+                <div class="textcontainer">
+                  <div class="texttitle">
+                    <h5>Email</h5>
+                  </div>
+                  <div class="textdisp">
+                    {{ user.local.mail }}
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="mycontainer">
+              <a class="userbtn">
+                <div class="textcontainer">
+                  <div class="texttitle">
+                    <h5>Localisation</h5>
+                  </div>
+                  <div class="textdisp">
+                    Paris, France
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="mycontainer">
+              <a class="userbtn" @click="EditTel = !EditTel">
+                <div class="textcontainer">
+                  <div class="texttitle">
+                    <h5>Téléphone</h5>
+                  </div>
+                  <div class="textdisp" v-if="user.local.tel === 'none' || user.local.tel === ''">
+                    Non renseigné
+                  </div>
+                  <div class="textdisp" v-else>
+                    {{user.local.tel}}
+                  </div>
+                  <div class="editicon">
+                    <i dark="" class="material-icons">keyboard_arrow_right</i>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="formdiv" v-if="EditTel">
+              <label>
+                <v-text-field class="formin" v-model="NewTel" name="NewTel" :placeholder="user.local.tel">
+                </v-text-field>
+              </label>
+            <a class="check material-icons" @click="changeTel()">done</a>
+            </div>
+              <div class="mycontainer">
+                <a class="userbtn" @click="EditDescription = !EditDescription">
+                  <div class="textcontainer">
+                    <div class="texttitle">
+                      <h5>Description</h5>
+                    </div>
+                    <div class="textdisp">
+                      {{ user.local.description }}
+                    </div>
+                      <div class="editicon">
+                      <i dark="" class="material-icons">keyboard_arrow_right</i>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="formdiv" v-if="EditDescription">
+                <label>
+                  <v-text-field class="formin" v-model="NewDescription" name="NewDescription" :placeholder="user.local.description">
+                  </v-text-field>
+                </label>
+              <a class="check material-icons" @click="PostDescription(NewDescription)">done</a>
+            </div>
+          </div>
 
-    <v-dialog style="z-index:25;" v-model="EditTel" scrollable max-width="500px">
-      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-          <v-flex xs8>
-            <v-divider></v-divider>
-            <label>
-              <v-text-field v-model="NewTel"
-                name="NewTel"
-                label="Phone number"
-                id="NewTel"
-                style="width: 450px; margin: 5px;"
-              ></v-text-field>
-            </label>
-          </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="EditTel = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="changeTel()">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          <div class="infoperso team">
+            <div v-for="team in Teams" :key="team.name">
+              <div class="mycontainer">
+                <a class="userbtn">
+                  <div class="textcontainer">
+                    <div class="texttitle" style="width: 300px;">
+                      <h5>Team : &emsp; {{ team.name }}</h5>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="mycontainer teamcontainer">
+                <a class="userbtn">
+                  <div class="textcontainer">
+                    <div class="texttitle iconteam">
+                      <div v-for="pers in team.users" :key="pers._id" @click="$router.push('/profil/' + pers._id)" class="team-member" style="cursor: pointer;">
+                        <v-tooltip style="display: inline;" bottom>
+                          <img slot="activator" :src="pers.picture" alt="">
+                          <span>{{pers.username}}</span>
+                        </v-tooltip>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="mycontainer teamcontainer">
+                <a class="userbtn" @click="NewTeam = team.name; DelTeam ();">
+                  <div class="textcontainer">
+                    <div class="texttitle">
+                      <h6>Quit team</h6>
+                    </div>
+                    <div class="textdisp">
+                    </div>
+                    <div class="editicon">
+                      <i dark="" class="material-icons">remove</i>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="mycontainer">
+              <a class="userbtn" v-if="!CreateTeam" @click="CreateTeam = true">
+                <div class="textcontainer">
+                  <div class="texttitle texttitlebig">
+                    <h5>Create a new team</h5>
+                  </div>
+                  <div class="textdisp">
+                  </div>
+                  <div class="editicon">
+                    <i dark="" class="material-icons">add</i>
+                  </div>
+                </div>
+              </a>
+              <div class="userbtn" v-if="CreateTeam">
+                <div class="textcontainer" style="padding-bottom: 12px;">
+                  <div class="texttitle texttitlebigedit">
+                    <h5>Create a new team</h5>
+                  </div>
+                  <label class="textdisp teamcreate">
+                    <v-text-field class="formin forminedit" v-model="NewTeam" name="TeamName" label="">
+                    </v-text-field>
+                  </label>
+                  <div class="editicon btnteamcreate">
+                    <a class="check material-icons" style="margin-top: 0px;" @click="CreateTeam = false;">cancel</a>
+                    <a class="checkdone material-icons" style="margin-top: 0px;" @click="PostTeam()">done</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -279,29 +615,3 @@ export default {
   }
 }
 </script>
-
-<style type="text/css">
-#photo {
-  float: left;
-  margin: 25px;
-}
-#editer {
-  opacity: 0;
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
-  display: inline-block;
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background-color: rgba(200, 200, 200, 0);
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-#photo:hover #editer {
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
-  opacity: 1;
-  background-color: rgba(200, 200, 200, 0.7);
-}
-</style>

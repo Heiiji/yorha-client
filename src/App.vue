@@ -26,7 +26,7 @@
                                 <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
-                                            <li v-for="msg in messages" :key="msg._id" v-if="msg.asread === false" @click="msgNbr = 0; redirect('/chat')">
+                                            <li v-for="(msg, index) in messages" :key="msg._id" v-if="index < 5" @click="msgNbr = 0; redirect('/chat')">
                                                 <a>
                                                     <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -92,7 +92,7 @@
                     </div>
                     <ul class="menu accordion-menu">
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/profil')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-user"></span><p>Dashboard</p></a></li>
+                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/profil')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>question_answer</v-icon></span><p>Dashboard</p></a></li>
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
                         <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><i dark class="material-icons">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">

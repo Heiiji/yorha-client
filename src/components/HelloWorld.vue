@@ -113,11 +113,11 @@
               </v-carousel>
                 <div class="socialp" style="height: 230px; cursor: auto; background-color: rgba(250, 250, 250, 0.8);">
                     <div style="margin: 15px; position: relative;" class="panel-body">
-                        <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
+                        <div><span style="text-align: left; display: inline-block; font-size: 1.7em; word-wrap: break-word; width: 100%;">What is his name ?<br/>
                             <img :src="randUser.picture" style="width: 25%; float: left;" />
                             <form v-on:submit.prevent="PlayRandUser()" ><v-text-field
                               name="Name"
-                              :label="name"
+                              label="name"
                               single-line
                               v-model="randUserReponse"
                               style="position: absolute; right: 10px; top: 40%; width: 65%;"
@@ -200,7 +200,8 @@
             <img :src="randUser.picture" style="float: left; width: 100px; height: 100px; border-radius: 50px;" />
             <h2 style="text-align: center; padding: 15px; padding-top: 5px; font-size: 1.3em;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>
           </div>
-          <v-card-title style="color: blue; text-align: center; font-size: 1.2em; display: block;">{{randUserResult}}</v-card-title>
+          <v-card-title v-if="randUserResult === 'Failed'" style="color: red; text-align: center; font-size: 1.2em; display: block;">{{randUserResult}}</v-card-title>
+          <v-card-title v-else style="color: green; text-align: center; font-size: 1.2em; display: block;">{{randUserResult}}</v-card-title>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="blue darken-1" flat @click.native="randPopup = false;">Close</v-btn>
@@ -274,7 +275,13 @@ export default {
     async getRandUser () {
       var vue = this
       AccountService.GetRand().then((response) => {
-        vue.randUser = response.data.user
+        if (response.data.user.username !== vue.randUser.username) {
+          vue.randUser = response.data.user
+        } else {
+          AccountService.GetRand().then((response) => {
+            vue.randUser = response.data.user
+          })
+        }
       })
     },
     async PlayRandUser () {

@@ -9,12 +9,18 @@
   margin: 0px;
   height: 100%;
 }
+h3 {
+  margin: 0px;
+}
 .title {
   position: relative;
   top: 0px;
   left: 0px;
   width: 100%;
   text-align: center;
+  background-color: rgb(33, 110, 210);
+  padding: 20px;
+  color: white;
 }
 .userList {
   position: relative;
@@ -98,7 +104,7 @@
         <div class="title">
           <h3>Your conversations</h3>
         </div>
-        <v-list-tile style="border-top-width: 1px; border-top-style: solid; border-top-color: rgba(34, 35, 38, 0.2);" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+        <v-list-tile style="border-top-width: 1px; border-top-style: solid; border-top-color: rgba(34, 35, 38, 0.1);" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
           <v-list-tile-content>
             <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
           </v-list-tile-content>
@@ -131,88 +137,7 @@
                 <a href="#"><i class="icon-link"></i></a>
               </div>
             </div>
-        <!-- <v-flex style="height: 100%; width: 100%; position: relative; overflow-y: scroll;">
-          <v-card style="position: absolute; bottom: 0px; width: 100%;">
-            <v-list style="height: auto;">
-              <div style="padding-bottom: 10px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
-                <v-list-tile
-                  avatar
-                  ripple
-                >
-                  <v-list-tile-avatar>
-                    <img :src="item.senderPic">
-                  </v-list-tile-avatar>
-                  <v-list-tile-content>
-                    <v-list-tile-title v-html="item.sender"></v-list-tile-title>
-                    <v-list-tile-sub-title style="line-break: normal;" v-html="item.text"></v-list-tile-sub-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </div>
-                  <div v-if="memoire >= 0" class="panel-body">
-                    <div class="post">
-                      <textarea class="form-control" placeholder="Message" v-model="msg.text" rows="4=6"></textarea>
-                      <div class="post-options">
-                        <a href="#"><i class="icon-camera"></i></a>
-                        <a href="#"><i class="icon-link"></i></a>
-                        <button class="btn btn-default pull-right" @click="SendMSG()">Send</button>
-                      </div>
-                    </div>
-                  </div>
-            </v-list>
-          </v-card>
-        </v-flex> -->
       </div>
-    <!-- <v-flex xs12 sm4>
-      <v-card style="height: 90%; padding-left: 15px;">
-        <v-toolbar color="teal" dark>
-          <v-toolbar-title class="text-xs-center">Your conversation</v-toolbar-title>
-          <v-spacer></v-spacer>
-        </v-toolbar>
-        <v-list subheader>
-          <v-subheader>Recent chat</v-subheader>
-          <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
-            <v-list-tile-content>
-              <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
-            </v-list-tile-content>
-            <v-list-tile-action>
-              <v-icon :color="chat[0].asread ? 'grey' : 'teal'">chat_bubble</v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list>
-      </v-card>
-    </v-flex>
-    <v-flex style="height: 1000px; position: relative; overflow-y: scroll;" xs12 sm10>
-      <v-card style="position: absolute; bottom: 10%; width: 100%;">
-        <v-list two-line>
-          <div v-for="(item, index) in displayMsg" :key="item._id + index">
-            <v-list-tile
-              avatar
-              ripple
-            >
-              <v-list-tile-avatar>
-                <img :src="item.senderPic">
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="item.sender"></v-list-tile-title>
-                <v-list-tile-sub-title style="line-break: normal;" v-html="item.text.replace(/\r?\n/g, '<br />')"></v-list-tile-sub-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </div>
-            <div v-if="memoire >= 0" class="panel panel-white">
-              <div class="panel-body">
-                <div class="post">
-                  <textarea class="form-control" placeholder="Message" v-model="msg.text" rows="4=6"></textarea>
-                  <div class="post-options">
-                    <a href="#"><i class="icon-camera"></i></a>
-                    <a href="#"><i class="icon-link"></i></a>
-                    <button class="btn btn-default pull-right" @click="SendMSG()">Send</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </v-list>
-      </v-card>
-    </v-flex> -->
   </v-layout>
   </div>
 </template>

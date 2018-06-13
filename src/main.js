@@ -1,15 +1,16 @@
 /* eslint-disable */
-import Vue        from 'vue'
-import App        from './App'
-import router     from './router'
-import VueSession from 'vue-session'
-import Vuetify    from 'vuetify'
-import Vuex       from 'vuex'
-import VueFire    from 'vuefire'
-import VueCookie  from 'vue-cookies'
-import firebase   from 'firebase'
-import VueDragDrop from 'vue-drag-drop'
-import Api        from './services/Api.js'
+import Vue            from 'vue'
+import App            from './App'
+import router         from './router'
+import VueSession     from 'vue-session'
+import Vuetify        from 'vuetify'
+import Vuex           from 'vuex'
+import VueFire        from 'vuefire'
+import VueCookie      from 'vue-cookies'
+import firebase       from 'firebase'
+import VueDragDrop    from 'vue-drag-drop'
+import Api            from './services/Api.js'
+import VueChatScroll  from 'vue-chat-scroll'
 
 import 'vuetify/dist/vuetify.min.css'
 
@@ -19,6 +20,7 @@ Vue.use(Vuetify)
 Vue.use(VueFire)
 Vue.use(VueCookie)
 Vue.use(VueDragDrop)
+Vue.use(VueChatScroll)
 
 Vue.config.productionTip = false
 

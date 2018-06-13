@@ -27,6 +27,7 @@
   border-right-style: solid;
   background-color: rgba(240, 240, 240, 0.9);
   margin: 0px;
+  margin-left: -15px;
 }
 .chatPlace {
   position: relative;
@@ -34,13 +35,60 @@
   width: 81.2%;
   height: 100%;
   margin: 0px;
-  background-color: rgba(210, 210, 210, 0.9);
+  background-color: rgba(210, 210, 210, 1);
 }
 .flex::-webkit-scrollbar {
   display: none;
 }
 .list__tile--avatar {
   height: auto !important;
+}
+.chatPlace {
+  padding-bottom: 100px;
+}
+.chatArea {
+  overflow-y: scroll;
+  height: 100%;
+  vertical-align: top;
+}
+.Message {
+  height: 100%;
+  padding: 20px;
+  padding-bottom: 0px;
+}
+.Message p {
+  background-color: white;
+  margin: 0px;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 2px 10px 10px 10px;
+  display: inline-block;
+  margin-left: 50px;
+}
+.MessageReverse {
+  height: 100%;
+  padding: 20px;
+  padding-bottom: 0px;
+  text-align: right;
+}
+.MessageReverse p {
+  background-color: rgb(240, 240, 240);
+  margin: 0px;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px 2px 10px 10px;
+  display: inline-block;
+  margin-right: 50px;
+}
+.post {
+  position: absolute;
+  text-align: center;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100px;
 }
 </style>
 <template>
@@ -50,7 +98,7 @@
         <div class="title">
           <h3>Your conversations</h3>
         </div>
-        <v-list-tile avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+        <v-list-tile style="border-top-width: 1px; border-top-style: solid; border-top-color: rgba(34, 35, 38, 0.2);" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
           <v-list-tile-content>
             <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
           </v-list-tile-content>
@@ -60,7 +108,30 @@
         </v-list-tile>
       </div>
       <div class="chatPlace">
-        <v-flex style="height: 100%; width: 100%; position: relative; overflow-y: scroll;">
+        <div v-if="memoire >= 0" id="ChatArea" class="chatArea" v-chat-scroll>
+          <div style="padding-bottom: 10px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
+            <div v-if="item.target === $store.state.user.local.mail" class="Message">
+              <img style="float: left; width: 40px; border-radius: 20px; margin-right: 20px;" :src="item.senderPic">
+              <h3 style="padding-top: 14px; margin-top: 0px; padding-left: 10px;">{{ item.sender }}</h3>
+              <p v-html="item.text"></p>
+            </div>
+              <div v-else class="MessageReverse">
+                <img style="float: right; width: 40px; border-radius: 20px; margin-left: 20px;" :src="item.senderPic">
+                <h3 style="padding-top: 14px; margin-top: 0px; padding-right: 10px; text-align: right">{{ item.sender }}</h3>
+                <p v-html="item.text"></p>
+              </div>
+          </div>
+        </div>
+            <div v-if="memoire >= 0" class="post">
+              <form v-on:submit.prevent="SendMSG()">
+                <input style="width: 90%; border-radius: 20px; display: inline-block;" class="form-control" type="text" placeholder="Message" v-model="msg.text"/>
+              </form>
+              <div class="post-options">
+                <a href="#"><i class="icon-camera"></i></a>
+                <a href="#"><i class="icon-link"></i></a>
+              </div>
+            </div>
+        <!-- <v-flex style="height: 100%; width: 100%; position: relative; overflow-y: scroll;">
           <v-card style="position: absolute; bottom: 0px; width: 100%;">
             <v-list style="height: auto;">
               <div style="padding-bottom: 10px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
@@ -89,7 +160,7 @@
                   </div>
             </v-list>
           </v-card>
-        </v-flex>
+        </v-flex> -->
       </div>
     <!-- <v-flex xs12 sm4>
       <v-card style="height: 90%; padding-left: 15px;">

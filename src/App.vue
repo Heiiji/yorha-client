@@ -57,6 +57,9 @@
                                     <li class="drop-all"><a href="#" class="text-center">All Tasks</a></li>
                                 </ul>
                             </li>-->
+                                <li v-if="signed === true">
+                                    <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><v-icon medium>event</v-icon></a>
+                                </li>
                             <li>
                               <div v-if="signed === true" @click="redirect('/profil')" style="padding: 20px; cursor: pointer;">
                                 <v-avatar v-if="user.local" size="32px" tile>
@@ -67,9 +70,6 @@
                                   <v-icon>account_circle</v-icon>
                               </v-btn>
                             </li>
-                                <li v-if="signed === true">
-                                    <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><v-icon medium>event</v-icon></a>
-                                </li>
                             <li v-if="signed === true">
                                 <a @click="logout()" class="log-out waves-effect waves-button waves-classic">
                                     <span>Log out</span>
@@ -96,7 +96,6 @@
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
                         <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><i dark class="material-icons">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">
-                            <!--<li v-if="work === 'Test'" style="width: 85%;"><a @click="$router.push('/posts')">Version Manager</a></li>-->
                                 <li style="width: 100%; margin: 0px;"><a @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
                                 <li style="width: 100%; margin: 0px;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
                                 <li style="width: 100%; margin: 0px;"><a @click="redirect('/Overview')">Version status</a></li>
@@ -209,11 +208,20 @@
 </template>
 
 <style>
+input.form-control.search-input:active {
+  border-color: blue;
+}
 .top-menu .navbar-nav>li>a {
   padding-bottom: 10px;
 }
 .sidebar {
   position: fixed;
+}
+.page-sidebar {
+  height: 100% !important;
+}
+.page-content {
+  background-color: #F1F4F9;
 }
 .navbar {
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
@@ -239,9 +247,6 @@
   }
   .page-content {
     padding-left: 0px;
-  }
-  .page-inner {
-    margin-left: 0px;
   }
 }
 @media (min-width:851px) {

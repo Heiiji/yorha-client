@@ -24,6 +24,7 @@
   -webkit-transition: box-shadow 0.2s, -webkit-transform 0.2s, ease-in-out;
   transition: box-shadow 0.2s, transform 0.2s, ease-in-out;
   overflow: hidden;
+  display: inline-block;
 }
 .userspace:hover {
   cursor: pointer;

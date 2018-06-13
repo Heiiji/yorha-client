@@ -213,17 +213,14 @@
 </template>
 
 <script>
-import VersionService from '@/services/VersionService'
 import AccountService from '@/services/AccountService'
 import DocService from '@/services/docService'
-import QwickLook from '@/components/versions/WorkingDisplay.vue'
 import News from '@/services/NewsService'
 
 export default {
   name: 'Home',
   data () {
     return {
-      versions: [],
       passed: [],
       PostAnn: null,
       picker: null,
@@ -261,41 +258,19 @@ export default {
         senderPic: '',
         token: ''
       },
-      department: [
-        { text: 'Test' },
-        { text: 'Marketing' },
-        { text: 'Support' },
-        { text: 'Dev' },
-        { text: 'Web' },
-        { text: 'Infra' },
-        { text: 'RH' },
-        { text: 'R&D' },
-        { text: 'International' }
-      ],
       allNews: [],
       DiscNews: [],
       TwitNews: [],
       randUser: [],
-      showTwit: false,
-      target: 'current'
+      showTwit: false
     }
   },
   mounted () {
     this.firebaseApp = this.$store.state.firebase
     this.getNews()
     this.getRandUser()
-    this.getVersion()
-  },
-  components: {
-    QwickLook
   },
   methods: {
-    async getVersion () {
-      const response = await VersionService.fetchPosts('current')
-      this.versions = response.data.versions
-      const responses = await VersionService.fetchPosts('finnish')
-      this.passed = responses.data.versions
-    },
     async getRandUser () {
       var vue = this
       AccountService.GetRand().then((response) => {

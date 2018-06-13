@@ -255,7 +255,6 @@
 </style>
 
 <script>
-import Api from '@/services/Api'
 import AccountServices from '@/services/AccountService'
 
 import firebase from 'firebase'
@@ -293,31 +292,11 @@ export default {
     ],
     Mdrawer: true,
     mini: true,
-    right: null,
-    items: [
-      { display: false, icon: 'home', text: 'Home', link: '/' },
-      { display: true, icon: 'reorder', text: 'Dashboard', link: '/profil' },
-      { display: false, icon: 'work', text: 'Department', link: '/department' },
-      { display: false, icon: 'history', text: 'App downloads', link: '/downloads' },
-      { display: false, icon: 'face', text: 'Trombi', link: '/trombi' }
-    ]
+    right: null
   }),
   methods: {
     searching () {
       this.$router.push('/SearchUser')
-    },
-    onSignInSuccess (googleUser) {
-      this.$store.GoogleToken = googleUser
-      Api().post('/account', {
-        username: googleUser.getBasicProfile().getName(),
-        mail: googleUser.getBasicProfile().getEmail(),
-        picture: googleUser.getBasicProfile().getEmail()
-      }).then((response) => {
-        this.user = response.data
-        this.$store.state.user = response.data
-        this.checkUser()
-      })
-      this.$router.push('/home')
     },
     login () {
       let provider = new firebase.auth.GoogleAuthProvider()

@@ -3,12 +3,9 @@ import Vue        from 'vue'
 import Router     from 'vue-router'
 
 import HelloWorld from '@/components/HelloWorld'
-import NewPost    from '@/components/NewPost'
 import EditPost   from '@/components/EditPost'
 import Management from '@/components/Management'
 import Trombi     from '@/components/trombi'
-const Changelog   = () => import('@/components/changelog')
-const Home        = () => import('@/components/home')
 const Calendar  = () => import('@/components/calendar')
 const DrHouse  = () => import('@/components/DrHouse')
 const Chat  = () => import('@/components/chat')
@@ -71,11 +68,6 @@ let router = new Router({
       component: WorkBoard
     },
     {
-      path: '/Home',
-      name: 'Home',
-      component: Home
-    },
-    {
       path: '/chat',
       name: 'Chat',
       component: Chat
@@ -109,11 +101,6 @@ let router = new Router({
       path: '/department/Support',
       name: 'Support',
       component: DSupport
-    },
-    {
-      path: '/department/Virtualisation',
-      name: 'Virtualisation',
-      component: DVirt
     },
     {
       path: '/department/Administration',
@@ -206,11 +193,6 @@ let router = new Router({
       component: Posts
     },
     {
-      path: '/posts/new',
-      name: 'NewPost',
-      component: NewPost
-    },
-    {
       path: '/posts/:id',
       name: 'EditPost',
       component: EditPost
@@ -239,11 +221,6 @@ let router = new Router({
       path: '/inventaire',
       name: 'Inventory',
       component: Inventory
-    },
-    {
-      path: '/changelog',
-      name: 'Changelog',
-      component: Changelog
     }
   ]
 })

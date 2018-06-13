@@ -60,6 +60,7 @@ h3 {
 .Message {
   height: 100%;
   padding: 20px;
+  padding-top: 5px;
   padding-bottom: 0px;
 }
 .Message p {
@@ -68,13 +69,15 @@ h3 {
   padding: 10px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 5px;
   border-radius: 2px 10px 10px 10px;
   display: inline-block;
-  margin-left: 50px;
+  margin-left: 3%;
 }
 .MessageReverse {
   height: 100%;
   padding: 20px;
+  padding-top: 5px;
   padding-bottom: 0px;
   text-align: right;
 }
@@ -84,9 +87,10 @@ h3 {
   padding: 10px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 5px;
   border-radius: 10px 2px 10px 10px;
   display: inline-block;
-  margin-right: 50px;
+  margin-right: 3%;
 }
 .post {
   position: absolute;
@@ -96,6 +100,14 @@ h3 {
   width: 100%;
   height: 100px;
 }
+.person {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: rgba(34, 35, 38, 0.1);
+}
+.person:hover {
+  background-color: rgba(180, 180, 180, 0.5);
+}
 </style>
 <template>
   <div>
@@ -104,26 +116,40 @@ h3 {
         <div class="title">
           <h3>Your conversations</h3>
         </div>
-        <v-list-tile style="border-top-width: 1px; border-top-style: solid; border-top-color: rgba(34, 35, 38, 0.1);" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+        <v-list-tile class="person" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
           <v-list-tile-content>
             <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
           </v-list-tile-content>
-          <v-list-tile-action>
-            <v-icon :color="chat[0].asread ? 'grey' : 'teal'">chat_bubble</v-icon>
-          </v-list-tile-action>
+          <v-icon style="text-decoration: none;" :color="chat[0].asread ? 'grey' : 'teal'">chat_bubble</v-icon>
         </v-list-tile>
       </div>
       <div class="chatPlace">
         <div v-if="memoire >= 0" id="ChatArea" class="chatArea" v-chat-scroll>
           <div style="padding-bottom: 10px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
             <div v-if="item.target === $store.state.user.local.mail" class="Message">
-              <img style="float: left; width: 40px; border-radius: 20px; margin-right: 20px;" :src="item.senderPic">
-              <h3 style="padding-top: 14px; margin-top: 0px; padding-left: 10px;">{{ item.sender }}</h3>
+              <span v-if="index > 0">
+                <span v-if="displayMsg[index - 1].sender !== item.sender">
+                  <img style="float: left; width: 40px; border-radius: 20px; margin-right: 20px;" :src="item.senderPic">
+                  <h3 style="padding-top: 14px; margin-top: 0px; padding-left: 10px; margin-bottom: 10px;">{{ item.sender }}</h3>
+                </span>
+              </span>
+              <span v-else>
+                <img style="float: left; width: 40px; border-radius: 20px; margin-right: 20px;" :src="item.senderPic">
+                <h3 style="padding-top: 14px; margin-top: 0px; padding-left: 10px; margin-bottom: 10px;">{{ item.sender }}</h3>
+              </span>
               <p v-html="item.text"></p>
             </div>
               <div v-else class="MessageReverse">
-                <img style="float: right; width: 40px; border-radius: 20px; margin-left: 20px;" :src="item.senderPic">
-                <h3 style="padding-top: 14px; margin-top: 0px; padding-right: 10px; text-align: right">{{ item.sender }}</h3>
+                <span v-if="index > 0">
+                  <span v-if="displayMsg[index - 1].sender !== item.sender">
+                    <img style="float: right; width: 40px; border-radius: 20px; margin-left: 20px;" :src="item.senderPic">
+                    <h3 style="padding-top: 14px; margin-top: 0px; padding-right: 10px; text-align: right; margin-bottom: 10px;">{{ item.sender }}</h3>
+                  </span>
+                </span>
+                <span v-else>
+                  <img style="float: right; width: 40px; border-radius: 20px; margin-left: 20px;" :src="item.senderPic">
+                  <h3 style="padding-top: 14px; margin-top: 0px; padding-right: 10px; text-align: right; margin-bottom: 10px;">{{ item.sender }}</h3>
+                </span>
                 <p v-html="item.text"></p>
               </div>
           </div>

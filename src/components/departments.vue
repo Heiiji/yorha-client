@@ -2,7 +2,7 @@
 .card {
   display: inline-block;
   box-shadow: none;
-  opacity: 0.6;
+  opacity: 0.82;
   -webkit-transition: opacity 0.2s ease-in-out;
   transition: opacity 0.2s ease-in-out;
 }

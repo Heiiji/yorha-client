@@ -22,16 +22,34 @@
   border: none;
   border-radius: 0px;
   width: 25%;
-  min-width: 400px;
+  min-width: 320px;
   z-index: 20;
   display: inline-block;
+}
+@media (max-width: 1600px) {
+  .select-dep {
+    width: 33.33%;
+  }
+}
+@media (max-width: 1391px) {
+  .select-dep {
+    width: 50%;
+  }
+}
+@media (max-width: 900px) {
+  .select-dep {
+    width: 70%;
+  }
+  .containerdep {
+    text-align: center;
+  }
 }
 .select-dep:hover {
   cursor: pointer;
 }
 </style>
 <template>
-  <div>
+  <div class="containerdep">
     <a @click="$router.push('/department/marketing')">
     <v-card class="select-dep">
       <v-card-media

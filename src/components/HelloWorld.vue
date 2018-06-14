@@ -158,7 +158,7 @@
               required
             ></v-select>
           </v-card-title>
-          <v-container grid-list-md>
+          <v-container v-if="document.type.text === 'Shadow Live Summary'" grid-list-md>
             <v-layout row wrap>
               <v-flex xs12>
                   <v-text-field
@@ -176,21 +176,6 @@
         <v-card-actions>
           <v-btn color="blue darken-1" flat @click.native="dialog = false; PostAnn = false">Close</v-btn>
           <v-btn color="blue darken-1" flat @click.native="PostAnnonce()">Save</v-btn>
-        </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <v-dialog style="z-index:25;" v-model="HelpDesk" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
-          <v-card-title style="color: blue;">Expliquer votre probleme :</v-card-title>
-          <v-container grid-list-md>
-            <v-layout row wrap>
-              <v-flex xs11><v-text-field required box multi-line v-model="HDesk.text"></v-text-field></v-flex>
-            </v-layout>
-          </v-container>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false; PostAnn = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="PostHelpDesk()">Send</v-btn>
         </v-card-actions>
         </v-card>
       </v-dialog>

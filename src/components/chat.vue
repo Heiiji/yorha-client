@@ -19,8 +19,11 @@ h3 {
   width: 100%;
   text-align: center;
   background-color: rgb(33, 110, 210);
-  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   color: white;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .userList {
   position: relative;
@@ -38,19 +41,17 @@ h3 {
 .chatPlace {
   position: relative;
   display: inline-block;
-  width: 81.2%;
+  width: calc(80% + 15px);
   height: 100%;
   margin: 0px;
   background-color: rgba(255, 255, 255, 1);
+  padding-bottom: 100px;
 }
 .flex::-webkit-scrollbar {
   display: none;
 }
 .list__tile--avatar {
   height: auto !important;
-}
-.chatPlace {
-  padding-bottom: 100px;
 }
 .chatArea {
   overflow-y: scroll;
@@ -115,7 +116,7 @@ h3 {
 }
 .post-options {
   display: block;
-  width: 85px;
+  width: 90px;
 }
 .person {
   border-top-width: 1px;
@@ -144,11 +145,13 @@ h3 {
 .personname {
   display: block;
   height: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
 }
 .personstatus {
-  position: absolute;
-  right: 6px;
   padding-top: 8px;
+  padding-right: 8px;
 }
 .chatName {
   position: relative;
@@ -162,6 +165,32 @@ h3 {
   border-bottom-color: rgb(200, 200, 200);
   border-bottom-width: 1px;
 }
+@media (max-width: 849px) {
+  .title {
+    color: rgb(33, 110, 210);
+  }
+  .personicon {
+    margin-left: calc(50% - 20px);
+  }
+  .personname {
+    display: none;
+  }
+  .personstatus{
+    display: none;
+  }
+  .post-options {
+    width: 115px;
+  }
+  .conteneur {
+    padding-left: 0px;
+  }
+  .userList {
+    margin-left: 0px;
+  }
+  .chatPlace {
+    width: 80%;
+  }
+}
 
 </style>
 <template>
@@ -169,7 +198,7 @@ h3 {
     <v-layout class="conteneur" row>
       <div class="userList">
         <div class="title">
-          <h3>Your conversations</h3>
+          <h3>Conversations</h3>
         </div>
         <div class="person" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
           <div class="personicon">

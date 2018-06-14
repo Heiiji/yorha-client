@@ -92,7 +92,7 @@
                     </div>
                     <ul class="menu accordion-menu">
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/profil')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>question_answer</v-icon></span><p>Dashboard</p></a></li>
+                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/Dashboard')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>question_answer</v-icon></span><p>Dashboard</p></a></li>
                         <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
                         <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><i dark class="material-icons">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">

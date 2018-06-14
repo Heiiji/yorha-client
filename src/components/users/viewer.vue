@@ -459,7 +459,11 @@ export default {
     async getUser (id) {
       const response = await AccountService.FindById(id)
       this.user = response.data.user
-      this.GetByDep()
+      if (this.user.username === this.$store.state.user.local.username) {
+        this.$router.push('/profil')
+      } else {
+        this.GetByDep()
+      }
     },
     GetByDep () {
       var vue = this

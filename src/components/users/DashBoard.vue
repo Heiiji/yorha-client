@@ -3,37 +3,10 @@
     <div v-if="user.local" style="padding-top: 0px;">
         <div class="profile-cover" style="background: none;">
             <v-parallax style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;" src="/static/Wallpaper 7.jpg"></v-parallax>
-            <div class="row">
-                <div class="col-md-3 profile-image">
-                    <div class="profile-image-container">
-                        <img :src="user.local.picture" alt="">
-                    </div>
-                </div>
-            </div>
         </div>
         <div id="main-wrapper">
             <div class="row">
                 <div class="col-md-3 user-profile">
-                    <h3 class="text-center">{{ user.local.username }}</h3>
-                    <p class="text-center">{{ user.local.work }} ({{ user.local.qualifier }})</p>
-                    <hr>
-                    <ul class="list-unstyled text-center">
-                        <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
-                        <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.local.mail }}</a></p></li>
-                        <li><p v-if="user.local.tel === 'none'"><i class="fa fa-phone m-r-xs"></i>tel non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.local.tel">{{user.local.tel}}</a></p></li>
-                    </ul>
-                    <hr>
-
-                        <div class="panel-heading">
-                            <div class="panel-title">Description</div>
-                        </div>
-                        <div class="panel-body">
-                            <p>{{ user.local.description }}</p>
-                        </div>
-                    <hr>
-                    <button @click="EditDescription = true" class="btn btn-primary btn-block">Modify Description</button>
-                    <button v-if="user.local.tel === 'none'" @click="EditTel = true" class="btn btn-primary btn-block">Add my number</button>
-                    <button v-else @click="EditTel = true" class="btn btn-primary btn-block">Change my number</button>
                 </div>
                 <div class="col-md-6 m-t-lg">
                     <v-tabs style="margin: 10px;" fixed-tabs>
@@ -321,105 +294,11 @@
                     </v-tabs>
                 </div>
                 <div class="col-md-3 m-t-lg">
-                    <div v-for="team in Teams" :key="team.name" class="panel panel-white">
-                        <div class="panel-heading">
-                            <div class="panel-title">Team : {{ team.name }}</div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="team">
-                                <div v-for="pers in team.users" :key="pers._id" @click="$router.push('/profil/' + pers._id)" class="team-member" style="cursor: pointer;">
-                                    <v-tooltip style="display: inline;" bottom>
-                                      <img slot="activator" :src="pers.picture" alt="">
-                                      <span>{{pers.username}}</span>
-                                    </v-tooltip>
-                                </div>
-                                <br/>
-                                <button v-if="$store.state.user.local.work === 'R&D' || $store.state.user.local.mail === 'julien.juret@blade-group.com'" @click="$router.push('taskmanager/' + team.name);" class="btn btn-primary btn-block">Task Manager</button>
-                                <button @click="NewTeam = team.name; DelTeam ();" class="btn btn-primary btn-block">Quit team</button>
-                            </div>
-                        </div>
-                    </div>
-                    <button @click="CreateTeam = true" class="btn btn-primary btn-block">Create a team</button>
                 </div>
             </div>
         </div>
     </div>
     <div>
-      <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-            <v-flex xs8>
-              <v-text-field v-model="NewDescription"
-                name="Description"
-                label="New Description"
-                id="Description"
-                textarea
-                style="width: 990px; margin: 5px;"
-              ></v-text-field>
-            </v-flex>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-btn color="blue darken-1" flat @click.native="EditDescription = false;">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="PostDescription(NewDescription)">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-        <v-dialog style="z-index:25;" v-model="CreateTeam" scrollable max-width="800px">
-          <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-            <v-card-title style="color: blue;">Nouvelle team :</v-card-title>
-            <v-divider></v-divider>
-              <v-flex xs8>
-                <v-text-field v-model="NewTeam"
-                  name="TeamName"
-                  label="Team Name"
-                  id="TeamName"
-                  style="width: 700px; margin: 5px;"
-                ></v-text-field>
-              </v-flex>
-            <v-divider></v-divider>
-            <v-card-actions>
-              <v-btn color="blue darken-1" flat @click.native="CreateTeam = false;">Close</v-btn>
-              <v-btn color="blue darken-1" flat @click.native="PostTeam()">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-      <v-dialog style="z-index:25;" v-model="EditPicture" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-          <v-card-title style="color: blue;">Nouvelle image de profil :</v-card-title>
-          <v-divider></v-divider>
-            <v-flex xs8>
-              <label>File
-                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-              </label>
-            </v-flex>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-btn color="blue darken-1" flat @click.native="EditPicture = false;">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="changePhoto()">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-    <v-dialog style="z-index:25;" v-model="EditTel" scrollable max-width="500px">
-      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-          <v-flex xs8>
-            <v-divider></v-divider>
-            <label>
-              <v-text-field v-model="NewTel"
-                name="NewTel"
-                label="Phone number"
-                id="NewTel"
-                style="width: 450px; margin: 5px;"
-              ></v-text-field>
-            </label>
-          </v-flex>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-btn color="blue darken-1" flat @click.native="EditTel = false;">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="changeTel()">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
     </div>
   </div>
 </template>
@@ -428,7 +307,6 @@
 import AccountService from '@/services/AccountService'
 import News from '@/services/NewsService'
 import Api from '@/services/Api'
-import axios from 'axios'
 
 export default {
   name: 'Profil',
@@ -633,36 +511,6 @@ export default {
           })
         }
       }
-    },
-    handleFileUpload () {
-      this.file = this.$refs.file.files[0]
-    },
-    changePhoto () {
-      let formData = new FormData()
-      formData.append('file', this.file)
-      formData.append('username', this.user.local.username)
-      formData.append('mail', this.user.email)
-      axios.post('http://localhost:8081/account/photo',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-      ).then(function () {
-        console.log('SUCCESS!!')
-      })
-        .catch(function (error) {
-          console.log('FAILURE : ' + error)
-        })
-    },
-    changeTel () {
-      AccountService.editTel({
-        tel: this.NewTel,
-        mail: this.user.local.mail
-      })
-      this.user.local.tel = this.NewTel
-      this.EditTel = false
     }
   }
 }

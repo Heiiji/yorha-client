@@ -1,4 +1,4 @@
-<style type="text/css">
+<style scoped>
 #photo {
   float: left;
   margin: 25px;

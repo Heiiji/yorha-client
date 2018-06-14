@@ -1,64 +1,403 @@
+<style scoped>
+#photo {
+  float: left;
+  margin: 25px;
+}
+.rowimage {
+  padding-top: 50px;
+  text-align: center;
+}
+.userprofileimage {
+  margin: auto;
+  height: 200px;
+  width: 200px;
+}
+.profile-image-container img {
+  border-radius: 100px;
+}
+#main-wrapper {
+  display: flex;
+}
+.infoperso {
+  margin-top: 50px;
+  height: 100%;
+  width: 49%;
+  background-color: white;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+.mycontainer {
+  position: relative;
+  border-top: 1px solid rgba(0,0,0,0.12);
+}
+.userbtn {
+  display: block;
+  text-decoration: none;
+  -webkit-user-drag: none;
+  decoration: none;
+  text-decoration: none;
+}
+.userbtn:hover {
+  text-decoration: none;
+  cursor: default;
+}
+.textcontainer {
+  padding: 24px;
+  margin-left: 8px;
+  display: flex;
+  align-items: baseline;
+  -webkit-box-align: baseline;
+  color: black;
+}
+.texttitle {
+  width: 200px;
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+.texttitle h5 {
+  font-size: 16px;
+  margin: 0px;
+}
+.texttitle h6 {
+  font-size: 16px;
+  margin: 0px;
+}
+.textdisp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  font-size: 14px;
+  padding-right: 24px;
+}
+.editicon {
+  display: flex;
+  -webkit-box-flex: 0;
+  height: 24px;
+  width: 36px;
+  color: rgba(0,0,0,0.65);
+  margin-left: 8px;
+  text-align: right;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: absolute;
+  right: 10px;
+}
+.team {
+  margin-left: 2%;
+}
+.teamcontainer {
+  border: none !important;
+}
+.iconteam {
+  width: 100% !important;
+}
+.formin {
+  padding: 0px !important;
+  width: 90%;
+  padding-top: 4px !important;
+}
+.formdiv {
+  margin-top: 0px;
+  -webkit-animation-name: slidein;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-delay: 0s;
+  -moz-animation-name: slidein;
+  -moz-animation-duration: 0.3s;
+  -moz-animation-delay: 0s;
+  -ms-animation-name: slidein;
+  -ms-animation-duration: 0.3s;
+  -ms-animation-delay: 0s;
+  -o-animation-name: slidein;
+  -o-animation-duration: 0.3s;
+  -o-animation-delay: 0s;
+  animation-name: slidein;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+  transition : all 0.3s;
+  -webkit-transition : all 0.3s;
+  -moz-transition : all 0.3s;
+}
+.formdiv label {
+ padding-left: 232px;
+ width: calc(100% - 44px);
+}
+.formdivteam label {
+ padding-left: 232px;
+ width: calc(100% - 88px);
+}
+.check {
+  position: absolute;
+  color: rgba(0,0,0,0.65);
+  margin-top: 10px;
+}
+.checkdone {
+  position: absolute;
+  color: rgba(0,0,0,0.65);
+  margin-top: 10px;
+  margin-left: 44px;
+}
+.teamcreate {
+  height: 35px;
+  margin-top: -20px;
+  margin-bottom: 0px !important;
+  padding-left: 2px !important;
+  -webkit-animation-name: slideinleft;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-delay: 0s;
+  -moz-animation-name: slideinleft;
+  -moz-animation-duration: 0.3s;
+  -moz-animation-delay: 0s;
+  -ms-animation-name: slideinleft;
+  -ms-animation-duration: 0.3s;
+  -ms-animation-delay: 0s;
+  -o-animation-name: slideinleft;
+  -o-animation-duration: 0.3s;
+  -o-animation-delay: 0s;
+  animation-name: slideinleft;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+  transition : all 0.3s;
+  -webkit-transition : all 0.3s;
+  -moz-transition : all 0.3s;
+}
+
+.btnteamcreate {
+  margin-right: 52px;
+  -webkit-animation-name: slideinleftbis;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-delay: 0s;
+  -moz-animation-name: slideinleftbis;
+  -moz-animation-duration: 0.3s;
+  -moz-animation-delay: 0s;
+  -ms-animation-name: slideinleftbis;
+  -ms-animation-duration: 0.3s;
+  -ms-animation-delay: 0s;
+  -o-animation-name: slideinleftbis;
+  -o-animation-duration: 0.3s;
+  -o-animation-delay: 0s;
+  animation-name: slideinleftbis;
+  animation-duration: 0.3s;
+  animation-delay: 0s;
+  transition : all 0.3s;
+  -webkit-transition : all 0.3s;
+  -moz-transition : all 0.3s;
+}
+.texttitlebigedit {
+  width: calc(200px + 5%);
+}
+.forminedit {
+  padding-top: 0px !important;
+  width: 100%;
+}
+
+@media (max-width: 849px) {
+  #main-wrapper {
+    display: block;
+  }
+  .team {
+    margin-left: 0px;
+  }
+  .infoperso {
+  width: 100%;
+  }
+  .formdiv label {
+    padding-left: 162px;
+  }
+  .texttitle {
+    width: 130px;
+  }
+  .texttitlebig {
+    width: 160px;
+  }
+  .texttitlebigedit {
+    width: calc(140px + 5%);
+  }
+  .forminedit {
+    width: 60%;
+  }
+}
+
+@keyframes slidein {
+  from {
+    margin-top: -61px;
+    opacity: 0;
+  }
+  30% {
+  opacity: 0;
+  }
+  71% {
+  opacity: 1;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+@keyframes slideinleft {
+  from {
+    margin-left: 150px;
+    opacity: 0;
+  }
+  30% {
+  opacity: 0;
+  }
+  71% {
+  opacity: 1;
+  }
+  to {
+    opacity: 1;
+    margin-left: 0px;
+  }
+}
+@keyframes slideinleftbis {
+  from {
+    margin-right: -44px;
+    opacity: 0;
+  }
+  30% {
+  opacity: 0;
+  }
+  71% {
+  opacity: 1;
+  }
+  to {
+    opacity: 1;
+    margin-right: 52px;
+  }
+}
+.buttons {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+.sendmsg {
+  width: 200px;
+  background-color: white !important;
+  color: black;
+  height: 48px;
+}
+.sendmsg:active {
+  color: black !important;
+}
+</style>
 <template>
   <div>
     <div>
-        <div class="profile-cover" style="background: none;">
-            <v-parallax style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;" src="/static/Wallpaper 7.jpg"></v-parallax>
-            <div class="row">
-                <div class="col-md-3 profile-image">
-                    <div class="profile-image-container">
-                        <img :src="user.picture" alt="">
-                    </div>
-                </div>
+      <div class="profile-cover" style="background: none;">
+        <div class="row rowimage">
+          <div class="userprofileimage">
+            <div class="profile-image-container">
+              <img height="200px" width="200px" :src="user.picture" alt="">
+              <h2 class="text-center">{{ user.username }}</h2>
             </div>
+          </div>
         </div>
-        <div id="main-wrapper">
-            <div class="row">
-                <div class="col-md-3 user-profile">
-                    <h3 class="text-center">{{ user.username }}</h3>
-                    <p class="text-center">{{ user.work }} ({{ user.qualifier }})</p>
-                    <hr>
-                    <ul class="list-unstyled text-center">
-                        <li><p><i class="fa fa-map-marker m-r-xs"></i>Paris, France</p></li>
-                        <li><p><i class="fa fa-envelope m-r-xs"></i><a href="#">{{ user.mail }}</a></p></li>
-                        <li><p v-if="user.tel === 'none' || user.tel === ''"><i class="fa fa-phone m-r-xs"></i>non renseigné</p><p v-else><i class="fa fa-phone m-r-xs"></i><a :href="'tel:' + user.tel">{{user.tel}}</a></p></li>
-                    </ul>
-                    <hr>
-                        <v-menu v-if="user.username != $store.state.user.local.username" style="background-color: rgba(0, 0, 0, 0); display: block;" dark offset-y>
-                          <v-btn style="background-color: rgba(33, 110, 210, 1); width: 100%; padding-bottom: 40px;" dark slot="activator">Add To Team
-                            <img src="https://www.thrivingparish.org/wp-content/uploads/2018/01/white-down-arrow-png-2.png" style="display: absolute; top: 10%; right: 10px; width: 20px; margin-left: 10px;" />
-                          </v-btn>
-                          <v-list v-if="$store.state.user.local">
-                            <v-list-tile v-for="item in $store.state.user.local.teams" :key="item">
-                              <v-list-tile-title @click="NewTeam = item; PostTeam ();" style="cursor: pointer;">{{ item }}</v-list-tile-title>
-                            </v-list-tile>
-                          </v-list>
-                        </v-menu>
-                    <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block">Send message</button>
+      </div>
+      <div class="buttons">
+        <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block sendmsg">Send message</button>
+      </div>
+      <div id="main-wrapper">
+        <div class="infoperso">
+          <div class="mycontainer">
+            <a class="userbtn">
+              <div class="textcontainer">
+                <div class="texttitle">
+                  <h5>Team</h5>
                 </div>
-                <div class="col-md-3 m-t-lg">
-                    <div class="panel panel-white">
-                        <div class="panel-heading">
-                            <div class="panel-title">Description</div>
-                        </div>
-                        <div class="panel-body">
-                            <p>{{ user.description }}</p>
-                        </div>
-                    </div>
-                        <div style="margin-top: 10px;" class="panel panel-white">
-                            <div class="panel-heading">
-                                <div class="panel-title">Department : {{ user.work }}</div>
-                            </div>
-                            <div class="panel-body">
-                              <div class="team">
-                                    <div v-for="pers in users" :key="pers._id" class="team-member">
-                                      <img :src="pers.picture" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="textdisp">
+                  {{ user.work }} ({{ user.qualifier }})
                 </div>
-            </div>
+              </div>
+            </a>
+          </div>
+          <div class="mycontainer">
+            <a class="userbtn">
+              <div class="textcontainer">
+                <div class="texttitle">
+                  <h5>Email</h5>
+                </div>
+                <div class="textdisp">
+                  {{ user.mail }}
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="mycontainer">
+            <a class="userbtn">
+              <div class="textcontainer">
+                <div class="texttitle">
+                  <h5>Localisation</h5>
+                </div>
+                <div class="textdisp">
+                  Paris, France
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="mycontainer">
+            <a class="userbtn">
+              <div class="textcontainer">
+                <div class="texttitle">
+                  <h5>Téléphone</h5>
+                </div>
+                <div class="textdisp" v-if="user.tel === 'none' || user.tel === ''">
+                  Non renseigné
+                </div>
+                <div class="textdisp" v-else>
+                  {{user.tel}}
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="mycontainer">
+            <a class="userbtn">
+              <div class="textcontainer">
+                <div class="texttitle">
+                  <h5>Descripton</h5>
+                </div>
+                <div class="textdisp">
+                  {{user.description}}
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
+
+        <div class="infoperso team" style="margin-top: 190px;">
+          <v-menu v-if="user.username != $store.state.user.local.username" style="background-color: rgba(0, 0, 0, 0); display: block; margin-left: -8px; margin-top: -145px; margin-bottom: 69px;" dark offset-y>
+            <v-btn style="border-radius:1px !important; background-color: rgba(255, 255, 255, 1); width: calc(100% - 8px); padding-bottom: 55px; padding-top: 12px;" dark slot="activator"><h3 style="color: black;">Add To Team</h3>
+            </v-btn>
+            <v-list v-if="$store.state.user.local">
+              <v-list-tile v-for="item in $store.state.user.local.teams" :key="item">
+                <v-list-tile-title @click="NewTeam = item; PostTeam ();" style="cursor: pointer;">{{ item }}</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+          <div class="mycontainer" style="border: none !important;">
+            <a class="userbtn">
+              <div class="textcontainer">
+                <div class="texttitle" style="width: 300px;">
+                  <h5>Department : &emsp; {{ user.work }}</h5>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="mycontainer teamcontainer">
+            <a class="userbtn">
+              <div class="textcontainer">
+                <div class="texttitle iconteam">
+                  <div v-for="pers in users" :key="pers._id" class="team-member">
+                    <v-tooltip style="display: inline;" bottom>
+                      <img slot="activator" :src="pers.picture" alt="">
+                      <span>{{pers.username}}</span>
+                    </v-tooltip>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
 
   <v-dialog style="z-index:25;" v-model="sendMSG" scrollable max-width="500px">
@@ -194,10 +533,3 @@ export default {
   }
 }
 </script>
-
-<style type="text/css">
-#photo {
-  float: left;
-  margin: 25px;
-}
-</style>

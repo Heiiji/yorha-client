@@ -447,7 +447,7 @@
                     </v-text-field>
                   </label>
                   <div class="editicon btnteamcreate">
-                    <a class="check material-icons" style="margin-top: 0px;" @click="CreateTeam = false;">cancel</a>
+                    <a class="check material-icons" style="margin-top: 0px;" @click="CreateTeam = false;">close</a>
                     <a class="checkdone material-icons" style="margin-top: 0px;" @click="PostTeam()">done</a>
                   </div>
                 </div>

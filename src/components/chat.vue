@@ -28,10 +28,10 @@ h3 {
   height: 100%;
   margin-left: -16px;
   display: inline-block;
-  border-right-color: black;
+  border-right-color: rgb(200, 200, 200);
   border-right-width: 1px;
   border-right-style: solid;
-  background-color: rgba(240, 240, 240, 0.9);
+  background-color: rgba(255, 255, 255, 1);
   margin: 0px;
   margin-left: -15px;
 }
@@ -41,7 +41,7 @@ h3 {
   width: 81.2%;
   height: 100%;
   margin: 0px;
-  background-color: rgba(210, 210, 210, 1);
+  background-color: rgba(255, 255, 255, 1);
 }
 .flex::-webkit-scrollbar {
   display: none;
@@ -54,60 +54,115 @@ h3 {
 }
 .chatArea {
   overflow-y: scroll;
-  height: 100%;
+  height: 95%;
   vertical-align: top;
+  padding-top: 12px;
 }
 .Message {
   height: 100%;
-  padding: 20px;
-  padding-top: 5px;
+  padding: 16px;
+  padding-top: 0px;
   padding-bottom: 0px;
 }
 .Message p {
-  background-color: white;
+  background-color: rgb(210, 210, 210);
   margin: 0px;
-  padding: 10px;
+  padding: 8px;
   padding-left: 15px;
   padding-right: 15px;
-  margin-top: 5px;
-  border-radius: 2px 10px 10px 10px;
+  border-radius: 19px 19px 19px 19px;
   display: inline-block;
-  margin-left: 3%;
+  margin-left: 1%;
+  font-size: 14px;
+  max-width: calc(99% - 44px);
+  text-align: left;
 }
 .MessageReverse {
   height: 100%;
-  padding: 20px;
-  padding-top: 5px;
+  padding: 16px;
+  padding-top: 0px;
   padding-bottom: 0px;
   text-align: right;
 }
 .MessageReverse p {
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(33, 110, 210);
   margin: 0px;
-  padding: 10px;
+  padding: 8px;
   padding-left: 15px;
   padding-right: 15px;
-  margin-top: 5px;
-  border-radius: 10px 2px 10px 10px;
+  margin-top: 0px;
+  border-radius: 19px 19px 19px 19px;
   display: inline-block;
-  margin-right: 3%;
+  margin-right: 1%;
+  color: white;
+  font-size: 14px;
+  max-width: calc(99% - 44px);
+  text-align: left;
 }
 .post {
   position: absolute;
+  display: flex;
   text-align: center;
   bottom: 0px;
   left: 0px;
   width: 100%;
-  height: 100px;
+  height: 70px;
+}
+.post form {
+  width: 100%;
+  text-align: left;
+  margin-top: 15px;
+}
+.post-options {
+  display: block;
+  width: 85px;
 }
 .person {
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: rgba(34, 35, 38, 0.1);
+  text-decoration: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
 }
 .person:hover {
   background-color: rgba(180, 180, 180, 0.5);
+  cursor: pointer;
 }
+.personicon {
+  display: block;
+  margin-left: 10px;
+  width: 40px;
+  height: 40px;
+}
+.personicon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+.personname {
+  display: block;
+  height: 40px;
+}
+.personstatus {
+  position: absolute;
+  right: 6px;
+  padding-top: 8px;
+}
+.chatName {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  color: rgb(50, 50, 50);
+  border-bottom-style: solid;
+  border-bottom-color: rgb(200, 200, 200);
+  border-bottom-width: 1px;
+}
+
 </style>
 <template>
   <div>
@@ -116,52 +171,62 @@ h3 {
         <div class="title">
           <h3>Your conversations</h3>
         </div>
-        <v-list-tile class="person" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
-          <v-list-tile-content>
-            <v-list-tile-title v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)"></v-list-tile-title>
-          </v-list-tile-content>
-          <v-icon style="text-decoration: none;" :color="chat[0].asread ? 'grey' : 'teal'">chat_bubble</v-icon>
-        </v-list-tile>
+        <div class="person" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
+          <div class="personicon">
+            <img :src="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].targetPic : chat[0].senderPic)"/>
+          </div>
+          <div class="personname">
+            <div style="font-size: 15px; padding: 10px;" v-html="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].sender)">
+            </div>
+          </div>
+          <div class="personstatus">
+            <v-icon style="text-decoration: none;" :color="chat[0].asread ? 'grey' : 'teal'">fiber_manual_record</v-icon>
+          </div>
+        </div>
       </div>
       <div class="chatPlace">
+        <div class="chatName">
+          <h3 v-if="memoire >= 0">{{conv[memoire][0].sender}}</h3>
+          <h3 v-else>Messages</h3>
+        </div>
         <div v-if="memoire >= 0" id="ChatArea" class="chatArea" v-chat-scroll>
-          <div style="padding-bottom: 10px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
+          <div style="padding-bottom: 4px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
             <div v-if="item.target === $store.state.user.local.mail" class="Message">
-              <span v-if="index > 0">
-                <span v-if="displayMsg[index - 1].sender !== item.sender">
-                  <img style="float: left; width: 40px; border-radius: 20px; margin-right: 20px;" :src="item.senderPic">
-                  <h3 style="padding-top: 14px; margin-top: 0px; padding-left: 10px; margin-bottom: 10px;">{{ item.sender }}</h3>
-                </span>
-              </span>
-              <span v-else>
-                <img style="float: left; width: 40px; border-radius: 20px; margin-right: 20px;" :src="item.senderPic">
-                <h3 style="padding-top: 14px; margin-top: 0px; padding-left: 10px; margin-bottom: 10px;">{{ item.sender }}</h3>
-              </span>
-              <p v-html="item.text"></p>
+              <div v-if="index > 0">
+                <div v-if="displayMsg[index - 1].sender !== item.sender">
+                  <img style="float: left; width: 30px; border-radius: 15px; margin-top: 4px;" :src="item.senderPic">
+                  <p v-html="item.text"></p>
+                </div>
+                <div v-else style="margin-left: 30px;"><p v-html="item.text"></p></div>
+              </div>
+              <div v-else>
+                <img style="float: left; width: 30px; border-radius: 15px; margin-top: 4px;" :src="item.senderPic">
+                <p v-html="item.text"></p>
+              </div>
             </div>
               <div v-else class="MessageReverse">
-                <span v-if="index > 0">
-                  <span v-if="displayMsg[index - 1].sender !== item.sender">
-                    <img style="float: right; width: 40px; border-radius: 20px; margin-left: 20px;" :src="item.senderPic">
-                    <h3 style="padding-top: 14px; margin-top: 0px; padding-right: 10px; text-align: right; margin-bottom: 10px;">{{ item.sender }}</h3>
-                  </span>
-                </span>
-                <span v-else>
-                  <img style="float: right; width: 40px; border-radius: 20px; margin-left: 20px;" :src="item.senderPic">
-                  <h3 style="padding-top: 14px; margin-top: 0px; padding-right: 10px; text-align: right; margin-bottom: 10px;">{{ item.sender }}</h3>
-                </span>
-                <p v-html="item.text"></p>
+                <div v-if="index > 0">
+                  <div v-if="displayMsg[index - 1].sender !== item.sender">
+                    <img style="float: right; width: 30px; border-radius: 15px; margin-top: 4px;" :src="item.senderPic">
+                    <p v-html="item.text"></p>
+                  </div>
+                  <div v-else style="margin-right: 30px;"><p v-html="item.text"></p></div>
+                </div>
+                <div v-else>
+                  <img style="float: right; width: 30px; border-radius: 15px; margin-top: 4px;" :src="item.senderPic">
+                  <p v-html="item.text"></p>
+                </div>
               </div>
           </div>
         </div>
             <div v-if="memoire >= 0" class="post">
-              <form v-on:submit.prevent="SendMSG()">
-                <input style="width: 90%; border-radius: 20px; display: inline-block;" class="form-control" type="text" placeholder="Message" v-model="msg.text"/>
-              </form>
               <div class="post-options">
                 <a href="#"><i class="icon-camera"></i></a>
                 <a href="#"><i class="icon-link"></i></a>
               </div>
+              <form v-on:submit.prevent="SendMSG()">
+                <input style="width: 90%; border-radius: 20px; display: inline-block;" class="form-control" type="text" placeholder="Message" v-model="msg.text"/>
+              </form>
             </div>
       </div>
   </v-layout>

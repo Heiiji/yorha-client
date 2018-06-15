@@ -29,7 +29,7 @@
 .userprofileimage {
   margin: auto;
   height: 200px;
-  width: 200px;
+  width: 100%;
 }
 .profile-image-container img {
   border-radius: 100px;

@@ -1,15 +1,128 @@
+<style scoped type="text/css">
+.categori {
+  width: 100%;
+  display: block;
+  margin: 0px;
+  padding: 5px;
+  background-color: white;
+  border-top-color: darkgrey;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+.categori:hover {
+  background-color: rgba(150, 150 ,150, 0.3);
+  cursor: pointer;
+}
+.conv {
+  display: inline-block;
+  width: 20%;
+  margin: 0px;
+  background-color: white;
+  height: 100%;
+  margin-right: 5px;
+  text-align: center;
+  border-radius: 3px;
+}
+#photo {
+  float: left;
+  margin: 25px;
+}
+#editer {
+  opacity: 0;
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+  display: inline-block;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background-color: rgba(200, 200, 200, 0);
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+#photo:hover #editer {
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+  opacity: 1;
+  background-color: rgba(200, 200, 200, 0.7);
+}
+.canal {
+  width: 80%;
+  display: inline-block;
+  position: relative;
+  height: 100%;
+}
+.post {
+  background-color: white;
+  box-shadow: -1px -1px 3px #aaa;
+  display: block;
+  position: fixed;
+  bottom: 0px;
+  width: 69%;
+}
+</style>
 <template>
   <div>
-    <div v-if="user.local" style="padding-top: 0px;">
-        <div class="profile-cover" style="background: none;">
-            <v-parallax style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;" src="/static/Wallpaper 7.jpg"></v-parallax>
-        </div>
-        <div id="main-wrapper">
-            <div class="row">
-                <div class="col-md-3 user-profile">
-                </div>
-                <div class="col-md-6 m-t-lg">
-                    <v-tabs style="margin: 10px;" fixed-tabs>
+    <div v-if="user.local" style="padding-top: 0px; position: relative;">
+        <div style="position: relative; display: flex;" id="main-wrapper">
+          <div class="conv">
+            <h3 style="display: block;">Channels</h3>
+            <div @click="activeTeam = 'General'" class="categori">
+              GENERAL
+            </div>
+            <div @click="activeTeam = 'Whatever'" class="categori">
+              WHATEVER
+            </div>
+            <div @click="activeTeam = $store.state.user.local.work" class="categori">
+              {{ $store.state.user.local.work.toUpperCase() }}
+            </div>
+            <div v-for="(elem, index) in Teams" :key="index" @click="activeTeam = elem.name" class="categori">
+              {{ elem.name }}
+            </div>
+          </div>
+          <div class="canal">
+            <div class="profile-timeline">
+                            <ul class="list-unstyled">
+                                <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" style="display: block;">
+                                    <div class="panel panel-white">
+                                        <div class="panel-body">
+                                            <div class="timeline-item-header">
+                                                <img :src="item.senderPic" alt="">
+                                                <p>{{ item.sender }} <small> {{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
+                                            </div>
+                                            <div class="timeline-item-post">
+                                                <p v-html="item.text"></p>
+                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
+                                                    <div class="timeline-comment-header">
+                                                        <img :src="comm.senderPic" alt="">
+                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
+                                                    </div>
+                                                    <p class="timeline-comment-text">{{comm.text}}</p>
+                                                </div>
+                                                <v-text-field
+                                                  name="reply"
+                                                  label="Reply"
+                                                  style="position: absolute; width: 75%;"
+                                                  v-model="item.message"
+                                                  single-line
+                                                ></v-text-field>
+                                                <v-btn fab small @click="postReply(item._id, item.message); item.message = ''" color="white" style="position: relative; left: 85%;">
+                                                  <v-icon dark>send</v-icon>
+                                                </v-btn>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="post">
+                                    <textarea class="form-control" placeholder="Post" v-model="News.text" rows="4=6"></textarea>
+                                    <div class="post-options">
+                                        <button class="btn btn-default pull-right" @click="News.department = activeTeam; postNews();">Post</button>
+                                    </div>
+                                </div>
+                                </div>
+                    <!-- <v-tabs style="display: inline-block; width: 79%; margin: 0px;" fixed-tabs>
                       <v-tab>
                         General
                       </v-tab>
@@ -291,11 +404,7 @@
                             </ul>
                         </div>
                       </v-tab-item>
-                    </v-tabs>
-                </div>
-                <div class="col-md-3 m-t-lg">
-                </div>
-            </div>
+                    </v-tabs> -->
         </div>
     </div>
     <div>
@@ -309,7 +418,7 @@ import News from '@/services/NewsService'
 import Api from '@/services/Api'
 
 export default {
-  name: 'Profil',
+  name: 'Dashboard',
   data () {
     return {
       edition: false,
@@ -330,7 +439,7 @@ export default {
       NewTel: '',
       PostNews: null,
       CreateTeam: false,
-      activeTeam: '',
+      activeTeam: 'General',
       selectedTeam: {
         name: '',
         pers: []
@@ -398,19 +507,10 @@ export default {
           picture: '/static/profil/' + vue.$store.state.user.displayName + '.png',
           Token: idToken
         }).then((response) => {
-          console.log('logged')
           vue.$store.state.user = client
           vue.$store.state.user.local = response.data
           vue.GetByTeam()
         })
-      })
-    },
-    PostTheme (target) {
-      var vue = this
-      vue.$store.state.user.local.homeTheme = target
-      AccountService.editHomeTheme({
-        newTheme: target,
-        mail: vue.$store.state.user.local.mail
       })
     },
     PostDescription (desc) {
@@ -421,34 +521,6 @@ export default {
       this.user.local.description = desc
       this.EditDescription = false
     },
-    PostTeam () {
-      AccountService.editTeam({
-        team: this.NewTeam,
-        mail: this.user.local.mail,
-        action: 'create'
-      }).then((response) => {
-        if (response.data.success === true) {
-          this.user.local.team = this.NewTeam
-          this.Refresh()
-          this.CreateTeam = false
-        } else {
-          this.NewTeam = 'Team already exist'
-        }
-      })
-    },
-    DelTeam () {
-      AccountService.editTeam({
-        team: this.NewTeam,
-        mail: this.user.local.mail,
-        action: 'delete'
-      }).then((response) => {
-        if (response.data.success === true) {
-          this.user.local.team = this.NewTeam
-          this.Refresh()
-        }
-        this.CreateTeam = false
-      })
-    },
     GetByTeam () {
       var vue = this
       vue.Teams = []
@@ -456,7 +528,6 @@ export default {
         AccountService.FindByTeam(elem).then((response) => {
           vue.Teams.push({name: elem, users: response.data.users})
         }).then(() => {
-          vue.activeTeam = vue.Teams[0].name
           vue.selectedTeam = vue.Teams[0]
         })
       })
@@ -465,7 +536,8 @@ export default {
       this.News.sender = this.$store.state.user.local.username
       this.News.senderPic = this.$store.state.user.local.picture
       var New = JSON.parse(JSON.stringify(this.News))
-      this.News = []
+      this.News.text = ''
+      console.log(New)
       News.Post(New).then(() => {
         this.getNews()
       })
@@ -515,29 +587,3 @@ export default {
   }
 }
 </script>
-
-<style type="text/css">
-#photo {
-  float: left;
-  margin: 25px;
-}
-#editer {
-  opacity: 0;
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
-  display: inline-block;
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background-color: rgba(200, 200, 200, 0);
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-#photo:hover #editer {
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
-  opacity: 1;
-  background-color: rgba(200, 200, 200, 0.7);
-}
-</style>

@@ -57,11 +57,17 @@ export default {
         this.$emit('link-updated', id, 'deleted')
       })
       gantt.$_eventsInitialized = true;
+    },
+    needRefresh () {
+      gantt.refreshData();
     }
   },
 
   mounted () {
     this.$_initGanttEvents();
+    this.$on('needRefresh', () => {
+      gantt.refreshData();
+    })
 
     gantt.init(this.$refs.gantt)
     gantt.parse(this.$props.tasks)

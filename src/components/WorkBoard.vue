@@ -5,7 +5,7 @@
         <button class="btn btn-primary btn-block" @click="toogleMake = true" style="width: 150px; position: absolute; right: 20px; top: 10px;">Add Project</button>
     </div>
     <div style="widht: 100%; display: block; margin-top: 60px;">
-    <v-flex style="cursor: pointer; display: inline-block; width: 400px; margin: 10px;" v-for="(board, index) in currentBoard" :key="index">
+    <v-flex style="cursor: pointer; display: inline-block; width: 400px; margin: 10px;" v-for="(board, index) in currentBoard" :key="index" @click="$router.push('/taskmanager/' + board.title)">
             <v-card color="cyan darken-2" class="white--text">
               <v-container fluid grid-list-lg>
                 <v-layout row>
@@ -98,6 +98,7 @@ export default {
     },
     PutBoard () {
       let vue = this
+      vue.toogleMake = false
       this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
         vue.newBoard.token = idToken
         vue.newBoard.user = vue.$store.state.user.local.mail

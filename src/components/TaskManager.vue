@@ -21,6 +21,22 @@
       </div>
       <gantt class="left-container" :tasks="tasks" @task-updated="logTaskUpdate" @link-updated="logLinkUpdate" @task-selected="selectTask" ref="gant"></gantt>
     </div>
+    <div class="cardDisplay">
+      <div style="height: auto; background-color: rgba(230, 230, 230, 0.7);" class="card">
+        <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Task</h2>
+        <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Description</h2>
+        <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Begining</h2>
+        <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Duration</h2>
+        <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Assignement</h2>
+      </div>
+      <div class="card" v-for="(task, index) in dispCards" :key="index">
+        <h3 class="elem">{{ task.title }}</h3>
+        <p class="elem">{{ task.description }}</p>
+        <p class="elem">{{ task.start_date }}</p>
+        <p class="elem">{{ task.duration }}</p>
+        <p class="elem"><img v-for="(user, index) in task.users" :key="index" width="30px" style="border-radius: 15px;" :src="user.picture" /></p>
+      </div>
+    </div>
     <v-menu
         transition="slide-x-transition"
         bottom
@@ -215,6 +231,21 @@
   </div>
 </template>
 <style scoped>
+.elem {
+  height: auto;
+  width: 20%;
+  padding: 10px;
+  border-right: rgba(150, 150, 150, 0.4) 1px solid;
+  margin: 0px;
+  margin-top: -10px;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+}
+.cardDisplay {
+  padding: 10px;
+  color: black;
+}
 .editIcon {
   position: absolute;
   top: 5px;
@@ -232,7 +263,17 @@
 }
 .card {
   border-radius: 5px;
-  cursor: pointer;
+  height: auto;
+  display: flex;
+  padding: 10px;
+  font-size: 1.2em;
+  background-color: rgba(230, 230, 230, 0.4);
+  -webkit-transition: width 0.1s, margin 0.1s, -webkit-transform 0.1s;
+  transition: min-width 0.1s,margin 0.1s, transform 0.1s;
+  box-shadow: none;
+}
+.card:hover {
+  background-color: rgba(200, 200, 200, 0.9);
   -webkit-transition: width 0.1s, margin 0.1s, -webkit-transform 0.1s;
   transition: min-width 0.1s,margin 0.1s, transform 0.1s;
 }
@@ -307,13 +348,9 @@ export default {
     return {
       tasks: {
         data: [
-          {id: 1, text: 'Task 1', description: 'lolilol', start_date: '15-04-2017', duration: 3, progress: 0.6},
-          {id: 2, text: 'Task 2', description: 'lolilol', start_date: '30-04-2017', duration: 6, progress: 0.4},
-          {id: 3, text: 'Task custom', description: 'lolilol', start_date: '23-06-2017', duration: 20, progress: 0.2}
+          {id: 1, text: 'Task 1', description: 'lolilol', start_date: '15-04-2017', duration: 3, progress: 0.6}
         ],
-        links: [
-          {id: 1, source: 1, target: 2, type: '0'}
-        ]
+        links: []
       },
       selectedTask: null,
       messages: [],
@@ -344,7 +381,8 @@ export default {
         users: {
         }
       },
-      cards: []
+      cards: [],
+      dispCards: []
     }
   },
   mounted () {
@@ -366,6 +404,7 @@ export default {
       var vue = this
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         TaskService.GetMine(vue.$route.params.team, idToken).then((response) => {
+          console.log(response)
           vue.cards = response.data.task
           vue.categories = response.data.coll
           vue.cards.sort(function (a, b) {
@@ -375,14 +414,25 @@ export default {
               return -1
             }
           })
-          vue.$refs.gant.needRefresh()
-          vue.cards.forEach((element) => {
-            for (let j = 0; j < element.users.length; j++) {
-              AccountService.FindUsersByName(element.users[j]).then((data) => {
-                element.users[j] = data.data.users[0]
+          /*
+          {id: 1, text: 'Task 1', description: 'lolilol', start_date: '15-04-2017', duration: 3, progress: 0.6},
+          {id: 2, text: 'Task 2', description: 'lolilol', start_date: '30-04-2017', duration: 6, progress: 0.4},
+          {id: 3, text: 'Task custom', description: 'lolilol', start_date: '23-06-2017', duration: 20, progress: 0.2}
+          {id: 1, source: 1, target: 2, type: '0'}
+          */
+          for (let i = 0; i < vue.cards.length; i++) {
+            vue.cards[i].start_date = vue.cards[i].start_date.replace(/^(....).(..).(..)............../g, '$3-$2-$1')
+            vue.cards[i].id = vue.cards[i]._id
+            for (let j = 0; j < vue.cards[i].users.length; j++) {
+              AccountService.FindUsersByName(vue.cards[i].users[j]).then((data) => {
+                vue.cards[i].users[j] = data.data.users[0]
               })
             }
-          })
+          }
+          vue.tasks.data = vue.cards
+          vue.$refs.gant.needRefresh()
+          vue.$emit('refreshGant')
+          vue.dispCards = vue.cards
         })
       })
     },
@@ -413,7 +463,7 @@ export default {
     GetByTeam () {
       var vue = this
       vue.Teams = []
-      AccountService.FindByTeam(vue.$route.params.team).then((response) => {
+      AccountService.FindUsers('all').then((response) => {
         vue.Teams.push(response.data.users)
       })
     },

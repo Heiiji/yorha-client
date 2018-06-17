@@ -49,6 +49,10 @@ export default {
         this.$emit('link-updated', id, 'inserted', link)
       })
 
+      gantt.attachEvent('refreshGant', () => {
+        gantt.refreshData();
+      })
+
       gantt.attachEvent('onAfterLinkUpdate', (id, link) => {
         this.$emit('link-updated', id, 'updated', link)
       })
@@ -68,9 +72,12 @@ export default {
     this.$on('needRefresh', () => {
       gantt.refreshData();
     })
-
+    
+    window.setInterval(() => {
+      gantt.clearAll()
+      gantt.parse(this.$props.tasks)
+    }, 10000)
     gantt.init(this.$refs.gantt)
-    gantt.parse(this.$props.tasks)
   }
 }
 </script>
@@ -128,4 +135,16 @@ export default {
   .gantt_task_row.gantt_selected {
     background-color: rgba(152, 153, 155, 0.9);
   }
+.gantt_add {
+  display: none !important;
+}
+.gantt_cal_light {
+  display: none !important;
+}
+.gantt_cal_cover {
+  display: none;
+}
+.gantt_grid_head_cell.gantt_grid_head_add {
+  display: none;
+}
 </style>

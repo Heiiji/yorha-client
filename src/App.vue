@@ -1,3 +1,122 @@
+<style scoped>
+input.form-control.search-input:active {
+  border-color: blue;
+}
+.top-menu .navbar-nav>li>a {
+  padding-bottom: 6px;
+}
+.sidebar {
+  position: fixed;
+}
+.page-sidebar {
+  height: 100% !important;
+  width: 52px !important;
+  overflow-x: hidden !important;
+  -webkit-transition: width 0.1s ease-in-out;
+  transition: width 0.1s ease-in-out;
+}
+.page-sidebar:hover {
+  width: 160px !important;
+  -webkit-transition: width 0.1s ease-in-out;
+  transition: width 0.1s ease-in-out;
+}
+.page-content {
+  background-color: #F1F4F9;
+}
+.navbar {
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
+}
+.msg-dropdown {
+  margin-right: 150px;
+}
+.logo-text {
+  background-color: white;
+  padding-left: 10px !important;
+}
+.logo-text img {
+  vertical-align: middle;
+}
+.navbar-nav {
+  text-align: right;
+}
+.navbar-nav li {
+  display: inline-block;
+  margin-top: 0px;
+  height: 60px;
+}
+.profile-dropdown {
+  background-color: white;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  margin-right: 20px;
+}
+.dropdown-lg {
+  background-color: white;
+  position: absolute;
+  right: 0px;
+}
+.my-msgs {
+  height: 83px !important;
+}
+.text-center {
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 10px;
+}
+.drop-all:hover {
+  background-color: rgb(244, 244, 244);
+}
+.accordion-menu li {
+  width: 100%;
+  margin-left: 0%;
+}
+.accordion-menu div {
+  vertical-align: middle;
+}
+.accordion-menu p {
+  text-align: left;
+  padding: 3px;
+}
+.accordion-menu a {
+  display: grid;
+  grid-template-columns: 24px 74px 24px;
+  grid-gap: 14px;
+  width: 100%;
+  text-align: left;
+  vertical-align: middle;
+  padding-left: 14px;
+}
+@media (max-width:850px) {
+  .page-sidebar {
+    display: none;
+  }
+  .noMobile {
+    display: none;
+  }
+  .page-inner {
+    margin-left: 0px;
+    padding-top: 0px;
+  }
+  .mobileOnly {
+    display: inline;
+  }
+  .page-content {
+    padding-left: 0px;
+  }
+}
+@media (min-width:851px) {
+  .mobileOnly {
+    display: none;
+  }
+  .page-inner {
+    margin-left: 52px;
+  }
+}
+</style>
 <template>
   <v-app id="app" data-app>
     <div class="overlay"></div>
@@ -11,7 +130,7 @@
                     </a>
                 </div>
                 <div class="logo-box">
-                    <a @click="redirect('/')" class="logo-text" style="background-color: rgb(33, 110, 210);"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
+                    <a @click="redirect('/')" class="logo-text"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
                 </div>
                 <div v-if="signed === true">
                     <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/rechercher">
@@ -23,10 +142,10 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li v-if="signed === true" class="dropdown">
                                 <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px;">email</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
-                                <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
+                                <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
-                                            <li v-for="(msg, index) in messages" :key="msg._id" v-if="index < 5" @click="msgNbr = 0; redirect('/chat')">
+                                            <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" v-if="index < 5" @click="msgNbr = 0; redirect('/chat')">
                                                 <a>
                                                     <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -36,7 +155,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="drop-all" style="width: 100%; text-align: center; margin: 0px;"><a @click="msgNbr = 0; redirect('/chat')" class="text-center">All Messages</a></li>
+                                    <li @click="msgNbr = 0; redirect('/chat')" class="waves-effect waves-button waves-classic drop-all" style="width: 100%; text-align: center; margin: 0px; height: 40px;"><p class="text-center">All Messages</p></li>
                                 </ul>
                             </li>
                             <!--<li v-if="signed === true" class="dropdown">
@@ -57,23 +176,24 @@
                                     <li class="drop-all"><a href="#" class="text-center">All Tasks</a></li>
                                 </ul>
                             </li>-->
-                                <li v-if="signed === true">
-                                    <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><v-icon medium>event</v-icon></a>
-                                </li>
-                            <li>
-                              <div v-if="signed === true" @click="redirect('/profil')" style="padding: 20px; cursor: pointer;">
-                                <v-avatar v-if="user.local" size="32px" tile>
-                                  <img style="border-radius: 20px;" :src="user.local.picture" alt="Profil">
-                                </v-avatar>
-                              </div>
-                              <v-btn v-else @click="login()" color="primary" fab small dark>
-                                  <v-icon>account_circle</v-icon>
-                              </v-btn>
-                            </li>
                             <li v-if="signed === true">
-                                <a @click="logout()" class="log-out waves-effect waves-button waves-classic">
-                                    <span>Log out</span>
-                                </a>
+                              <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px;">date_range</i></a>
+                            </li>
+                            <li v-if="signed === true" class="dropdown" style="margin-right: 20px;">
+                              <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" style="padding-bottom: 10px;" data-toggle="dropdown"><img v-if="user.local" style="width: 24px; height: 24px; border-radius: 12px;" :src="user.local.picture" alt="Profil">
+                              </a>
+                              <ul class="dropdown-menu profile-dropdown" role="menu">
+                                <li style="height: 30px; width: 60px; margin-bottom: 10px;">
+                                  <div @click="redirect('/profil')" style="height: 30px; width: 60px; height: 30px; cursor: pointer;">
+                                    <p style="height: 20px; text-align: center; padding-top: 5px;">Profile</p>
+                                  </div>
+                                </li>
+                                <li style="height: 30px; width: 60px;">
+                                  <div @click="logout()" style="height: 30px; width: 60px; height: 30px; cursor: pointer;">
+                                    <p style="height: 20px; text-align: center; padding-top: 5px;">Log out</p>
+                                  </div>
+                                </li>
+                              </ul>
                             </li>
                         </ul>
                     </div>
@@ -83,33 +203,43 @@
         </span>
             <div v-if="($route.path != '/home' || $store.state.forceMenu) && $route.path != '/login'" class="page-sidebar sidebar">
                 <div class="page-sidebar-inner slimscroll">
-                <div class="sidebar-header">
+                <!-- <div class="sidebar-header">
                         <div class="sidebar-profile">
                             <div v-if="user.local" class="sidebar-profile-details">
                                 <span><small>{{ $store.state.user.local.work }}</small></span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <ul class="menu accordion-menu">
-                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/Dashboard')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>question_answer</v-icon></span><p>Dashboard</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/department')" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-briefcase"></span><p>Departments</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="tools = !tools" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-tasks"></span><p>Tools</p><i dark class="material-icons">keyboard_arrow_down</i></a>
+                        <li>
+                          <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons">home</i><p>Home</p></a>
+                        </li>
+                        <li>
+                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons">forum</i><p>Dashboard</p></a>
+                        </li>
+                        <li>
+                          <a @click="redirect('/department')" class="waves-effect waves-button"><i class="material-icons">work</i><p>Departments</p></a>
+                        </li>
+                        <li class="droplink">
+                          <a @click="tools = !tools" class="waves-effect waves-button"><i class="material-icons">build</i><p>Tools</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">
-                                <li style="width: 100%; margin: 0px;"><a @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
-                                <li style="width: 100%; margin: 0px;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
-                                <li style="width: 100%; margin: 0px;"><a @click="redirect('/Overview')">Version status</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="redirect('/Overview')">Version status</a></li>
                             </ul>
                         </li>
-                        <li style="width: 80%; margin-left: 10%;" class="droplink"><a @click="document = !document" class="waves-effect waves-button"><span class="menu-icon glyphicon glyphicon-edit"></span><p>Documents</p><i dark class="material-icons">keyboard_arrow_down</i></a>
+                        <li class="droplink">
+                          <a @click="document = !document" class="waves-effect waves-button"><i class="material-icons">folder</i><p>Documents</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
                             <ul v-if="document" class="sub-menu">
-                                <li style="width: 100%; margin: 0px;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
-                                <li style="width: 100%; margin: 0px;"><a @click="redirect('/version/viewer')">QA Report</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="redirect('/version/viewer')">QA Report</a></li>
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
-                        <li style="width: 80%; margin-left: 10%;"><a @click="redirect('/trombi')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>face</v-icon></span><p>Trombi</p></a></li>
-                        <li style="width: 80%; margin-left: 10%;"><a @click="feedback = true" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.5;" dark>mail</v-icon></span><p>Feedback</p></a></li>
+                        <li>
+                          <a @click="redirect('/trombi')" class="waves-effect waves-button"><i class="material-icons">face</i><p>Trombi</p></a></li>
+                        <li>
+                          <a @click="feedback = true" class="waves-effect waves-button"><i class="material-icons">feedback</i><p>Feedback</p></a></li>
                     </ul>
                 </div>
             </div>
@@ -207,58 +337,6 @@
   </v-app>
 </template>
 
-<style>
-input.form-control.search-input:active {
-  border-color: blue;
-}
-.top-menu .navbar-nav>li>a {
-  padding-bottom: 10px;
-}
-.sidebar {
-  position: fixed;
-}
-.page-sidebar {
-  height: 100% !important;
-}
-.page-content {
-  background-color: #F1F4F9;
-}
-.navbar {
-  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
-}
-@media (max-width:1100px) {
-  .navbar-right {
-    display: none !important;
-  }
-}
-@media (max-width:850px) {
-  .page-sidebar {
-    display: none;
-  }
-  .noMobile {
-    display: none;
-  }
-  .page-inner {
-    margin-left: 0px;
-    padding-top: 0px;
-  }
-  .mobileOnly {
-    display: inline;
-  }
-  .page-content {
-    padding-left: 0px;
-  }
-}
-@media (min-width:851px) {
-  .mobileOnly {
-    display: none;
-  }
-  .page-inner {
-    margin-left: 160px;
-  }
-}
-</style>
-
 <script>
 import AccountServices from '@/services/AccountService'
 
@@ -282,7 +360,7 @@ export default {
     menu: '',
     drawer: false,
     work: 'none',
-    MainImg: '/static/Shadow_Horizontal_White.png',
+    MainImg: '/static/Shadow_Horizontal_Black.svg',
     department: [
       { text: 'Test' },
       { text: 'Marketing' },

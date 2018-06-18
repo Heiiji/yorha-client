@@ -2,6 +2,11 @@
 .trombi {
  margin-left: 1%;
 }
+@media (max-width: 849px) {
+  .trombi {
+    text-align: center;
+  }
+}
 .page-title {
   text-align: left;
   position: relative;

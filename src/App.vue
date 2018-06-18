@@ -229,16 +229,16 @@ input.form-control.search-input:active {
                         <li class="droplink">
                           <a @click="tools = !tools" class="waves-effect waves-button"><i class="material-icons">build</i><p>Tools</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">
-                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
-                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
-                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="redirect('/Overview')">Version status</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/Overview')">Version status</a></li>
                             </ul>
                         </li>
                         <li class="droplink">
                           <a @click="document = !document" class="waves-effect waves-button"><i class="material-icons">folder</i><p>Documents</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
                             <ul v-if="document" class="sub-menu">
-                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
-                                <li style="width: 100%; margin: 0px; padding-left: 20%;"><a @click="redirect('/version/viewer')">QA Report</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/version/viewer')">QA Report</a></li>
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->

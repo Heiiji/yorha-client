@@ -113,6 +113,7 @@
   padding: 0px !important;
   width: 90%;
   padding-top: 4px !important;
+  grid-column: 2;
 }
 .formdiv {
   margin-top: 0px;
@@ -134,10 +135,6 @@
   transition : all 0.3s;
   -webkit-transition : all 0.3s;
   -moz-transition : all 0.3s;
-}
-.formdiv label {
- padding-left: 232px;
- width: calc(100% - 44px);
 }
 .formdivteam label {
  padding-left: 232px;
@@ -207,7 +204,11 @@
   padding-top: 0px !important;
   width: 100%;
 }
-
+.formdiv-grid {
+  display: grid;
+  margin-left: 32px;
+  grid-template-columns: 200px auto 46px;
+}
 @media (max-width: 849px) {
   #main-wrapper {
     display: block;
@@ -217,9 +218,6 @@
   }
   .infoperso {
   width: 100%;
-  }
-  .formdiv label {
-    padding-left: 162px;
   }
   .texttitle {
     width: 130px;
@@ -232,6 +230,11 @@
   }
   .forminedit {
     width: 60%;
+  }
+  .formdiv-grid {
+    display: grid;
+    margin-left: 32px;
+    grid-template-columns: 130px auto 46px;
   }
 }
 
@@ -354,11 +357,11 @@
               </a>
             </div>
             <div class="formdiv" v-if="EditTel">
-              <label>
+              <div class="formdiv-grid">
                 <v-text-field class="formin" v-model="NewTel" name="NewTel" :placeholder="user.local.tel">
                 </v-text-field>
-              </label>
-            <a class="check material-icons" @click="changeTel()">done</a>
+                <div style="grid-column: 3;"><a class="check material-icons" @click="changeTel()">done</a></div>
+              </div>
             </div>
               <div class="mycontainer">
                 <a class="userbtn" @click="EditDescription = !EditDescription">
@@ -376,11 +379,11 @@
                 </a>
               </div>
               <div class="formdiv" v-if="EditDescription">
-                <label>
+                <div class="formdiv-grid">
                   <v-text-field class="formin" v-model="NewDescription" name="NewDescription" :placeholder="user.local.description">
                   </v-text-field>
-                </label>
-              <a class="check material-icons" @click="PostDescription(NewDescription)">done</a>
+                  <div style="grid-column: 3;"><a class="check material-icons" @click="PostDescription(NewDescription)">done</a></div>
+                </div>
             </div>
           </div>
 

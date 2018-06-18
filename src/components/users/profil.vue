@@ -438,7 +438,7 @@
                 </div>
               </a>
               <div class="userbtn" v-if="CreateTeam">
-                <div class="textcontainer" style="padding-bottom: 12px;">
+                <div class="textcontainer" style="padding-bottom: 16px;">
                   <div class="texttitle texttitlebigedit">
                     <h5>Create a new team</h5>
                   </div>

@@ -19,7 +19,7 @@
           <li class="gantt-message" v-for="(message, index) in messages" :key="index">{{message}}</li>
         </ul>
       </div>
-      <gantt class="left-container" :tasks="tasks" @task-updated="logTaskUpdate" @link-updated="logLinkUpdate" @task-selected="selectTask" ref="gant"></gantt>
+      <gantt class="left-container" :tasks="tasks" @firebase="firebaseApp" @task-updated="logTaskUpdate" @link-updated="logLinkUpdate" @task-selected="selectTask" ref="gant"></gantt>
     </div>
     <div class="cardDisplay">
       <div style="height: auto; background-color: rgba(230, 230, 230, 0.7);" class="card">
@@ -29,13 +29,24 @@
         <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Duration</h2>
         <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Assignement</h2>
       </div>
-      <div class="card" v-for="(task, index) in dispCards" :key="index">
+      <div class="card" v-for="(task, index) in dispCards" :key="index" @click="EditCard = task; selected = task.users; displayEditCard = true">
         <h3 class="elem">{{ task.title }}</h3>
         <p class="elem">{{ task.description }}</p>
-        <p class="elem">{{ task.start_date }}</p>
+        <p class="elem">{{ task.start_dateUse }}</p>
         <p class="elem">{{ task.duration }}</p>
         <p class="elem"><img v-for="(user, index) in task.users" :key="index" width="30px" style="border-radius: 15px;" :src="user.picture" /></p>
       </div>
+    </div>
+    <div style="position: fixed !important; bottom: 10px; right: 70px">
+      <v-btn
+          color="blue"
+          dark
+          fab
+          style="z-index: 5;"
+          @click="ShowSet = true"
+        >
+        <v-icon>settings</v-icon>
+      </v-btn>
     </div>
     <v-menu
         transition="slide-x-transition"
@@ -58,12 +69,29 @@
         </v-list-tile>
       </v-list>
     </v-menu>
-    <div style="display: block;">
-      <v-dialog style="z-index:25;" v-model="NewCard" scrollable max-width="800px">
+      <v-dialog style="z-index:25;" v-model="ShowSet" scrollable max-width="800px">
         <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
-          <v-card-title style="color: blue;">New card :</v-card-title>
+          <v-card-title style="color: blue;">Board settings :</v-card-title>
           <v-divider></v-divider>
             <v-flex xs8>
+              <v-switch
+                :label="`Public board`"
+                v-model="settings.public"
+              ></v-switch>
+            </v-flex>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-btn color="blue darken-1" flat @click.native="ShowSet = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat>Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    <div style="display: block;">
+      <v-dialog style="z-index: 25; background-color: rgba(247,247,250,0.98) !important;" v-model="NewCard" scrollable max-width="800px">
+        <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
+          <v-card-title style="color: blue;">New task :</v-card-title>
+          <v-divider></v-divider>
+            <v-flex style="text-align: center;" xs8>
               <v-text-field v-model="card.title"
                 name="title"
                 label="title"
@@ -76,6 +104,8 @@
                   id="text"
                   style="width: 700px; margin: 5px;"
                 ></v-text-field>
+                <h4 style="text-align: center;">Start date</h4>
+                <v-date-picker v-model="picker" :landscape="true" :reactive="true"></v-date-picker>
                 <v-container style="height: auto;" fluid>
                 <v-layout row wrap>
                   <v-flex xs12 sm6>
@@ -133,44 +163,32 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-dialog style="z-index:25;" v-model="displayEditCard" scrollable max-width="800px">
-        <v-card v-if="EditCard.style" style="background-color: rgba(247,247,250,0.98); text-align: center;">
-          <v-card color="blue-grey darken-2" class="white--text" :style="card.style">
-            <v-card-title :style="card.style" primary-title>
-              <div class="headline">{{ EditCard.title }}</div><br/>
-              <div>{{ EditCard.text }}</div>
-              <div class="team">
+      <v-dialog style="z-index: 25; background-color: rgba(247,247,250,0.98);" v-model="displayEditCard" scrollable max-width="800px">
+        <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
+              <div class="headline" style="display: block;">{{ EditCard.title }}</div><br/>
+              <div style="display: block;">{{ EditCard.description }}</div><br/>
+              <div class="team" style="display: block;">
                   <div @click="$router.push('/profil/' + EditCard._id)" v-for="pers in EditCard.users" :key="pers._id" class="team-member" style="cursor: pointer;">
                      <img :src="pers.picture" alt="">
                   </div>
               </div>
-            </v-card-title>
-          </v-card>
           <v-divider></v-divider>
-            <v-flex v-if="EditCard.style" xs8>
-              <v-flex xs12 sm12>
-                <v-subheader v-text="'linked project'"></v-subheader>
-                  <v-select
-                    v-model="EditCard.project"
-                    :items="ProjList"
-                    item-text="project name"
-                    label="project name"
-                    autocomplete
-                  ></v-select>
-              </v-flex>
+            <v-flex v-if="EditCard.text" xs8>
               <v-text-field v-model="EditCard.title"
                 name="title"
                 label="title"
                 style="width: 700px; margin: 5px;"
               ></v-text-field>
-                <v-text-field v-model="EditCard.text"
-                  name="text"
-                  label="text"
+                <v-text-field v-model="EditCard.description"
+                  name="description"
+                  label="description"
                   textarea
-                  id="text"
+                  id="description"
                   style="width: 700px; margin: 5px;"
                 ></v-text-field>
-                <v-container fluid>
+                <h4 style="text-align: center;">Start date</h4>
+                <v-date-picker v-model="EditCard.start_dateUse" :landscape="true" :reactive="true"></v-date-picker>
+                <v-container style="height: auto;" fluid>
                 <v-layout row wrap>
                   <v-flex xs12 sm6>
                     <v-subheader v-text="'Selected users :'"></v-subheader>
@@ -245,6 +263,7 @@
 .cardDisplay {
   padding: 10px;
   color: black;
+  margin-bottom: 50px;
 }
 .editIcon {
   position: absolute;
@@ -353,6 +372,14 @@ export default {
         links: []
       },
       selectedTask: null,
+      firebaseApp: null,
+      ShowSet: false,
+      picker: null,
+      landscape: false,
+      reactive: false,
+      settings: {
+        public: true
+      },
       messages: [],
       selected: [],
       categories: [],
@@ -404,9 +431,7 @@ export default {
       var vue = this
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         TaskService.GetMine(vue.$route.params.team, idToken).then((response) => {
-          console.log(response)
           vue.cards = response.data.task
-          vue.categories = response.data.coll
           vue.cards.sort(function (a, b) {
             if (a.date > b.date) {
               return 1
@@ -414,13 +439,15 @@ export default {
               return -1
             }
           })
-          /*
+          /* minimum nécéssaire pour le Gantt
           {id: 1, text: 'Task 1', description: 'lolilol', start_date: '15-04-2017', duration: 3, progress: 0.6},
           {id: 2, text: 'Task 2', description: 'lolilol', start_date: '30-04-2017', duration: 6, progress: 0.4},
           {id: 3, text: 'Task custom', description: 'lolilol', start_date: '23-06-2017', duration: 20, progress: 0.2}
           {id: 1, source: 1, target: 2, type: '0'}
           */
           for (let i = 0; i < vue.cards.length; i++) {
+            let startdate = vue.cards[i].start_date.replace(/^(....).(..).(..)............../g, '$1-$2-$3')
+            vue.cards[i].start_dateUse = startdate
             vue.cards[i].start_date = vue.cards[i].start_date.replace(/^(....).(..).(..)............../g, '$3-$2-$1')
             vue.cards[i].id = vue.cards[i]._id
             for (let j = 0; j < vue.cards[i].users.length; j++) {
@@ -430,8 +457,6 @@ export default {
             }
           }
           vue.tasks.data = vue.cards
-          vue.$refs.gant.needRefresh()
-          vue.$emit('refreshGant')
           vue.dispCards = vue.cards
         })
       })
@@ -442,6 +467,7 @@ export default {
       newCard = vue.card
       newCard.users = vue.selected
       newCard.board = vue.$route.params.team
+      newCard.start_date = vue.picker
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         newCard.token = idToken
         TaskService.Post(newCard).then((response) => {

@@ -3,11 +3,18 @@
 </template>
 
 <script>
+// import AccountService from '@/services/AccountService'
+import TaskService from '@/services/TaskService'
 /* eslint-disable */
 import 'dhtmlx-gantt'
 
 export default {
   name: 'gantt',
+  data () {
+    return {
+      timer: 5000
+    }
+  },
   props: {
     tasks: {
       type: Object,
@@ -18,6 +25,15 @@ export default {
   },
 
   methods: {
+    PostCard (task) {
+      var vue = this
+      this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
+        task.token = idToken
+        TaskService.PutTask(task).then((res) => {
+          console.log(res)
+        })
+      })
+    },
     $_initGanttEvents: function () {
       if(gantt.$_eventsInitialized)
         return;
@@ -36,6 +52,7 @@ export default {
 
       gantt.attachEvent('onAfterTaskUpdate', (id, task) => {
         this.$emit('task-updated', id, 'updated', task)
+        this.PostCard(task)
       })
 
       gantt.attachEvent('onAfterTaskDelete', (id) => {
@@ -69,14 +86,14 @@ export default {
 
   mounted () {
     this.$_initGanttEvents();
-    this.$on('needRefresh', () => {
-      gantt.refreshData();
-    })
-    
+    this.firebaseApp = this.$store.state.firebase
     window.setInterval(() => {
       gantt.clearAll()
       gantt.parse(this.$props.tasks)
-    }, 10000)
+      if (this.timer <= 6666) {
+        this.timer *= 2
+      }
+    }, this.timer)
     gantt.init(this.$refs.gantt)
   }
 }

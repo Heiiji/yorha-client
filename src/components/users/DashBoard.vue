@@ -540,4 +540,7 @@ export default {
   opacity: 1;
   background-color: rgba(200, 200, 200, 0.7);
 }
+.form-control {
+  width: 100%;
+}
 </style>

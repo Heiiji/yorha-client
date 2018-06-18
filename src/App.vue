@@ -147,16 +147,16 @@ input.form-control.search-input:active {
                                         <ul class="list-unstyled">
                                             <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat')">
                                                 <a v-if="index == 0">
-                                                    <div class="msg-img"><div class="online on"></div><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
+                                                    <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
                                                     <p class="msg-text"> {{ msg.text }}</p>
-                                                    <p class="msg-time">{{ msg.date }}</p>
+                                                    <p class="msg-time">{{ new Date(msg.date).toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</p>
                                                 </a>
-                                                <a v-else-if="msg.sender != messages[index].sender">
-                                                    <div class="msg-img"><div class="online on"></div><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
+                                                <a v-else-if="msg.sender != messages[index - 1].sender">
+                                                    <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
                                                     <p class="msg-text"> {{ msg.text }}</p>
-                                                    <p class="msg-time">{{ msg.date }}</p>
+                                                    <p class="msg-time">{{ new Date(msg.date).toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</p>
                                                 </a>
                                             </li>
                                         </ul>
@@ -352,6 +352,9 @@ import firebase from 'firebase'
 export default {
   data: () => ({
     tools: false,
+    navigator: {
+      language: ''
+    },
     document: false,
     user: [],
     signed: false,
@@ -453,6 +456,7 @@ export default {
     }
   },
   mounted () {
+    this.navigator.language = navigator.language
     var vue = this
     this.firebaseApp = this.$store.state.firebase
     var user = this.firebaseApp.auth().currentUser

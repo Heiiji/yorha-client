@@ -147,18 +147,16 @@ input.form-control.search-input:active {
                                         <ul class="list-unstyled">
                                             <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat')">
                                                 <a v-if="index == 0">
-                                                    <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
+                                                    <div class="msg-img"><div class="online on"></div><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
                                                     <p class="msg-text"> {{ msg.text }}</p>
                                                     <p class="msg-time">{{ msg.date }}</p>
                                                 </a>
-                                                <a v-else>
-                                                    <span v-if="msg.sender != messages[index].sender">
-                                                      <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
-                                                      <p class="msg-name">{{ msg.sender }}</p>
-                                                      <p class="msg-text"> {{ msg.text }}</p>
-                                                      <p class="msg-time">{{ msg.date }}</p>
-                                                    </span>
+                                                <a v-else-if="msg.sender != messages[index].sender">
+                                                    <div class="msg-img"><div class="online on"></div><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
+                                                    <p class="msg-name">{{ msg.sender }}</p>
+                                                    <p class="msg-text"> {{ msg.text }}</p>
+                                                    <p class="msg-time">{{ msg.date }}</p>
                                                 </a>
                                             </li>
                                         </ul>

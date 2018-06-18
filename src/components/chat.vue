@@ -2,7 +2,7 @@
 .conteneur {
   position: fixed;
   padding-top: 60px;
-  padding-left: 175px;
+  padding-left: 56px;
   top: 0px;
   left: 0px;
   width: 100%;

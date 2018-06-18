@@ -145,12 +145,20 @@ input.form-control.search-input:active {
                                 <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
-                                            <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" v-if="index < 5" @click="msgNbr = 0; redirect('/chat')">
-                                                <a>
+                                            <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat')">
+                                                <a v-if="index == 0">
                                                     <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
                                                     <p class="msg-text"> {{ msg.text }}</p>
                                                     <p class="msg-time">{{ msg.date }}</p>
+                                                </a>
+                                                <a v-else>
+                                                    <span v-if="msg.sender != messages[index].sender">
+                                                      <div class="msg-img"><div class="online on"></div><img class="img-circle" :src="msg.senderPic" alt="pic"></div>
+                                                      <p class="msg-name">{{ msg.sender }}</p>
+                                                      <p class="msg-text"> {{ msg.text }}</p>
+                                                      <p class="msg-time">{{ msg.date }}</p>
+                                                    </span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -421,6 +429,21 @@ export default {
         AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
           vue.messages = response.data.msgs
           vue.msgNbr = 0
+          vue.messages.sort(function (a, b) {
+            if (a.senderMail > b.senderMail) {
+              if (a.date < b.date) {
+                return 1
+              } else {
+                return -1
+              }
+            } else {
+              if (a.date < b.date) {
+                return 1
+              } else {
+                return -1
+              }
+            }
+          })
           vue.messages.forEach(function (element) {
             if (element.asread === false) {
               vue.msgNbr += 1

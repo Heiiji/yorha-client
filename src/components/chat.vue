@@ -58,6 +58,7 @@ h3 {
   height: 95%;
   vertical-align: top;
   padding-top: 12px;
+  border-bottom: solid 1px rgb(200, 200, 200);
 }
 .Message {
   height: 100%;
@@ -159,7 +160,7 @@ h3 {
   left: 0px;
   width: 100%;
   text-align: center;
-  padding: 20px;
+  padding: 16px;
   color: rgb(50, 50, 50);
   border-bottom-style: solid;
   border-bottom-color: rgb(200, 200, 200);

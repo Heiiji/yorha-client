@@ -25,6 +25,7 @@ input.form-control.search-input:active {
 }
 .navbar {
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
+  line-height: 8px;
 }
 .msg-dropdown {
   margin-right: 150px;
@@ -61,6 +62,7 @@ input.form-control.search-input:active {
 }
 .my-msgs {
   height: 83px !important;
+  line-height: 0px;
 }
 .text-center {
   text-align: center;
@@ -141,7 +143,7 @@ input.form-control.search-input:active {
                     <div class="top-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li v-if="signed === true" class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px;">email</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px;">chat_bubble_outline</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
@@ -221,7 +223,10 @@ input.form-control.search-input:active {
                           <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons">home</i><p>Home</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons">forum</i><p>Dashboard</p></a>
+                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons">vertical_split</i><p>Dashboard</p></a>
+                        </li>
+                        <li>
+                          <a @click="redirect('/Chat')" class="waves-effect waves-button"><i class="material-icons">forum</i><p>Messages</p></a>
                         </li>
                         <li>
                           <a @click="redirect('/department')" class="waves-effect waves-button"><i class="material-icons">work</i><p>Departments</p></a>

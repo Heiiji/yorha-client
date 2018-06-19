@@ -160,7 +160,7 @@ h3 {
   left: 0px;
   width: 100%;
   text-align: center;
-  padding: 20px;
+  padding: 16px;
   color: rgb(50, 50, 50);
   border-bottom-style: solid;
   border-bottom-color: rgb(200, 200, 200);

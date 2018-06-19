@@ -306,7 +306,7 @@
               <a class="userbtn">
                 <div class="textcontainer">
                   <div class="texttitle">
-                    <h5>Team</h5>
+                    <h5>Department</h5>
                   </div>
                   <div class="textdisp">
                     {{ user.local.work }} ({{ user.local.qualifier }})

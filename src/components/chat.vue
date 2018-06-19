@@ -298,6 +298,7 @@ export default {
     getConv () {
       var nbr = 0
       var vue = this
+      let targ = -1
       var conv = []
       AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
         response.data.msgs.sort(function (a, b) {
@@ -353,15 +354,27 @@ export default {
             })
           }
           vue.conv = JSON.parse(JSON.stringify(conv))
-          vue.conv.forEach((elem) => {
-            elem.forEach((msg) => {
+          for (let i = 0; i < vue.conv.length; i++) {
+            if (vue.$route.params.conv) {
+              if (vue.$route.params.conv === vue.conv[i][0].senderMail || vue.$route.params.conv === vue.conv[i][0].target) {
+                targ = i
+              }
+            }
+            vue.conv[i].forEach((msg) => {
               msg.text = msg.text.replace(/\r?\n/g, '<br />').replace(/http([^ ]*)/g, '<a href="http' + '$1' + '" style="color: blue;" target="_blank">http' + '$1' + '</a>')
             })
-          })
+          }
           if (vue.memoire >= 0) {
             vue.displayMsg = vue.conv[vue.memoire]
           } else {
-            vue.messages = ''
+            if (vue.$route.params.conv && targ >= 0) {
+              vue.displayMsg = vue.conv[targ]
+              vue.memoire = targ
+              vue.target = ((vue.conv[targ][0].senderMail === vue.$store.state.user.local.mail) ? vue.conv[targ][0].target : vue.conv[targ][0].senderMail)
+              vue.conv[targ][0].asread = true
+            } else {
+              vue.messages = ''
+            }
           }
         })
       })

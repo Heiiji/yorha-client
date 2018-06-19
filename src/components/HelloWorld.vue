@@ -141,6 +141,12 @@
             <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg2.text"></p>
           </v-card>
         </v-dialog>
+        <v-dialog style="z-index:25;" v-model="DiscNews.msg3.show" scrollable max-width="1000px">
+          <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
+            <v-card-title style="color: blue;">{{DiscNews.msg3.name}}</v-card-title>
+            <p style="font-size: 1.5em; text-align: left; padding: 15px;" v-html="DiscNews.msg3.text"></p>
+          </v-card>
+        </v-dialog>
       </span>
       <v-dialog style="z-index:25;" v-model="showTwit" scrollable max-width="1000px">
         <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">

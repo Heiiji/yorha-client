@@ -145,7 +145,7 @@ input.form-control.search-input:active {
                                 <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
-                                            <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat')">
+                                            <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat/' + msg.senderMail)">
                                                 <a v-if="index == 0">
                                                     <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>

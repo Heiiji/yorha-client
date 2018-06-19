@@ -21,7 +21,8 @@ export default {
       default () {
         return {data: [], links: []}
       }
-    }
+    },
+    instance: ''
   },
 
   methods: {
@@ -88,13 +89,16 @@ export default {
     this.$_initGanttEvents();
     this.firebaseApp = this.$store.state.firebase
     window.setInterval(() => {
-      gantt.clearAll()
-      gantt.parse(this.$props.tasks)
-      if (this.timer <= 6666) {
-        this.timer *= 2
+      if (this.$props.instance === this.$store.state.GanttInstance) {
+        gantt.clearAll()
+        gantt.parse(this.$props.tasks)
+        if (this.timer <= 6666) {
+          this.timer *= 2
+        }
       }
     }, this.timer)
     gantt.init(this.$refs.gantt)
+    gantt.clearAll()
   }
 }
 </script>

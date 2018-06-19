@@ -33,6 +33,10 @@ export default {
     return Api().get('accountName/' + params)
   },
 
+  FindUsersByMail (params) {
+    return Api().get('accountMail/' + params)
+  },
+
   FindByTeam (params) {
     return Api().get('accountTeam/' + params)
   },

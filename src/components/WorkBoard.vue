@@ -17,14 +17,6 @@
                       </div>
                     </div>
                   </v-flex>
-                  <v-flex xs5>
-                    <v-card-media
-                      src="https://www.stagephotoparis.fr/wp-content/uploads/2016/02/stage-placeholder.jpg"
-                      height="125px"
-                      style="border-radius: 5px;"
-                      contain
-                    ></v-card-media>
-                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card>

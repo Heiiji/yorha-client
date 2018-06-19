@@ -19,7 +19,7 @@
           <li class="gantt-message" v-for="(message, index) in messages" :key="index">{{message}}</li>
         </ul>
       </div>
-      <gantt class="left-container" :tasks="tasks" @firebase="firebaseApp" @task-updated="logTaskUpdate" @link-updated="logLinkUpdate" @task-selected="selectTask" ref="gant"></gantt>
+      <gantt class="left-container" :tasks="tasks" :instance="$route.params.team" @firebase="firebaseApp" @task-updated="logTaskUpdate" @link-updated="logLinkUpdate" @task-selected="selectTask" ref="gant"></gantt>
     </div>
     <div class="cardDisplay">
       <div style="height: auto; background-color: rgba(230, 230, 230, 0.7);" class="card">
@@ -37,7 +37,7 @@
         <p class="elem"><img v-for="(user, index) in task.users" :key="index" width="30px" style="border-radius: 15px;" :src="user.picture" /></p>
       </div>
     </div>
-    <div style="position: fixed !important; bottom: 10px; right: 70px">
+    <div v-if="$store.state.user.local.mail === settings.selected[0]" style="position: fixed !important; bottom: 10px; right: 70px">
       <v-btn
           color="blue"
           dark
@@ -79,10 +79,52 @@
                 v-model="settings.public"
               ></v-switch>
             </v-flex>
+            <v-flex xs12 sm6>
+                    <v-select
+                      :items="Teams[0]"
+                      v-model="settings.selected"
+                      label="Select"
+                      item-text="username"
+                      item-value="mail"
+                      multiple
+                      chips
+                      max-height="auto"
+                      autocomplete
+                    >
+                      <template slot="selection" slot-scope="data">
+                        <v-chip
+                          :selected="data.selected"
+                          :key="JSON.stringify(data.item)"
+                          close
+                          class="chip--select-multi"
+                          @input="data.parent.selectItem(data.item)"
+                        >
+                          <v-avatar>
+                            <img :src="data.item.picture">
+                          </v-avatar>
+                          {{ data.item.username }}
+                        </v-chip>
+                      </template>
+                      <template slot="item" slot-scope="data">
+                        <template v-if="typeof data.item !== 'object'">
+                          <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                        </template>
+                        <template v-else>
+                          <v-list-tile-avatar>
+                            <img :src="data.item.picture">
+                          </v-list-tile-avatar>
+                          <v-list-tile-content>
+                            <v-list-tile-title v-html="data.item.username"></v-list-tile-title>
+                            <v-list-tile-sub-title v-html="data.item.work"></v-list-tile-sub-title>
+                          </v-list-tile-content>
+                        </template>
+                      </template>
+                    </v-select>
+                  </v-flex>
           <v-divider></v-divider>
           <v-card-actions>
             <v-btn color="blue darken-1" flat @click.native="ShowSet = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat>Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="SaveSettings()">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -378,7 +420,8 @@ export default {
       landscape: false,
       reactive: false,
       settings: {
-        public: true
+        public: true,
+        selected: ''
       },
       messages: [],
       selected: [],
@@ -414,7 +457,9 @@ export default {
   },
   mounted () {
     this.firebaseApp = this.$store.state.firebase
+    this.$store.state.GanttInstance = this.$route.params.team
     this.GetByTeam()
+    this.GetBoard()
     this.GetCard()
   },
   filters: {
@@ -427,6 +472,24 @@ export default {
     }
   },
   methods: {
+    async GetBoard () {
+      let vue = this
+      this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
+        TaskService.GetThisBoard(idToken, vue.$route.params.team).then((response) => {
+          response.data.board[0].selected = response.data.board[0].users
+          vue.settings = response.data.board[0]
+        })
+      })
+    },
+    SaveSettings () {
+      let vue = this
+      vue.ShowSet = false
+      this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
+        vue.settings.token = idToken
+        vue.settings.board = vue.$route.params.team
+        TaskService.SaveSetting(vue.settings)
+      })
+    },
     GetCard () {
       var vue = this
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {

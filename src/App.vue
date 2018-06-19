@@ -25,6 +25,7 @@ input.form-control.search-input:active {
 }
 .navbar {
   box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 0px 1px 0 rgba(0,0,0,.14), 0 2px 4px 0 rgba(0,0,0,.12);
+  line-height: 8px;
 }
 .msg-dropdown {
   margin-right: 150px;
@@ -61,6 +62,7 @@ input.form-control.search-input:active {
 }
 .my-msgs {
   height: 83px !important;
+  line-height: 0px;
 }
 .text-center {
   text-align: center;

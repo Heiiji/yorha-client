@@ -479,7 +479,6 @@ export default {
       e1: null,
       EditDescription: null,
       NewDescription: '',
-      EditPicture: null,
       NewTeam: '',
       EditTel: false,
       NewTel: '',
@@ -512,14 +511,7 @@ export default {
       ],
       allNews: [],
       Partner: [],
-      Teams: [],
-      background: [
-        { text: 'Landscape' },
-        { text: 'Cat' },
-        { text: 'Urban' },
-        { text: 'forest' },
-        { text: 'abstract' }
-      ]
+      Teams: []
     }
   },
   mounted () {

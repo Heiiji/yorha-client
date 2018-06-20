@@ -136,11 +136,6 @@ export default {
           return -1
         }
       })
-    },
-    ChangeStatus (id, newStatus) {
-      this.modif.id = id
-      this.modif.status = newStatus
-      AccountService.ChangeStatus(this.modif)
     }
   }
 }

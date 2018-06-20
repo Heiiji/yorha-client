@@ -211,13 +211,6 @@ input.form-control.search-input:active {
         </span>
             <div v-if="($route.path != '/home' || $store.state.forceMenu) && $route.path != '/login'" class="page-sidebar sidebar">
                 <div class="page-sidebar-inner slimscroll">
-                <!-- <div class="sidebar-header">
-                        <div class="sidebar-profile">
-                            <div v-if="user.local" class="sidebar-profile-details">
-                                <span><small>{{ $store.state.user.local.work }}</small></span>
-                            </div>
-                        </div>
-                    </div> -->
                     <ul class="menu accordion-menu">
                         <li>
                           <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons">home</i><p>Home</p></a>

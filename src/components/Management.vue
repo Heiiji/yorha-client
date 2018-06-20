@@ -58,24 +58,31 @@ export default {
     }
   },
   mounted () {
-    this.getUsers('stagiaire')
+    this.firebaseApp = this.$store.state.firebase
+    this.getUsers()
   },
   methods: {
     async getUsersByStatus (arg) {
       const response = await AccountService.FindByStatus(arg)
       this.users = response.data.users
     },
-    async getUsers (arg) {
+    async getUsers () {
       const response = await AccountService.FindUsers('all')
       this.users = response.data.users
     },
     SetLead (id) {
-      AccountService.SetQualifier({id: id, qualifier: 'SquadLeader'})
+      this.$store.state.firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+        AccountService.SetQualifier({id: id, qualifier: 'SquadLeader', token: idToken})
+      })
     },
     ChangeStatus (id, newStatus) {
-      this.modif.id = id
-      this.modif.status = newStatus
-      AccountService.ChangeStatus(this.modif)
+      let vue = this
+      this.$store.state.firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+        vue.modif.id = id
+        vue.modif.status = newStatus
+        vue.modif.token = idToken
+        AccountService.ChangeStatus(vue.modif)
+      })
     }
   }
 }

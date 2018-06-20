@@ -1,7 +1,6 @@
 <template>
   <div>
-            <div style="text-align: left; position: relative; width: 100%; padding-bottom: 80px; margin-bottom: -70px;" class="page-title">
-                <h3>Home</h3>
+            <div style="text-align: left; position: relative; width: 100%; padding-bottom: 80px; margin-bottom: -40px;" class="page-title">
                 <button class="btn btn-primary btn-block" @click="PostAnn = true" style="width: 150px; position: absolute; right: 20px; top: 10px;">Post document</button>
             </div>
         <v-container grid-list-md text-xs-center>
@@ -221,12 +220,6 @@ export default {
       randPopup: false,
       randUserResult: '',
       twittText: '',
-      HDesk: {
-        sender: '',
-        senderMail: '',
-        senderPic: '',
-        text: ''
-      },
       docs: [
         { text: 'Shadow Live Summary',
           id: 0}
@@ -314,9 +307,6 @@ export default {
           })
         })
       })
-    },
-    PostHelpDesk () {
-      AccountService.SendHelpDesk()
     },
     async getNews () {
       var vue = this

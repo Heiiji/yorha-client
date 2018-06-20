@@ -11,16 +11,6 @@
                         <h4>Workplace : {{ user.work }}</h4>
                       </div>
                     </v-card-title>
-                    <!--<v-card-actions>
-                      <v-menu bottom left>
-                      <v-btn flat color="orange" slot="activator">Change</v-btn>
-                      <v-list>
-                        <v-list-tile style="z-index: 20; background-color: white;" v-for="(item, i) in rangs" :key="i">
-                          <v-list-tile-title style="z-index: 21;" @click="ChangeStatus(user._id, item.text)">{{ item.text }}</v-list-tile-title>
-                        </v-list-tile>
-                      </v-list>
-                      </v-menu>
-                    </v-card-actions>-->
                   </v-card>
     <v-expansion-panel style="z-index: 20;">
         <v-expansion-panel-content

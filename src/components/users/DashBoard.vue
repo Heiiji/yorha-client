@@ -12,6 +12,7 @@
   display: grid;
   grid-template-rows: 52px min-content min-content auto;
   grid-gap: 20px;
+  border-radius: 12px;
 }
 .canal {
   width: 550px;
@@ -20,6 +21,7 @@
   display: grid;
   grid-template-rows: 52px min-content auto;
   grid-gap: 20px;
+  border-radius: 12px;
 }
 .dep-title {
   grid-row: 1;
@@ -27,6 +29,7 @@
   background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
   text-align: center;
+  border-radius: 12px;
 }
 .post {
   grid-row: 2;
@@ -38,6 +41,7 @@
   grid-template-rows: auto 36px;
   grid-template-columns: auto auto 88px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+  border-radius: 12px;
 }
 .conv-title {
   grid-row: 1;
@@ -46,6 +50,7 @@
   color: white;
   background-color: rgb(33, 110, 210);
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+  border-radius: 12px;
 }
 .profile-timeline {
   grid-row: 3;
@@ -54,23 +59,24 @@
   grid-row: 2;
   background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+  border-radius: 12px;
 }
 .conv-container-team {
   grid-row: 3;
   display: block;
   background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+  border-radius: 12px;
 }
 .categori {
   padding: 14px;
   text-align: left;
-  border-top: 1px solid rgba(0,0,0,.12);
   background-color: white;
   width: 250px;
+  border-radius: 12px;
 }
 .categori:hover {
   background-color: rgba(150, 150 ,150, 0.3);
-  border-top: 1px solid rgba(0,0,0,0);
   cursor: pointer;
 }
 .form-control {
@@ -102,6 +108,7 @@
   margin-bottom: 20px;
   background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+  border-radius: 12px;
 }
 .timeline-item-header {
   grid-row: 1;

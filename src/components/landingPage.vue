@@ -116,8 +116,6 @@
   }
   .shadowlogo img {
     width: 100%;
-    -webkit-filter: drop-shadow(5px 5px 5px #777);
-    filter: drop-shadow(5px 5px 5px #777);
   }
   .logoblade {
     left: 45%;

@@ -24,6 +24,7 @@
   width: 49%;
   background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  border-radius: 12px;
 }
 .mycontainer {
   position: relative;
@@ -294,11 +295,11 @@
         </div>
       </div>
       <div class="buttons">
-        <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block sendmsg">Send message</button>
+        <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block sendmsg" style="border-radius:12px;">Send message</button>
       </div>
       <div id="main-wrapper">
         <div class="infoperso">
-          <div class="mycontainer">
+          <div class="mycontainer" style="border-top: none;">
             <a class="userbtn">
               <div class="textcontainer">
                 <div class="texttitle">
@@ -365,7 +366,7 @@
 
         <div class="infoperso team" style="margin-top: 190px;">
           <v-menu v-if="user.username != $store.state.user.local.username" style="background-color: rgba(0, 0, 0, 0); display: block; margin-left: -8px; margin-top: -145px; margin-bottom: 69px;" dark offset-y>
-            <v-btn style="border-radius:1px !important; background-color: rgba(255, 255, 255, 1); width: calc(100% - 8px); padding-bottom: 55px; padding-top: 12px;" dark slot="activator"><h3 style="color: black;">Add To Team</h3>
+            <v-btn style="border-radius:12px !important; background-color: rgba(255, 255, 255, 1); width: calc(100% - 8px); padding-bottom: 55px; padding-top: 12px;" dark slot="activator"><h3 style="color: black;">Add To Team</h3>
             </v-btn>
             <v-list v-if="$store.state.user.local">
               <v-list-tile v-for="item in $store.state.user.local.teams" :key="item">

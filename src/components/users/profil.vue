@@ -43,6 +43,7 @@
   width: 49%;
   background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  border-radius: 12px;
 }
 .mycontainer {
   position: relative;
@@ -302,9 +303,9 @@
         </div>
         <div id="main-wrapper">
           <div class="infoperso">
-            <div class="mycontainer">
+            <div class="mycontainer" style="border: none;">
               <a class="userbtn">
-                <div class="textcontainer">
+                <div class="textcontainer" style="border-radius: 12px;">
                   <div class="texttitle">
                     <h5>Department</h5>
                   </div>
@@ -365,7 +366,7 @@
             </div>
               <div class="mycontainer">
                 <a class="userbtn" @click="EditDescription = !EditDescription">
-                  <div class="textcontainer">
+                  <div class="textcontainer" style="border-radius: 12px;">
                     <div class="texttitle">
                       <h5>Description</h5>
                     </div>
@@ -389,7 +390,7 @@
 
           <div class="infoperso team">
             <div v-for="team in Teams" :key="team.name">
-              <div class="mycontainer">
+              <div class="mycontainer" style="border: none;">
                 <a class="userbtn">
                   <div class="textcontainer">
                     <div class="texttitle" style="width: 300px;">
@@ -414,7 +415,7 @@
               </div>
               <div class="mycontainer teamcontainer">
                 <a class="userbtn" @click="NewTeam = team.name; DelTeam ();">
-                  <div class="textcontainer">
+                  <div class="textcontainer" style="border-bottom: 1px solid rgba(0,0,0,0.12); margin-left: 0px;">
                     <div class="texttitle">
                       <h6>Quit team</h6>
                     </div>
@@ -427,7 +428,7 @@
                 </a>
               </div>
             </div>
-            <div class="mycontainer">
+            <div class="mycontainer" style="border: none;">
               <a class="userbtn" v-if="!CreateTeam" @click="CreateTeam = true">
                 <div class="textcontainer">
                   <div class="texttitle texttitlebig">

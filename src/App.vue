@@ -15,6 +15,9 @@ input.form-control.search-input:active {
   -webkit-transition: width 0.1s ease-in-out;
   transition: width 0.1s ease-in-out;
 }
+.page-sidebar::-webkit-scrollbar {
+  display: none;
+}
 .page-sidebar:hover {
   width: 160px !important;
   -webkit-transition: width 0.1s ease-in-out;
@@ -55,6 +58,9 @@ input.form-control.search-input:active {
   width: 100px;
   margin-right: 20px;
 }
+.dropdown-menu {
+  border-radius: 12px;
+}
 .dropdown-lg {
   background-color: white;
   position: absolute;
@@ -91,6 +97,10 @@ input.form-control.search-input:active {
   text-align: left;
   vertical-align: middle;
   padding-left: 14px;
+}
+.list-unstyled {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 @media (max-width:850px) {
   .page-sidebar {
@@ -148,7 +158,7 @@ input.form-control.search-input:active {
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
                                             <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat/' + msg.senderMail)">
-                                                <a v-if="index == 0">
+                                                <a v-if="index == 0" style="border-radius: 12px;">
                                                     <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
                                                     <p class="msg-text"> {{ msg.text }}</p>
@@ -163,7 +173,7 @@ input.form-control.search-input:active {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li @click="msgNbr = 0; redirect('/chat')" class="waves-effect waves-button waves-classic drop-all" style="width: 100%; text-align: center; margin: 0px; height: 40px;"><p class="text-center">All Messages</p></li>
+                                    <li @click="msgNbr = 0; redirect('/chat')" class="waves-effect waves-button waves-classic drop-all" style="width: 100%; text-align: center; margin: 0px; height: 40px; border-radius: 12px;"><p class="text-center">All Messages</p></li>
                                 </ul>
                             </li>
                             <!--<li v-if="signed === true" class="dropdown">

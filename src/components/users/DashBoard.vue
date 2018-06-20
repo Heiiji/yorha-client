@@ -20,7 +20,6 @@
   display: grid;
   grid-template-rows: 52px min-content auto;
   grid-gap: 20px;
-
 }
 .dep-title {
   grid-row: 1;
@@ -112,7 +111,8 @@
   padding-left: 16px;
   padding-right: 16px;
   grid-row: 1;
-  grid-column: 2;
+  grid-column: 2/5;
+  overflow: hidden;
 }
 .timeline-item-header-text h3 {
   font-weight: 800px !important;
@@ -171,6 +171,60 @@
   display: inline-block;
   width: 24px;
 }
+@media (max-width:920px) {
+  .timeline-item-header-text {
+    grid-column: 2/5;
+    overflow: hidden;
+    line-height: 20px;
+    padding-right: 2px;
+  }
+  .timeline-comment {
+    grid-column: 1/5;
+  }
+  .conv  {
+    grid-column: 3;
+  }
+  .categori {
+    width: 300px;
+  }
+  .canal {
+    width: 300px;
+    max-width: 300px !important;
+  }
+  #main-wrapper {
+    grid-gap: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: auto auto 300px auto auto;
+  }
+}
+@media (max-width:390px) {
+  .timeline-item-header-text {
+    grid-column: 2/5;
+    overflow: hidden;
+    line-height: 20px;
+    padding-right: 2px;
+  }
+  .timeline-comment {
+    grid-column: 1/5;
+  }
+  .conv  {
+    grid-column: 3;
+  }
+  .categori {
+    width: 250px;
+  }
+  .canal {
+    width: 250px;
+    max-width: 250px !important;
+  }
+  #main-wrapper {
+    grid-gap: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: auto auto 250px auto auto;
+  }
+}
 </style>
 <template>
   <div>
@@ -188,8 +242,6 @@
           <div class="conv-container-team">
             <div v-for="(elem, index) in Teams" :key="index" @click="activeTeam = elem.name" class="categori waves-effect waves-button waves-classic">{{ elem.name }}</div>
           </div>
-        </div>
-        <div class="conv" style="display: none;">
         </div>
         <div class="canal">
           <div class="dep-title">

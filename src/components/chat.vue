@@ -201,6 +201,16 @@ h3 {
         <div class="title">
           <h3>Conversations</h3>
         </div>
+        <div class="person" avatar>
+          <div class="personicon">
+            <i class="material-icons" style="margin-top: 8px;">add</i>
+          </div>
+          <div class="personname">
+            <div @click="nouvConv = true" style="font-size: 15px; padding: 10px;">
+              Nouvelle conversation
+            </div>
+          </div>
+        </div>
         <div class="person" avatar v-for="(chat, index) in conv" :key="chat[0]._id + index" v-if="chat[0].target !== chat[0].senderMail" @click="memoire = index; displayMsg = chat; target = ((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].target : chat[0].senderMail); chat[0].asread = true; MakeIsRead();">
           <div class="personicon">
             <img :src="((chat[0].senderMail === $store.state.user.local.mail) ? chat[0].targetPic : chat[0].senderPic)"/>
@@ -260,6 +270,28 @@ h3 {
             </div>
       </div>
   </v-layout>
+    <v-dialog style="z-index:25;;" v-model="nouvConv" scrollable max-width="800px">
+        <v-flex style="padding: 20px;" xs12>
+          <v-select
+            :items="usernames"
+            v-model="target"
+            label="target"
+            autocomplete
+            style="width: 100%;"
+          ></v-select>
+          <v-text-field v-model="msg.text"
+                        name="text"
+                        label="text"
+                        textarea
+                        style="width: 100%; margin: 5px;"
+          ></v-text-field>
+        </v-flex>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="nouvConv = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="SendMSG(); nouvConv = false;">Send</v-btn>
+        </v-card-actions>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -267,14 +299,18 @@ import AccountServices from '@/services/AccountService'
 
 export default {
   name: 'chat',
-  data () {
+  data: function () {
     return {
       messages: [],
       displayMsg: [],
       memoire: -1,
       conv: [],
       repere: '',
+      nouvConv: false,
       target: '',
+      selected: [],
+      users: {},
+      usernames: [],
       msg: {
         target: '',
         text: '',
@@ -288,6 +324,7 @@ export default {
   mounted () {
     this.firebaseApp = this.$store.state.firebase
     this.getConv()
+    this.getUsers()
     window.setInterval(() => {
       this.getConv()
     }, 5000)
@@ -298,6 +335,7 @@ export default {
     },
     getConv () {
       var nbr = 0
+      var nbr2 = 0
       var vue = this
       let targ = -1
       var conv = []
@@ -319,32 +357,85 @@ export default {
               return -1
             }
           })
-          for (let i = 0; i < 100; i++) {
-            if (vue.messages[i]) {
+          let p1 = ''
+          let p2 = ''
+          for (let m = 0; m < 300; m++) {
+            if (vue.messages[m]) {
               if (conv[nbr]) {
-                if (conv[nbr][0].senderMail === vue.messages[i].senderMail) {
-                  conv[nbr].splice(1, 0, vue.messages[i])
+                if (vue.messages[m].senderMail === p1) {
+                  conv[nbr].splice(1, 0, vue.messages[m])
                 } else {
                   nbr += 1
-                  conv[nbr] = []
-                  conv[nbr].splice(0, 0, vue.messages[i])
-                  for (let j = 0; j < 100; j++) {
-                    if (conv[nbr] && rep[j]) {
-                      if (conv[nbr][0].senderMail === rep[j].target) {
-                        conv[nbr].splice(1, 0, rep[j])
+                }
+              } else {
+                conv[nbr] = []
+                p1 = vue.messages[m].senderMail
+                p2 = vue.messages[m].target
+                m -= 1
+              }
+            }
+          }
+          let mem = 0
+          let toggle = 0
+          for (let m = 0; m < 300; m++) {
+            if (rep[m]) {
+              if (conv[nbr2]) {
+                if (rep[m].target === conv[nbr2][0].senderMail) {
+                  conv[nbr2].splice(1, 0, rep[m])
+                } else {
+                  mem = nbr2
+                  while (mem <= nbr && rep[m].target !== conv[mem][0].senderMail) {
+                    mem += 1
+                  }
+                  if (mem > nbr2) {
+                    conv[mem] = []
+                    p2 = rep[m].target
+                    toggle = 0
+                    while (rep[m]) {
+                      if (rep[m].target === p2) {
+                        conv[mem].splice(1, 0, rep[m])
+                      } else {
+                        if (toggle === 0) {
+                          toggle = m
+                        }
                       }
+                      m += 1
+                    }
+                    if (toggle !== 0) {
+                      m = toggle
+                    }
+                  } else {
+                    toggle = 0
+                    while (rep[m]) {
+                      if (rep[m].target === conv[mem][0].senderMail) {
+                        conv[mem].splice(1, 0, rep[m])
+                      } else {
+                        if (toggle === 0) {
+                          toggle = m
+                        }
+                      }
+                      m += 1
+                    }
+                    if (toggle !== 0) {
+                      m = toggle
                     }
                   }
                 }
               } else {
-                conv[nbr] = []
-                conv[nbr].splice(0, 0, vue.messages[i])
-                for (let j = 0; j < 100; j++) {
-                  if (conv[nbr] && rep[j]) {
-                    if (conv[nbr][0].senderMail === rep[j].target) {
-                      conv[nbr].splice(1, 0, rep[j])
+                conv[nbr2] = []
+                p2 = rep[m].target
+                while (rep[m]) {
+                  if (rep[m].target !== p2) {
+                    conv[nbr2].splice(1, 0, rep[m])
+                  } else {
+                    if (mem === 0) {
+                      mem = m
                     }
                   }
+                  m += 1
+                }
+                if (mem !== 0) {
+                  m = mem
                 }
               }
             }
@@ -378,6 +469,13 @@ export default {
             }
           }
         })
+      })
+    },
+    async getUsers (arg) {
+      let vue = this
+      const response = await AccountServices.FindUsers('all')
+      response.data.users.forEach((el) => {
+        vue.usernames.push(el.mail)
       })
     },
     SendMSG () {

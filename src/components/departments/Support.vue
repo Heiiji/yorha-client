@@ -1,92 +1,134 @@
+<style scoped>
+  #main-wrapper {
+    margin: 0px;
+    z-index: 3;
+  }
+  .profile-cover {
+    z-index: 1;
+    margin-bottom: 50px;
+  }
+  .dep-title {
+    text-align: center;
+    color: white;
+    height: 80px;
+    width: 100%;
+    font-size: 50px;
+    font-weight: 600;
+    padding-top: 225px;
+  }
+  .peoples {
+    position: fixed;
+    left: calc(52px + 3.33%);
+    display: inline-block;
+    width: calc(45% - 26px);
+    min-height: 72px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  }
+  .peoples-heading {
+    display: block;
+    padding: 24px;
+    margin-left: 8px;
+  }
+  .peoples-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .peoples-body {
+    display: block;
+    min-height: 72px;
+  }
+  .peoples-pic {
+    padding: 24px;
+    margin-left: 8px;
+    display: inline-block;
+  }
+  .description-panel {
+    position: fixed;
+    left: calc(52px + 50%);
+    display: inline-block;
+    width: calc(45% - 26px);
+    min-height: 72px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+  }
+  .description-heading {
+    display: block;
+    padding: 24px;
+    margin-left: 8px;
+  }
+  .description-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .description-body {
+    padding: 24px;
+    margin-left: 8px;
+  }
+  @media (max-width: 849px) {
+    .peoples {
+      position: inherit;
+      margin-left: 5%;
+      width: 90%;
+      margin-bottom: 20px;
+    }
+    .description-panel {
+      position: inherit;
+      margin-left: 5%;
+      width: 90%;
+    }
+  }
+</style>
 <template>
-  <div><div style="padding: 0px;">
-      <div class="profile-cover" style="background: url('https://geekyapar.com/wp-content/uploads/2014/04/green-lantern-batman-dark-dc-comics-comics-superman-superheroes-justice-league-aquaman-flash-comic-hero-wonder-woman-cyborg-dc-comics-69099.jpg'); -webkit-background-size: cover; background-size: cover;">
-          <div class="row">
-              <div class="col-md-3 profile-image">
-                  <div class="profile-image-container">
-                      <img src="https://orig00.deviantart.net/71e8/f/2012/067/3/7/batman_portrait_by_tenguyari-d4s3sve.jpg" alt="">
-                  </div>
-              </div>
-          </div>
-      </div>
+  <div>
+    <div style="padding: 0px; width: 100%;">
       <div id="main-wrapper">
-          <div class="row">
-              <div class="col-md-3 user-profile">
-                  <h3 class="text-center">Le Support</h3>
-                  <p class="text-center">You've got a problem, we have the solution</p>
-                  <hr>
-                  <div class="panel panel-white">
-                      <div class="panel-heading">
-                          <div class="panel-title">Heroes : </div>
-                      </div>
-                      <div class="panel-body">
-                        <div class="team">
-                              <div v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
-                                 <img :src="pers.picture" alt="">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-6 m-t-lg">
-                    <div class="profile-timeline">
-                            <ul class="list-unstyled">
-                                <li v-for="item in allNews" v-if="item.department === 'Support'" :key="item._id" class="timeline-item" style="display: block;">
-                                    <div class="panel panel-white">
-                                        <div class="panel-body">
-                                            <div class="timeline-item-header">
-                                                <img :src="item.senderPic" alt="">
-                                                <p>{{ item.sender }} <span>Posted for {{ item.department }}</span></p>
-                                                <small>{{ item.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
-                                            </div>
-                                            <div class="timeline-item-post">
-                                                <p>{{ item.text }}</p>
-                                                <div class="timeline-options">
-                                                    <a href="#"><i class="icon-share"></i> Share</a>
-                                                </div>
-                                                <div v-for="comm in item.reply" :key="comm._id" class="timeline-comment">
-                                                    <div class="timeline-comment-header">
-                                                        <img :src="comm.senderPic" alt="">
-                                                        <p>{{comm.sender}} <small>{{ comm.date.toLocaleDateString(navigator.language, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small></p>
-                                                    </div>
-                                                    <p class="timeline-comment-text">{{comm.text}}</p>
-                                                </div>
-                                                <textarea class="form-control" v-model="item.message" placeholder="Reply"></textarea>
-                                                <button class="btn btn-default pull-right" @click="postReply(item._id, item.message)">Send</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-              </div>
-              <div class="col-md-3 m-t-lg">
-                <div class="panel panel-white">
-                  <v-btn v-if="$store.state.user.local.work === 'Support' && $store.state.user.local.qualifier === 'SquadLeader'" @click="NewDescription = description; EditDescription = true;" color="primary" style="float: right;" fab small dark>
-                    <v-icon>edit</v-icon>
-                  </v-btn>
-                    <div class="panel-heading">
-                        <div class="panel-title">Description</div>
-                    </div>
-                    <div class="panel-body">
-                        <p v-html="description.replace(/\n/g, '<br/>')" ></p>
-                    </div>
-                </div>
-              </div>
+        <div class="profile-cover" style="background: url('https://geekyapar.com/wp-content/uploads/2014/04/green-lantern-batman-dark-dc-comics-comics-superman-superheroes-justice-league-aquaman-flash-comic-hero-wonder-woman-cyborg-dc-comics-69099.jpg') center; -webkit-background-size: cover; background-size: cover;">
+          <div class="dep-title"><div style="background-color: rgba(0, 0, 0, 0.4);">Le Support</div></div>
+        </div>
+        <div class="peoples">
+          <div class="peoples-heading">
+            <div class="peoples-title">Peoples : </div>
           </div>
+          <div class="peoples-body">
+            <div class="peoples-pic">
+              <div style="width: 40px; height: 40px; display: inline-block; margin-right: 10px; margin-bottom: 10px; cursor: pointer;" v-for="pers in users" :key="pers._id" class="team-member" @click="$router.push('/profil/' + pers._id)">
+                <v-tooltip style="display: inline;" bottom>
+                  <img style="width: 40px; border-radius: 20px;" slot="activator" :src="pers.picture" alt="">
+                  <span>{{pers.username}}</span>
+                </v-tooltip>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="description-panel">
+          <div class="">
+            <v-btn v-if="$store.state.user.local.work === 'Support' && $store.state.user.local.qualifier === 'SquadLeader'" @click="NewDescription = description; EditDescription = true;" color="primary" style="float: right;" fab small dark>
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <div class="description-heading">
+              <div class="description-title">Description :</div>
+            </div>
+            <div class="description-body">
+              <p v-html="description.replace(/\n/g, '<br/>')" ></p>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
+    </div>
     <v-dialog style="z-index:25;" v-model="EditDescription" scrollable max-width="1000px">
       <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-          <v-flex xs8>
-            <v-text-field v-model="NewDescription"
-              name="Description"
-              label="New Description"
-              id="Description"
-              textarea
-              style="width: 990px; margin: 5px;"
-            ></v-text-field>
-          </v-flex>
+        <v-flex xs8>
+          <v-text-field v-model="NewDescription"
+                        name="Description"
+                        label="New Description"
+                        id="Description"
+                        textarea
+                        style="width: 990px; margin: 5px;"
+          ></v-text-field>
+        </v-flex>
         <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="blue darken-1" flat @click.native="EditDescription = false;">Close</v-btn>
@@ -95,35 +137,34 @@
       </v-card>
     </v-dialog>
 
-<v-dialog style="z-index:25;" v-model="sendMSG" scrollable max-width="500px">
-  <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-      <v-flex xs8>
+    <v-dialog style="z-index:25;" v-model="sendMSG" scrollable max-width="500px">
+      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+        <v-flex xs8>
+          <v-divider></v-divider>
+          <label>
+            <v-text-field v-model="msg.text"
+                          name="NewMSG"
+                          label="Message"
+                          id="NewMSG"
+                          style="width: 450px; margin: 5px;"
+            ></v-text-field>
+          </label>
+        </v-flex>
         <v-divider></v-divider>
-        <label>
-          <v-text-field v-model="msg.text"
-            name="NewMSG"
-            label="Message"
-            id="NewMSG"
-            style="width: 450px; margin: 5px;"
-          ></v-text-field>
-        </label>
-      </v-flex>
-    <v-divider></v-divider>
-    <v-card-actions>
-      <v-btn color="blue darken-1" flat @click.native="sendMSG = false;">Close</v-btn>
-      <v-btn color="blue darken-1" flat @click.native="SendMSG()">Send</v-btn>
-    </v-card-actions>
-  </v-card>
-</v-dialog>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="sendMSG = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="SendMSG()">Send</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 import AccountService from '@/services/AccountService'
 import DepService from '@/services/depService'
-import News from '@/services/NewsService'
 
 export default {
-  name: 'Profil',
+  name: 'Support',
   data () {
     return {
       user: [],
@@ -149,7 +190,6 @@ export default {
     this.navigator.language = navigator.language
     this.GetByDep()
     this.GetDep()
-    this.getNews()
   },
   methods: {
     GetByDep () {
@@ -181,27 +221,6 @@ export default {
           vue.GetDep()
         })
       })
-    },
-    async getNews () {
-      var vue = this
-      const response = await News.fetchNews()
-      if (response.data) {
-        if (response.data.news) {
-          var tmp = response.data.news
-          tmp.forEach(function (element) {
-            element.date = new Date(element.date)
-            News.GetReply(element._id).then((reponse) => {
-              element.reply = reponse.data.reply
-              element.reply.forEach(function (el) {
-                el.date = new Date(el.date)
-              })
-              element.message = ''
-              vue.allNews = ''
-              vue.allNews = tmp
-            })
-          })
-        }
-      }
     }
   }
 }

@@ -162,14 +162,15 @@
 <script>
 import AccountService from '@/services/AccountService'
 import DepService from '@/services/depService'
-import News from '@/services/NewsService'
 
 export default {
-  name: 'Profil',
+  name: 'Marketing',
   data () {
     return {
       user: [],
       users: [],
+      departmentName: 'Marketing',
+      departmentIMG: 'https://www.tanikal.com/wp-content/uploads/2017/11/Digital-Marketing-Media-Technology-Graphic-1024x586.jpg',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       NewDescription: '',
       EditDescription: false,
@@ -191,7 +192,6 @@ export default {
     this.navigator.language = navigator.language
     this.GetByDep()
     this.GetDep()
-    this.getNews()
   },
   methods: {
     GetByDep () {
@@ -223,27 +223,6 @@ export default {
           vue.GetDep()
         })
       })
-    },
-    async getNews () {
-      var vue = this
-      const response = await News.fetchNews()
-      if (response.data) {
-        if (response.data.news) {
-          var tmp = response.data.news
-          tmp.forEach(function (element) {
-            element.date = new Date(element.date)
-            News.GetReply(element._id).then((reponse) => {
-              element.reply = reponse.data.reply
-              element.reply.forEach(function (el) {
-                el.date = new Date(el.date)
-              })
-              element.message = ''
-              vue.allNews = ''
-              vue.allNews = tmp
-            })
-          })
-        }
-      }
     }
   }
 }

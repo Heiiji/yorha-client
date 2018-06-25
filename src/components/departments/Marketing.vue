@@ -86,7 +86,7 @@
     <div style="padding: 0px; width: 100%;">
       <div id="main-wrapper">
         <div class="profile-cover" style="background: url('https://www.tanikal.com/wp-content/uploads/2017/11/Digital-Marketing-Media-Technology-Graphic-1024x586.jpg') center; -webkit-background-size: cover; background-size: cover;">
-          <div class="dep-title"><div style="background-color: rgba(255, 255, 255, 0.3);">Le Marketing</div></div>
+          <div class="dep-title"><div style="background-color: rgba(0, 0, 0, 0.4);">Le Marketing</div></div>
         </div>
         <div class="peoples">
           <div class="peoples-heading">

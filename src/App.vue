@@ -223,10 +223,10 @@ input.form-control.search-input:active {
                 <div class="page-sidebar-inner slimscroll">
                     <ul class="menu accordion-menu">
                         <li>
-                          <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons">home</i><p>Home</p></a>
+                          <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons">home</i><p>Dashboard</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons">vertical_split</i><p>Dashboard</p></a>
+                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons">vertical_split</i><p>Discussions</p></a>
                         </li>
                         <li>
                           <a @click="redirect('/Chat')" class="waves-effect waves-button"><i class="material-icons">forum</i><p>Messages</p></a>

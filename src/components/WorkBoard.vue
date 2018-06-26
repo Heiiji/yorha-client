@@ -5,7 +5,7 @@
         <button class="btn btn-primary btn-block" @click="toogleMake = true" style="width: 150px; position: absolute; right: 20px; top: 10px;">Add Project</button>
     </div>
     <div style="widht: 100%; display: block; margin-top: 60px;">
-    <v-flex style="cursor: pointer; display: inline-block; width: 400px; margin: 10px;" v-for="board in currentBoard" :key="board._id">
+    <v-flex style="cursor: pointer; display: inline-block; width: 400px; margin: 10px;" v-for="(board, index) in currentBoard" :key="index" @click="$router.push('/taskmanager/' + board.title)">
             <v-card color="cyan darken-2" class="white--text">
               <v-container fluid grid-list-lg>
                 <v-layout row>
@@ -13,17 +13,9 @@
                     <div>
                       <div>
                         <div class="headline">{{ board.title }}</div>
-                        <span class="white--text">{{ board.title }}</span>
+                        <span class="white--text">{{ board.description }}</span>
                       </div>
                     </div>
-                  </v-flex>
-                  <v-flex xs5>
-                    <v-card-media
-                      src="https://www.stagephotoparis.fr/wp-content/uploads/2016/02/stage-placeholder.jpg"
-                      height="125px"
-                      style="border-radius: 5px;"
-                      contain
-                    ></v-card-media>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -68,7 +60,8 @@ export default {
       newBoard: {
         token: '',
         title: '',
-        description: ''
+        description: '',
+        user: ''
       },
       currentBoard: {
         0: {
@@ -91,14 +84,17 @@ export default {
       let vue = this
       this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
         TaskService.GetBoard(idToken).then((response) => {
-          vue.currentBoard = response.data
+          vue.currentBoard = response.data.boards
         })
       })
     },
     PutBoard () {
       let vue = this
+      vue.toogleMake = false
       this.firebaseApp.auth().currentUser.getIdToken(true).then(function (idToken) {
         vue.newBoard.token = idToken
+        vue.newBoard.user = vue.$store.state.user.local.mail
+        console.log(vue.newBoard)
         TaskService.PutBoard(vue.newBoard).then((response) => {
           vue.GetBoard()
         })

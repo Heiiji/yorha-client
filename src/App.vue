@@ -240,6 +240,7 @@ input.form-control.search-input:active {
                                 <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
                                 <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
                                 <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/Overview')">Version status</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/Workboard')">Task Manager</a></li>
                             </ul>
                         </li>
                         <li class="droplink">

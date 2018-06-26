@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="text-align: left; position: relative; width: 100%; padding-bottom: 80px; margin-bottom: -80px;" class="page-title">
-        <h3>Task Manager / Board</h3>
+      <h3>Task Manager / Board <span style="color: red;">(PRE-ALPHA)</span></h3>
         <button class="btn btn-primary btn-block" @click="toogleMake = true" style="width: 150px; position: absolute; right: 20px; top: 10px;">Add Project</button>
     </div>
     <div style="widht: 100%; display: block; margin-top: 60px;">

@@ -129,6 +129,11 @@
   grid-row: 2;;
   grid-column: 1/5;
   border-bottom: 1px solid rgba(0,0,0,.08);
+  padding-top: 40px !important;
+  padding-bottom: 20px !important;
+}
+.timeline-item-post p {
+  font-size: 15px;
 }
 .timeline-comment {
   padding-top: 6px;

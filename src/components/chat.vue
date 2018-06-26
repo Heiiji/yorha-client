@@ -55,10 +55,10 @@ h3 {
 }
 .chatArea {
   overflow-y: scroll;
-  height: 95%;
+  height: calc(100% + 40px);
   vertical-align: top;
   padding-top: 12px;
-  border-bottom: solid 1px rgb(200, 200, 200);
+  padding-bottom: 70px;
 }
 .Message {
   height: 100%;
@@ -109,6 +109,7 @@ h3 {
   left: 0px;
   width: 100%;
   height: 70px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 20%, rgba(255,255,255,1) 50%);
 }
 .post form {
   width: 100%;
@@ -117,7 +118,7 @@ h3 {
 }
 .post-options {
   display: block;
-  width: 90px;
+  width: 100px;
 }
 .person {
   border-top-width: 1px;
@@ -127,6 +128,16 @@ h3 {
   padding-top: 10px;
   padding-bottom: 10px;
   display: flex;
+}
+.person_active {
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: rgba(34, 35, 38, 0.1);
+  text-decoration: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  background-color: rgb(200, 200, 200);
 }
 .person:hover {
   background-color: rgba(180, 180, 180, 0.5);
@@ -166,6 +177,9 @@ h3 {
   border-bottom-color: rgb(200, 200, 200);
   border-bottom-width: 1px;
 }
+.post-options a {
+  margin-right: 10px;
+}
 @media (max-width: 849px) {
   .title {
     color: rgb(33, 110, 210);
@@ -178,9 +192,6 @@ h3 {
   }
   .personstatus{
     display: none;
-  }
-  .post-options {
-    width: 115px;
   }
   .conteneur {
     padding-left: 0px;
@@ -264,9 +275,10 @@ h3 {
                 <a href="#"><i class="icon-camera"></i></a>
                 <a href="#"><i class="icon-link"></i></a>
               </div>
-              <form v-on:submit.prevent="SendMSG()">
-                <input style="width: 90%; border-radius: 20px; display: inline-block;" class="form-control" type="text" placeholder="Message" v-model="msg.text"/>
+              <form v-on:submit.prevent="SendMSG()" id="sendmsg" style="width: 100%;">
+                <input style="width: calc(100% - 20px); border-radius: 20px; display: inline-block;" class="form-control" type="text" placeholder="Message" v-model="msg.text"/>
               </form>
+              <button type="submit" form="sendmsg" value="Submit" style="padding-bottom: 6px; margin-right: 5%;"><i class="material-icons" style="color: rgba(0,0,0,.65);">send</i></button>
             </div>
       </div>
   </v-layout>

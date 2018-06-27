@@ -44,6 +44,7 @@ const store = new Vuex.Store({
   state: {
     isLogged: false,
     firebase: firebase,
+    activeQwickConv: 'null',
     GoogleToken: [],
     request: '',
     forceMenu: false,

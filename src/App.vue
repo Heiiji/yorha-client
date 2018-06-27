@@ -493,11 +493,13 @@ input.form-control.search-input:active {
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    <QwickChat v-if="$store.state.activeQwickConv !== 'null'" selectChat="$store.state.activeQwickConv"/>
   </v-app>
 </template>
 
 <script>
 import AccountServices from '@/services/AccountService'
+import QwickChat from './components/qwickChat'
 
 import firebase from 'firebase'
 var audio = new Audio(require('../static/notification.wav'))
@@ -541,6 +543,9 @@ export default {
     mini: true,
     right: null
   }),
+  components: {
+    QwickChat
+  },
   methods: {
     editTheme (newTheme) {
       let vue = this

@@ -10,7 +10,7 @@
   background-color: none;
   text-align: center;
   display: grid;
-  grid-template-rows: 52px min-content min-content auto;
+  grid-template-rows: 40px min-content min-content auto;
   grid-gap: 20px;
   border-radius: 12px;
 }
@@ -19,17 +19,18 @@
   max-width: 550px !important;
   grid-column: 3;
   display: grid;
-  grid-template-rows: 52px min-content auto;
+  grid-template-rows: 40px min-content auto;
   grid-gap: 20px;
   border-radius: 12px;
 }
 .dep-title {
   grid-row: 1;
-  padding: 14px;
-  background-color: white;
+  padding: 8px;
+  background-color: rgb(48, 120, 220);
+  color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
   text-align: center;
-  border-radius: 12px;
+  border-radius: 20px;
 }
 .post {
   grid-row: 2;
@@ -45,12 +46,11 @@
 }
 .conv-title {
   grid-row: 1;
-  padding: 14px;
+  padding: 8px;
   font-size: 16px;
-  color: white;
-  background-color: rgb(33, 110, 210);
+  background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
-  border-radius: 12px;
+  border-radius: 20px;
 }
 .profile-timeline {
   grid-row: 3;

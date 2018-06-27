@@ -18,7 +18,7 @@ h3 {
   left: 0px;
   width: 100%;
   text-align: center;
-  background-color: rgb(33, 110, 210);
+  background-color: rgb(255, 115, 11);
   padding-top: 20px;
   padding-bottom: 20px;
   color: white;

@@ -8,6 +8,21 @@ input.form-control.search-input:active {
 .sidebar {
   position: fixed;
 }
+.sub-menu, .sidebar {
+  background-color: rgb(255, 255, 255) !important;
+}
+.sub-menu p {
+  padding: 0px !important;
+}
+.material-icons, .menu-name {
+  color: rgb(26, 26, 26);
+}
+.menu-name {
+  padding: 0px;
+}
+.menu {
+  background-color: rgba(0, 0, 0, 0);
+}
 .page-sidebar {
   height: 100% !important;
   width: 52px !important;
@@ -98,6 +113,9 @@ input.form-control.search-input:active {
   vertical-align: middle;
   padding-left: 14px;
 }
+.accordion-menu a:hover {
+  background-color: rgb(230, 230, 230) !important;
+}
 .list-unstyled {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -153,7 +171,7 @@ input.form-control.search-input:active {
                     <div class="top-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li v-if="signed === true" class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px;">chat_bubble_outline</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px; color: rgb(255, 115, 11);">chat_bubble_outline</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
@@ -195,7 +213,7 @@ input.form-control.search-input:active {
                                 </ul>
                             </li>-->
                             <li v-if="signed === true">
-                              <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px;">date_range</i></a>
+                              <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px; color: rgb(48, 120, 220);">date_range</i></a>
                             </li>
                             <li v-if="signed === true" class="dropdown" style="margin-right: 20px;">
                               <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" style="padding-bottom: 10px;" data-toggle="dropdown"><img v-if="user.local" style="width: 24px; height: 24px; border-radius: 12px;" :src="user.local.picture" alt="Profil">
@@ -223,38 +241,38 @@ input.form-control.search-input:active {
                 <div class="page-sidebar-inner slimscroll">
                     <ul class="menu accordion-menu">
                         <li>
-                          <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons">home</i><p>Dashboard</p></a>
+                          <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 26, 70);">home</i><p class="menu-name">Dashboard</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons">vertical_split</i><p>Discussions</p></a>
+                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(48, 120, 220)">vertical_split</i><p class="menu-name">Discussions</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/Chat')" class="waves-effect waves-button"><i class="material-icons">forum</i><p>Messages</p></a>
+                          <a @click="redirect('/Chat')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 115, 11)">forum</i><p class="menu-name">Messages</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/department')" class="waves-effect waves-button"><i class="material-icons">work</i><p>Departments</p></a>
+                          <a @click="redirect('/department')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(121, 200, 204)">work</i><p class="menu-name">Departments</p></a>
                         </li>
                         <li class="droplink">
-                          <a @click="tools = !tools" class="waves-effect waves-button"><i class="material-icons">build</i><p>Tools</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
+                          <a @click="tools = !tools" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(166, 120, 255)">build</i><p class="menu-name">Tools</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
                             <ul v-if="tools" class="sub-menu">
-                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/drhouse')" target="_blank">Dr House</a></li>
-                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank">Jira</a></li>
-                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/Overview')">Version status</a></li>
-                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/Workboard')">Task Manager</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="redirect('/drhouse')" target="_blank"><p class="menu-name">Dr House</p></a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank"><p class="menu-name">Jira</p></a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="redirect('/Overview')"><p class="menu-name">Version status</p></a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="redirect('/Workboard')"><p class="menu-name">Task Manager</p></a></li>
                             </ul>
                         </li>
                         <li class="droplink">
-                          <a @click="document = !document" class="waves-effect waves-button"><i class="material-icons">folder</i><p>Documents</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
+                          <a @click="document = !document" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(98, 175, 255)">folder</i><p class="menu-name">Documents</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
                             <ul v-if="document" class="sub-menu">
-                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="search = 'Live'; redirect('/SearchUser')">Shadow Live</a></li>
-                                <li style="width: 100%; margin: 0px; padding-left: 25%;"><a style="text-align: left !important;" @click="redirect('/version/viewer')">QA Report</a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="search = 'Live'; redirect('/SearchUser')"><p class="menu-name">Shadow Live</p></a></li>
+                                <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="redirect('/version/viewer')"><p class="menu-name">QA Report</p></a></li>
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
                         <li>
-                          <a @click="redirect('/trombi')" class="waves-effect waves-button"><i class="material-icons">face</i><p>Trombi</p></a></li>
+                          <a @click="redirect('/trombi')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 67, 175)">face</i><p class="menu-name">Trombi</p></a></li>
                         <li>
-                          <a @click="feedback = true" class="waves-effect waves-button"><i class="material-icons">feedback</i><p>Feedback</p></a></li>
+                          <a @click="feedback = true" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 218, 0)">feedback</i><p class="menu-name">Feedback</p></a></li>
                     </ul>
                 </div>
             </div>

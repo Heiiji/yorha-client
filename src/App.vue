@@ -414,6 +414,14 @@ export default {
     right: null
   }),
   methods: {
+    editTheme (newTheme) {
+      this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
+        AccountServices.editTheme({
+          theme: newTheme,
+          token: idToken
+        })
+      })
+    },
     searching () {
       this.$router.push('/SearchUser')
     },

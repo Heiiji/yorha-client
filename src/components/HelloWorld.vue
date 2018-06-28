@@ -144,6 +144,29 @@ a {
   border-radius: 12px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
+.post-solo-header {
+  display: grid;
+  grid-template-columns: 55px auto;
+  width: 100%;
+}
+.post-solo-header-img {
+  grid-column: 1;
+}
+.post-solo-header-title {
+  grid-column: 2;
+}
+.post-solo-header-title p {
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
+  padding: 16px;
+  margin-bottom: 0px !important;
+}
+.post-solo-text {
+  color: black;
+  margin-bottom: 0px !important;
+  padding: 10px;
+}
 @media (max-width:1000px) {
   .main-container {
     margin-left: 0px;
@@ -173,8 +196,11 @@ a {
         </div>
         <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
           <div class="post-solo">
-            <img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="width: 55px;" />
-            <p class="px-0"><strong>{{ news.title }} :</strong> {{ news.text }}</p>
+            <div class="post-solo-header">
+              <div class="post-solo-header-img"><img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="width: 55px;" /></div>
+              <div class="post-solo-header-title"><p>{{ news.title }} :</p></div>
+            </div>
+            <p class="post-solo-text">{{ news.text }}</p>
           </div>
         </a>
       </div>

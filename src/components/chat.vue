@@ -18,10 +18,8 @@ h3 {
   left: 0px;
   width: 100%;
   text-align: center;
-  background-color: rgb(255, 115, 11);
   padding-top: 20px;
   padding-bottom: 20px;
-  color: white;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -34,9 +32,12 @@ h3 {
   border-right-color: rgb(200, 200, 200);
   border-right-width: 1px;
   border-right-style: solid;
+  border-left-color: rgb(200, 200, 200);
+  border-left-width: 1px;
+  border-left-style: solid;
   background-color: rgba(255, 255, 255, 1);
   margin: 0px;
-  margin-left: -15px;
+  margin-left: -13px;
 }
 .chatPlace {
   position: relative;
@@ -74,7 +75,7 @@ h3 {
   padding-right: 15px;
   border-radius: 19px 19px 19px 19px;
   display: inline-block;
-  margin-left: 1%;
+  margin-left: 10px;
   font-size: 14px;
   max-width: calc(99% - 44px);
   text-align: left;
@@ -87,7 +88,7 @@ h3 {
   text-align: right;
 }
 .MessageReverse p {
-  background-color: rgb(33, 110, 210);
+  background-color: rgb(255, 115, 11);
   margin: 0px;
   padding: 8px;
   padding-left: 15px;
@@ -95,7 +96,7 @@ h3 {
   margin-top: 0px;
   border-radius: 19px 19px 19px 19px;
   display: inline-block;
-  margin-right: 1%;
+  margin-right: 10px;
   color: white;
   font-size: 14px;
   max-width: calc(99% - 44px);
@@ -116,14 +117,7 @@ h3 {
   text-align: left;
   margin-top: 15px;
 }
-.post-options {
-  display: block;
-  width: 100px;
-}
 .person {
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: rgba(34, 35, 38, 0.1);
   text-decoration: none;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -177,8 +171,8 @@ h3 {
   border-bottom-color: rgb(200, 200, 200);
   border-bottom-width: 1px;
 }
-.post-options a {
-  margin-right: 10px;
+.chatArea::-webkit-scrollbar {
+  width: 0 !important;
 }
 @media (max-width: 849px) {
   .title {
@@ -203,21 +197,85 @@ h3 {
     width: 80%;
   }
 }
-
+.post-container {
+  width: 100%;
+  display: grid;
+  margin-left: 56px;
+  margin-right: 56px;
+  grid-template-columns: auto 80px 20px 40px;
+  background-color: #eceff1;
+  height: 40px;
+  border-radius: 20px;
+  margin-top: 12px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+}
+.post-input {
+  grid-column: 1;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.post-input form {
+  margin-top: 0px !important;
+  padding-top: 4px;
+}
+.post-options {
+  grid-column: 2;
+  margin: 0px !important;
+}
+.post-send {
+  grid-column: 4;
+}
+.form-control, .form-control:focus {
+  background-color: rgba(0, 0, 0, 0) !important;
+  border: none !important;
+}
+.bg_dark_normal, .bg_dark_color {
+  background-color: #3c4043 !important;
+  color: white !important;
+  border-left-color: #3c4043 !important;
+  border-right-color: #3c4043 !important;
+}
+.bg-title_dark_normal {
+  background-color: #333333 !important;
+  color: white !important;
+  border: none;
+}
+.bg-title_dark_color {
+  background-color: rgb(255, 115, 11) !important;
+  color: white !important;
+  border: none;
+}
+.bg-title_clair_normal {
+  background-color: white !important;
+  color: black !important;
+}
+.btn-add_clair_normal, .btn-add_clair_color {
+  background-color: white !important;
+  color: black !important;
+}
+.btn-add_dark_normal, .btn-add_dark_color {
+  background-color: #5f6368 !important;
+}
+.chat-area_dark_normal, .chat-area_dark_color {
+  background-color: #202124 !important;
+}
+.post_dark_normal, .post_dark_color {
+  background: linear-gradient(to bottom, rgba(32,33,36,0) 20%, rgba(32,33,36,1) 50%);
+}
 </style>
 <template>
   <div>
     <v-layout class="conteneur" row>
-      <div class="userList">
-        <div class="title">
+      <div class="userList" :class="'bg_' + $store.state.user.local.theme">
+        <div class="title" :class="'bg_' + $store.state.user.local.theme">
           <h3>Conversations</h3>
         </div>
         <div class="person" avatar>
-          <div class="personicon">
-            <i class="material-icons" style="margin-top: 8px;">add</i>
-          </div>
-          <div class="personname">
-            <div @click="nouvConv = true" style="font-size: 15px; padding: 10px;">
+          <v-btn @click="nouvConv = true" :class="'btn-add_' + $store.state.user.local.theme" fab small dark>
+            <v-icon>add</v-icon>
+          </v-btn>
+          <div class="personname" style="width: calc(100% - 60px);">
+            <div @click="nouvConv = true" style="font-size: 15px; padding: 10px; padding-top: 14px;">
               Nouvelle conversation
             </div>
           </div>
@@ -235,12 +293,12 @@ h3 {
           </div>
         </div>
       </div>
-      <div class="chatPlace">
-        <div class="chatName">
+      <div class="chatPlace" :class="'chat-area_' + $store.state.user.local.theme">
+        <div class="chatName" :class="'bg-title_' + $store.state.user.local.theme">
           <h3 v-if="memoire >= 0">{{conv[memoire][0].sender}}</h3>
           <h3 v-else>Messages</h3>
         </div>
-        <div v-if="memoire >= 0" id="ChatArea" class="chatArea" v-chat-scroll>
+        <div v-if="memoire >= 0" id="ChatArea" class="chatArea" v-chat-scroll :class="'chat-area_' + $store.state.user.local.theme">
           <div style="padding-bottom: 4px; height: auto;" v-for="(item, index) in displayMsg" :key="item._id + index">
             <div v-if="item.target === $store.state.user.local.mail" class="Message">
               <div v-if="index > 0">
@@ -270,19 +328,26 @@ h3 {
               </div>
           </div>
         </div>
-            <div v-if="memoire >= 0" class="post">
-              <div class="post-options">
-                <a href="#"><i class="icon-camera"></i></a>
-                <a href="#"><i class="icon-link"></i></a>
+            <div v-if="memoire >= 0" class="post" :class="'post_' + $store.state.user.local.theme">
+              <div class="post-container">
+                <div class="post-input">
+                  <form v-on:submit.prevent="SendMSG()" id="sendmsg" style="width: 100%;">
+                    <input style="width: calc(100% - 20px); border-radius: 20px; display: inline-block;" class="form-control" type="text" placeholder="Message" v-model="msg.text"/>
+                  </form>
+                </div>
+                <div class="post-options" style="display: grid; grid-template-columns: 40px 40px;">
+                  <i class="material-icons" style="grid-column: 1; display: inline-block; padding: 8px; color: rgba(0,0,0,.65);">photo</i>
+                  <i class="material-icons" style="grid-column: 2; display: inline-block; padding: 8px; color: rgba(0,0,0,.65);">attachment</i>
+                </div>
+                <div class="post-send">
+                  <button type="submit" form="sendmsg" value="Submit" style="height: 24px; margin-top: 9px"><i class="material-icons" style="color: rgba(0,0,0,.65);">send</i></button>
+                </div>
               </div>
-              <form v-on:submit.prevent="SendMSG()" id="sendmsg" style="width: 100%;">
-                <input style="width: calc(100% - 20px); border-radius: 20px; display: inline-block;" class="form-control" type="text" placeholder="Message" v-model="msg.text"/>
-              </form>
-              <button type="submit" form="sendmsg" value="Submit" style="padding-bottom: 6px; margin-right: 5%;"><i class="material-icons" style="color: rgba(0,0,0,.65);">send</i></button>
             </div>
       </div>
   </v-layout>
-    <v-dialog style="z-index:25;;" v-model="nouvConv" scrollable max-width="800px">
+    <v-dialog style="z-index:25; background-color: rgba(250,250,250,1);" v-model="nouvConv" scrollable max-width="800px">
+      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
         <v-flex style="padding: 20px;" xs12>
           <v-select
             :items="usernames"
@@ -303,6 +368,7 @@ h3 {
           <v-btn color="blue darken-1" flat @click.native="nouvConv = false;">Close</v-btn>
           <v-btn color="blue darken-1" flat @click.native="SendMSG(); nouvConv = false;">Send</v-btn>
         </v-card-actions>
+      </v-card>
     </v-dialog>
   </div>
 </template>

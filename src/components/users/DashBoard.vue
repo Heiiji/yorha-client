@@ -237,37 +237,51 @@
     grid-template-columns: auto auto 250px auto auto;
   }
 }
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+}
+.dep-title_clair_normal {
+  background-color: white !important;
+  color: black !important;
+}
+.dep-title_dark_normal, .bg_dark_normal, .bg_dark_color {
+  background-color: #3c4043 !important;
+  color: white !important;
+}
+.comment_dark_normal, .comment_dark_color {
+  color: white;
+}
 </style>
 <template>
-  <div>
+  <div :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
     <div v-if="user.local" style="padding-top: 0px; position: relative;">
       <div id="main-wrapper">
         <div class="conv">
-          <div class="conv-title">
+          <div class="conv-title" :class="'bg_' + $store.state.user.local.theme">
             <h3>Channels</h3>
           </div>
-          <div class="conv-container">
-            <div @click="activeTeam = 'General'" class="categori waves-effect waves-button waves-classic">GENERAL</div>
-            <div @click="activeTeam = 'Whatever'" class="categori waves-effect waves-button waves-classic">WHATEVER</div>
-            <div @click="activeTeam = $store.state.user.local.work" class="categori waves-effect waves-button waves-classic">{{ $store.state.user.local.work.toUpperCase() }}</div>
+          <div class="conv-container" :class="'bg_' + $store.state.user.local.theme">
+            <div @click="activeTeam = 'General'" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">GENERAL</div>
+            <div @click="activeTeam = 'Whatever'" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">WHATEVER</div>
+            <div @click="activeTeam = $store.state.user.local.work" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">{{ $store.state.user.local.work.toUpperCase() }}</div>
           </div>
-          <div class="conv-container-team">
-            <div v-for="(elem, index) in Teams" :key="index" @click="activeTeam = elem.name" class="categori waves-effect waves-button waves-classic">{{ elem.name }}</div>
+          <div class="conv-container-team" :class="'bg_' + $store.state.user.local.theme">
+            <div v-for="(elem, index) in Teams" :key="index" @click="activeTeam = elem.name" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">{{ elem.name }}</div>
           </div>
         </div>
         <div class="canal">
-          <div class="dep-title">
+          <div class="dep-title" :class="'dep-title_' + $store.state.user.local.theme">
             <h3>{{activeTeam}}</h3>
           </div>
-          <div class="post">
-            <textarea class="form-control" placeholder="Post" v-model="News.text" rows="2=4"></textarea>
+          <div class="post" :class="'bg_' + $store.state.user.local.theme">
+            <textarea class="form-control" :class="'bg_' + $store.state.user.local.theme" placeholder="Post" v-model="News.text" rows="2=4"></textarea>
             <div class="post-options">
               <v-btn class="btn btn--flat blue--text text--darken-1" @click="News.department = activeTeam; postNews();">Post</v-btn>
             </div>
           </div>
           <div class="profile-timeline">
             <ul class="list-unstyled">
-              <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" style="display: block;">
+              <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" :class="'bg_' + $store.state.user.local.theme" style="display: block;">
 
                 <div class="panel-body">
                   <div class="timeline-item-header"><img :src="item.senderPic" alt=""></div>
@@ -279,7 +293,7 @@
                     <div class="timeline-comment-header" v-for="comm in item.reply" :key="comm._id">
                       <img :src="comm.senderPic" alt="">
                       <div class="timeline-comment-header-container">
-                        <div class="timeline-comment-header-container-owner"><p>{{comm.sender}} :&emsp;<span style="color: black;">{{comm.text}}</span></p></div><small style="width: 100%; margin-top: -10px;">{{ comm.date.toLocaleDateString(navigator.language, {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
+                        <div class="timeline-comment-header-container-owner"><p>{{comm.sender}} :&emsp;<span :class="'comment_' + $store.state.user.local.theme">{{comm.text}}</span></p></div><small style="width: 100%; margin-top: -10px;">{{ comm.date.toLocaleDateString(navigator.language, {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                       </div>
                     </div>
                     <div class="timeline-comment-reply">

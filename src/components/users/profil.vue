@@ -287,29 +287,44 @@
     margin-right: 52px;
   }
 }
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+}
+.user_dark_color, .user_dark_normal {
+  color: white !important;
+}
+.infoperso_dark_color, .infoperso_dark_normal {
+  background-color: #3c4043 !important;
+}
+.txt_dark_color, .txt_dark_normal {
+  color: white !important;
+}
+.txt_dark_color input, .txt_dark_normal input {
+  color: white !important;
+}
 </style>
 <template>
-  <div>
+  <div :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
     <div v-if="user.local" style="padding-top: 0px;">
         <div class="profile-cover" style="background: none;">
             <div class="row rowimage">
                 <div class="userprofileimage">
                     <div class="profile-image-container">
                         <img height="200px" width="200px" :src="user.local.picture" alt="">
-                        <h2 class="text-center">{{ user.local.username }}</h2>
+                        <h2 class="text-center" :class="'user_' + $store.state.user.local.theme">{{ user.local.username }}</h2>
                     </div>
                 </div>
             </div>
         </div>
         <div id="main-wrapper">
-          <div class="infoperso">
+          <div class="infoperso" :class="'infoperso_' + $store.state.user.local.theme">
             <div class="mycontainer" style="border: none;">
               <a class="userbtn">
                 <div class="textcontainer" style="border-radius: 12px;">
                   <div class="texttitle">
-                    <h5>Department</h5>
+                    <h5 :class="'txt_' + $store.state.user.local.theme">Department</h5>
                   </div>
-                  <div class="textdisp">
+                  <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                     {{ user.local.work }} ({{ user.local.qualifier }})
                   </div>
                 </div>
@@ -319,9 +334,9 @@
               <a class="userbtn">
                 <div class="textcontainer">
                   <div class="texttitle">
-                    <h5>Email</h5>
+                    <h5 :class="'txt_' + $store.state.user.local.theme">Email</h5>
                   </div>
-                  <div class="textdisp">
+                  <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                     {{ user.local.mail }}
                   </div>
                 </div>
@@ -331,9 +346,9 @@
               <a class="userbtn">
                 <div class="textcontainer">
                   <div class="texttitle">
-                    <h5>Localisation</h5>
+                    <h5 :class="'txt_' + $store.state.user.local.theme">Localisation</h5>
                   </div>
-                  <div class="textdisp">
+                  <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                     Paris, France
                   </div>
                 </div>
@@ -343,58 +358,58 @@
               <a class="userbtn" @click="EditTel = !EditTel">
                 <div class="textcontainer">
                   <div class="texttitle">
-                    <h5>Téléphone</h5>
+                    <h5 :class="'txt_' + $store.state.user.local.theme">Téléphone</h5>
                   </div>
-                  <div class="textdisp" v-if="user.local.tel === 'none' || user.local.tel === ''">
+                  <div class="textdisp" v-if="user.local.tel === 'none' || user.local.tel === ''" :class="'txt_' + $store.state.user.local.theme">
                     Non renseigné
                   </div>
-                  <div class="textdisp" v-else>
+                  <div class="textdisp" v-else :class="'txt_' + $store.state.user.local.theme">
                     {{user.local.tel}}
                   </div>
                   <div class="editicon">
-                    <i dark="" class="material-icons">keyboard_arrow_right</i>
+                    <i dark="" class="material-icons" :class="'txt_' + $store.state.user.local.theme">keyboard_arrow_right</i>
                   </div>
                 </div>
               </a>
             </div>
             <div class="formdiv" v-if="EditTel">
               <div class="formdiv-grid">
-                <v-text-field class="formin" v-model="NewTel" name="NewTel" :placeholder="user.local.tel">
+                <v-text-field class="formin" v-model="NewTel" name="NewTel" :placeholder="user.local.tel" :class="'txt_' + $store.state.user.local.theme">
                 </v-text-field>
-                <div style="grid-column: 3;"><a class="check material-icons" @click="changeTel()">done</a></div>
+                <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="changeTel()">done</a></div>
               </div>
             </div>
               <div class="mycontainer">
                 <a class="userbtn" @click="EditDescription = !EditDescription">
                   <div class="textcontainer" style="border-radius: 12px;">
                     <div class="texttitle">
-                      <h5>Description</h5>
+                      <h5 :class="'txt_' + $store.state.user.local.theme">Description</h5>
                     </div>
-                    <div class="textdisp">
+                    <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                       {{ user.local.description }}
                     </div>
                       <div class="editicon">
-                      <i dark="" class="material-icons">keyboard_arrow_right</i>
+                      <i dark="" class="material-icons" :class="'txt_' + $store.state.user.local.theme">keyboard_arrow_right</i>
                     </div>
                   </div>
                 </a>
               </div>
               <div class="formdiv" v-if="EditDescription">
                 <div class="formdiv-grid">
-                  <v-text-field class="formin" v-model="NewDescription" name="NewDescription" :placeholder="user.local.description">
+                  <v-text-field class="formin" v-model="NewDescription" name="NewDescription" :placeholder="user.local.description" :class="'txt_' + $store.state.user.local.theme">
                   </v-text-field>
-                  <div style="grid-column: 3;"><a class="check material-icons" @click="PostDescription(NewDescription)">done</a></div>
+                  <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="PostDescription(NewDescription)">done</a></div>
                 </div>
             </div>
           </div>
 
-          <div class="infoperso team">
+          <div class="infoperso team" :class="'infoperso_' + $store.state.user.local.theme">
             <div v-for="team in Teams" :key="team.name">
               <div class="mycontainer" style="border: none;">
                 <a class="userbtn">
                   <div class="textcontainer">
                     <div class="texttitle" style="width: 300px;">
-                      <h5>Team : &emsp; {{ team.name }}</h5>
+                      <h5 :class="'txt_' + $store.state.user.local.theme">Team : &emsp; {{ team.name }}</h5>
                     </div>
                   </div>
                 </a>
@@ -406,7 +421,7 @@
                       <div v-for="pers in team.users" :key="pers._id" @click="$router.push('/profil/' + pers._id)" class="team-member" style="cursor: pointer;">
                         <v-tooltip style="display: inline;" bottom>
                           <img slot="activator" :src="pers.picture" alt="">
-                          <span>{{pers.username}}</span>
+                          <span :class="'txt_' + $store.state.user.local.theme">{{pers.username}}</span>
                         </v-tooltip>
                       </div>
                     </div>
@@ -417,12 +432,12 @@
                 <a class="userbtn" @click="NewTeam = team.name; DelTeam ();">
                   <div class="textcontainer" style="border-bottom: 1px solid rgba(0,0,0,0.12); margin-left: 0px;">
                     <div class="texttitle">
-                      <h6>Quit team</h6>
+                      <h6 :class="'txt_' + $store.state.user.local.theme">Quit team</h6>
                     </div>
                     <div class="textdisp">
                     </div>
                     <div class="editicon">
-                      <i dark="" class="material-icons">remove</i>
+                      <i dark="" class="material-icons" :class="'txt_' + $store.state.user.local.theme">remove</i>
                     </div>
                   </div>
                 </a>
@@ -432,27 +447,27 @@
               <a class="userbtn" v-if="!CreateTeam" @click="CreateTeam = true">
                 <div class="textcontainer">
                   <div class="texttitle texttitlebig">
-                    <h5>Create a new team</h5>
+                    <h5 :class="'txt_' + $store.state.user.local.theme">Create a new team</h5>
                   </div>
                   <div class="textdisp">
                   </div>
                   <div class="editicon">
-                    <i dark="" class="material-icons">add</i>
+                    <i dark="" class="material-icons" :class="'txt_' + $store.state.user.local.theme">add</i>
                   </div>
                 </div>
               </a>
               <div class="userbtn" v-if="CreateTeam">
                 <div class="textcontainer" style="padding-bottom: 16px;">
                   <div class="texttitle texttitlebigedit">
-                    <h5>Create a new team</h5>
+                    <h5 :class="'txt_' + $store.state.user.local.theme">Create a new team</h5>
                   </div>
                   <label class="textdisp teamcreate">
-                    <v-text-field class="formin forminedit" v-model="NewTeam" name="TeamName" label="">
+                    <v-text-field class="formin forminedit" v-model="NewTeam" name="TeamName" label="" :class="'txt_' + $store.state.user.local.theme">
                     </v-text-field>
                   </label>
                   <div class="editicon btnteamcreate">
-                    <a class="check material-icons" style="margin-top: 0px;" @click="CreateTeam = false;">close</a>
-                    <a class="checkdone material-icons" style="margin-top: 0px;" @click="PostTeam()">done</a>
+                    <a class="check material-icons" style="margin-top: 0px;" @click="CreateTeam = false;" :class="'txt_' + $store.state.user.local.theme">close</a>
+                    <a class="checkdone material-icons" style="margin-top: 0px;" @click="PostTeam()" :class="'txt_' + $store.state.user.local.theme">done</a>
                   </div>
                 </div>
               </div>

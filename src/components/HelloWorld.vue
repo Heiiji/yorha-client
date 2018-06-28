@@ -173,13 +173,29 @@ a {
     margin-right: 0px;
   }
 }
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+}
+.actu_clair_normal, .btn-actu_clair_normal {
+  background-color: white !important;
+  color: black !important;
+}
+.actu_dark_normal, .btn-actu_dark_normal {
+  background-color: #3c4043 !important;
+}
+.btn-actu_dark_color, .btn-actu_clair_color {
+  background-color: rgb(255, 26, 70) !important;
+}
+.bg_dark_color, .bg_dark_normal, .bg_dark_color p, .bg_dark_normal p {
+  background-color: #3c4043 !important;
+  color: white !important;
+}
 </style>
 <template>
-  <div>
-
+  <div :class="'page-inner_' + $store.state.user.local.theme">
     <div class="main-container">
       <div class="ask_trombi">
-        <div class="panel-body">
+        <div class="panel-body" :class="'bg_' + $store.state.user.local.theme">
           <span style="text-align: left; display: inline-block; font-size: 1.25em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
             <img :src="randUser.picture" style="width: 60px; border-radius: 30px; float: left; margin-top: 16px;"/>
             <form v-on:submit.prevent="PlayRandUser()" ><v-text-field name="Name" :label="name" single-line v-model="randUserReponse" style="float: right; width: calc(100% - 70px); padding-top: 30px;"></v-text-field></form>
@@ -189,13 +205,13 @@ a {
 
       <div class="post-container">
         <div style="width: 100%; height: 52px; margin-top: -4px; margin-bottom: 30px; display: inline-flex;">
-          <div class="actu">Actualités</div>
-          <v-btn @click="PostAnn = true" style="background-color: rgb(255, 26, 70);" fab small dark>
-            <v-icon color="white">add</v-icon>
+          <div class="actu" :class="'actu_' + $store.state.user.local.theme">Actualités</div>
+          <v-btn @click="PostAnn = true" :class="'btn-actu_' + $store.state.user.local.theme" fab small dark>
+            <v-icon>add</v-icon>
           </v-btn>
         </div>
         <a v-for="news in allNews" :key="news._id" @click="$router.push(news.link)" v-if="news.department === 'Annonce'">
-          <div class="post-solo">
+          <div class="post-solo" :class="'bg_' + $store.state.user.local.theme">
             <div class="post-solo-header">
               <div class="post-solo-header-img"><img v-if="news.title === 'Résumé Live Shadow' || news.title === 'Shadow Live Summary'" src="https://icon-icons.com/icons2/56/PNG/512/rafagayoutube_11279.png" style="width: 55px;" /></div>
               <div class="post-solo-header-title"><p>{{ news.title }} :</p></div>
@@ -207,7 +223,8 @@ a {
 
       <div class="social-container">
         <div class="twitter-container">
-          <Timeline :id="'Shadow_France'" :sourceType="'profile'"/>
+          <Timeline v-if="$store.state.user.local.theme === 'dark_color' || $store.state.user.local.theme === 'dark_normal'" :id="'Shadow_France'" :sourceType="'profile'" :options="{ theme: 'dark' }"/>
+            <Timeline v-if="$store.state.user.local.theme === 'clair_color' || $store.state.user.local.theme === 'clair_normal'" :id="'Shadow_France'" :sourceType="'profile'"/>
         </div>
       </div>
     </div>

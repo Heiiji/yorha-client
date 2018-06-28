@@ -14,6 +14,8 @@
   padding-bottom: 80px;
   margin-bottom: -80px;
   z-index: 1;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
 }
 .userspace {
   position: relative;
@@ -70,15 +72,30 @@
   white-space: initial;
   word-wrap: break-word
 }
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+}
+.page-title_dark_color h3, .page-title_clair_color h3 {
+  color: rgb(255, 67, 175) !important;
+}
+.page-title_dark_normal h3 {
+  color: white !important;
+}
+.userspace_dark_normal, .userspace_dark_color {
+  box-shadow: 0px 4px 5px #222;
+}
+.userspace_dark_normal:hover, .userspace_dark_color:hover {
+  box-shadow: 0px 6px 14px #111;
+}
 </style>
 <template>
-  <div>
-    <div style="" class="page-title">
+  <div :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
+    <div class="page-title" :class="'page-title_' + $store.state.user.local.theme">
         <h3>Trombinoscope</h3>
     </div>
     <br/>
     <div class="trombi">
-      <div v-for="(user, i) in users" :key="i" class="userspace">
+      <div v-for="(user, i) in users" :key="i" class="userspace" :class="'userspace_' + $store.state.user.local.theme">
         <div :src="user.picture" @click="$router.push('/profil/' + user._id)">
           <div class="nameuser">
             <div class="usertxt"><span>{{ user.username }}</span></div>

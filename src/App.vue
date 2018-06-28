@@ -8,9 +8,6 @@ input.form-control.search-input:active {
 .sidebar {
   position: fixed;
 }
-.sub-menu, .sidebar {
-  background-color: rgb(255, 255, 255) !important;
-}
 .sub-menu p {
   padding: 0px !important;
 }
@@ -46,7 +43,7 @@ input.form-control.search-input:active {
   line-height: 8px;
 }
 .msg-dropdown {
-  margin-right: 150px;
+  margin-right: 214px;
 }
 .logo-text {
   background-color: white;
@@ -77,7 +74,6 @@ input.form-control.search-input:active {
   border-radius: 12px;
 }
 .dropdown-lg {
-  background-color: white;
   position: absolute;
   right: 0px;
 }
@@ -113,9 +109,6 @@ input.form-control.search-input:active {
   vertical-align: middle;
   padding-left: 14px;
 }
-.accordion-menu a:hover {
-  background-color: rgb(230, 230, 230) !important;
-}
 .list-unstyled {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -138,6 +131,13 @@ input.form-control.search-input:active {
     padding-left: 0px;
   }
 }
+.dropdown-color {
+  width: 56px;
+  right: 145px;
+}
+.dropdown-color::before, .dropdown-color::after {
+  display: none !important;
+}
 @media (min-width:851px) {
   .mobileOnly {
     display: none;
@@ -145,6 +145,71 @@ input.form-control.search-input:active {
   .page-inner {
     margin-left: 52px;
   }
+}
+.topmenu-outer_dark_normal, .topmenu-outer_dark_color, .logo-text_dark_normal, .logo-text_dark_color {
+  background-color: #202124;
+}
+.form-control_dark_normal, .form-control_dark_normal:focus, .form-control_dark_color, .form-control_dark_color:focus {
+  background-color: #333333;
+  border-color: black;
+  color: white;
+}
+.msg-icon_dark_normal, .color-icon_dark_normal, .calendar-icon_dark_normal, .dashboard_dark_normal, .discussions_dark_normal, .dep_dark_normal, .tools_dark_normal, .doc_dark_normal, .trombi_dark_normal, .fb_dark_normal {
+  color: #c1c1c1;
+}
+.msg-icon_clair_normal, .color-icon_clair_normal, .calendar-icon_clair_normal, .dashboard_clair_normal, .discussions_clair_normal, .dep_clair_normal, .tools_clair_normal, .doc_clair_normal, .trombi_clair_normal, .fb_clair_normal {
+  color: #333333;
+}
+.msg-icon_dark_color, .msg-icon_clair_color {
+  color: rgb(255, 115, 11);
+}
+.color-icon_dark_color, .color-icon_clair_color, .discussions_clair_color, .discussions_dark_color {
+  color: rgb(48, 120, 220);
+}
+.calendar-icon_dark_color, .calendar-icon_clair_color, .dashboard_dark_color, .dashboard_clair_color {
+  color: rgb(255, 26, 70);
+}
+.dep_dark_color, .dep_clair_color {
+  color: rgb(121, 200, 204);
+}
+.tools_dark_color, .tools_clair_color {
+  color: rgb(166, 120, 255);
+}
+.doc_dark_color, .doc_clair_color {
+  color: rgb(98, 175, 255);
+}
+.trombi_dark_color, .trombi_clair_color {
+  color: rgb(255, 67, 175);
+}
+.fb_dark_color, .fb_clair_color {
+  color: rgb(255, 218, 0)
+}
+.sub-menu_clair_normal, .sub-menu_clair_color, .sidebar_clair_normal, .sidebar_clair_color {
+  background-color: rgb(255, 255, 255) !important;
+}
+.sub-menu_dark_normal, .sub-menu_dark_color, .sidebar_dark_normal, .sidebar_dark_color, .dropdown_dark_normal, .dropdown_dark_color {
+  background-color: #202124 !important;
+}
+.dropdown_clair_normal, .dropdown_clair_color {
+  background-color: white !important;
+}
+.dropdown_dark_normal::after, .dropdown_dark_color::after {
+  border-bottom: 7px solid #202124;
+}
+.accordion-menu_clair_normal a:hover, .accordion-menu_clair_color a:hover {
+  background-color: rgb(230, 230, 230) !important;
+}
+.accordion-menu_dark_normal a:hover, .accordion-menu_dark_color a:hover, .dropdown_dark_normal a:hover, .dropdown_dark_color a:hover, .allmsgs_dark_normal:hover, .allmsgs_dark_color:hover {
+  background-color: rgb(10, 10, 10) !important;
+}
+.accordion-menu_dark_normal p, .accordion-menu_dark_color p, .dropdown_dark_normal p, .dropdown_dark_color p {
+  color: white !important;
+}
+.my-msgs_dark_normal, .my-msgs_dark_color {
+  border-color: rgb(10, 10, 10) !important;
+}
+.key_dark_normal, .key_dark_color {
+  color: white;
 }
 </style>
 <template>
@@ -160,22 +225,25 @@ input.form-control.search-input:active {
                     </a>
                 </div>
                 <div class="logo-box">
-                    <a @click="redirect('/')" class="logo-text"><img style="display: absolute;" width="100%" :src="MainImg" /></a>
+                    <a @click="redirect('/')" class="logo-text" :class="'logo-text_' + $store.state.user.local.theme">
+                      <img v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'" style="display: absolute;" width="100%" src="/static/Shadow_Horizontal_Black.svg" />
+                      <img v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'" style="display: absolute;" width="100%" src="/static/Shadow_Horizontal_White.svg" />
+                    </a>
                 </div>
                 <div v-if="signed === true">
                     <form v-on:submit.prevent="searching()" style="width: 50%; position: absolute; left: 200px; top: 13px;" action="/rechercher">
-                        <input type="text" name="search" v-model="search" style="width: 100%; margin-left: 20px; border-radius: 20px;" class="form-control search-input" placeholder="Search...">
+                        <input type="text" name="search" v-model="search" style="width: 100%; margin-left: 20px; border-radius: 20px;" class="form-control search-input" :class="'form-control_' + $store.state.user.local.theme" placeholder="Search...">
                     </form>
                 </div>
-                <div class="topmenu-outer">
+                <div :class="'topmenu-outer_' + $store.state.user.local.theme">
                     <div class="top-menu">
                         <ul class="nav navbar-nav navbar-right">
                             <li v-if="signed === true" class="dropdown">
-                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px; color: rgb(255, 115, 11);">chat_bubble_outline</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
-                                <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" role="menu">
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" :class="'msg-icon_' + $store.state.user.local.theme" style="font-size: 24px; padding-bottom: 10px;">chat_bubble_outline</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
+                                <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" :class="'dropdown_' + $store.state.user.local.theme" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled">
-                                            <li class="my-msgs" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat/' + msg.senderMail)">
+                                            <li class="my-msgs" :class="'my-msgs_' + $store.state.user.local.theme" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat/' + msg.senderMail)">
                                                 <a v-if="index == 0" style="border-radius: 12px;">
                                                     <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -191,7 +259,56 @@ input.form-control.search-input:active {
                                             </li>
                                         </ul>
                                     </li>
-                                    <li @click="msgNbr = 0; redirect('/chat')" class="waves-effect waves-button waves-classic drop-all" style="width: 100%; text-align: center; margin: 0px; height: 40px; border-radius: 12px;"><p class="text-center">All Messages</p></li>
+                                    <li @click="msgNbr = 0; redirect('/chat')" class="waves-effect waves-button waves-classic drop-all" :class="'allmsgs_' + $store.state.user.local.theme" style="width: 100%; text-align: center; margin: 0px; height: 40px; border-radius: 12px;"><p class="text-center">All Messages</p></li>
+                                </ul>
+                            </li>
+                            <li v-if="signed === true" class="dropdown">
+                                <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" :class="'color-icon_' + $store.state.user.local.theme" style="font-size: 24px; padding-bottom: 10px;">color_lens</i></a>
+                                <ul class="dropdown-menu title-caret dropdown-lg dropdown-color" style="background-color: rgba(0, 0, 0, 0); border: none; box-shadow: none;" role="menu">
+                                  <li class="dropdown-menu-list slimscroll change-theme" style="max-height: 90%;">
+                                    <ul class="list-unstyled">
+                                      <li v-if="$store.state.user.local.theme === 'dark_color'">
+                                        <v-btn color="black" fab small dark @click="editTheme('clair_color')">
+                                          <v-icon color="white">invert_colors</v-icon>
+                                        </v-btn>
+                                      </li>
+                                      <li v-if="$store.state.user.local.theme === 'dark_normal'">
+                                        <v-btn color="black" fab small dark @click="editTheme('clair_normal')">
+                                          <v-icon color="white">invert_colors</v-icon>
+                                        </v-btn>
+                                      </li>
+                                      <li v-if="$store.state.user.local.theme === 'clair_normal'">
+                                        <v-btn color="white" fab small dark @click="editTheme('dark_normal')">
+                                          <v-icon color="black">invert_colors</v-icon>
+                                        </v-btn>
+                                      </li>
+                                      <li v-if="$store.state.user.local.theme === 'clair_color'">
+                                        <v-btn color="white" fab small dark @click="editTheme('dark_color')">
+                                          <v-icon color="black">invert_colors</v-icon>
+                                        </v-btn>
+                                      </li>
+                                      <li v-if="$store.state.user.local.theme === 'dark_normal'">
+                                        <v-btn color="black" fab small dark @click="editTheme('dark_color')">
+                                          <v-icon color="white">format_color_fill</v-icon>
+                                        </v-btn>
+                                      </li>
+                                      <li v-if="$store.state.user.local.theme === 'dark_color'">
+                                        <v-btn color="black" fab small dark @click="editTheme('dark_normal')">
+                                          <v-icon color="blue">format_color_fill</v-icon>
+                                        </v-btn>
+                                      </li>
+                                      <li v-if="$store.state.user.local.theme === 'clair_normal'">
+                                        <v-btn color="white" fab small dark @click="editTheme('clair_color')">
+                                          <v-icon color="black">format_color_fill</v-icon>
+                                        </v-btn>
+                                      </li>
+                                      <li v-if="$store.state.user.local.theme === 'clair_color'">
+                                        <v-btn color="white" fab small dark @click="editTheme('clair_normal')">
+                                          <v-icon color="blue">format_color_fill</v-icon>
+                                        </v-btn>
+                                      </li>
+                                    </ul>
+                                  </li>
                                 </ul>
                             </li>
                             <!--<li v-if="signed === true" class="dropdown">
@@ -213,12 +330,12 @@ input.form-control.search-input:active {
                                 </ul>
                             </li>-->
                             <li v-if="signed === true">
-                              <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><i class="material-icons" style="font-size: 24px; padding-bottom: 10px; color: rgb(48, 120, 220);">date_range</i></a>
+                              <a @click="redirect('/calendar')" class="waves-effect waves-button waves-classic"><i class="material-icons" :class="'calendar-icon_' + $store.state.user.local.theme" style="font-size: 24px; padding-bottom: 10px;">date_range</i></a>
                             </li>
                             <li v-if="signed === true" class="dropdown" style="margin-right: 20px;">
                               <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" style="padding-bottom: 10px;" data-toggle="dropdown"><img v-if="user.local" style="width: 24px; height: 24px; border-radius: 12px;" :src="user.local.picture" alt="Profil">
                               </a>
-                              <ul class="dropdown-menu profile-dropdown" role="menu">
+                              <ul class="dropdown-menu profile-dropdown" :class="'dropdown_' + $store.state.user.local.theme" role="menu">
                                 <li style="height: 30px; width: 60px; margin-bottom: 10px;">
                                   <div @click="redirect('/profil')" style="height: 30px; width: 60px; height: 30px; cursor: pointer;">
                                     <p style="height: 20px; text-align: center; padding-top: 5px;">Profile</p>
@@ -237,24 +354,24 @@ input.form-control.search-input:active {
             </div>
         </div>
         </span>
-            <div v-if="($route.path != '/home' || $store.state.forceMenu) && $route.path != '/login'" class="page-sidebar sidebar">
+            <div v-if="($route.path != '/home' || $store.state.forceMenu) && $route.path != '/login'" class="page-sidebar sidebar" :class="'sidebar_' + $store.state.user.local.theme">
                 <div class="page-sidebar-inner slimscroll">
-                    <ul class="menu accordion-menu">
+                    <ul class="menu accordion-menu" :class="'accordion-menu_' + $store.state.user.local.theme">
                         <li>
-                          <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 26, 70);">home</i><p class="menu-name">Dashboard</p></a>
+                          <a @click="redirect('/')" class="waves-effect waves-button"><i class="material-icons" :class="'dashboard_' + $store.state.user.local.theme">home</i><p class="menu-name">Dashboard</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(48, 120, 220)">vertical_split</i><p class="menu-name">Discussions</p></a>
+                          <a @click="redirect('/Dashboard')" class="waves-effect waves-button"><i class="material-icons" :class="'discussions_' + $store.state.user.local.theme">vertical_split</i><p class="menu-name">Discussions</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/Chat')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 115, 11)">forum</i><p class="menu-name">Messages</p></a>
+                          <a @click="redirect('/Chat')" class="waves-effect waves-button"><i class="material-icons" :class="'msg-icon_' + $store.state.user.local.theme">forum</i><p class="menu-name">Messages</p></a>
                         </li>
                         <li>
-                          <a @click="redirect('/department')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(121, 200, 204)">work</i><p class="menu-name">Departments</p></a>
+                          <a @click="redirect('/department')" class="waves-effect waves-button"><i class="material-icons" :class="'dep_' + $store.state.user.local.theme">work</i><p class="menu-name">Departments</p></a>
                         </li>
                         <li class="droplink">
-                          <a @click="tools = !tools" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(166, 120, 255)">build</i><p class="menu-name">Tools</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
-                            <ul v-if="tools" class="sub-menu">
+                          <a @click="tools = !tools" class="waves-effect waves-button"><i class="material-icons" :class="'tools_' + $store.state.user.local.theme">build</i><p class="menu-name">Tools</p><i dark :class="'material-icons ' + 'key_' + $store.state.user.local.theme" style="margin-left: -22px;">keyboard_arrow_down</i></a>
+                            <ul v-if="tools" class="sub-menu" :class="'sub-menu_' + $store.state.user.local.theme">
                                 <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="redirect('/drhouse')" target="_blank"><p class="menu-name">Dr House</p></a></li>
                                 <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" href="https://o-computers.atlassian.net/secure/Dashboard.jspa" target="_blank"><p class="menu-name">Jira</p></a></li>
                                 <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="redirect('/Overview')"><p class="menu-name">Version status</p></a></li>
@@ -262,17 +379,17 @@ input.form-control.search-input:active {
                             </ul>
                         </li>
                         <li class="droplink">
-                          <a @click="document = !document" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(98, 175, 255)">folder</i><p class="menu-name">Documents</p><i dark class="material-icons" style="margin-left: -22px;">keyboard_arrow_down</i></a>
-                            <ul v-if="document" class="sub-menu">
+                          <a @click="document = !document" class="waves-effect waves-button"><i class="material-icons" :class="'doc_' + $store.state.user.local.theme">folder</i><p class="menu-name">Documents</p><i dark :class="'material-icons ' + 'key_' + $store.state.user.local.theme" style="margin-left: -22px;">keyboard_arrow_down</i></a>
+                            <ul v-if="document" class="sub-menu" :class="'sub-menu_' + $store.state.user.local.theme">
                                 <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="search = 'Live'; redirect('/SearchUser')"><p class="menu-name">Shadow Live</p></a></li>
                                 <li style="width: 100%; margin: 0px; padding-left: 24%;"><a style="text-align: left !important;" @click="redirect('/version/viewer')"><p class="menu-name">QA Report</p></a></li>
                             </ul>
                         </li>
                         <!--<li style="width: 80%;"><a @click="$router.push('/timeline')" class="waves-effect waves-button"><span class="menu-icon"><v-icon style="opacity: 0.6;" dark>replay</v-icon></span><p>Timeline</p></a></li>-->
                         <li>
-                          <a @click="redirect('/trombi')" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 67, 175)">face</i><p class="menu-name">Trombi</p></a></li>
+                          <a @click="redirect('/trombi')" class="waves-effect waves-button"><i class="material-icons" :class="'trombi_' + $store.state.user.local.theme">face</i><p class="menu-name">Trombi</p></a></li>
                         <li>
-                          <a @click="feedback = true" class="waves-effect waves-button"><i class="material-icons" style="color: rgb(255, 218, 0)">feedback</i><p class="menu-name">Feedback</p></a></li>
+                          <a @click="feedback = true" class="waves-effect waves-button"><i class="material-icons" :class="'fb_' + $store.state.user.local.theme">feedback</i><p class="menu-name">Feedback</p></a></li>
                     </ul>
                 </div>
             </div>
@@ -415,11 +532,15 @@ export default {
   }),
   methods: {
     editTheme (newTheme) {
+      let vue = this
       this.$store.state.user.local.theme = newTheme
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         AccountServices.editTheme({
           theme: newTheme,
           token: idToken
+        }).then(() => {
+          vue.checkUser()
+          vue.$router.push('/trash')
         })
       })
     },

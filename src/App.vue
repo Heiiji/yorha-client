@@ -415,6 +415,7 @@ export default {
   }),
   methods: {
     editTheme (newTheme) {
+      this.$store.state.user.local.theme = newTheme
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         AccountServices.editTheme({
           theme: newTheme,

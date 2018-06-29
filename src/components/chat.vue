@@ -347,7 +347,30 @@ h3 {
       </div>
   </v-layout>
     <v-dialog style="z-index:25; background-color: rgba(250,250,250,1);" v-model="nouvConv" scrollable max-width="800px">
-      <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+      <v-card style="text-align: center;" dark="true" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+        <v-flex style="padding: 20px;" xs12>
+          <v-select
+            :items="usernames"
+            v-model="target"
+            label="target"
+            autocomplete
+            style="width: 100%;"
+            dark="true"
+          ></v-select>
+          <v-text-field v-model="msg.text"
+                        name="text"
+                        label="text"
+                        textarea
+                        style="width: 100%; margin: 5px;"
+          ></v-text-field>
+        </v-flex>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="nouvConv = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="SendMSG(); nouvConv = false;">Send</v-btn>
+        </v-card-actions>
+      </v-card>
+      <v-card style="text-align: center;" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
         <v-flex style="padding: 20px;" xs12>
           <v-select
             :items="usernames"

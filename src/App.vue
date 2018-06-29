@@ -184,10 +184,10 @@ input.form-control.search-input:active {
 .fb_dark_color, .fb_clair_color {
   color: rgb(255, 218, 0)
 }
-.sub-menu_clair_normal, .sub-menu_clair_color, .sidebar_clair_normal, .sidebar_clair_color {
+.sub-menu_clair_normal, .sub-menu_clair_color, .sidebar_clair_normal, .sidebar_clair_color, .popup_clair_color, .popup_clair_normal {
   background-color: rgb(255, 255, 255) !important;
 }
-.sub-menu_dark_normal, .sub-menu_dark_color, .sidebar_dark_normal, .sidebar_dark_color, .dropdown_dark_normal, .dropdown_dark_color {
+.sub-menu_dark_normal, .sub-menu_dark_color, .sidebar_dark_normal, .sidebar_dark_color, .dropdown_dark_normal, .dropdown_dark_color, .popup_dark_color, .popup_dark_normal {
   background-color: #202124 !important;
 }
 .dropdown_clair_normal, .dropdown_clair_color {
@@ -208,8 +208,8 @@ input.form-control.search-input:active {
 .my-msgs_dark_normal, .my-msgs_dark_color {
   border-color: rgb(10, 10, 10) !important;
 }
-.key_dark_normal, .key_dark_color {
-  color: white;
+.key_dark_normal, .key_dark_color, .popup_dark_color, .popup_dark_normal {
+  color: white !important;
 }
 </style>
 <template>
@@ -395,10 +395,19 @@ input.form-control.search-input:active {
             </div>
         <router-view class="page-inner" :Search="search" v-on:refresh="checkUser()" />
           <v-dialog style="z-index:25;" v-model="feedback" scrollable max-width="800px">
-            <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
-              <v-card-title style="color: grey; font-size: 1.4em; text-align: center; display: block;">feedback (by default, it's anonyme)</v-card-title>
+            <v-card style=" text-align: center;" :class="'popup_' + $store.state.user.local.theme">
+              <v-card-title style="font-size: 1.4em; text-align: center; display: block;" :class="'popup_' + $store.state.user.local.theme">feedback (by default, it's anonyme)</v-card-title>
               <hr style="margin: 0px;"/>
-                <v-flex xs8>
+                <v-flex xs8 v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                  <v-text-field v-model="FeedbackText" :class="'popup_' + $store.state.user.local.theme"
+                    textarea
+                    name="FeedbackText"
+                    id="FeedbackText"
+                    style="width: 700px; margin: 5px; margin-left: 50px;"
+                    dark="true"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs8 v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
                   <v-text-field v-model="FeedbackText"
                     textarea
                     name="FeedbackText"

@@ -296,12 +296,16 @@
                         <div class="timeline-comment-header-container-owner"><p>{{comm.sender}} :&emsp;<span :class="'comment_' + $store.state.user.local.theme">{{comm.text}}</span></p></div><small style="width: 100%; margin-top: -10px;">{{ comm.date.toLocaleDateString(navigator.language, {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                       </div>
                     </div>
-                    <div class="timeline-comment-reply">
+                    <div class="timeline-comment-reply" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                      <v-text-field name="reply" label="Reply" v-model="item.message" single-line dark="true"></v-text-field>
+                    </div>
+                    <div class="timeline-comment-reply" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
                       <v-text-field name="reply" label="Reply" v-model="item.message" single-line></v-text-field>
                     </div>
                     <div class="timeline-comment-replybtn">
                       <a @click="postReply(item._id, item.message);">
-                        <i class="material-icons" style="color: rgba(0,0,0,.65);">check</i>
+                        <i v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'" class="material-icons" style="color: rgba(255,255,255,.65);">check</i>
+                        <i v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'" class="material-icons" style="color: rgba(0,0,0,.65);">check</i>
                       </a>
                     </div>
                   </div>

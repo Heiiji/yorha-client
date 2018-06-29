@@ -190,6 +190,10 @@ a {
   background-color: #3c4043 !important;
   color: white !important;
 }
+.popup_dark_color, .popup_dark_normal {
+  background-color: #202124 !important;
+  color: white !important;
+}
 </style>
 <template>
   <div :class="'page-inner_' + $store.state.user.local.theme">
@@ -198,7 +202,12 @@ a {
         <div class="panel-body" :class="'bg_' + $store.state.user.local.theme">
           <span style="text-align: left; display: inline-block; font-size: 1.25em; word-wrap: break-word; width: 100%;">Trombi-Game : What is his name ?<br/>
             <img :src="randUser.picture" style="width: 60px; border-radius: 30px; float: left; margin-top: 16px;"/>
-            <form v-on:submit.prevent="PlayRandUser()" ><v-text-field name="Name" :label="name" single-line v-model="randUserReponse" style="float: right; width: calc(100% - 70px); padding-top: 30px;"></v-text-field></form>
+            <form v-on:submit.prevent="PlayRandUser()" v-if="$store.state.user.local.theme === 'dark_color' || $store.state.user.local.theme === 'dark_normal'">
+              <v-text-field name="Name" :label="name" single-line v-model="randUserReponse" dark="true" style="float: right; width: calc(100% - 70px); padding-top: 30px;"></v-text-field>
+            </form>
+            <form v-on:submit.prevent="PlayRandUser()" v-if="$store.state.user.local.theme === 'clair_color' || $store.state.user.local.theme === 'clair_normal'">
+              <v-text-field name="Name" :label="name" single-line v-model="randUserReponse" style="float: right; width: calc(100% - 70px); padding-top: 30px;"></v-text-field>
+            </form>
           </span>
         </div>
       </div>
@@ -230,8 +239,18 @@ a {
     </div>
 
       <v-dialog style="z-index:25;" v-model="PostAnn" scrollable max-width="1000px">
-        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center;">
-          <v-card-title style="color: blue;">Post de :
+        <v-card style="text-align: center;" :class="'popup_' + $store.state.user.local.theme">
+          <v-card-title v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">Post de :
+            <v-select
+              :items="docs"
+              v-model="document.type"
+              label="Select type"
+              single-line
+              required
+              dark="true"
+            ></v-select>
+          </v-card-title>
+          <v-card-title v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">Post de :
             <v-select
               :items="docs"
               v-model="document.type"
@@ -242,7 +261,16 @@ a {
           </v-card-title>
           <v-container v-if="document.type.text === 'Shadow Live Summary'" grid-list-md>
             <v-layout row wrap>
-              <v-flex xs12>
+              <v-flex xs12 v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                  <v-text-field
+                  name="url"
+                  label="Video URL"
+                  required
+                  v-model="document.url"
+                  dark="true"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12 v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
                   <v-text-field
                   name="url"
                   label="Video URL"
@@ -250,8 +278,10 @@ a {
                   v-model="document.url"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs6><v-date-picker required v-model="document.date" :landscape="true" :reactive="true"></v-date-picker></v-flex>
-              <v-flex xs6><v-text-field required box multi-line label="Text" v-model="document.text"></v-text-field></v-flex>
+              <v-flex xs6 v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'"><v-date-picker required v-model="document.date" :landscape="true" :reactive="true" dark="true"></v-date-picker></v-flex>
+              <v-flex xs6 v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'"><v-date-picker required v-model="document.date" :landscape="true" :reactive="true"></v-date-picker></v-flex>
+              <v-flex xs6 v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'"><v-text-field required box multi-line label="Text" v-model="document.text" dark="true"></v-text-field></v-flex>
+              <v-flex xs6 v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'"><v-text-field required box multi-line label="Text" v-model="document.text"></v-text-field></v-flex>
             </v-layout>
           </v-container>
         <v-divider></v-divider>
@@ -262,7 +292,21 @@ a {
         </v-card>
       </v-dialog>
       <v-dialog style="z-index:25;" v-model="randPopup" scrollable max-width="500px">
-        <v-card style="background-color: rgba(250,250,250,0.95); text-align: center; padding: 20px;">
+        <v-card style="text-align: center; padding: 20px;" dark="true" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+          <div>
+            <img :src="randUser.picture" style="float: left; width: 100px; height: 100px; border-radius: 50px;" />
+            <h2 style="text-align: center; padding: 15px; padding-top: 5px; font-size: 1.3em;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>
+          </div>
+          <v-card-title v-if="randUserResult === 'Failed'" style="color: red; text-align: center; font-size: 1.2em; display: block;">{{randUserResult}}</v-card-title>
+          <v-card-title v-else style="color: green; text-align: center; font-size: 1.2em; display: block;">{{randUserResult}}</v-card-title>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" flat @click.native="randPopup = false;">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="$router.push('/profil/' + randUser._id)">Go to profil</v-btn>
+          <v-btn color="blue darken-1" style="position: absolute; right: 10px;" flat @click.native="randPopup = false; getRandUser();">retry</v-btn>
+        </v-card-actions>
+        </v-card>
+        <v-card style="text-align: center; padding: 20px;" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
           <div>
             <img :src="randUser.picture" style="float: left; width: 100px; height: 100px; border-radius: 50px;" />
             <h2 style="text-align: center; padding: 15px; padding-top: 5px; font-size: 1.3em;">{{ randUser.username }}<br/><br/>Workplace : {{ randUser.work }}</h2>

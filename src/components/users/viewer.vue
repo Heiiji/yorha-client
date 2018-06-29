@@ -430,7 +430,25 @@
     </div>
 
   <v-dialog style="z-index:25;" v-model="sendMSG" scrollable max-width="500px">
-    <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+    <v-card style="text-align: center;" dark="true" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+        <v-flex xs8>
+          <v-divider></v-divider>
+          <label>
+            <v-text-field v-model="msg.text"
+              name="NewMSG"
+              label="Message"
+              id="NewMSG"
+              style="width: 450px; margin: 5px;"
+            ></v-text-field>
+          </label>
+        </v-flex>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn color="blue darken-1" flat @click.native="sendMSG = false;">Close</v-btn>
+        <v-btn color="blue darken-1" flat @click.native="SendMSG()">Send</v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-card style="text-align: center;" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
         <v-flex xs8>
           <v-divider></v-divider>
           <label>

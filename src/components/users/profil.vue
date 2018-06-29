@@ -373,8 +373,13 @@
               </a>
             </div>
             <div class="formdiv" v-if="EditTel">
-              <div class="formdiv-grid">
-                <v-text-field class="formin" v-model="NewTel" name="NewTel" :placeholder="user.local.tel" :class="'txt_' + $store.state.user.local.theme">
+              <div class="formdiv-grid" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                <v-text-field class="formin" v-model="NewTel" name="NewTel" :placeholder="user.local.tel" dark="true">
+                </v-text-field>
+                <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="changeTel()">done</a></div>
+              </div>
+              <div class="formdiv-grid" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
+                <v-text-field class="formin" v-model="NewTel" name="NewTel" :placeholder="user.local.tel">
                 </v-text-field>
                 <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="changeTel()">done</a></div>
               </div>
@@ -395,8 +400,13 @@
                 </a>
               </div>
               <div class="formdiv" v-if="EditDescription">
-                <div class="formdiv-grid">
-                  <v-text-field class="formin" v-model="NewDescription" name="NewDescription" :placeholder="user.local.description" :class="'txt_' + $store.state.user.local.theme">
+                <div class="formdiv-grid" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                  <v-text-field class="formin" v-model="NewDescription" name="NewDescription" :placeholder="user.local.description" dark="true">
+                  </v-text-field>
+                  <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="PostDescription(NewDescription)">done</a></div>
+                </div>
+                <div class="formdiv-grid" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
+                  <v-text-field class="formin" v-model="NewDescription" name="NewDescription" :placeholder="user.local.description">
                   </v-text-field>
                   <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="PostDescription(NewDescription)">done</a></div>
                 </div>
@@ -461,8 +471,12 @@
                   <div class="texttitle texttitlebigedit">
                     <h5 :class="'txt_' + $store.state.user.local.theme">Create a new team</h5>
                   </div>
-                  <label class="textdisp teamcreate">
-                    <v-text-field class="formin forminedit" v-model="NewTeam" name="TeamName" label="" :class="'txt_' + $store.state.user.local.theme">
+                  <label class="textdisp teamcreate" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                    <v-text-field class="formin forminedit" v-model="NewTeam" name="TeamName" label="" dark="true">
+                    </v-text-field>
+                  </label>
+                  <label class="textdisp teamcreate" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
+                    <v-text-field class="formin forminedit" v-model="NewTeam" name="TeamName" label="">
                     </v-text-field>
                   </label>
                   <div class="editicon btnteamcreate">

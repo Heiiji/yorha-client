@@ -356,6 +356,7 @@ input.form-control.search-input:active {
 import AccountServices from '@/services/AccountService'
 
 import firebase from 'firebase'
+var audio = new Audio(require('../static/notification.wav'))
 // var db = firebase.database
 
 export default {
@@ -365,6 +366,7 @@ export default {
       language: ''
     },
     document: false,
+    isActive: false,
     user: [],
     signed: false,
     firebaseApp: [],
@@ -430,6 +432,7 @@ export default {
     },
     checkUser () {
       var vue = this
+      let tp = vue.msgNbr
       vue.user = vue.$store.state.user
       if (vue.$route.fullPath) {
       }
@@ -454,11 +457,18 @@ export default {
               }
             }
           })
-          vue.messages.forEach(function (element) {
-            if (element.asread === false) {
+          for (let m = 0; m < vue.messages.length; m++) {
+            if (vue.messages[m].asread === false) {
               vue.msgNbr += 1
             }
-          })
+          }
+          if (vue.isActive) {
+            if (tp !== vue.msgNbr) {
+              audio.play()
+            }
+          } else {
+            vue.isActive = true
+          }
         })
         this.$store.state.user.local.picture = this.user.local.picture
       }
@@ -472,6 +482,9 @@ export default {
     if (user) {
       vue.checkUser()
       vue.signed = true
+      window.setInterval(() => {
+        vue.checkUser()
+      }, 5000)
     } else {
       if (vue.$route.path !== '/' && vue.$route.path !== '/login') {
         vue.$store.state.request = vue.$route.path

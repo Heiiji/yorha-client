@@ -373,6 +373,7 @@ export default {
           let p2 = ''
           for (let m = 0; m < 300; m++) {
             if (vue.messages[m]) {
+              console.log(vue.messages[m].senderMail)
               if (conv[nbr]) {
                 if (vue.messages[m].senderMail === p1) {
                   conv[nbr].splice(1, 0, vue.messages[m])
@@ -383,61 +384,95 @@ export default {
                 conv[nbr] = []
                 p1 = vue.messages[m].senderMail
                 p2 = vue.messages[m].target
-                m -= 1
+                conv[nbr].splice(1, 0, vue.messages[m])
               }
             }
           }
           let mem = 0
           let toggle = 0
           for (let m = 0; m < 300; m++) {
+            mem = 0
+            toggle = 0
             if (rep[m]) {
               if (conv[nbr2]) {
-                if (rep[m].target === conv[nbr2][0].senderMail) {
-                  conv[nbr2].splice(1, 0, rep[m])
-                } else {
-                  mem = nbr2
-                  while (mem <= nbr && rep[m].target !== conv[mem][0].senderMail) {
-                    mem += 1
-                  }
-                  if (mem > nbr2) {
-                    conv[mem] = []
-                    p2 = rep[m].target
-                    toggle = 0
-                    while (rep[m]) {
-                      if (rep[m].target === p2) {
-                        conv[mem].splice(1, 0, rep[m])
-                      } else {
-                        if (toggle === 0) {
-                          toggle = m
-                        }
-                      }
+                if (conv[nbr2][0]) {
+                  if (rep[m].target === conv[nbr2][0].senderMail || rep[m].target === conv[nbr2][0].target) {
+                    while (rep[m] && (rep[m].target === conv[nbr2][0].senderMail || rep[m].target === conv[nbr2][0].target)) {
+                      conv[nbr2].splice(1, 0, rep[m])
                       m += 1
                     }
-                    if (toggle !== 0) {
-                      m = toggle
-                    }
+                    m -= 1
+                    nbr2 += 1
                   } else {
-                    toggle = 0
-                    while (rep[m]) {
-                      if (rep[m].target === conv[mem][0].senderMail) {
-                        conv[mem].splice(1, 0, rep[m])
-                      } else {
-                        if (toggle === 0) {
-                          toggle = m
-                        }
-                      }
-                      m += 1
+                    mem = nbr2
+                    while (mem <= nbr && (rep[m].target !== conv[mem][0].senderMail || rep[m].target !== conv[mem][0].target)) {
+                      mem += 1
                     }
-                    if (toggle !== 0) {
-                      m = toggle
+                    console.log(mem)
+                    if (mem > nbr2) {
+                      console.log('kapue')
+                      conv[mem] = []
+                      p2 = rep[m].target
+                      toggle = 0
+                      while (rep[m]) {
+                        if (rep[m].target === p2) {
+                          conv[mem].splice(1, 0, rep[m])
+                        } else {
+                          if (toggle === 0) {
+                            toggle = m
+                          }
+                        }
+                        m += 1
+                      }
+                      if (toggle !== 0) {
+                        m = toggle
+                      }
+                      m -= 1
+                    } else {
+                      console.log('tolyo')
+                      toggle = 0
+                      let tp = 0
+                      while (rep[m]) {
+                        tp = m
+                        if (rep[m].target === conv[mem][0].senderMail || rep[m].target !== conv[mem][0].target) {
+                          conv[mem].splice(1, 0, rep[m])
+                        } else {
+                          if (toggle === 0) {
+                            toggle = m
+                          }
+                        }
+                        m = tp + 1
+                      }
+                      if (toggle !== 0) {
+                        m = toggle
+                      }
+                      m -= 1
                     }
                   }
+                } else {
+                  conv[nbr2] = []
+                  p2 = rep[m].target
+                  while (rep[m]) {
+                    if (rep[m].target === p2) {
+                      conv[nbr2].splice(1, 0, rep[m])
+                    } else {
+                      if (mem === 0) {
+                        mem = m
+                      }
+                    }
+                    m += 1
+                  }
+                  if (mem !== 0) {
+                    m = mem
+                  }
+                  nbr2++
+                  m -= 1
                 }
               } else {
                 conv[nbr2] = []
                 p2 = rep[m].target
                 while (rep[m]) {
-                  if (rep[m].target !== p2) {
+                  if (rep[m].target === p2) {
                     conv[nbr2].splice(1, 0, rep[m])
                   } else {
                     if (mem === 0) {
@@ -449,6 +484,8 @@ export default {
                 if (mem !== 0) {
                   m = mem
                 }
+                m -= 1
+                nbr2++
               }
             }
           }

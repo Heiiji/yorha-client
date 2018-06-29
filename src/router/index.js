@@ -37,11 +37,11 @@ const Overview    = () => import('@/components/versions/Overview')
 const Posts       = () => import('@/components/versions/Posts')
 const Login       = () => import('@/components/landingPage')
 // users files
-import SearchUser from '@/components/users/SearchUser'
-import Viewer     from '@/components/users/viewer'
-import Profil     from '@/components/users/profil'
-import DashBoard  from '@/components/users/DashBoard'
-import trash      from '@/components/trash'
+const SearchUser = () => import('@/components/users/SearchUser')
+const Viewer     = () => import('@/components/users/viewer')
+const Profil     = () => import('@/components/users/profil')
+const DashBoard  = () => import('@/components/users/DashBoard')
+const trash      = () => import('@/components/trash')
 
 import firebase from 'firebase'
 

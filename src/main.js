@@ -49,7 +49,10 @@ const store = new Vuex.Store({
     forceMenu: false,
     user: {
       username: '',
-      status: ''
+      status: '',
+      local: {
+        theme: 'dark_normal'
+      }
     },
     isLoggedIn: !!localStorage.getItem('token')
   },

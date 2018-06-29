@@ -73,6 +73,9 @@ export default {
   editDescription (params) {
     return Api().put('account/description', params)
   },
+  editTheme (params) {
+    return Api().put('account/theme', params)
+  },
   editHomeTheme (params) {
     return Api().put('account/homeTheme', params)
   },

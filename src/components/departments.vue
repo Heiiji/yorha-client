@@ -47,9 +47,19 @@
 .select-dep:hover {
   cursor: pointer;
 }
+.page-inner_dark_color div, .page-inner_dark_normal div {
+  background-color: #333333 !important;
+  color: white !important;
+}
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+}
+.page-inner_clair_color, .page-inner_clair_normal {
+  background-color: white !important;
+}
 </style>
 <template>
-  <div class="containerdep">
+  <div class="containerdep" :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
     <a @click="$router.push('/department/marketing')">
     <v-card class="select-dep">
       <v-card-media

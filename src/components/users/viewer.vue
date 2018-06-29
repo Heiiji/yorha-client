@@ -280,32 +280,60 @@
 .sendmsg:active {
   color: black !important;
 }
+.btn__content, .btn__content:focus {
+  background-color: rgba(0, 0, 0, 0) !important;
+  color: white;
+}
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+}
+.user_dark_color, .user_dark_normal {
+  color: white !important;
+}
+.infoperso_dark_color, .infoperso_dark_normal {
+  background-color: #3c4043 !important;
+  color: white;
+}
+.infopersobtn_dark_color, .infopersobtn_dark_normal {
+  background-color: #3c4043 !important;
+  color: white;
+}
+.infopersobtn_clair_color, .infopersobtn_clair_normal {
+  background-color: white !important;
+  color: black;
+}
+.txt_dark_color, .txt_dark_normal {
+  color: white !important;
+}
+.txt_dark_color input, .txt_dark_normal input {
+  color: white !important;
+}
 </style>
 <template>
-  <div>
+  <div :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
     <div>
       <div class="profile-cover" style="background: none;">
         <div class="row rowimage">
           <div class="userprofileimage">
             <div class="profile-image-container">
               <img height="200px" width="200px" :src="user.picture" alt="">
-              <h2 class="text-center">{{ user.username }}</h2>
+              <h2 class="text-center" :class="'user_' + $store.state.user.local.theme">{{ user.username }}</h2>
             </div>
           </div>
         </div>
       </div>
       <div class="buttons">
-        <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block sendmsg" style="border-radius:12px;">Send message</button>
+        <button v-if="user.username != $store.state.user.local.username" @click="sendMSG = true" class="btn btn-primary btn-block sendmsg" style="border-radius:12px;" :class="'infoperso_' + $store.state.user.local.theme">Send message</button>
       </div>
       <div id="main-wrapper">
-        <div class="infoperso">
+        <div class="infoperso" :class="'infoperso_' + $store.state.user.local.theme">
           <div class="mycontainer" style="border-top: none;">
             <a class="userbtn">
               <div class="textcontainer">
                 <div class="texttitle">
-                  <h5>Team</h5>
+                  <h5 :class="'txt_' + $store.state.user.local.theme">Team</h5>
                 </div>
-                <div class="textdisp">
+                <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                   {{ user.work }} ({{ user.qualifier }})
                 </div>
               </div>
@@ -315,9 +343,9 @@
             <a class="userbtn">
               <div class="textcontainer">
                 <div class="texttitle">
-                  <h5>Email</h5>
+                  <h5 :class="'txt_' + $store.state.user.local.theme">Email</h5>
                 </div>
-                <div class="textdisp">
+                <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                   {{ user.mail }}
                 </div>
               </div>
@@ -327,9 +355,9 @@
             <a class="userbtn">
               <div class="textcontainer">
                 <div class="texttitle">
-                  <h5>Localisation</h5>
+                  <h5 :class="'txt_' + $store.state.user.local.theme">Localisation</h5>
                 </div>
-                <div class="textdisp">
+                <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                   Paris, France
                 </div>
               </div>
@@ -339,12 +367,12 @@
             <a class="userbtn">
               <div class="textcontainer">
                 <div class="texttitle">
-                  <h5>Téléphone</h5>
+                  <h5 :class="'txt_' + $store.state.user.local.theme">Téléphone</h5>
                 </div>
-                <div class="textdisp" v-if="user.tel === 'none' || user.tel === ''">
+                <div class="textdisp" v-if="user.tel === 'none' || user.tel === ''" :class="'txt_' + $store.state.user.local.theme">
                   Non renseigné
                 </div>
-                <div class="textdisp" v-else>
+                <div class="textdisp" v-else :class="'txt_' + $store.state.user.local.theme">
                   {{user.tel}}
                 </div>
               </div>
@@ -354,9 +382,9 @@
             <a class="userbtn">
               <div class="textcontainer">
                 <div class="texttitle">
-                  <h5>Descripton</h5>
+                  <h5 :class="'txt_' + $store.state.user.local.theme">Descripton</h5>
                 </div>
-                <div class="textdisp">
+                <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
                   {{user.description}}
                 </div>
               </div>
@@ -364,9 +392,9 @@
           </div>
         </div>
 
-        <div class="infoperso team" style="margin-top: 190px;">
+        <div class="infoperso team" style="margin-top: 190px;" :class="'infoperso_' + $store.state.user.local.theme">
           <v-menu v-if="user.username != $store.state.user.local.username" style="background-color: rgba(0, 0, 0, 0); display: block; margin-left: -8px; margin-top: -145px; margin-bottom: 69px;" dark offset-y>
-            <v-btn style="border-radius:12px !important; background-color: rgba(255, 255, 255, 1); width: calc(100% - 8px); padding-bottom: 55px; padding-top: 12px;" dark slot="activator"><h3 style="color: black;">Add To Team</h3>
+            <v-btn style="border-radius:12px !important; width: calc(100% - 8px); padding-bottom: 55px; padding-top: 12px;" dark slot="activator" :class="'infopersobtn_' + $store.state.user.local.theme"><h3 :class="'infopersobtn_' + $store.state.user.local.theme">Add To Team</h3>
             </v-btn>
             <v-list v-if="$store.state.user.local">
               <v-list-tile v-for="item in $store.state.user.local.teams" :key="item">
@@ -378,7 +406,7 @@
             <a class="userbtn">
               <div class="textcontainer">
                 <div class="texttitle" style="width: 300px;">
-                  <h5>Department : &emsp; {{ user.work }}</h5>
+                  <h5 :class="'txt_' + $store.state.user.local.theme">Department : &emsp; {{ user.work }}</h5>
                 </div>
               </div>
             </a>
@@ -402,7 +430,25 @@
     </div>
 
   <v-dialog style="z-index:25;" v-model="sendMSG" scrollable max-width="500px">
-    <v-card style="background-color: rgba(250,250,250,1); text-align: center;">
+    <v-card style="text-align: center;" dark="true" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+        <v-flex xs8>
+          <v-divider></v-divider>
+          <label>
+            <v-text-field v-model="msg.text"
+              name="NewMSG"
+              label="Message"
+              id="NewMSG"
+              style="width: 450px; margin: 5px;"
+            ></v-text-field>
+          </label>
+        </v-flex>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn color="blue darken-1" flat @click.native="sendMSG = false;">Close</v-btn>
+        <v-btn color="blue darken-1" flat @click.native="SendMSG()">Send</v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-card style="text-align: center;" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
         <v-flex xs8>
           <v-divider></v-divider>
           <label>

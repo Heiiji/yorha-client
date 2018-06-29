@@ -80,15 +80,25 @@
       width: 90%;
     }
   }
+  .page-inner_dark_color, .page-inner_dark_normal {
+    background-color: #333333 !important;
+  }
+  .txt_dark_color, .txt_dark_normal {
+    background-color: #3c4043 !important;
+    color: white !important;
+  }
+  .txt_dark_color input, .txt_dark_normal input {
+    color: white !important;
+  }
 </style>
 <template>
-  <div>
+  <div :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
     <div style="padding: 0px; width: 100%;">
       <div id="main-wrapper">
         <div class="profile-cover" style="background: url('https://geekyapar.com/wp-content/uploads/2014/04/green-lantern-batman-dark-dc-comics-comics-superman-superheroes-justice-league-aquaman-flash-comic-hero-wonder-woman-cyborg-dc-comics-69099.jpg') center; -webkit-background-size: cover; background-size: cover;">
           <div class="dep-title"><div style="background-color: rgba(0, 0, 0, 0.4);">Le Support</div></div>
         </div>
-        <div class="peoples">
+        <div class="peoples" :class="'txt_' + $store.state.user.local.theme">
           <div class="peoples-heading">
             <div class="peoples-title">Peoples : </div>
           </div>
@@ -103,7 +113,7 @@
             </div>
           </div>
         </div>
-        <div class="description-panel">
+        <div class="description-panel" :class="'txt_' + $store.state.user.local.theme">
           <div class="">
             <v-btn v-if="$store.state.user.local.work === 'Support' && $store.state.user.local.qualifier === 'SquadLeader'" @click="NewDescription = description; EditDescription = true;" color="primary" style="float: right;" fab small dark>
               <v-icon>edit</v-icon>

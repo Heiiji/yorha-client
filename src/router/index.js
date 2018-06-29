@@ -41,6 +41,7 @@ import SearchUser from '@/components/users/SearchUser'
 import Viewer     from '@/components/users/viewer'
 import Profil     from '@/components/users/profil'
 import DashBoard  from '@/components/users/DashBoard'
+import trash      from '@/components/trash'
 
 import firebase from 'firebase'
 
@@ -48,6 +49,11 @@ Vue.use(Router)
 
 let router = new Router({
   routes: [
+    {
+      path: '/trash',
+      name: 'trash',
+      component: trash
+    },
     {
       path: '/',
       name: 'HelloWorld',

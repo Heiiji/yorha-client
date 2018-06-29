@@ -10,7 +10,7 @@
   background-color: none;
   text-align: center;
   display: grid;
-  grid-template-rows: 52px min-content min-content auto;
+  grid-template-rows: 40px min-content min-content auto;
   grid-gap: 20px;
   border-radius: 12px;
 }
@@ -19,17 +19,18 @@
   max-width: 550px !important;
   grid-column: 3;
   display: grid;
-  grid-template-rows: 52px min-content auto;
+  grid-template-rows: 40px min-content auto;
   grid-gap: 20px;
   border-radius: 12px;
 }
 .dep-title {
   grid-row: 1;
-  padding: 14px;
-  background-color: white;
+  padding: 8px;
+  background-color: rgb(48, 120, 220);
+  color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
   text-align: center;
-  border-radius: 12px;
+  border-radius: 20px;
 }
 .post {
   grid-row: 2;
@@ -45,12 +46,11 @@
 }
 .conv-title {
   grid-row: 1;
-  padding: 14px;
+  padding: 8px;
   font-size: 16px;
-  color: white;
-  background-color: rgb(33, 110, 210);
+  background-color: white;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
-  border-radius: 12px;
+  border-radius: 20px;
 }
 .profile-timeline {
   grid-row: 3;
@@ -237,37 +237,51 @@
     grid-template-columns: auto auto 250px auto auto;
   }
 }
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+}
+.dep-title_clair_normal {
+  background-color: white !important;
+  color: black !important;
+}
+.dep-title_dark_normal, .bg_dark_normal, .bg_dark_color {
+  background-color: #3c4043 !important;
+  color: white !important;
+}
+.comment_dark_normal, .comment_dark_color {
+  color: white;
+}
 </style>
 <template>
-  <div>
+  <div :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
     <div v-if="user.local" style="padding-top: 0px; position: relative;">
       <div id="main-wrapper">
         <div class="conv">
-          <div class="conv-title">
+          <div class="conv-title" :class="'bg_' + $store.state.user.local.theme">
             <h3>Channels</h3>
           </div>
-          <div class="conv-container">
-            <div @click="activeTeam = 'General'" class="categori waves-effect waves-button waves-classic">GENERAL</div>
-            <div @click="activeTeam = 'Whatever'" class="categori waves-effect waves-button waves-classic">WHATEVER</div>
-            <div @click="activeTeam = $store.state.user.local.work" class="categori waves-effect waves-button waves-classic">{{ $store.state.user.local.work.toUpperCase() }}</div>
+          <div class="conv-container" :class="'bg_' + $store.state.user.local.theme">
+            <div @click="activeTeam = 'General'" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">GENERAL</div>
+            <div @click="activeTeam = 'Whatever'" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">WHATEVER</div>
+            <div @click="activeTeam = $store.state.user.local.work" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">{{ $store.state.user.local.work.toUpperCase() }}</div>
           </div>
-          <div class="conv-container-team">
-            <div v-for="(elem, index) in Teams" :key="index" @click="activeTeam = elem.name" class="categori waves-effect waves-button waves-classic">{{ elem.name }}</div>
+          <div class="conv-container-team" :class="'bg_' + $store.state.user.local.theme">
+            <div v-for="(elem, index) in Teams" :key="index" @click="activeTeam = elem.name" class="categori waves-effect waves-button waves-classic" :class="'bg_' + $store.state.user.local.theme">{{ elem.name }}</div>
           </div>
         </div>
         <div class="canal">
-          <div class="dep-title">
+          <div class="dep-title" :class="'dep-title_' + $store.state.user.local.theme">
             <h3>{{activeTeam}}</h3>
           </div>
-          <div class="post">
-            <textarea class="form-control" placeholder="Post" v-model="News.text" rows="2=4"></textarea>
+          <div class="post" :class="'bg_' + $store.state.user.local.theme">
+            <textarea class="form-control" :class="'bg_' + $store.state.user.local.theme" placeholder="Post" v-model="News.text" rows="2=4"></textarea>
             <div class="post-options">
               <v-btn class="btn btn--flat blue--text text--darken-1" @click="News.department = activeTeam; postNews();">Post</v-btn>
             </div>
           </div>
           <div class="profile-timeline">
             <ul class="list-unstyled">
-              <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" style="display: block;">
+              <li v-for="item in allNews" v-if="item.department === activeTeam" :key="item._id" class="timeline-item" :class="'bg_' + $store.state.user.local.theme" style="display: block;">
 
                 <div class="panel-body">
                   <div class="timeline-item-header"><img :src="item.senderPic" alt=""></div>
@@ -279,15 +293,19 @@
                     <div class="timeline-comment-header" v-for="comm in item.reply" :key="comm._id">
                       <img :src="comm.senderPic" alt="">
                       <div class="timeline-comment-header-container">
-                        <div class="timeline-comment-header-container-owner"><p>{{comm.sender}} :&emsp;<span style="color: black;">{{comm.text}}</span></p></div><small style="width: 100%; margin-top: -10px;">{{ comm.date.toLocaleDateString(navigator.language, {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
+                        <div class="timeline-comment-header-container-owner"><p>{{comm.sender}} :&emsp;<span :class="'comment_' + $store.state.user.local.theme">{{comm.text}}</span></p></div><small style="width: 100%; margin-top: -10px;">{{ comm.date.toLocaleDateString(navigator.language, {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'}) }}</small>
                       </div>
                     </div>
-                    <div class="timeline-comment-reply">
+                    <div class="timeline-comment-reply" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                      <v-text-field name="reply" label="Reply" v-model="item.message" single-line dark="true"></v-text-field>
+                    </div>
+                    <div class="timeline-comment-reply" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
                       <v-text-field name="reply" label="Reply" v-model="item.message" single-line></v-text-field>
                     </div>
                     <div class="timeline-comment-replybtn">
                       <a @click="postReply(item._id, item.message);">
-                        <i class="material-icons" style="color: rgba(0,0,0,.65);">check</i>
+                        <i v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'" class="material-icons" style="color: rgba(255,255,255,.65);">check</i>
+                        <i v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'" class="material-icons" style="color: rgba(0,0,0,.65);">check</i>
                       </a>
                     </div>
                   </div>

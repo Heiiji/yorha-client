@@ -38,10 +38,14 @@
     display: inline;
   }
 }
+.page-inner_dark_color, .page-inner_dark_normal {
+  background-color: #333333 !important;
+  color: white !important;
+}
 </style>
 
 <template>
-  <div class="containerYT">
+  <div class="containerYT" :class="'page-inner_' + $store.state.user.local.theme" style="min-height:951px !important">
     <span v-if="Doc">
       <h2 class="YTtitle">Shadow Live Summary<span v-if="Doc.date">{{' - ' + Doc.date.replace(/..............$/g, '')}}</span></h2>
       <iframe class="iframeYT" width="640" height="360" :src="Doc.link"></iframe>

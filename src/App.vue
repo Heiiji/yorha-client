@@ -243,7 +243,7 @@ input.form-control.search-input:active {
                                 <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" :class="'dropdown_' + $store.state.user.local.theme" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
                                         <ul class="list-unstyled" style="padding-left: 0px;">
-                                            <li class="my-msgs" :class="'my-msgs_' + $store.state.user.local.theme" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat/' + msg.senderMail)">
+                                            <li class="my-msgs" :class="'my-msgs_' + $store.state.user.local.theme" v-for="(msg, index) in messages" :key="msg._id" @click="activeQwickConv = msg.senderMail">
                                                 <a v-if="index == 0" style="border-radius: 12px;">
                                                     <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -493,7 +493,7 @@ input.form-control.search-input:active {
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <QwickChat v-if="$store.state.activeQwickConv !== 'null'" selectChat="$store.state.activeQwickConv"/>
+    <QwickChat :selectChat="activeQwickConv"/>
   </v-app>
 </template>
 
@@ -521,6 +521,7 @@ export default {
     feedback: false,
     FeedbackText: '',
     messages: [],
+    activeQwickConv: null,
     msgNbr: 0,
     search: '',
     menu: '',

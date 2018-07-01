@@ -426,7 +426,7 @@ export default {
       var vue = this
       let targ = -1
       var conv = []
-      if (this.$store.state.activeQwickConv !== 'null') {
+      if (vue.selectChat !== 'null') {
         AccountServices.GetMSG(this.$store.state.user.local.mail).then((response) => {
           response.data.msgs.sort(function (a, b) {
             if (a.senderMail > b.senderMail) {

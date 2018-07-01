@@ -242,8 +242,8 @@ input.form-control.search-input:active {
                                 <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" :class="'msg-icon_' + $store.state.user.local.theme" style="font-size: 24px; padding-bottom: 10px;">chat_bubble_outline</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" :class="'dropdown_' + $store.state.user.local.theme" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
-                                        <ul class="list-unstyled">
-                                            <li class="my-msgs" :class="'my-msgs_' + $store.state.user.local.theme" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat/' + msg.senderMail)">
+                                        <ul class="list-unstyled" style="padding-left: 0px;">
+                                            <li class="my-msgs" :class="'my-msgs_' + $store.state.user.local.theme" v-for="(msg, index) in messages" :key="msg._id" @click="activeQwickConv = msg.senderMail">
                                                 <a v-if="index == 0" style="border-radius: 12px;">
                                                     <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>
                                                     <p class="msg-name">{{ msg.sender }}</p>
@@ -493,11 +493,13 @@ input.form-control.search-input:active {
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    <QwickChat :selectChat="activeQwickConv"/>
   </v-app>
 </template>
 
 <script>
 import AccountServices from '@/services/AccountService'
+import QwickChat from './components/qwickChat'
 
 import firebase from 'firebase'
 var audio = new Audio(require('../static/notification.wav'))
@@ -519,6 +521,7 @@ export default {
     feedback: false,
     FeedbackText: '',
     messages: [],
+    activeQwickConv: null,
     msgNbr: 0,
     search: '',
     menu: '',
@@ -541,6 +544,9 @@ export default {
     mini: true,
     right: null
   }),
+  components: {
+    QwickChat
+  },
   methods: {
     editTheme (newTheme) {
       let vue = this

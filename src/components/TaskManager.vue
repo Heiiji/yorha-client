@@ -28,6 +28,7 @@
         <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Begining</h2>
         <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Duration</h2>
         <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Assignement</h2>
+        <h2 style="background-color: rgba(230, 230, 230, 0.7);" class="elem">Actions</h2>
       </div>
       <div class="card" v-for="(task, index) in dispCards" :key="index" @click="EditCard = task; selected = task.users; displayEditCard = true">
         <h3 class="elem">{{ task.title }}</h3>
@@ -35,9 +36,51 @@
         <p class="elem">{{ task.start_dateUse }}</p>
         <p class="elem">{{ task.duration }}</p>
         <p class="elem"><img v-for="(user, index) in task.users" :key="index" width="30px" style="border-radius: 15px;" :src="user.picture" /></p>
+        <p class="elem" >
+          <i @click="DeleteCard(task._id)" class="material-icons actions">
+          delete
+          </i>
+        </p>
+      </div>
+      <div v-if="AddOne" class="card">
+          <v-text-field
+            style="margin: 5px;"
+            v-model="card.title"
+            label="Title"
+            single-line
+            solo
+          ></v-text-field>
+        <v-text-field
+          style="margin: 5px;"
+          v-model="card.text"
+          label="Description"
+          single-line
+          solo
+        ></v-text-field>
+        <v-text-field
+          style="margin: 5px;"
+          type="Number"
+          v-model="card.duration"
+          label="Duration (days)"
+          single-line
+          solo
+        ></v-text-field>
+        <p class="elem" >
+          <i @click="AddOne = false" class="material-icons actions">
+            cancel
+          </i>
+          <i @click="PostCard()" class="material-icons actions">
+            save
+          </i>
+        </p>
+      </div>
+      <div v-else style="height: auto; background-color: rgba(230, 230, 230, 0.7); text-align: center;" class="card">
+          <i @click="AddOne = true" class="material-icons actions" style="font-size: 2em; width: 100%; cursor: pointer;">
+          add
+          </i>
       </div>
     </div>
-    <div v-if="$store.state.user.local.mail === settings.selected[0]" style="position: fixed !important; bottom: 10px; right: 70px">
+    <div v-if="$store.state.user.local.mail === settings.selected[0]" style="position: fixed !important; bottom: 10px; right: 10px">
       <v-btn
           color="blue"
           dark
@@ -48,27 +91,6 @@
         <v-icon>settings</v-icon>
       </v-btn>
     </div>
-    <v-menu
-        transition="slide-x-transition"
-        bottom
-        right
-        style="position: fixed; bottom: 10px; right: 8px; background-color:  rgba(0, 0, 0, 0);"
-      >
-      <v-btn
-          color="blue"
-          dark
-          fab
-          slot="activator"
-          style="z-index: 5;"
-        >
-        <v-icon>add</v-icon>
-      </v-btn>
-      <v-list style="z-index: 6;">
-        <v-list-tile @click="NewCard = true">
-          <v-list-tile-title>Add a task</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-menu>
       <v-dialog style="z-index:25;" v-model="ShowSet" scrollable max-width="800px">
         <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
           <v-card-title style="color: blue;">Board settings :</v-card-title>
@@ -121,6 +143,9 @@
                       </template>
                     </v-select>
                   </v-flex>
+             <v-flex xs12 sm6>
+                <v-btn @click="DeleteBoard()" color="error">Delete Board</v-btn>
+             </v-flex>
           <v-divider></v-divider>
           <v-card-actions>
             <v-btn color="blue darken-1" flat @click.native="ShowSet = false">Close</v-btn>
@@ -129,82 +154,6 @@
         </v-card>
       </v-dialog>
     <div style="display: block;">
-      <v-dialog style="z-index: 25; background-color: rgba(247,247,250,0.98) !important;" v-model="NewCard" scrollable max-width="800px">
-        <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
-          <v-card-title style="color: blue;">New task :</v-card-title>
-          <v-divider></v-divider>
-            <v-flex style="text-align: center;" xs8>
-              <v-text-field v-model="card.title"
-                name="title"
-                label="title"
-                style="width: 700px; margin: 5px;"
-              ></v-text-field>
-                <v-text-field v-model="card.text"
-                  name="text"
-                  label="text"
-                  textarea
-                  id="text"
-                  style="width: 700px; margin: 5px;"
-                ></v-text-field>
-                <h4 style="text-align: center;">Start date</h4>
-                <v-date-picker v-model="picker" :landscape="true" :reactive="true"></v-date-picker>
-                <v-container style="height: auto;" fluid>
-                <v-layout row wrap>
-                  <v-flex xs12 sm6>
-                    <v-subheader v-text="'Selected users :'"></v-subheader>
-                  </v-flex>
-                  <v-flex xs12 sm6>
-                    <v-select
-                      :items="Teams[0]"
-                      v-model="selected"
-                      label="Select"
-                      item-text="username"
-                      item-value="username"
-                      multiple
-                      chips
-                      max-height="auto"
-                      autocomplete
-                    >
-                      <template slot="selection" slot-scope="data">
-                        <v-chip
-                          :selected="data.selected"
-                          :key="JSON.stringify(data.item)"
-                          close
-                          class="chip--select-multi"
-                          @input="data.parent.selectItem(data.item)"
-                        >
-                          <v-avatar>
-                            <img :src="data.item.picture">
-                          </v-avatar>
-                          {{ data.item.username }}
-                        </v-chip>
-                      </template>
-                      <template slot="item" slot-scope="data">
-                        <template v-if="typeof data.item !== 'object'">
-                          <v-list-tile-content v-text="data.item"></v-list-tile-content>
-                        </template>
-                        <template v-else>
-                          <v-list-tile-avatar>
-                            <img :src="data.item.picture">
-                          </v-list-tile-avatar>
-                          <v-list-tile-content>
-                            <v-list-tile-title v-html="data.item.username"></v-list-tile-title>
-                            <v-list-tile-sub-title v-html="data.item.work"></v-list-tile-sub-title>
-                          </v-list-tile-content>
-                        </template>
-                      </template>
-                    </v-select>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-flex>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-btn color="blue darken-1" flat @click.native="NewCard = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="PostCard()">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
       <v-dialog style="z-index: 25; background-color: rgba(247,247,250,0.98);" v-model="displayEditCard" scrollable max-width="800px">
         <v-card style="background-color: rgba(247,247,250,0.98); text-align: center;">
               <div class="headline" style="display: block;">{{ EditCard.title }}</div><br/>
@@ -396,6 +345,14 @@ color: white;
 .select-task-prompt h2{
   color: white;
 }
+.actions {
+  padding: 6px;
+  border-radius: 15px;
+  background-color: rgba(240, 240, 240, 0.2);
+}
+.actions:hover {
+  background-color: rgba(160, 160, 160, 0.9);
+}
 </style>
 <script>
 import AccountService from '@/services/AccountService'
@@ -413,6 +370,7 @@ export default {
         ],
         links: []
       },
+      AddOne: false,
       selectedTask: null,
       firebaseApp: null,
       ShowSet: false,
@@ -448,8 +406,7 @@ export default {
       card: {
         title: '',
         text: '',
-        users: {
-        }
+        duration: null
       },
       cards: [],
       dispCards: []
@@ -513,10 +470,12 @@ export default {
             vue.cards[i].start_dateUse = startdate
             vue.cards[i].start_date = vue.cards[i].start_date.replace(/^(....).(..).(..)............../g, '$3-$2-$1')
             vue.cards[i].id = vue.cards[i]._id
-            for (let j = 0; j < vue.cards[i].users.length; j++) {
-              AccountService.FindUsersByName(vue.cards[i].users[j]).then((data) => {
-                vue.cards[i].users[j] = data.data.users[0]
-              })
+            if (vue.cards[i].users) {
+              for (let j = 0; j < vue.cards[i].users.length; j++) {
+                AccountService.FindUsersByName(vue.cards[i].users[j]).then((data) => {
+                  vue.cards[i].users[j] = data.data.users[0]
+                })
+              }
             }
           }
           vue.tasks.data = vue.cards
@@ -528,14 +487,30 @@ export default {
       var vue = this
       var newCard = {}
       newCard = vue.card
-      newCard.users = vue.selected
       newCard.board = vue.$route.params.team
-      newCard.start_date = vue.picker
       this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
         newCard.token = idToken
-        TaskService.Post(newCard).then((response) => {
+        TaskService.Post(newCard).then(() => {
           vue.GetCard()
           vue.NewCard = false
+        })
+      })
+    },
+    DeleteCard (elem) {
+      var vue = this
+      this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
+        TaskService.DeleteCard({token: idToken, target: elem}).then(() => {
+          vue.NewCard = false
+          vue.displayEditCard = false
+          vue.GetCard()
+        })
+      })
+    },
+    DeleteBoard () {
+      var vue = this
+      this.firebaseApp.auth().currentUser.getIdToken(false).then(function (idToken) {
+        TaskService.DeleteBoard({token: idToken, target: vue.$route.params.team}).then(() => {
+          vue.$router.push('/workboard')
         })
       })
     },

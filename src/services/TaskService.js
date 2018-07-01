@@ -25,6 +25,12 @@ export default {
   PutTask (params) {
     return Api().put('/task', params)
   },
+  DeleteCard (params) {
+    return Api().delete('/task/' + params.token + '/' + params.target)
+  },
+  DeleteBoard (params) {
+    return Api().delete('/board/' + params.token + '/' + params.target)
+  },
   SetAsFinnished (params) {
     return Api().put('/FinnishedTask', params)
   }

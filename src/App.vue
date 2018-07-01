@@ -242,7 +242,7 @@ input.form-control.search-input:active {
                                 <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="material-icons" :class="'msg-icon_' + $store.state.user.local.theme" style="font-size: 24px; padding-bottom: 10px;">chat_bubble_outline</i><span v-if="msgNbr > 0" class="badge badge-success pull-right">{{ msgNbr }}</span></a>
                                 <ul class="dropdown-menu title-caret dropdown-lg msg-dropdown" :class="'dropdown_' + $store.state.user.local.theme" role="menu">
                                     <li class="dropdown-menu-list slimscroll messages" style="max-height: 90%;">
-                                        <ul class="list-unstyled">
+                                        <ul class="list-unstyled" style="padding-left: 0px;">
                                             <li class="my-msgs" :class="'my-msgs_' + $store.state.user.local.theme" v-for="(msg, index) in messages" :key="msg._id" @click="msgNbr = 0; redirect('/chat/' + msg.senderMail)">
                                                 <a v-if="index == 0" style="border-radius: 12px;">
                                                     <div class="msg-img"><img style="border-radius: 20px;" class="img-circle" :src="msg.senderPic" alt="pic"></div>

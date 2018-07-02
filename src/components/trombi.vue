@@ -93,6 +93,11 @@
     <div class="page-title" :class="'page-title_' + $store.state.user.local.theme">
         <h3>Trombinoscope</h3>
     </div>
+    <div>
+      <v-btn @click="sortByAlphabet(); SortBy = 'alphabet'" style="z-index: 5;" small>Sort by alphabet</v-btn>
+      <v-btn @click="sortByDepartment(); SortBy = 'department'" style="z-index: 5;" small>Sort by department</v-btn>
+      <v-btn @click="sortByLocation(); SortBy = 'location'" style="z-index: 5;" small>Sort by location</v-btn>
+    </div>
     <br/>
     <div class="trombi">
       <div v-for="(user, i) in users" :key="i" class="userspace" :class="'userspace_' + $store.state.user.local.theme">
@@ -118,6 +123,7 @@ export default {
     return {
       edition: false,
       users: [],
+      SortBy: 'alphabet',
       modif: {
         id: '',
         status: ''
@@ -143,6 +149,33 @@ export default {
     async getUsersByStatus (arg) {
       const response = await AccountService.FindByStatus(arg)
       this.users = response.data.users
+    },
+    async sortByAlphabet () {
+      this.users = this.users.sort(function (a, b) {
+        if (a.username > b.username) {
+          return 1
+        } else {
+          return -1
+        }
+      })
+    },
+    async sortByDepartment () {
+      this.users = this.users.sort(function (a, b) {
+        if (a.work > b.work) {
+          return 1
+        } else {
+          return -1
+        }
+      })
+    },
+    async sortByLocation () {
+      this.users = this.users.sort(function (a, b) {
+        if (a.location > b.location) {
+          return 1
+        } else {
+          return -1
+        }
+      })
     },
     async getUsers (arg) {
       const response = await AccountService.FindUsers('all')

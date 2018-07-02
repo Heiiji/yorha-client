@@ -358,7 +358,7 @@
                   <h5 :class="'txt_' + $store.state.user.local.theme">Localisation</h5>
                 </div>
                 <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
-                  Paris, France
+                  {{ user.location }}
                 </div>
               </div>
             </a>

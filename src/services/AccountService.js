@@ -69,7 +69,9 @@ export default {
   SendFeedback (feedback) {
     return Api().put('feedback', feedback)
   },
-
+  editLocation (params) {
+    return Api().put('account/location', params)
+  },
   editDescription (params) {
     return Api().put('account/description', params)
   },

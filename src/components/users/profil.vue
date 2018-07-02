@@ -343,16 +343,31 @@
               </a>
             </div>
             <div class="mycontainer">
-              <a class="userbtn">
+              <a class="userbtn" @click="EditLocation = !EditLocation">
                 <div class="textcontainer">
                   <div class="texttitle">
                     <h5 :class="'txt_' + $store.state.user.local.theme">Localisation</h5>
                   </div>
                   <div class="textdisp" :class="'txt_' + $store.state.user.local.theme">
-                    Paris, France
+                    {{ $store.state.user.local.location }}
+                  </div>
+                  <div class="editicon">
+                    <i dark="" class="material-icons" :class="'txt_' + $store.state.user.local.theme">keyboard_arrow_right</i>
                   </div>
                 </div>
               </a>
+            </div>
+            <div class="formdiv" v-if="EditLocation">
+              <div class="formdiv-grid" v-if="$store.state.user.local.theme === 'dark_normal' || $store.state.user.local.theme === 'dark_color'">
+                <v-text-field class="formin" v-model="NewLocation" name="NewLocation" :placeholder="user.local.location" dark="true">
+                </v-text-field>
+                <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="changeLocation()">done</a></div>
+              </div>
+              <div class="formdiv-grid" v-if="$store.state.user.local.theme === 'clair_normal' || $store.state.user.local.theme === 'clair_color'">
+                <v-text-field class="formin" v-model="NewLocation" name="NewLocation" :placeholder="user.local.location">
+                </v-text-field>
+                <div style="grid-column: 3;"><a class="check material-icons" :class="'txt_' + $store.state.user.local.theme" @click="changeLocation()">done</a></div>
+              </div>
             </div>
             <div class="mycontainer">
               <a class="userbtn" @click="EditTel = !EditTel">
@@ -509,8 +524,10 @@ export default {
       e1: null,
       EditDescription: null,
       NewDescription: '',
+      NewLocation: '',
       NewTeam: '',
       EditTel: false,
+      EditLocation: false,
       NewTel: '',
       PostNews: null,
       CreateTeam: false,
@@ -588,6 +605,14 @@ export default {
       })
       this.user.local.description = desc
       this.EditDescription = false
+    },
+    changeLocation (desc) {
+      AccountService.editLocation({
+        mail: this.user.local.mail,
+        location: this.NewLocation
+      })
+      this.Refresh()
+      this.EditLocation = false
     },
     PostTeam () {
       AccountService.editTeam({
